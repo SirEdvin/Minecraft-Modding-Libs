@@ -1,0 +1,84 @@
+package site.siredvin.broccolium.modules.platform
+
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
+import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.stats.Stat
+import net.minecraft.stats.StatFormatter
+import net.minecraft.stats.Stats
+import net.minecraft.world.Container
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntityType
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
+import site.siredvin.broccolium.modules.platform.api.InnerBasePlatform
+import site.siredvin.broccolium.modules.platform.api.MenuBuilder
+import java.util.function.Supplier
+
+abstract class FabricInnerBasePlatform : InnerBasePlatform {
+    override fun <T : Item> registerItem(key: ResourceLocation, item: Supplier<T>): Supplier<T> {
+        val registeredItem = Registry.register(BuiltInRegistries.ITEM, key, item.get())
+        return Supplier { registeredItem }
+    }
+
+    override fun <T : Block> registerBlock(
+        key: ResourceLocation,
+        block: Supplier<T>,
+        itemFactory: (T) -> Item,
+    ): Supplier<T> {
+        val registeredBlock = Registry.register(BuiltInRegistries.BLOCK, key, block.get())
+        Registry.register(BuiltInRegistries.ITEM, key, itemFactory(registeredBlock))
+        return Supplier { registeredBlock }
+    }
+
+    override fun <V : BlockEntity, T : BlockEntityType<V>> registerBlockEntity(
+        key: ResourceLocation,
+        blockEntityTypeSup: Supplier<T>,
+    ): Supplier<T> {
+        val registeredBlockEntityType = Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, key, blockEntityTypeSup.get())
+        return Supplier { registeredBlockEntityType }
+    }
+
+    override fun <M : AbstractContainerMenu> registerMenu(
+        key: ResourceLocation,
+        builder: MenuBuilder<M>,
+    ): Supplier<MenuType<M>> {
+        val menuType = ExtendedScreenHandlerType(builder::build)
+        val registeredMenu = Registry.register(BuiltInRegistries.MENU, key, menuType)
+        return Supplier { registeredMenu }
+    }
+
+    override fun registerCreativeTab(key: ResourceLocation, tab: CreativeModeTab): Supplier<CreativeModeTab> {
+        val registeredTab = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, key, tab)
+        return Supplier { registeredTab }
+    }
+
+    override fun registerCustomStat(id: ResourceLocation, formatter: StatFormatter): Supplier<Stat<ResourceLocation>> {
+        val registeredStat = Registry.register(BuiltInRegistries.CUSTOM_STAT, id, id)
+        return Supplier { Stats.CUSTOM.get(registeredStat, formatter) }
+    }
+
+    override fun <C : Container, T : Recipe<C>> registerRecipeSerializer(
+        key: ResourceLocation,
+        serializer: RecipeSerializer<T>,
+    ): Supplier<RecipeSerializer<T>> {
+        val registeredRecipe = Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, key, serializer)
+        return Supplier { registeredRecipe }
+    }
+
+    override fun <V : Entity, T : EntityType<V>> registerEntity(
+        key: ResourceLocation,
+        entityTypeSup: Supplier<T>,
+    ): Supplier<T> {
+        val registeredEntityType = Registry.register(BuiltInRegistries.ENTITY_TYPE, key, entityTypeSup.get())
+        return Supplier { registeredEntityType }
+    }
+}

@@ -1,0 +1,77 @@
+package site.siredvin.broccolium.test.storage
+
+import net.minecraft.world.item.ItemStack
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
+import site.siredvin.broccolium.modules.storage.item.api.AccessibleAgnosticItemStorage
+import java.util.function.Predicate
+
+class DummyStorage(private val maxSlots: Int, initialItems: List<ItemStack>) : AccessibleAgnosticItemStorage {
+
+    val items: MutableList<ItemStack> = mutableListOf()
+
+    init {
+        if (initialItems.size > maxSlots) {
+            throw IllegalArgumentException("Max slots is too low for you?")
+        }
+        initialItems.forEach {
+            items.add(it)
+        }
+        clean()
+    }
+
+    override fun getItem(slot: Int): ItemStack = items[slot]
+
+    override fun getItems(): Iterator<ItemStack> = items.iterator()
+
+    fun clean() {
+        items.removeIf { it.isEmpty }
+    }
+
+    override fun takeItems(predicate: Predicate<ItemStack>, limit: Int): ItemStack {
+        var slidingStack = ItemStack.EMPTY
+        var slidingLimit = limit
+        val toRemove = mutableListOf<Int>()
+        items.forEachIndexed { index, stack ->
+            if (slidingLimit > 0) {
+                if (!stack.isEmpty && predicate.test(stack)) {
+                    if (slidingStack.isEmpty) {
+                        slidingStack = stack
+                        slidingLimit = minOf(limit, stack.maxStackSize) - stack.count
+                        toRemove.add(index)
+                    } else if (ItemStorageUtils.canMerge(slidingStack, stack)) {
+                        val originalCount = stack.count
+                        val remainder = ItemStorageUtils.inplaceMerge(slidingStack, stack)
+                        slidingLimit -= originalCount - remainder.count
+                        if (remainder.isEmpty) {
+                            toRemove.add(index)
+                        }
+                    }
+                }
+            }
+        }
+        toRemove.asReversed().forEach {
+            items.removeAt(it)
+        }
+        clean()
+        return slidingStack
+    }
+
+    override fun storeItem(stack: ItemStack): ItemStack {
+        items.forEach {
+            if (ItemStorageUtils.canMerge(it, stack)) {
+                ItemStorageUtils.inplaceMerge(it, stack)
+            }
+        }
+        if (stack.isEmpty) {
+            return ItemStack.EMPTY
+        }
+        if (items.size < maxSlots) {
+            items.add(stack)
+            return ItemStack.EMPTY
+        }
+        return stack
+    }
+
+    override fun setChanged() {
+    }
+}

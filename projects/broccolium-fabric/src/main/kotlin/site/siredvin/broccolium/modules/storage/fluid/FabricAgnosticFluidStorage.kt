@@ -1,0 +1,79 @@
+package site.siredvin.broccolium.modules.storage.fluid
+
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.storage.FabricStorageUtils
+import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidSink
+import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
+import java.util.function.Predicate
+
+open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>) : AgnosticFluidStorage {
+
+    override val movableType: String
+        get() = FabricStorageUtils.MOVABLE_TYPE
+
+    override fun getFluids(): Iterator<AgnosticFluidStack> = this.storage.map { it.toVanilla() }.iterator()
+
+    override fun moveTo(to: AgnosticFluidSink, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+        if (to.movableType == FabricStorageUtils.MOVABLE_TYPE) {
+            return to.moveFrom(this, limit, takePredicate)
+        }
+        if (to.movableType == null) {
+            return FabricStorageUtils.moveToTargetable(this.storage, to, limit, takePredicate)
+        }
+        throw IllegalStateException("Cannot mix movable type, this should be impossible here")
+    }
+
+    override fun moveFrom(from: AgnosticFluidStorage, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+        if (from.movableType == FabricStorageUtils.MOVABLE_TYPE) {
+            if (from !is FabricAgnosticFluidStorage) throw IllegalStateException("For fabricTransfer please use FabricFluidStorage")
+            return StorageUtil.move(
+                from.storage,
+                storage,
+                { takePredicate.test(it.toVanilla(1)) },
+                limit * PlatformToolkit.get().fluidCompactDivider,
+                null,
+            ) / PlatformToolkit.get().fluidCompactDivider
+        }
+        if (from.movableType == null) {
+            return FabricStorageUtils.moveFromTargetable(from, this.storage, limit, takePredicate)
+        }
+        throw IllegalStateException("Cannot mix movable type, this should be impossible here")
+    }
+
+    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Long): AgnosticFluidStack {
+        val platformLimit = limit * PlatformToolkit.get().fluidCompactDivider
+        if (!storage.supportsExtraction()) return AgnosticFluidStack.Companion.EMPTY
+        val extractableTarget = StorageUtil.findExtractableContent(storage, {
+            predicate.test(it.toVanilla())
+        }, null)
+        if (extractableTarget == null || extractableTarget.amount == 0L) {
+            return AgnosticFluidStack.Companion.EMPTY
+        }
+        val realLimit = minOf(extractableTarget.amount, platformLimit)
+        Transaction.openOuter().use {
+            val extracted = storage.extract(extractableTarget.resource, realLimit, it)
+            it.commit()
+            return extractableTarget.resource.toVanilla(extracted)
+        }
+    }
+
+    override fun storeFluid(stack: AgnosticFluidStack): AgnosticFluidStack {
+        if (!storage.supportsInsertion()) return stack
+        Transaction.openOuter().use {
+            val inserted = storage.insert(stack.toVariant(), stack.platformAmount, it)
+            if (inserted == 0L) {
+                it.abort()
+                return stack
+            }
+            it.commit()
+            return stack.copyWithCount((stack.platformAmount - inserted) / PlatformToolkit.get().fluidCompactDivider)
+        }
+    }
+
+    override fun setChanged() {
+    }
+}

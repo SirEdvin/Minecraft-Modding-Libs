@@ -1,0 +1,26 @@
+modLoader="kotlinforforge"
+loaderVersion="[4,)"
+
+issueTrackerURL="https://github.com/SirEdvin/Minecraft-Modding-Libs/issues"
+logoFile="pack.png"
+
+license="MIT"
+
+[[mods]]
+modId="broccolium"
+version="${file.jarVersion}"
+displayName="Broccolium"
+displayURL="https://github.com/SirEdvin/Minecraft-Modding-Libs/"
+
+credits=""
+authors="SirEdvin"
+description='''
+A library for all of my mods, actually
+'''
+
+[[dependencies.broccolium]]
+modId="forge"
+mandatory=true
+versionRange="[${forgeVersion},48)"
+ordering="NONE"
+side="BOTH"
