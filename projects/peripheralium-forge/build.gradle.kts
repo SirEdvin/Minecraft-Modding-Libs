@@ -46,13 +46,8 @@ dependencies {
 
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
 
-    val broccolium = project(":broccolium-forge")
-    broccolium.isTransitive = false
-    val tweakium = project(":tweakium-forge")
-    tweakium.isTransitive = false
-
-    implementation(fg.deobf("site.siredvin:broccolium-forge-1.20.1:1.0.0-rc.1"))
-    implementation(fg.deobf("site.siredvin:tweakium-forge-1.20.1:1.0.0-rc.1"))
+    implementation(project(":broccolium-forge", configuration = "raw"))
+    implementation(project(":tweakium-forge", configuration = "raw"))
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)

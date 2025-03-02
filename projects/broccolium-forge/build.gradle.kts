@@ -39,6 +39,26 @@ sourceSets {
     }
 }
 
+configurations.create("raw") {
+    isCanBeConsumed = true
+}
+
+tasks.register<Jar>("rawJar") {
+    dependsOn(tasks.named("jar"))
+    archiveBaseName.set(archiveBaseName.get() + "-raw")
+    archiveClassifier.set("raw")
+    from(sourceSets["main"].output)
+}
+
+tasks.named("jar") { finalizedBy("rawJar") }
+
+artifacts {
+    add("raw", tasks["rawJar"]) {
+        classifier = "raw"
+    }
+}
+
+
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)
