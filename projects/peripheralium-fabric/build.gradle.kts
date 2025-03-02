@@ -20,6 +20,12 @@ baseShaking {
 fabricShaking {
     commonProjectName.set("peripheralium-core")
     projectName.set("peripheralium")
+    accessWidener.set(project(":peripheralium-core").file("src/main/resources/peripheralium.accesswidener"))
+    extraVersionMappings.set(
+        mapOf(
+            "computercraft" to "cc-tweaked",
+        ),
+    )
     shake()
 }
 
@@ -41,13 +47,6 @@ repositories {
     }
 }
 
-sourceSets {
-    test {
-        compileClasspath += project(":peripheralium-core").sourceSets["testFixtures"].output
-        runtimeClasspath += project(":peripheralium-core").sourceSets["testFixtures"].output
-    }
-}
-
 dependencies {
     implementation(libs.bundles.kotlin)
 
@@ -63,6 +62,18 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
     }
 
+    modImplementation(project(":broccolium-fabric")) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+        exclude("site.siredvin")
+    }
+
+    modImplementation(project(":tweakium-fabric")) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+        exclude("site.siredvin")
+    }
+
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)
     testAnnotationProcessor(libs.autoService)
@@ -76,7 +87,6 @@ tasks.test {
     useJUnitPlatform()
     systemProperty("junit.jupiter.extensions.autodetection.enabled", true)
 }
-
 
 publishingShaking {
     shake()

@@ -14,19 +14,13 @@ baseShaking {
 }
 
 vanillaShaking {
+    accessWideners.set(
+        listOf(
+            "src/main/resources/peripheralium-common.accesswidener",
+            "src/main/resources/peripheralium.accesswidener",
+        ),
+    )
     shake()
-}
-
-sourceSets {
-    create("testFixtures") {
-        compileClasspath += main.get().compileClasspath
-        compileClasspath += main.get().output
-        runtimeClasspath += main.get().output
-    }
-    test {
-        compileClasspath += sourceSets["testFixtures"].output
-        runtimeClasspath += sourceSets["testFixtures"].output
-    }
 }
 
 dependencies {
@@ -36,16 +30,11 @@ dependencies {
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
 
-    add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test"))
-    add(sourceSets["testFixtures"].compileOnlyConfigurationName, libs.bundles.test)
+    implementation(project(":broccolium-core"))
+    implementation(project(":tweakium-core"))
 
     testImplementation(kotlin("test"))
     testImplementation(libs.bundles.test)
-}
-
-java.registerFeature("testFixtures") {
-    usingSourceSet(sourceSets.getByName("testFixtures"))
-    disablePublication()
 }
 
 tasks.test {

@@ -23,7 +23,6 @@ fabricShaking {
     extraVersionMappings.set(
         mapOf(
             "computercraft" to "cc-tweaked",
-            "broccolium" to modVersion,
         ),
     )
     shake()
@@ -44,13 +43,6 @@ repositories {
         content {
             includeGroup("com.terraformersmc")
         }
-    }
-}
-
-sourceSets {
-    test {
-        compileClasspath += project(":tweakium-core").sourceSets["testFixtures"].output
-        runtimeClasspath += project(":tweakium-core").sourceSets["testFixtures"].output
     }
 }
 

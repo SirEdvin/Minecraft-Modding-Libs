@@ -1,23 +1,23 @@
-package site.siredvin.periparium
+package site.siredvin.peripheralium.data
 
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.FinishedRecipe
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Ingredient
-import site.siredvin.peripheralium.common.setup.Blocks
-import site.siredvin.peripheralium.common.setup.Items
-import site.siredvin.peripheralium.data.blocks.TweakedShapedRecipeBuilder
-import site.siredvin.peripheralium.data.blocks.TweakedShapelessRecipeBuilder
-import site.siredvin.peripheralium.data.blocks.TweakedSmeltingRecipeBuilder
-import site.siredvin.peripheralium.xplat.RecipeIngredients
+import site.siredvin.broccolium.modules.data.recipe.TweakedShapedRecipeBuilder
+import site.siredvin.broccolium.modules.data.recipe.TweakedShapelessRecipeBuilder
+import site.siredvin.broccolium.modules.data.recipe.TweakedSmeltingRecipeBuilder
+import site.siredvin.broccolium.modules.platform.PlatformIngredients
+import site.siredvin.peripheralium.Blocks
+import site.siredvin.peripheralium.Items
 import java.util.function.Consumer
 
-class LibRecipeProvider(output: PackOutput) : RecipeProvider(output) {
+class PeripheraliumRecipeProvider(output: PackOutput) : RecipeProvider(output) {
     override fun buildRecipes(consumer: Consumer<FinishedRecipe>) {
-        val ingredients = RecipeIngredients.get()
+        val ingredients = PlatformIngredients.get()
 
-        TweakedShapelessRecipeBuilder.shapeless(Items.PERIPHERALIUM_BLEND.get())
+        TweakedShapelessRecipeBuilder.shapeless(Items.PERIPHERALIUM_DUST.get())
             .requires(ingredients.redstone)
             .requires(ingredients.glowstoneDust)
             .save(consumer)

@@ -9,7 +9,6 @@ class LibUALanguageProvider(
     output: PackOutput,
 ) : LanguageProvider(output, BroccoliumCore.MOD_ID, "uk_ua", object : ModInformationHolder {}, *BroccoliumText.entries.toTypedArray()) {
     override fun addTranslations() {
-        add(BroccoliumText.CREATIVE_TAB, "Перифераліум")
         add(BroccoliumText.PRESS_FOR_DESCRIPTION, "[§3Left shift§r] показити опис")
         add(BroccoliumText.EMPTY_ENERGY, "Порожня енергія (якого біса?)")
         add(BroccoliumText.TURTLE_FUEL_ENERGY, "Паливо для черепах")

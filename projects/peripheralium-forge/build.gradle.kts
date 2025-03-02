@@ -17,6 +17,7 @@ forgeShaking {
     commonProjectName.set("peripheralium-core")
     projectName.set("peripheralium")
     useAT.set(true)
+    useMixins.set(true)
     extraVersionMappings.set(
         mapOf(
             "computercraft" to "cc-tweaked",
@@ -36,19 +37,20 @@ repositories {
     }
 }
 
-sourceSets {
-    test {
-        compileClasspath += project(":peripheralium-core").sourceSets["testFixtures"].output
-        runtimeClasspath += project(":peripheralium-core").sourceSets["testFixtures"].output
-    }
-}
-
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)
     libs.bundles.forge.base.get().map { implementation(fg.deobf(it)) }
 
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
+
+    implementation(project(":broccolium-forge")) {
+        exclude("site.siredvin")
+    }
+
+    implementation(project(":tweakium-forge")) {
+        exclude("site.siredvin")
+    }
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)

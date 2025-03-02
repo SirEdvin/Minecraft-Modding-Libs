@@ -1,10 +1,10 @@
-package site.siredvin.periparium
+package site.siredvin.peripheralium.data
 
 import net.minecraft.data.models.ItemModelGenerators
 import net.minecraft.data.models.model.ModelTemplates
-import site.siredvin.peripheralium.common.setup.Items
+import site.siredvin.peripheralium.Items
 
-object LibItemModelProvider {
+object PeripheraliumItemModelProvider {
     fun addModels(generators: ItemModelGenerators) {
         val peripheraliumDust = Items.PERIPHERALIUM_DUST.get()
         val periphaliumBlend = Items.PERIPHERALIUM_BLEND.get()

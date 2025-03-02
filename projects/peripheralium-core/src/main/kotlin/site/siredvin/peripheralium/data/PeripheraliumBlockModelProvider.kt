@@ -1,4 +1,4 @@
-package site.siredvin.periparium
+package site.siredvin.peripheralium.data
 
 import net.minecraft.data.models.BlockModelGenerators
 import net.minecraft.data.models.blockstates.MultiVariantGenerator
@@ -8,9 +8,9 @@ import net.minecraft.data.models.model.ModelLocationUtils
 import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.data.models.model.TextureMapping
 import net.minecraft.data.models.model.TextureSlot
-import site.siredvin.peripheralium.common.setup.Blocks
+import site.siredvin.peripheralium.Blocks
 
-object LibBlockModelProvider {
+object PeripheraliumBlockModelProvider {
     fun addModels(generators: BlockModelGenerators) {
         val peripheraliumBlock = Blocks.PERIPHERALIUM_BLOCK.get()
 

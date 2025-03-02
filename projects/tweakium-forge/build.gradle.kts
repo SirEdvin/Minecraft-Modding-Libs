@@ -47,8 +47,6 @@ dependencies {
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
 
     implementation(project(":broccolium-forge")) {
-        exclude("net.fabricmc.fabric-api")
-        exclude("net.fabricmc", "fabric-loader")
         exclude("site.siredvin")
     }
 

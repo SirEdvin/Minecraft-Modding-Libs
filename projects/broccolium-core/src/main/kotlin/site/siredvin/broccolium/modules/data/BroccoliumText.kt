@@ -5,7 +5,6 @@ import site.siredvin.broccolium.modules.data.api.TextRecord
 
 enum class BroccoliumText : TextRecord {
     PRESS_FOR_DESCRIPTION,
-    CREATIVE_TAB,
     EMPTY_ENERGY,
     TURTLE_FUEL_ENERGY,
     FORGE_ENERGY,

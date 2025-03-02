@@ -10,7 +10,6 @@ class LibENLanguageProvider(
     output: PackOutput,
 ) : LanguageProvider(output, BroccoliumCore.MOD_ID, "en_us", object : ModInformationHolder {}, *BroccoliumText.entries.toTypedArray()) {
     override fun addTranslations() {
-        add(BroccoliumText.CREATIVE_TAB, "Peripheralium")
         add(BroccoliumText.PRESS_FOR_DESCRIPTION, "[§3Left shift§r] show description")
         add(BroccoliumText.EMPTY_ENERGY, "Empty energy (like, what?)")
         add(BroccoliumText.TURTLE_FUEL_ENERGY, "Turtle fuel")
