@@ -13,5 +13,6 @@ class LibUALanguageProvider(
         add(BroccoliumText.EMPTY_ENERGY, "Порожня енергія (якого біса?)")
         add(BroccoliumText.TURTLE_FUEL_ENERGY, "Паливо для черепах")
         add(BroccoliumText.FORGE_ENERGY, "Forge-енергія")
+        add(BroccoliumText.RF_ENERGY, "RF енергія")
     }
 }

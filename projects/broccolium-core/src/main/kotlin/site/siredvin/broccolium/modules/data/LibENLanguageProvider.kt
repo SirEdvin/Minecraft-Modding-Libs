@@ -14,5 +14,6 @@ class LibENLanguageProvider(
         add(BroccoliumText.EMPTY_ENERGY, "Empty energy (like, what?)")
         add(BroccoliumText.TURTLE_FUEL_ENERGY, "Turtle fuel")
         add(BroccoliumText.FORGE_ENERGY, "Forge energy")
+        add(BroccoliumText.RF_ENERGY, "RF energy")
     }
 }

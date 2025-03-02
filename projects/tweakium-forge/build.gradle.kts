@@ -11,6 +11,7 @@ val modVersion: String by extra
 baseShaking {
     projectPart.set("forge")
     projectName.set("tweakium")
+    integrationRepositories.set(true)
     shake()
 }
 
@@ -46,9 +47,10 @@ dependencies {
 
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
 
-    implementation(project(":broccolium-forge")) {
-        exclude("site.siredvin")
-    }
+    val broccolium = project(":broccolium-forge")
+    broccolium.isTransitive = false
+
+    implementation(fg.deobf(broccolium))
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)

@@ -33,7 +33,7 @@ parchmentMc = "1.20.1"
 
 # Dev mod dependenceis
 jei = "15.1.0.19"
-rei = "12.0.625"
+rei = "12.1.785"
 
 # Testing
 autoService = "1.1.1"
@@ -79,6 +79,7 @@ forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-ko
 # Dev mod dependencies
 jei-forge = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei" }
 rei-fabric = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei"}
+rei-forge = {module = "me.shedaniel:RoughlyEnoughItems-forge", version.ref = "rei"}
 
 # Testing
 autoService = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }

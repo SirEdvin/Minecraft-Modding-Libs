@@ -10,6 +10,7 @@ plugins {
 baseShaking {
     projectPart.set("forge")
     projectName.set("peripheralium")
+    integrationRepositories.set(true)
     shake()
 }
 
@@ -41,16 +42,17 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)
     libs.bundles.forge.base.get().map { implementation(fg.deobf(it)) }
+    libs.bundles.forge.cc.get().map { implementation(fg.deobf(it)) }
 
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
 
-    implementation(project(":broccolium-forge")) {
-        exclude("site.siredvin")
-    }
+    val broccolium = project(":broccolium-forge")
+    broccolium.isTransitive = false
+    val tweakium = project(":tweakium-forge")
+    tweakium.isTransitive = false
 
-    implementation(project(":tweakium-forge")) {
-        exclude("site.siredvin")
-    }
+    implementation(fg.deobf(broccolium))
+    implementation(fg.deobf(tweakium))
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)
