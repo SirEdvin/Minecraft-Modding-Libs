@@ -4,8 +4,7 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.nbt.CompoundTag
-import site.siredvin.peripheralium.api.config.IOperationAbilityConfig
-import site.siredvin.peripheralium.api.peripheral.*
+import site.siredvin.tweakium.modules.peripheral.api.*
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -13,7 +12,7 @@ import java.util.function.BiConsumer
 import java.util.function.Consumer
 import kotlin.math.max
 
-class OperationAbility(private val owner: IPeripheralOwner, private val reduceRate: Double = 1.0, private val config: IOperationAbilityConfig) : IOwnerAbility, IPeripheralPlugin {
+class OperationBoon(private val owner: IPeripheralOwner, private val reduceRate: Double = 1.0, private val cooldownThreshold: Int = 0) : IPeripheralOwnerBoon {
     private val allowedOperations: MutableMap<String, IPeripheralOperation<*>> = HashMap()
 
     protected fun setCooldown(operation: IPeripheralOperation<*>, cooldown: Int) {
@@ -64,9 +63,9 @@ class OperationAbility(private val owner: IPeripheralOwner, private val reduceRa
         }
         val cost = operation.getCost(context)
         var cooldown = (operation.getCooldown(context) * reduceRate).toInt()
-        val fuelAbility: FuelAbility<*>?
+        val fuelAbility: FuelBoon<*>?
         if (cost != 0) {
-            fuelAbility = owner.getAbility(PeripheralOwnerAbility.FUEL)
+            fuelAbility = owner.getBoon(PeripheralOwnerBoonKey.FUEL)
             if (fuelAbility == null) {
                 val result = MethodResult.of(null, "This peripheral has no fuel at all")
                 failCallback?.accept(result, FailReason.NOT_ENOUGH_FUEL)
@@ -81,19 +80,15 @@ class OperationAbility(private val owner: IPeripheralOwner, private val reduceRa
         }
         val result = method.apply(context)
         successCallback?.accept(context)
-        if (cooldown > config.cooldownTresholdLevel) {
+        if (cooldown > cooldownThreshold) {
             setCooldown(operation, cooldown)
         }
         return result
     }
 
-    fun getCurrentCooldown(operation: IPeripheralOperation<*>): Int {
-        return getCooldown(operation)
-    }
+    fun getCurrentCooldown(operation: IPeripheralOperation<*>): Int = getCooldown(operation)
 
-    fun isOnCooldown(operation: IPeripheralOperation<*>): Boolean {
-        return getCurrentCooldown(operation) > 0
-    }
+    fun isOnCooldown(operation: IPeripheralOperation<*>): Boolean = getCurrentCooldown(operation) > 0
 
     override fun collectConfiguration(data: MutableMap<String, Any>) {
         for (operation in allowedOperations.values) {
@@ -108,16 +103,14 @@ class OperationAbility(private val owner: IPeripheralOwner, private val reduceRa
     }
 
     @LuaFunction(value = ["getOperations"])
-    fun getOperationsLua(): List<String> {
-        return allowedOperations.keys.toList()
-    }
+    fun getOperationsLua(): List<String> = allowedOperations.keys.toList()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is OperationAbility) return false
+        if (other !is OperationBoon) return false
 
         if (reduceRate != other.reduceRate) return false
-        if (config != other.config) return false
+        if (cooldownThreshold != other.cooldownThreshold) return false
         if (allowedOperations != other.allowedOperations) return false
 
         return true
@@ -125,7 +118,7 @@ class OperationAbility(private val owner: IPeripheralOwner, private val reduceRa
 
     override fun hashCode(): Int {
         var result = reduceRate.hashCode()
-        result = 31 * result + config.hashCode()
+        result = 31 * result + cooldownThreshold.hashCode()
         result = 31 * result + allowedOperations.hashCode()
         return result
     }

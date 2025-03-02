@@ -11,11 +11,11 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
-import site.siredvin.peripheralium.api.blockentities.IOwnedBlockEntity
-import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
-import site.siredvin.peripheralium.storages.item.ItemStorageUtils
-import site.siredvin.peripheralium.storages.item.SlottedItemStorage
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
 import java.util.function.Function
 
@@ -29,13 +29,13 @@ object FakePlayerProviderBlockEntity {
         }
         var fake: FakePlayerProxy? = registeredPlayers[blockEntity]
         if (fake == null) {
-            fake = FakePlayerProxy(PeripheraliumPlatform.createFakePlayer(blockEntity.player!!.level() as ServerLevel, profile))
+            fake = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(blockEntity.player!!.level() as ServerLevel, profile))
             registeredPlayers[blockEntity] = fake
         }
         return fake
     }
 
-    private fun load(player: ServerPlayer, realPlayer: Player, storage: SlottedItemStorage?, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
+    private fun load(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticItemStorage?, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
         val direction = overwrittenDirection ?: realPlayer.direction
         player.setServerLevel(realPlayer.level() as ServerLevel)
         val position = realPlayer.blockPosition()
@@ -90,7 +90,7 @@ object FakePlayerProviderBlockEntity {
         }
     }
 
-    private fun unload(player: ServerPlayer, realPlayer: Player, storage: SlottedItemStorage?, skipInventory: Boolean = false) {
+    private fun unload(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticItemStorage?, skipInventory: Boolean = false) {
         val playerInventory: Inventory = player.inventory
         playerInventory.selected = 0
 
@@ -135,7 +135,7 @@ object FakePlayerProviderBlockEntity {
             ?: throw LuaException("Cannot init player for this block entity computer for some reason")
         val player: FakePlayerProxy =
             getPlayer(blockEntity, realPlayer.gameProfile)
-        val storage = ItemStorageExtractor.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity = null) as? SlottedItemStorage
+        val storage = AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity = null) as? SlottedAgnosticItemStorage
         if (!skipInventory && storage == null) {
             throw IllegalArgumentException("Cannot init fake player with storage and with block entity without storage")
         }

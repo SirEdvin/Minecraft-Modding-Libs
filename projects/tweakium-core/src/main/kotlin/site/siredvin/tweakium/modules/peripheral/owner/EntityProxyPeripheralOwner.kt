@@ -12,17 +12,16 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
-import site.siredvin.peripheralium.api.blockentities.IOwnedBlockEntity
-import site.siredvin.peripheralium.api.peripheral.IPeripheralTileEntity
-import site.siredvin.peripheralium.ext.toVec3
-import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
-import site.siredvin.peripheralium.storages.item.SlottedItemStorage
-import site.siredvin.peripheralium.util.DataStorageUtil
-import site.siredvin.peripheralium.util.world.FakePlayerProviderEntity
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
+import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
+import site.siredvin.broccolium.modules.base.ext.toVec3
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
+import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
+import site.siredvin.tweakium.modules.player.FakePlayerProviderEntity
+import site.siredvin.tweakium.modules.player.FakePlayerProxy
 
-open class EntityProxyPeripheralOwner<T>(protected val blockEntity: T, protected val entity: Entity) :
-    BasePeripheralOwner() where T : BlockEntity, T : IPeripheralTileEntity {
+open class EntityProxyPeripheralOwner<T>(protected val blockEntity: T, protected val entity: Entity) : BasePeripheralOwner() where T : BlockEntity, T : IPeripheralBlockEntity {
     override val level: Level
         get() = entity.level()
     override val pos: BlockPos
@@ -33,8 +32,8 @@ open class EntityProxyPeripheralOwner<T>(protected val blockEntity: T, protected
         get() = (blockEntity as? IOwnedBlockEntity)?.player
     override val dataStorage: CompoundTag
         get() = DataStorageUtil.getDataStorage(blockEntity)
-    override val storage: SlottedItemStorage? by lazy {
-        ItemStorageExtractor.extractStorage(entity.level(), entity) as? SlottedItemStorage
+    override val storage: SlottedAgnosticItemStorage? by lazy {
+        AgnosticItemStorageLookup.extractStorage(entity.level(), entity) as? SlottedAgnosticItemStorage
     }
 
     override fun markDataStorageDirty() {

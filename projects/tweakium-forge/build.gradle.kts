@@ -3,9 +3,10 @@ import site.siredvin.peripheralium.gradle.mavenDependencies
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("site.siredvin.publishing")
-    id("site.siredvin.mod-publishing")
     id("site.siredvin.forge")
 }
+
+val modVersion: String by extra
 
 baseShaking {
     projectPart.set("forge")
@@ -17,6 +18,7 @@ forgeShaking {
     commonProjectName.set("tweakium-core")
     projectName.set("tweakium")
     useAT.set(true)
+    useMixins.set(true)
     extraVersionMappings.set(
         mapOf(
             "computercraft" to "cc-tweaked",
@@ -36,19 +38,19 @@ repositories {
     }
 }
 
-sourceSets {
-    test {
-        compileClasspath += project(":tweakium-core").sourceSets["testFixtures"].output
-        runtimeClasspath += project(":tweakium-core").sourceSets["testFixtures"].output
-    }
-}
-
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)
     libs.bundles.forge.base.get().map { implementation(fg.deobf(it)) }
+    libs.bundles.forge.cc.get().map { implementation(fg.deobf(it)) }
 
     libs.bundles.externalMods.forge.runtime.get().map { runtimeOnly(fg.deobf(it)) }
+
+    implementation(project(":broccolium-forge")) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+        exclude("site.siredvin")
+    }
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)

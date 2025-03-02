@@ -9,10 +9,10 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.computercraft.peripheral.ability.OperationAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.storages.item.SlottedItemStorage
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.ability.OperationBoon
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.player.FakePlayerProxy
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 
@@ -27,7 +27,7 @@ interface IPeripheralOwner {
     val facing: Direction
     val owner: Player?
     val dataStorage: CompoundTag
-    val storage: SlottedItemStorage?
+    val storage: SlottedAgnosticItemStorage?
 
     fun markDataStorageDirty()
 
@@ -37,9 +37,9 @@ interface IPeripheralOwner {
     fun destroyUpgrade()
     fun isMovementPossible(level: Level, pos: BlockPos): Boolean
     fun move(level: Level, pos: BlockPos): Boolean
-    fun <T : IOwnerAbility> attachAbility(ability: IPeripheralOwnerAbility<T>, abilityImplementation: T)
-    fun <T : IOwnerAbility> getAbility(ability: IPeripheralOwnerAbility<T>): T?
-    val abilities: Collection<IOwnerAbility>
+    fun <T : IPeripheralOwnerBoon> attachBoon(ability: IPeripheralOwnerBoonKey<T>, abilityImplementation: T)
+    fun <T : IPeripheralOwnerBoon> getBoon(ability: IPeripheralOwnerBoonKey<T>): T?
+    val abilities: Collection<IPeripheralOwnerBoon>
 
     @Throws(LuaException::class)
     fun <T> withOperation(
@@ -48,9 +48,9 @@ interface IPeripheralOwner {
         method: IPeripheralFunction<T, MethodResult>,
         check: IPeripheralCheck<T>? = null,
         successCallback: Consumer<T>? = null,
-        failCallback: BiConsumer<MethodResult, OperationAbility.FailReason>? = null,
+        failCallback: BiConsumer<MethodResult, OperationBoon.FailReason>? = null,
     ): MethodResult {
-        val operationAbility = getAbility(PeripheralOwnerAbility.OPERATION)
+        val operationAbility = getBoon(PeripheralOwnerBoonKey.OPERATION)
             ?: throw IllegalArgumentException("Owner doesn't have ability to store operations logic, which is very strange!")
         return operationAbility.performOperation(operation, context, check, method, successCallback, failCallback)
     }

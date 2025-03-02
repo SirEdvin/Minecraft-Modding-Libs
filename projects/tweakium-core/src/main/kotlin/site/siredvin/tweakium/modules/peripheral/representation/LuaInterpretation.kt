@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.level.block.state.properties.Property
-import site.siredvin.peripheralium.ext.fromRelative
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.broccolium.modules.base.ext.fromRelative
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
 
 object LuaInterpretation {
     // BlockPos tricks
@@ -50,25 +50,23 @@ object LuaInterpretation {
     }
 
     @Throws(LuaException::class)
-    fun asID(id: String): ResourceLocation {
-        return try {
-            ResourceLocation(id)
-        } catch (e: ResourceLocationException) {
-            throw LuaException(e.message)
-        }
+    fun asID(id: String): ResourceLocation = try {
+        ResourceLocation(id)
+    } catch (e: ResourceLocationException) {
+        throw LuaException(e.message)
     }
 
     @Throws(LuaException::class)
     fun asItemStack(obj: Any?): ItemStack {
         if (obj is String) {
-            val candidate = XplatRegistries.ITEMS.get(asID(obj)).defaultInstance
+            val candidate = PlatformRegistries.ITEMS.get(asID(obj)).defaultInstance
             if (candidate.isEmpty) throw LuaException("Cannot find item with id $obj")
             return candidate
         }
         if (obj is Map<*, *>) {
             val id = obj["item"] as? String ?: throw LuaException("Item stack table should contains item field with item id")
             val count = obj.getOrDefault("count", 1) as? Number ?: throw LuaException("Count field should be a number")
-            val candidate = XplatRegistries.ITEMS.get(asID(id)).defaultInstance
+            val candidate = PlatformRegistries.ITEMS.get(asID(id)).defaultInstance
             if (candidate.isEmpty) throw LuaException("Cannot find item with id $obj")
             return candidate.copyWithCount(count.toInt())
         }
@@ -121,7 +119,7 @@ object LuaInterpretation {
     fun asBlockState(table: Map<*, *>): BlockState {
         if (table.containsKey("block")) {
             val blockID = table["block"].toString()
-            val block = XplatRegistries.BLOCKS.get(ResourceLocation(blockID))
+            val block = PlatformRegistries.BLOCKS.get(ResourceLocation(blockID))
             if (block == net.minecraft.world.level.block.Blocks.AIR) {
                 throw LuaException(String.format("Cannot find block %s", table["block"]))
             }

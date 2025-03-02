@@ -74,9 +74,14 @@ data class Rotation(val axis: Axis, val angle: Float, val x: Float, val y: Float
     }
 
     override fun process(transformation: PoseStack): PoseStack {
-        transformation.rotateAround(axis.rotationDegrees(angle), x.coerceIn(limitingRange), y.coerceIn(limitingRange), z.coerceIn(
-            limitingRange
-        ))
+        transformation.rotateAround(
+            axis.rotationDegrees(angle),
+            x.coerceIn(limitingRange),
+            y.coerceIn(limitingRange),
+            z.coerceIn(
+                limitingRange,
+            ),
+        )
         return transformation
     }
 }

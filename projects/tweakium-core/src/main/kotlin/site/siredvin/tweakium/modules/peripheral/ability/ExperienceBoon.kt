@@ -10,20 +10,19 @@ import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
-import site.siredvin.peripheralium.api.peripheral.*
-import site.siredvin.peripheralium.util.radiusCorrect
-import site.siredvin.peripheralium.util.representation.LuaInterpretation
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralFunction
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
+import site.siredvin.tweakium.modules.peripheral.representation.LuaInterpretation
+import site.siredvin.tweakium.modules.peripheral.util.radiusCorrect
 import kotlin.math.min
 
-class ExperienceAbility(val owner: IPeripheralOwner, private val interactionRadius: Int, private val xpToFuelRate: Int, private val xpTransferOperation: IPeripheralOperation<Any?>) :
-    IOwnerAbility,
-    IPeripheralPlugin {
+class ExperienceBoon(val owner: IPeripheralOwner, private val interactionRadius: Int, private val xpToFuelRate: Int, private val xpTransferOperation: IPeripheralOperation<Any?>) : IPeripheralOwnerBoon {
     companion object {
         private const val COLLECTED_XP_AMOUNT = "CollectedXPAmount"
 
-        fun getStoredXP(dataStorage: CompoundTag): Double {
-            return dataStorage.getDouble(COLLECTED_XP_AMOUNT)
-        }
+        fun getStoredXP(dataStorage: CompoundTag): Double = dataStorage.getDouble(COLLECTED_XP_AMOUNT)
     }
 
     override val operations: List<IPeripheralOperation<*>>
@@ -33,9 +32,7 @@ class ExperienceAbility(val owner: IPeripheralOwner, private val interactionRadi
         data["xpToFuelRate"] = xpToFuelRate
     }
 
-    fun getStoredXP(): Double {
-        return getStoredXP(owner.dataStorage)
-    }
+    fun getStoredXP(): Double = getStoredXP(owner.dataStorage)
 
     fun adjustStoredXP(amount: Double) {
         owner.dataStorage.putDouble(COLLECTED_XP_AMOUNT, owner.dataStorage.getDouble(COLLECTED_XP_AMOUNT) + amount)
@@ -46,24 +43,22 @@ class ExperienceAbility(val owner: IPeripheralOwner, private val interactionRadi
     protected fun withXPTransfer(
         function: IPeripheralFunction<Any?, MethodResult>,
     ): MethodResult {
-        val ability: OperationAbility = owner.getAbility(PeripheralOwnerAbility.OPERATION)!!
+        val ability: OperationBoon = owner.getBoon(PeripheralOwnerBoonKey.OPERATION)!!
         return ability.performOperation(xpTransferOperation, null, null, function, null, null)
     }
 
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
-    fun collectXP(): MethodResult {
-        return withXPTransfer {
-            val level: Level = owner.level!!
-            val pos = owner.pos
-            val searchBox = AABB(pos).inflate(interactionRadius.toDouble())
-            val oldCount = getStoredXP()
-            level.getEntitiesOfClass(ExperienceOrb::class.java, searchBox).forEach { entity ->
-                adjustStoredXP(entity.value.toDouble())
-                entity.remove(Entity.RemovalReason.KILLED)
-            }
-            MethodResult.of(getStoredXP() - oldCount)
+    fun collectXP(): MethodResult = withXPTransfer {
+        val level: Level = owner.level!!
+        val pos = owner.pos
+        val searchBox = AABB(pos).inflate(interactionRadius.toDouble())
+        val oldCount = getStoredXP()
+        level.getEntitiesOfClass(ExperienceOrb::class.java, searchBox).forEach { entity ->
+            adjustStoredXP(entity.value.toDouble())
+            entity.remove(Entity.RemovalReason.KILLED)
         }
+        MethodResult.of(getStoredXP() - oldCount)
     }
 
     @LuaFunction(mainThread = true)
@@ -83,7 +78,7 @@ class ExperienceAbility(val owner: IPeripheralOwner, private val interactionRadi
     @Throws(LuaException::class)
     fun burnXP(limit: Double): Double {
         if (limit <= 0) throw LuaException("Incorrect limit")
-        val fuelAbility: FuelAbility<*> = owner.getAbility(PeripheralOwnerAbility.FUEL)
+        val fuelAbility: FuelBoon<*> = owner.getBoon(PeripheralOwnerBoonKey.FUEL)
             ?: throw LuaException("Unsupported operation")
         val burnAmount = min(limit, getStoredXP())
         adjustStoredXP(-burnAmount)
@@ -115,21 +110,19 @@ class ExperienceAbility(val owner: IPeripheralOwner, private val interactionRadi
             }
 
             val abilityExtractResult =
-                AbilityToolkit.extractAbility(PeripheralOwnerAbility.EXPERIENCE, owner.level!!, targetPos)
-            if (abilityExtractResult.rightPresent()) {
-                return@withXPTransfer MethodResult.of(null, abilityExtractResult.right)
+                BoonToolkit.extractAbility(PeripheralOwnerBoonKey.EXPERIENCE, owner.level!!, targetPos)
+            if (abilityExtractResult.second != null) {
+                return@withXPTransfer MethodResult.of(null, abilityExtractResult.second)
             }
             val transferAmount = min(getStoredXP(), limit)
             adjustStoredXP(-transferAmount)
-            abilityExtractResult.left!!.adjustStoredXP(transferAmount)
+            abilityExtractResult.first!!.adjustStoredXP(transferAmount)
             MethodResult.of(transferAmount)
         }
     }
 
     @LuaFunction(mainThread = true, value = ["getStoredXP"])
-    fun getStoredXPLua(): Double {
-        return getStoredXP()
-    }
+    fun getStoredXPLua(): Double = getStoredXP()
 
     @LuaFunction(mainThread = true)
     fun getOwnerXP(): MethodResult {
@@ -139,7 +132,7 @@ class ExperienceAbility(val owner: IPeripheralOwner, private val interactionRadi
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is ExperienceAbility) return false
+        if (other !is ExperienceBoon) return false
 
         if (interactionRadius != other.interactionRadius) return false
         if (xpToFuelRate != other.xpToFuelRate) return false

@@ -8,15 +8,18 @@ import kotlinx.atomicfu.locks.withLock
 import net.minecraft.core.BlockPos
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.api.peripheral.*
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.ext.xor
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.broccolium.modules.base.ext.xor
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.api.*
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Consumer
 
-abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O) : IOwnedPeripheral<O>, IDynamicPeripheral, IExpandedPeripheral {
+abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O) :
+    IOwnedPeripheral<O>,
+    IDynamicPeripheral,
+    IExpandedPeripheral {
     protected open val internalConnectedComputers: MutableList<IComputerAccess> = mutableListOf()
     protected open var initialized = false
     protected open val pluggedMethods: MutableList<BoundMethod> = mutableListOf()
@@ -49,13 +52,13 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
     open val peripheralConfiguration: MutableMap<String, Any>
         get() {
             val data: MutableMap<String, Any> = HashMap()
-            peripheralOwner.abilities.forEach(Consumer { ability: IOwnerAbility -> ability.collectConfiguration(data) })
+            peripheralOwner.abilities.forEach(Consumer { ability: IPeripheralOwnerBoon -> ability.collectConfiguration(data) })
             return data
         }
 
     protected open fun addOperations(operations: List<IPeripheralOperation<*>>) {
         if (operations.isNotEmpty()) {
-            val operationAbility = peripheralOwner.getAbility(PeripheralOwnerAbility.OPERATION)
+            val operationAbility = peripheralOwner.getBoon(PeripheralOwnerBoonKey.OPERATION)
             if (operationAbility != null) {
                 for (operation in operations) operationAbility.registerOperation(operation)
             }
@@ -72,9 +75,7 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
     protected open fun collectPluginMethods(server: MinecraftServer) {
         plugins.forEach(Consumer { collectPlugin(server, it) })
         peripheralOwner.abilities.forEach {
-            if (it is IPeripheralPlugin) {
-                collectPlugin(server, it)
-            }
+            collectPlugin(server, it)
         }
     }
 
@@ -83,11 +84,11 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
     }
 
     protected open fun buildPlugins() {
-        if (!initialized && PeripheraliumPlatform.minecraftServer != null) {
+        if (!initialized && PlatformToolkit.get().minecraftServer != null) {
             initialized = true
             pluggedMethods.clear()
             additionalTypeStorage.clear()
-            collectPluginMethods(PeripheraliumPlatform.minecraftServer!!)
+            collectPluginMethods(PlatformToolkit.get().minecraftServer!!)
             internalMethodNames = pluggedMethods.stream().map { obj: BoundMethod -> obj.name }.toArray { size -> Array(size) { "" } }
         }
     }
@@ -104,9 +105,7 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
             internalConnectedComputers.add(computer)
             if (internalConnectedComputers.size == 1) {
                 plugins.forEach {
-                    if (it is IObservingPeripheralPlugin) {
-                        it.onFirstAttach()
-                    }
+                    it.onFirstAttach()
                 }
             }
         }
@@ -117,9 +116,7 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
             internalConnectedComputers.remove(computer)
             if (internalConnectedComputers.isEmpty()) {
                 plugins.forEach {
-                    if (it is IObservingPeripheralPlugin) {
-                        it.onLastDetach()
-                    }
+                    it.onLastDetach()
                 }
             }
         }
@@ -144,17 +141,11 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
         return internalMethodNames
     }
 
-    override fun getAdditionalTypes(): Set<String> {
-        return additionalTypeStorage
-    }
+    override fun getAdditionalTypes(): Set<String> = additionalTypeStorage
 
-    override fun getType(): String {
-        return peripheralType
-    }
+    override fun getType(): String = peripheralType
 
-    override fun getTarget(): Any? {
-        return peripheralOwner.targetRepresentation
-    }
+    override fun getTarget(): Any? = peripheralOwner.targetRepresentation
 
     @Throws(LuaException::class)
     override fun callMethod(
@@ -180,13 +171,9 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
         return true
     }
 
-    override fun equals(other: IPeripheral?): Boolean {
-        return internalEquals(other)
-    }
+    override fun equals(other: IPeripheral?): Boolean = internalEquals(other)
 
-    override fun equals(other: Any?): Boolean {
-        return internalEquals(other)
-    }
+    override fun equals(other: Any?): Boolean = internalEquals(other)
 
     override fun hashCode(): Int {
         var result = peripheralType.hashCode()

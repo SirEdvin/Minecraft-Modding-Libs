@@ -15,15 +15,13 @@ abstract class ComputerLanguageProvider(
     vararg textRecords: TextRecord,
 ) : LanguageProvider(output, modID, locale, informationHolder, *textRecords) {
 
-    override fun getExpectedKeys(): Stream<String> {
-        return Stream.concat(
-            super.getExpectedKeys(),
-            Stream.of(
-                informationHolder.turtleSerializers.stream().map { ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toTurtleTranslationKey() },
-                informationHolder.pocketSerializers.stream().map { ComputerPlatformRegistries.POCKET_SERIALIZERS.getKey(it.get()).toPocketTranslationKey() },
-            ).flatMap { it }
-        )
-    }
+    override fun getExpectedKeys(): Stream<String> = Stream.concat(
+        super.getExpectedKeys(),
+        Stream.of(
+            informationHolder.turtleSerializers.stream().map { ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toTurtleTranslationKey() },
+            informationHolder.pocketSerializers.stream().map { ComputerPlatformRegistries.POCKET_SERIALIZERS.getKey(it.get()).toPocketTranslationKey() },
+        ).flatMap { it },
+    )
 
     fun addPocket(id: ResourceLocation, text: String) {
         add(id.toPocketTranslationKey(), text)
@@ -38,7 +36,5 @@ abstract class ComputerLanguageProvider(
         addTurtle(id, text)
     }
 
-    override fun getName(): String {
-        return "ComputerLanguage$locale"
-    }
+    override fun getName(): String = "ComputerLanguage$locale"
 }

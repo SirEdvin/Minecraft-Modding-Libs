@@ -11,7 +11,7 @@ import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
 import java.util.function.Function
 
@@ -22,7 +22,7 @@ object FakePlayerProviderPocket {
     private fun getPlayer(pocket: IPocketAccess, profile: GameProfile): FakePlayerProxy {
         var fake: FakePlayerProxy? = registeredPlayers[pocket]
         if (fake == null) {
-            fake = FakePlayerProxy(PeripheraliumPlatform.createFakePlayer(pocket.entity!!.level() as ServerLevel, profile))
+            fake = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(pocket.entity!!.level() as ServerLevel, profile))
             registeredPlayers[pocket] = fake
         }
         return fake

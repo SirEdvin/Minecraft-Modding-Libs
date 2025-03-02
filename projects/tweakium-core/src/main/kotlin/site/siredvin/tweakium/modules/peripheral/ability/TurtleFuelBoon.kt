@@ -1,13 +1,10 @@
 package site.siredvin.tweakium.modules.peripheral.ability
 
-import site.siredvin.peripheralium.computercraft.peripheral.owner.TurtlePeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.owner.TurtlePeripheralOwner
 
-open class TurtleFuelAbility(owner: TurtlePeripheralOwner, override val maxFuelConsumptionRate: Int) :
-    FuelAbility<TurtlePeripheralOwner>(owner) {
+open class TurtleFuelBoon(owner: TurtlePeripheralOwner, override val maxFuelConsumptionRate: Int) : FuelBoon<TurtlePeripheralOwner>(owner) {
 
-    override fun consumeFuelInternal(count: Int): Boolean {
-        return owner.turtle.consumeFuel(count)
-    }
+    override fun consumeFuelInternal(count: Int): Boolean = owner.turtle.consumeFuel(count)
 
     override val isFuelConsumptionDisable: Boolean
         get() = !owner.turtle.isFuelNeeded
@@ -22,7 +19,7 @@ open class TurtleFuelAbility(owner: TurtlePeripheralOwner, override val maxFuelC
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is TurtleFuelAbility) return false
+        if (other !is TurtleFuelBoon) return false
         if (!super.equals(other)) return false
 
         if (maxFuelConsumptionRate != other.maxFuelConsumptionRate) return false

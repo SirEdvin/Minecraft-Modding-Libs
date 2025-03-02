@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation
 import site.siredvin.broccolium.modules.platform.api.InnerBasePlatform
 import java.util.function.Supplier
 
-interface InnerComputerBasePlatform: InnerBasePlatform {
+interface InnerComputerBasePlatform : InnerBasePlatform {
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
         serializer: TurtleUpgradeSerialiser<V>,
@@ -17,5 +17,4 @@ interface InnerComputerBasePlatform: InnerBasePlatform {
         key: ResourceLocation,
         serializer: PocketUpgradeSerialiser<V>,
     ): Supplier<PocketUpgradeSerialiser<V>>
-
 }

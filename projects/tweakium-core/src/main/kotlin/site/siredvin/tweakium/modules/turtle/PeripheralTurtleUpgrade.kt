@@ -6,9 +6,9 @@ import dan200.computercraft.api.turtle.TurtleUpgradeType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.api.peripheral.IOwnedPeripheral
-import site.siredvin.peripheralium.api.turtle.TurtleUpgradeIDSupplier
-import site.siredvin.peripheralium.api.turtle.TurtleUpgradePeripheralBuilder
+import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
+import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeIDSupplier
+import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradePeripheralBuilder
 
 abstract class PeripheralTurtleUpgrade<T : IOwnedPeripheral<*>> : BaseTurtleUpgrade<T> {
     constructor(id: ResourceLocation, adjective: String, item: ItemStack) : super(
@@ -25,9 +25,7 @@ abstract class PeripheralTurtleUpgrade<T : IOwnedPeripheral<*>> : BaseTurtleUpgr
     )
 
     companion object {
-        fun <T : IOwnedPeripheral<*>> dynamic(item: Item, constructor: TurtleUpgradePeripheralBuilder<T>, idBuilder: TurtleUpgradeIDSupplier): PeripheralTurtleUpgrade<T> {
-            return Dynamic(idBuilder.get(item), item.defaultInstance, constructor)
-        }
+        fun <T : IOwnedPeripheral<*>> dynamic(item: Item, constructor: TurtleUpgradePeripheralBuilder<T>, idBuilder: TurtleUpgradeIDSupplier): PeripheralTurtleUpgrade<T> = Dynamic(idBuilder.get(item), item.defaultInstance, constructor)
     }
 
     private class Dynamic<T : IOwnedPeripheral<*>>(
@@ -35,8 +33,6 @@ abstract class PeripheralTurtleUpgrade<T : IOwnedPeripheral<*>> : BaseTurtleUpgr
         stack: ItemStack,
         private val constructor: TurtleUpgradePeripheralBuilder<T>,
     ) : PeripheralTurtleUpgrade<T>(turtleID, stack) {
-        override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T {
-            return constructor.build(turtle, side)
-        }
+        override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T = constructor.build(turtle, side)
     }
 }

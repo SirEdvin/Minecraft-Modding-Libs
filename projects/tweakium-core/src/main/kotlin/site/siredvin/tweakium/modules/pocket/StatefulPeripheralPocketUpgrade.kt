@@ -3,9 +3,9 @@ package site.siredvin.tweakium.modules.pocket
 import dan200.computercraft.api.pocket.IPocketAccess
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.api.peripheral.IOwnedPeripheral
-import site.siredvin.peripheralium.api.pocket.PockerUpgradePeripheralBuilder
-import site.siredvin.peripheralium.util.pocketAdjective
+import site.siredvin.broccolium.modules.base.util.pocketAdjective
+import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
+import site.siredvin.tweakium.modules.pocket.api.PockerUpgradePeripheralBuilder
 
 class StatefulPeripheralPocketUpgrade<T : IOwnedPeripheral<*>>(
     id: ResourceLocation,
@@ -21,7 +21,5 @@ class StatefulPeripheralPocketUpgrade<T : IOwnedPeripheral<*>>(
         constructor,
     )
 
-    override fun getPeripheral(access: IPocketAccess): T {
-        return constructor.build(access)
-    }
+    override fun getPeripheral(access: IPocketAccess): T = constructor.build(access)
 }

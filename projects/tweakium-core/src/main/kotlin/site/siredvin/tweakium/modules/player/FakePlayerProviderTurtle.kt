@@ -9,8 +9,8 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.storages.ContainerUtils
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.broccolium.modules.storage.item.ContainerUtils
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
 import java.util.function.Function
 
@@ -24,7 +24,7 @@ object FakePlayerProviderTurtle {
     private fun getPlayer(turtle: ITurtleAccess, profile: GameProfile): FakePlayerProxy {
         var fake: FakePlayerProxy? = registeredPlayers[turtle]
         if (fake == null) {
-            fake = FakePlayerProxy(PeripheraliumPlatform.createFakePlayer(turtle.level as ServerLevel, profile))
+            fake = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(turtle.level as ServerLevel, profile))
             registeredPlayers[turtle] = fake
         }
         return fake

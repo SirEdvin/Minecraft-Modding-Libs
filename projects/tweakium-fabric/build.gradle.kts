@@ -4,7 +4,6 @@ import site.siredvin.peripheralium.gradle.mavenDependencies
 plugins {
     id("site.siredvin.fabric")
     id("site.siredvin.publishing")
-    id("site.siredvin.mod-publishing")
 }
 
 val modVersion: String by extra
@@ -20,6 +19,13 @@ baseShaking {
 fabricShaking {
     commonProjectName.set("tweakium-core")
     projectName.set("tweakium")
+    accessWidener.set(project(":tweakium-core").file("src/main/resources/tweakium.accesswidener"))
+    extraVersionMappings.set(
+        mapOf(
+            "computercraft" to "cc-tweaked",
+            "broccolium" to modVersion,
+        ),
+    )
     shake()
 }
 
@@ -56,6 +62,12 @@ dependencies {
     modImplementation(libs.bundles.ccfabric) {
         exclude("net.fabricmc.fabric-api")
         exclude("net.fabricmc", "fabric-loader")
+    }
+
+    modImplementation(project(":broccolium-fabric")) {
+        exclude("net.fabricmc.fabric-api")
+        exclude("net.fabricmc", "fabric-loader")
+        exclude("site.siredvin")
     }
 
     modRuntimeOnly(libs.bundles.externalMods.fabric.runtime) {

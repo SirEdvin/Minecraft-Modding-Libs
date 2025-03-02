@@ -10,8 +10,7 @@ import site.siredvin.tweakium.modules.data.ComputerModInformationHolder
 import site.siredvin.tweakium.modules.platform.api.InnerComputerBasePlatform
 import java.util.function.Supplier
 
-abstract class ComputerBasePlatform:
-    BasePlatform() {
+abstract class ComputerBasePlatform : BasePlatform() {
     abstract override val baseInnerPlatform: InnerComputerBasePlatform
     abstract override val modInformationTracker: ComputerModInformationTracker
 
@@ -22,9 +21,7 @@ abstract class ComputerBasePlatform:
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         name: String,
         serializer: TurtleUpgradeSerialiser<V>,
-    ): Supplier<TurtleUpgradeSerialiser<V>> {
-        return registerTurtleUpgrade(ResourceLocation(baseInnerPlatform.modID, name), serializer)
-    }
+    ): Supplier<TurtleUpgradeSerialiser<V>> = registerTurtleUpgrade(ResourceLocation(baseInnerPlatform.modID, name), serializer)
 
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
@@ -39,9 +36,7 @@ abstract class ComputerBasePlatform:
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         name: String,
         serializer: PocketUpgradeSerialiser<V>,
-    ): Supplier<PocketUpgradeSerialiser<V>> {
-        return registerPocketUpgrade(ResourceLocation(baseInnerPlatform.modID, name), serializer)
-    }
+    ): Supplier<PocketUpgradeSerialiser<V>> = registerPocketUpgrade(ResourceLocation(baseInnerPlatform.modID, name), serializer)
 
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         key: ResourceLocation,

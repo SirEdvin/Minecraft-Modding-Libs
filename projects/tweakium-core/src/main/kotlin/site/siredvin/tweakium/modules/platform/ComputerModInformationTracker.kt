@@ -8,7 +8,9 @@ import site.siredvin.broccolium.modules.platform.ModInformationTracker
 import site.siredvin.tweakium.modules.data.ComputerModInformationHolder
 import java.util.function.Supplier
 
-open class ComputerModInformationTracker: ModInformationTracker(), ComputerModInformationHolder {
+open class ComputerModInformationTracker :
+    ModInformationTracker(),
+    ComputerModInformationHolder {
     val internalPocketUpgrades: MutableList<Supplier<PocketUpgradeSerialiser<out IPocketUpgrade>>> = mutableListOf()
     val internalTurtleUpgrades: MutableList<Supplier<TurtleUpgradeSerialiser<out ITurtleUpgrade>>> = mutableListOf()
     override val pocketSerializers: List<Supplier<PocketUpgradeSerialiser<out IPocketUpgrade>>>

@@ -5,26 +5,24 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
 import net.minecraft.world.level.Level
-import site.siredvin.broccolium.modules.storage.item.SlottedItemSink
-import site.siredvin.peripheralium.api.peripheral.IPeripheralPlugin
-import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
-import site.siredvin.peripheralium.storages.item.ItemStorageUtils
-import site.siredvin.peripheralium.storages.item.SlottedItemStorage
-import site.siredvin.peripheralium.util.assertBetween
-import site.siredvin.peripheralium.util.representation.LuaRepresentation
-import site.siredvin.peripheralium.util.representation.RepresentationMode
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemSink
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
+import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
+import site.siredvin.tweakium.modules.peripheral.representation.RepresentationMode
+import site.siredvin.tweakium.modules.peripheral.util.assertBetween
 import java.util.*
 
 abstract class AbstractInventoryPlugin : IPeripheralPlugin {
-    abstract val storage: SlottedItemStorage
+    abstract val storage: SlottedAgnosticItemStorage
     abstract val level: Level
 
     override val additionalType: String
         get() = PeripheralPluginUtils.Type.INVENTORY
 
-    open fun sizeImpl(): Int {
-        return storage.size
-    }
+    open fun sizeImpl(): Int = storage.size
 
     open fun listImpl(): Map<Int, Map<String, *>> {
         val result: MutableMap<Int, Map<String, *>> = hashMapOf()
@@ -41,19 +39,13 @@ abstract class AbstractInventoryPlugin : IPeripheralPlugin {
         return if (stack.isEmpty) null else LuaRepresentation.forItemStack(stack)
     }
 
-    open fun getItemLimitImpl(slot: Int): Int {
-        return storage.getItem(slot).maxStackSize
-    }
+    open fun getItemLimitImpl(slot: Int): Int = storage.getItem(slot).maxStackSize
 
     @LuaFunction(mainThread = true)
-    fun size(): Int {
-        return sizeImpl()
-    }
+    fun size(): Int = sizeImpl()
 
     @LuaFunction(mainThread = true)
-    fun list(): Map<Int, Map<String, *>> {
-        return listImpl()
-    }
+    fun list(): Map<Int, Map<String, *>> = listImpl()
 
     @LuaFunction(mainThread = true)
     fun getItemDetail(slot: Int): Map<String, *>? {
@@ -74,7 +66,7 @@ abstract class AbstractInventoryPlugin : IPeripheralPlugin {
         val location: IPeripheral = computer.getAvailablePeripheral(toName)
             ?: throw LuaException("Target '$toName' does not exist")
 
-        val toStorage = ItemStorageExtractor.extractItemSinkFromUnknown(level, location.target)
+        val toStorage = AgnosticItemStorageLookup.extractItemSinkFromUnknown(level, location.target)
             ?: throw LuaException("Target '$toName' is not an inventory")
 
         // Validate slots
@@ -83,7 +75,7 @@ abstract class AbstractInventoryPlugin : IPeripheralPlugin {
         val actualLimit: Int = limit.orElse(Int.MAX_VALUE)
         assertBetween(fromSlot, 1, storage.size, "fromtSlot")
         if (toSlot.isPresent) {
-            if (toStorage !is SlottedItemSink) {
+            if (toStorage !is SlottedAgnosticItemSink) {
                 throw LuaException("Target '$toName' is not slotted storage, so you can't provide slot")
             }
             assertBetween(toSlot.get(), 1, toStorage.size, "toSlot")
@@ -98,10 +90,10 @@ abstract class AbstractInventoryPlugin : IPeripheralPlugin {
         // Find location to transfer to
         val location =
             computer.getAvailablePeripheral(fromName) ?: throw LuaException("Source '$fromName' does not exist")
-        val fromStorage = ItemStorageExtractor.extractItemSinkFromUnknown(level, location.target)
+        val fromStorage = AgnosticItemStorageLookup.extractItemSinkFromUnknown(level, location.target)
             ?: throw LuaException("Source '$fromName' is not an inventory")
 
-        if (fromStorage !is SlottedItemStorage) {
+        if (fromStorage !is SlottedAgnosticItemStorage) {
             throw LuaException("Source '$fromName' is not slotted storage")
         }
 

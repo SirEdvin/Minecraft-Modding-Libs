@@ -7,12 +7,11 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.properties.DirectionProperty
-import site.siredvin.peripheralium.common.blocks.FacingBlockEntityBlock
-import site.siredvin.peripheralium.storages.item.SlottedItemStorage
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
+import site.siredvin.broccolium.modules.base.block.FacingBlockEntityBlock
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.player.FakePlayerProxy
 
-open class BlockPeripheralOwner(protected val blockPos: BlockPos, protected val blockLevel: Level, protected val facingProperty: DirectionProperty = FacingBlockEntityBlock.FACING) :
-    BasePeripheralOwner() {
+open class BlockPeripheralOwner(protected val blockPos: BlockPos, protected val blockLevel: Level, protected val facingProperty: DirectionProperty = FacingBlockEntityBlock.FACING) : BasePeripheralOwner() {
 
     override val level: Level
         get() = blockLevel
@@ -35,34 +34,26 @@ open class BlockPeripheralOwner(protected val blockPos: BlockPos, protected val 
         CompoundTag()
     }
 
-    override val storage: SlottedItemStorage?
+    override val storage: SlottedAgnosticItemStorage?
         get() = null
 
     override fun markDataStorageDirty() {
     }
 
-    override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T {
-        throw IllegalArgumentException("Cannot perform player logic for block owner")
-    }
+    override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T = throw IllegalArgumentException("Cannot perform player logic for block owner")
 
     override val toolInMainHand: ItemStack
         get() = ItemStack.EMPTY
 
-    override fun storeItem(stored: ItemStack): ItemStack {
-        return stored
-    }
+    override fun storeItem(stored: ItemStack): ItemStack = stored
 
     override fun destroyUpgrade() {
         level.removeBlock(blockPos, false)
     }
 
-    override fun isMovementPossible(level: Level, pos: BlockPos): Boolean {
-        return false
-    }
+    override fun isMovementPossible(level: Level, pos: BlockPos): Boolean = false
 
-    override fun move(level: Level, pos: BlockPos): Boolean {
-        return false
-    }
+    override fun move(level: Level, pos: BlockPos): Boolean = false
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

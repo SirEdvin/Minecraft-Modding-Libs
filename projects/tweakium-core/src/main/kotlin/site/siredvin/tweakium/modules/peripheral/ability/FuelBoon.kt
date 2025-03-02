@@ -2,11 +2,10 @@ package site.siredvin.tweakium.modules.peripheral.ability
 
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
-import site.siredvin.peripheralium.api.peripheral.IOwnerAbility
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
-import site.siredvin.peripheralium.api.peripheral.IPeripheralPlugin
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
 
-abstract class FuelAbility<T : IPeripheralOwner>(protected var owner: T) : IOwnerAbility, IPeripheralPlugin {
+abstract class FuelBoon<T : IPeripheralOwner>(protected var owner: T) : IPeripheralOwnerBoon {
     protected abstract fun consumeFuelInternal(count: Int): Boolean
     protected abstract val maxFuelConsumptionRate: Int
     protected fun getFuelConsumptionRateInternal(): Int {
@@ -34,9 +33,7 @@ abstract class FuelAbility<T : IPeripheralOwner>(protected var owner: T) : IOwne
     val fuelConsumptionMultiply: Int
         get() = Math.pow(2.0, (getFuelConsumptionRateInternal() - 1).toDouble()).toInt()
 
-    fun reduceCooldownAccordingToConsumptionRate(cooldown: Int): Int {
-        return cooldown / getFuelConsumptionRateInternal()
-    }
+    fun reduceCooldownAccordingToConsumptionRate(cooldown: Int): Int = cooldown / getFuelConsumptionRateInternal()
 
     fun consumeFuel(count: Int, simulate: Boolean): Boolean {
         if (isFuelConsumptionDisable) return true
@@ -71,7 +68,7 @@ abstract class FuelAbility<T : IPeripheralOwner>(protected var owner: T) : IOwne
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is FuelAbility<*>) return false
+        if (other !is FuelBoon<*>) return false
 
         if (maxFuelConsumptionRate != other.maxFuelConsumptionRate) return false
         if (isFuelConsumptionDisable != other.isFuelConsumptionDisable) return false

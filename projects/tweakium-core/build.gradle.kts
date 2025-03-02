@@ -14,6 +14,12 @@ baseShaking {
 }
 
 vanillaShaking {
+    accessWideners.set(
+        listOf(
+            "src/main/resources/tweakium-common.accesswidener",
+            "src/main/resources/tweakium.accesswidener",
+        ),
+    )
     shake()
 }
 
@@ -36,16 +42,13 @@ dependencies {
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
 
+    implementation(project(":broccolium-core"))
+
     add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test"))
     add(sourceSets["testFixtures"].compileOnlyConfigurationName, libs.bundles.test)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.bundles.test)
-}
-
-java.registerFeature("testFixtures") {
-    usingSourceSet(sourceSets.getByName("testFixtures"))
-    disablePublication()
 }
 
 tasks.test {

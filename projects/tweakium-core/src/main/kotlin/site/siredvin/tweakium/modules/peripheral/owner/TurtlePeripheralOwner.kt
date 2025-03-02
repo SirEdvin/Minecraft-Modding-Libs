@@ -8,14 +8,14 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.TurtleFuelAbility
-import site.siredvin.peripheralium.storages.ContainerUtils
-import site.siredvin.peripheralium.storages.ContainerWrapper
-import site.siredvin.peripheralium.storages.item.SlottedItemStorage
-import site.siredvin.peripheralium.util.DataStorageUtil
-import site.siredvin.peripheralium.util.world.FakePlayerProviderTurtle
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
+import site.siredvin.broccolium.modules.storage.item.ContainerUtils
+import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.ability.TurtleFuelBoon
+import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
+import site.siredvin.tweakium.modules.player.FakePlayerProviderTurtle
+import site.siredvin.tweakium.modules.player.FakePlayerProxy
 
 open class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide) : BasePeripheralOwner() {
 
@@ -35,16 +35,14 @@ open class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide
     override val dataStorage: CompoundTag
         get() = DataStorageUtil.getDataStorage(turtle, side)
 
-    override val storage: SlottedItemStorage
+    override val storage: SlottedAgnosticItemStorage
         get() = ContainerWrapper(turtle.inventory)
 
     override fun markDataStorageDirty() {
         turtle.updateUpgradeNBTData(side)
     }
 
-    override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T {
-        return FakePlayerProviderTurtle.withPlayer(turtle, function, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
-    }
+    override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T = FakePlayerProviderTurtle.withPlayer(turtle, function, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
 
     override val toolInMainHand: ItemStack
         get() = turtle.inventory.getItem(turtle.selectedSlot)
@@ -76,12 +74,10 @@ open class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide
         })
     }
 
-    override fun move(level: Level, pos: BlockPos): Boolean {
-        return turtle.teleportTo(level, pos)
-    }
+    override fun move(level: Level, pos: BlockPos): Boolean = turtle.teleportTo(level, pos)
 
     fun attachFuel(maxFuelConsumptionLevel: Int = 1): TurtlePeripheralOwner {
-        attachAbility(PeripheralOwnerAbility.FUEL, TurtleFuelAbility(this, maxFuelConsumptionLevel))
+        attachBoon(PeripheralOwnerBoonKey.FUEL, TurtleFuelBoon(this, maxFuelConsumptionLevel))
         return this
     }
 

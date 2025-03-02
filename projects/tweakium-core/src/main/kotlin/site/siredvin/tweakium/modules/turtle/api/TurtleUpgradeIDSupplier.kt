@@ -2,11 +2,11 @@ package site.siredvin.tweakium.modules.turtle.api
 
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import site.siredvin.peripheralium.xplat.XplatRegistries
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
 
 fun interface TurtleUpgradeIDSupplier {
     companion object {
-        val IDENTIC = TurtleUpgradeIDSupplier { XplatRegistries.ITEMS.getKey(it) }
+        val IDENTIC = TurtleUpgradeIDSupplier { PlatformRegistries.ITEMS.getKey(it) }
         val WITHOUT_CORE = TurtleUpgradeIDSupplier {
             val base = IDENTIC.get(it)
             // To cutoff _core part

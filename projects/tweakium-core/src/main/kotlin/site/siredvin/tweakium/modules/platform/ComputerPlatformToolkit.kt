@@ -1,6 +1,5 @@
 package site.siredvin.tweakium.modules.platform
 
-import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
 import site.siredvin.tweakium.modules.platform.api.InnerComputerPlatformToolkit
 
 object ComputerPlatformToolkit {

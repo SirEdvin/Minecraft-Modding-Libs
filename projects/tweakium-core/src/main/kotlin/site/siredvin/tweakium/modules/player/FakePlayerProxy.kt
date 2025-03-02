@@ -25,18 +25,18 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
+import site.siredvin.broccolium.modules.base.ext.toBlockPos
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.storage.item.ContainerUtils
 import site.siredvin.broccolium.modules.tricks.DropConsumer
-import site.siredvin.peripheralium.PeripheraliumCore
-import site.siredvin.peripheralium.ext.toBlockPos
-import site.siredvin.peripheralium.storages.ContainerUtils
-import site.siredvin.peripheralium.xplat.PeripheraliumPlatform
+import site.siredvin.tweakium.TweakiumCore
 import java.util.*
 import java.util.function.Predicate
 
 class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) {
 
     companion object {
-        val DUMMY_PROFILE = GameProfile(UUID.fromString("6e483f02-30db-4454-b612-3a167614b276"), "[" + PeripheraliumCore.MOD_ID + "]")
+        val DUMMY_PROFILE = GameProfile(UUID.fromString("6e483f02-30db-4454-b612-3a167614b276"), "[" + TweakiumCore.MOD_ID + "]")
         private val collidablePredicate = EntitySelector.NO_SPECTATORS
     }
 
@@ -82,9 +82,7 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
         return result
     }
 
-    fun findHit(skipEntity: Boolean, skipBlock: Boolean): HitResult {
-        return findHit(skipEntity, skipBlock, null)
-    }
+    fun findHit(skipEntity: Boolean, skipBlock: Boolean): HitResult = findHit(skipEntity, skipBlock, null)
 
     fun findHit(skipEntity: Boolean, skipBlock: Boolean, entityFilter: Predicate<Entity>?): HitResult {
         val origin = Vec3(fakePlayer.x, fakePlayer.y, fakePlayer.z)
@@ -161,10 +159,13 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
                 }
             }
         }
-        return if (closestEntity != null && closestDistance <= range && (
-                blockHit.type == HitResult.Type.MISS || fakePlayer.distanceToSqr(
-                    blockHit.location,
-                ) > closestDistance * closestDistance
+        return if (closestEntity != null &&
+            closestDistance <= range &&
+            (
+                blockHit.type == HitResult.Type.MISS ||
+                    fakePlayer.distanceToSqr(
+                        blockHit.location,
+                    ) > closestDistance * closestDistance
                 )
         ) {
             EntityHitResult(closestEntity, closestVec!!)
@@ -173,16 +174,14 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
         }
     }
 
-    fun useOnSpecificEntity(entity: Entity, result: HitResult): InteractionResult {
-        return PeripheraliumPlatform.interactWithEntity(fakePlayer, InteractionHand.MAIN_HAND, entity, result as EntityHitResult)
-    }
+    fun useOnSpecificEntity(entity: Entity, result: HitResult): InteractionResult = PlatformToolkit.get().interactWithEntity(fakePlayer, InteractionHand.MAIN_HAND, entity, result as EntityHitResult)
 
     fun use(skipEntity: Boolean, skipBlock: Boolean, entityFilter: Predicate<Entity>?): InteractionResult {
         val hit = findHit(skipEntity, skipBlock, entityFilter)
         if (hit is BlockHitResult) {
             return withConsumer(level, hit.blockPos) {
                 if (fakePlayer.pose != Pose.CROUCHING) {
-                    val useOnResult = PeripheraliumPlatform.useOn(fakePlayer, fakePlayer.mainHandItem, hit) { true }
+                    val useOnResult = PlatformToolkit.get().useOn(fakePlayer, fakePlayer.mainHandItem, hit) { true }
                     if (useOnResult.consumesAction()) {
                         return@withConsumer useOnResult
                     }
@@ -201,14 +200,12 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
         return InteractionResult.FAIL
     }
 
-    fun use(skipEntity: Boolean, skipBlock: Boolean): InteractionResult {
-        return use(skipEntity, skipBlock, null)
-    }
+    fun use(skipEntity: Boolean, skipBlock: Boolean): InteractionResult = use(skipEntity, skipBlock, null)
 
     fun swing(skipEntity: Boolean, skipBlock: Boolean, entityFilter: Predicate<Entity>?): Pair<Boolean, String> {
         val hit = findHit(skipEntity = skipEntity, skipBlock = skipBlock, entityFilter = entityFilter)
         if (hit.type == HitResult.Type.MISS) {
-            return Pair.of(false, "Nothing to swing")
+            return Pair(false, "Nothing to swing")
         }
         if (hit is BlockHitResult) {
             return swingBlock(hit)
@@ -216,7 +213,7 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
         if (hit is EntityHitResult) {
             return swingEntity(hit)
         }
-        return Pair.of(false, "Nothing found")
+        return Pair(false, "Nothing found")
     }
 
     fun swingBlock(hit: BlockHitResult): Pair<Boolean, String> {
@@ -229,11 +226,11 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
         }
         @Suppress("DEPRECATION")
         if (!level.isEmptyBlock(pos) && !state.liquid()) {
-            if (PeripheraliumPlatform.isBlockProtected(pos, state, fakePlayer)) {
-                return Pair.of(false, "Cannot break protected block")
+            if (PlatformToolkit.get().isBlockProtected(pos, state, fakePlayer)) {
+                return Pair(false, "Cannot break protected block")
             }
             if (block == Blocks.BEDROCK || state.getDestroySpeed(level, pos) <= -1f) {
-                return Pair.of(false, "Unbreakable block detected")
+                return Pair(false, "Unbreakable block detected")
             }
             val breakSpeed = 0.5f * tool.getDestroySpeed(state) / state.getDestroySpeed(level, pos) - 0.1f
             currentDamage += 9 * breakSpeed
@@ -247,25 +244,25 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
                     setState(null, null)
                 }
             }
-            return Pair.of(true, "")
+            return Pair(true, "")
         }
-        return Pair.of(false, "Nothing to dig here")
+        return Pair(false, "Nothing to dig here")
     }
 
     fun swingEntity(hit: EntityHitResult): Pair<Boolean, String> {
         val tool = fakePlayer.mainHandItem
         if (tool.isEmpty) {
-            return Pair.of(false, "Cannot swing without tool")
+            return Pair(false, "Cannot swing without tool")
         }
         val entity = hit.entity
         if (entity !is LivingEntity) {
-            return Pair.of(false, "Incorrect entity hit")
+            return Pair(false, "Incorrect entity hit")
         }
         if (!fakePlayer.canAttack(entity)) {
-            return Pair.of(false, "Can't swing this entity")
+            return Pair(false, "Can't swing this entity")
         }
         withConsumer(entity) { fakePlayer.attack(entity) }
         fakePlayer.cooldowns.addCooldown(tool.item, 1)
-        return Pair.of(true, "")
+        return Pair(true, "")
     }
 }

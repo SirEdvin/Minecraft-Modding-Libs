@@ -26,17 +26,11 @@ abstract class LibPocketUpgradeDataProvider(output: PackOutput, serializers: Lis
         }
     }
 
-    fun <V : IPocketUpgrade> simpleWithCustomItem(serialiser: PocketUpgradeSerialiser<V>, item: ItemLike): Upgrade<PocketUpgradeSerialiser<*>> {
-        return simpleWithCustomItem(ComputerPlatformRegistries.POCKET_SERIALIZERS.getKey(serialiser), serialiser, item.asItem())
-    }
+    fun <V : IPocketUpgrade> simpleWithCustomItem(serialiser: PocketUpgradeSerialiser<V>, item: ItemLike): Upgrade<PocketUpgradeSerialiser<*>> = simpleWithCustomItem(ComputerPlatformRegistries.POCKET_SERIALIZERS.getKey(serialiser), serialiser, item.asItem())
 
-    fun <V : IPocketUpgrade> simpleWithCustomItem(serialiser: Supplier<PocketUpgradeSerialiser<V>>, item: ItemLike): Upgrade<PocketUpgradeSerialiser<*>> {
-        return simpleWithCustomItem(serialiser.get(), item)
-    }
+    fun <V : IPocketUpgrade> simpleWithCustomItem(serialiser: Supplier<PocketUpgradeSerialiser<V>>, item: ItemLike): Upgrade<PocketUpgradeSerialiser<*>> = simpleWithCustomItem(serialiser.get(), item)
 
-    fun <V : IPocketUpgrade, S : ItemLike> simpleWithCustomItem(serialiser: Supplier<PocketUpgradeSerialiser<V>>, item: Supplier<S>): Upgrade<PocketUpgradeSerialiser<*>> {
-        return simpleWithCustomItem(serialiser.get(), item.get())
-    }
+    fun <V : IPocketUpgrade, S : ItemLike> simpleWithCustomItem(serialiser: Supplier<PocketUpgradeSerialiser<V>>, item: Supplier<S>): Upgrade<PocketUpgradeSerialiser<*>> = simpleWithCustomItem(serialiser.get(), item.get())
 
     abstract fun registerUpgrades(addUpgrade: Consumer<Upgrade<PocketUpgradeSerialiser<*>>>)
 }

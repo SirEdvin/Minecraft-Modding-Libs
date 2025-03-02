@@ -1,38 +1,32 @@
 package site.siredvin.tweakium.modules.peripheral.owner
 
-import site.siredvin.peripheralium.api.config.IOperationAbilityConfig
-import site.siredvin.peripheralium.api.peripheral.IOwnerAbility
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOwner
-import site.siredvin.peripheralium.api.peripheral.IPeripheralOwnerAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.OperationAbility
-import site.siredvin.peripheralium.computercraft.peripheral.ability.PeripheralOwnerAbility
+import site.siredvin.tweakium.modules.peripheral.ability.OperationBoon
+import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoonKey
 
 abstract class BasePeripheralOwner : IPeripheralOwner {
-    private val _abilities: MutableMap<IPeripheralOwnerAbility<*>, IOwnerAbility>
+    private val _abilities: MutableMap<IPeripheralOwnerBoonKey<*>, IPeripheralOwnerBoon> = HashMap()
 
-    // TODO: actually, rework Peripheral Owner framework to avoid runtime exception in case for moving, for example
-    init {
-        _abilities = HashMap()
-    }
-
-    override val abilities: Collection<IOwnerAbility>
+    override val abilities: Collection<IPeripheralOwnerBoon>
         get() = _abilities.values
 
-    override fun <T : IOwnerAbility> attachAbility(ability: IPeripheralOwnerAbility<T>, abilityImplementation: T) {
+    override fun <T : IPeripheralOwnerBoon> attachBoon(ability: IPeripheralOwnerBoonKey<T>, abilityImplementation: T) {
         if (_abilities.containsKey(ability)) {
             throw IllegalArgumentException("Ability $ability already registered")
         }
         _abilities[ability] = abilityImplementation
     }
 
-    override fun <T : IOwnerAbility> getAbility(ability: IPeripheralOwnerAbility<T>): T? {
+    override fun <T : IPeripheralOwnerBoon> getBoon(ability: IPeripheralOwnerBoonKey<T>): T? {
         @Suppress("UNCHECKED_CAST")
         return _abilities[ability] as T?
     }
 
-    fun attachOperations(reduceRate: Double = 1.0, config: IOperationAbilityConfig) {
-        val operationAbility = OperationAbility(this, reduceRate = reduceRate, config = config)
-        attachAbility(PeripheralOwnerAbility.OPERATION, operationAbility)
+    fun attachOperations(reduceRate: Double = 1.0, cooldownThreshold: Int = 0) {
+        val operationAbility = OperationBoon(this, reduceRate = reduceRate, cooldownThreshold = cooldownThreshold)
+        attachBoon(PeripheralOwnerBoonKey.OPERATION, operationAbility)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -44,7 +38,5 @@ abstract class BasePeripheralOwner : IPeripheralOwner {
         return true
     }
 
-    override fun hashCode(): Int {
-        return _abilities.hashCode()
-    }
+    override fun hashCode(): Int = _abilities.hashCode()
 }

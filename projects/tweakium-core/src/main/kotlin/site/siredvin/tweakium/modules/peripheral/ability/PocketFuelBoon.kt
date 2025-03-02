@@ -1,9 +1,9 @@
 package site.siredvin.tweakium.modules.peripheral.ability
 
 import net.minecraft.world.food.FoodData
-import site.siredvin.peripheralium.computercraft.peripheral.owner.PocketPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.owner.PocketPeripheralOwner
 
-class PocketFuelAbility(owner: PocketPeripheralOwner, private val foodFuelPrice: Int, override val maxFuelConsumptionRate: Int) : FuelAbility<PocketPeripheralOwner>(owner) {
+class PocketFuelBoon(owner: PocketPeripheralOwner, private val foodFuelPrice: Int, override val maxFuelConsumptionRate: Int) : FuelBoon<PocketPeripheralOwner>(owner) {
 
     companion object {
         const val MAX_FOOD_LEVEL = 20
@@ -54,7 +54,7 @@ class PocketFuelAbility(owner: PocketPeripheralOwner, private val foodFuelPrice:
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is PocketFuelAbility) return false
+        if (other !is PocketFuelBoon) return false
         if (!super.equals(other)) return false
 
         if (foodFuelPrice != other.foodFuelPrice) return false

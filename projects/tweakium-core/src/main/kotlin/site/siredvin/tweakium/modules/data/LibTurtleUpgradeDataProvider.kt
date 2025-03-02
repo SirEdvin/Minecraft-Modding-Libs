@@ -26,17 +26,11 @@ abstract class LibTurtleUpgradeDataProvider(output: PackOutput, serializers: Lis
         }
     }
 
-    fun <V : ITurtleUpgrade> simpleWithCustomItem(serialiser: TurtleUpgradeSerialiser<V>, item: ItemLike): Upgrade<TurtleUpgradeSerialiser<*>> {
-        return simpleWithCustomItem(ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(serialiser), serialiser, item.asItem())
-    }
+    fun <V : ITurtleUpgrade> simpleWithCustomItem(serialiser: TurtleUpgradeSerialiser<V>, item: ItemLike): Upgrade<TurtleUpgradeSerialiser<*>> = simpleWithCustomItem(ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(serialiser), serialiser, item.asItem())
 
-    fun <V : ITurtleUpgrade> simpleWithCustomItem(serialiser: Supplier<TurtleUpgradeSerialiser<V>>, item: ItemLike): Upgrade<TurtleUpgradeSerialiser<*>> {
-        return simpleWithCustomItem(serialiser.get(), item)
-    }
+    fun <V : ITurtleUpgrade> simpleWithCustomItem(serialiser: Supplier<TurtleUpgradeSerialiser<V>>, item: ItemLike): Upgrade<TurtleUpgradeSerialiser<*>> = simpleWithCustomItem(serialiser.get(), item)
 
-    fun <V : ITurtleUpgrade, S : ItemLike> simpleWithCustomItem(serialiser: Supplier<TurtleUpgradeSerialiser<V>>, item: Supplier<S>): Upgrade<TurtleUpgradeSerialiser<*>> {
-        return simpleWithCustomItem(serialiser.get(), item.get())
-    }
+    fun <V : ITurtleUpgrade, S : ItemLike> simpleWithCustomItem(serialiser: Supplier<TurtleUpgradeSerialiser<V>>, item: Supplier<S>): Upgrade<TurtleUpgradeSerialiser<*>> = simpleWithCustomItem(serialiser.get(), item.get())
 
     abstract fun registerUpgrades(addUpgrade: Consumer<Upgrade<TurtleUpgradeSerialiser<*>>>)
 }

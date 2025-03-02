@@ -8,12 +8,9 @@ import net.minecraft.world.entity.EntityDimensions
 import net.minecraft.world.entity.Pose
 import net.minecraft.world.entity.player.Player
 
-class FabricFakePlayer(serverLevel: ServerLevel, gameProfile: GameProfile) :
-    FakePlayer(serverLevel, gameProfile) {
+class FabricFakePlayer(serverLevel: ServerLevel, gameProfile: GameProfile) : FakePlayer(serverLevel, gameProfile) {
 
-    override fun canHarmPlayer(other: Player): Boolean {
-        return true
-    }
+    override fun canHarmPlayer(other: Player): Boolean = true
 
     override fun die(damageSource: DamageSource) {}
 
@@ -22,13 +19,9 @@ class FabricFakePlayer(serverLevel: ServerLevel, gameProfile: GameProfile) :
         return y + 0.2
     }
 
-    override fun getStandingEyeHeight(pose: Pose, dimensions: EntityDimensions): Float {
-        return 0f
-    }
+    override fun getStandingEyeHeight(pose: Pose, dimensions: EntityDimensions): Float = 0f
 
-    override fun getAttackStrengthScale(f: Float): Float {
-        return 1f
-    }
+    override fun getAttackStrengthScale(f: Float): Float = 1f
 
     companion object {
         fun create(serverLevel: ServerLevel, profile: GameProfile): FabricFakePlayer {

@@ -4,9 +4,9 @@ import dan200.computercraft.api.turtle.TurtleUpgradeType
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.api.peripheral.IOwnedPeripheral
-import site.siredvin.peripheralium.computercraft.pocket.StatefulPocketUpgrade
-import site.siredvin.peripheralium.util.turtleAdjective
+import site.siredvin.broccolium.modules.base.util.turtleAdjective
+import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
+import site.siredvin.tweakium.modules.pocket.StatefulPocketUpgrade
 
 abstract class StatefulTurtleUpgrade<T : IOwnedPeripheral<*>>(
     id: ResourceLocation,

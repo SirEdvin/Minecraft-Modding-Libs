@@ -8,16 +8,15 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.properties.DirectionProperty
-import site.siredvin.peripheralium.api.blockentities.IOwnedBlockEntity
-import site.siredvin.peripheralium.common.blocks.FacingBlockEntityBlock
-import site.siredvin.peripheralium.storages.item.ItemStorageExtractor
-import site.siredvin.peripheralium.storages.item.SlottedItemStorage
-import site.siredvin.peripheralium.util.world.FakePlayerProviderBlockEntity
-import site.siredvin.peripheralium.util.world.FakePlayerProxy
+import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
+import site.siredvin.broccolium.modules.base.block.FacingBlockEntityBlock
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.player.FakePlayerProviderBlockEntity
+import site.siredvin.tweakium.modules.player.FakePlayerProxy
 import java.util.*
 
-open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProperty: DirectionProperty = FacingBlockEntityBlock.FACING) :
-    BasePeripheralOwner() where T : BlockEntity {
+open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProperty: DirectionProperty = FacingBlockEntityBlock.FACING) : BasePeripheralOwner() where T : BlockEntity {
 
     override val level: Level?
         get() = Objects.requireNonNull(blockEntity.level)
@@ -41,8 +40,8 @@ open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProper
         CompoundTag()
     }
 
-    override val storage: SlottedItemStorage? by lazy {
-        ItemStorageExtractor.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity) as? SlottedItemStorage
+    override val storage: SlottedAgnosticItemStorage? by lazy {
+        AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity) as? SlottedAgnosticItemStorage
     }
 
     override fun markDataStorageDirty() {
@@ -70,13 +69,9 @@ open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProper
         level!!.removeBlock(blockEntity.blockPos, false)
     }
 
-    override fun isMovementPossible(level: Level, pos: BlockPos): Boolean {
-        return false
-    }
+    override fun isMovementPossible(level: Level, pos: BlockPos): Boolean = false
 
-    override fun move(level: Level, pos: BlockPos): Boolean {
-        return false
-    }
+    override fun move(level: Level, pos: BlockPos): Boolean = false
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

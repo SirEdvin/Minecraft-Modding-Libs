@@ -7,9 +7,9 @@ import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.api.turtle.TurtleUpgradeType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import site.siredvin.peripheralium.api.peripheral.IOwnedPeripheral
-import site.siredvin.peripheralium.computercraft.peripheral.DisabledPeripheral
-import site.siredvin.peripheralium.util.turtleAdjective
+import site.siredvin.broccolium.modules.base.util.turtleAdjective
+import site.siredvin.tweakium.modules.peripheral.DisabledPeripheral
+import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
 
 abstract class BaseTurtleUpgrade<T : IOwnedPeripheral<*>>(
     id: ResourceLocation,

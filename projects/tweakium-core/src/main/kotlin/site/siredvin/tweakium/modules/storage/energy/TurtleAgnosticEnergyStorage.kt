@@ -2,8 +2,8 @@ package site.siredvin.tweakium.modules.storage.energy
 
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleAnimation
-import site.siredvin.broccolium.modules.storage.energy.Energies
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
+import site.siredvin.broccolium.modules.storage.energy.Energies
 import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
 import java.util.function.Predicate
 

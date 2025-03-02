@@ -8,17 +8,20 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import site.siredvin.peripheralium.api.blockentities.IOwnedBlockEntity
-import site.siredvin.peripheralium.api.peripheral.IOwnedPeripheral
-import site.siredvin.peripheralium.api.peripheral.IPeripheralProvider
-import site.siredvin.peripheralium.api.peripheral.IPeripheralTileEntity
+import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
+import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralProvider
 import java.util.UUID
 
 abstract class PeripheralBlockEntity<T : IOwnedPeripheral<*>>(
     blockEntityType: BlockEntityType<*>,
     blockPos: BlockPos,
     blockState: BlockState,
-) : BlockEntity(blockEntityType, blockPos, blockState), IPeripheralTileEntity, IPeripheralProvider<T>, IOwnedBlockEntity {
+) : BlockEntity(blockEntityType, blockPos, blockState),
+    IPeripheralBlockEntity,
+    IPeripheralProvider<T>,
+    IOwnedBlockEntity {
     // Peripheral logic
     final override var peripheralSettings: CompoundTag
         protected set
