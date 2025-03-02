@@ -51,8 +51,8 @@ dependencies {
     val tweakium = project(":tweakium-forge")
     tweakium.isTransitive = false
 
-    implementation(fg.deobf(broccolium))
-    implementation(fg.deobf(tweakium))
+    implementation(fg.deobf("site.siredvin:broccolium-forge-1.20.1:1.0.0-rc.1"))
+    implementation(fg.deobf("site.siredvin:tweakium-forge-1.20.1:1.0.0-rc.1"))
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)
