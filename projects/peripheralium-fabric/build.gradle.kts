@@ -62,17 +62,8 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
     }
 
-    modImplementation(project(":broccolium-fabric")) {
-        exclude("net.fabricmc.fabric-api")
-        exclude("net.fabricmc", "fabric-loader")
-        exclude("site.siredvin")
-    }
-
-    modImplementation(project(":tweakium-fabric")) {
-        exclude("net.fabricmc.fabric-api")
-        exclude("net.fabricmc", "fabric-loader")
-        exclude("site.siredvin")
-    }
+    implementation(project(":broccolium-fabric").dependencyProject.sourceSets.main.get().output)
+    implementation(project(":tweakium-fabric").dependencyProject.sourceSets.main.get().output)
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)
