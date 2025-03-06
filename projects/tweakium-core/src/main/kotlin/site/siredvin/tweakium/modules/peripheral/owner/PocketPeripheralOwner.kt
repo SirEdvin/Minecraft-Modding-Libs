@@ -3,7 +3,6 @@ package site.siredvin.tweakium.modules.peripheral.owner
 import dan200.computercraft.api.pocket.IPocketAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -12,6 +11,7 @@ import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.ability.PocketFuelBoon
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import site.siredvin.tweakium.modules.player.FakePlayerProviderPocket
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
@@ -35,15 +35,11 @@ open class PocketPeripheralOwner(val pocket: IPocketAccess) : BasePeripheralOwne
     override val owner: Player?
         get() = pocket.entity as? Player
 
-    override val dataStorage: CompoundTag
+    override val dataStorage: IDataStorage
         get() = DataStorageUtil.getDataStorage(pocket)
 
     override val storage: SlottedAgnosticItemStorage?
         get() = owner?.inventory?.let { ContainerWrapper(it) }
-
-    override fun markDataStorageDirty() {
-        pocket.updateUpgradeNBTData()
-    }
 
     override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T = FakePlayerProviderPocket.withPlayer(pocket, function, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
 

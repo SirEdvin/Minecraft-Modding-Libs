@@ -9,6 +9,8 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import site.siredvin.broccolium.modules.base.block.FacingBlockEntityBlock
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
+import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
 
 open class BlockPeripheralOwner(protected val blockPos: BlockPos, protected val blockLevel: Level, protected val facingProperty: DirectionProperty = FacingBlockEntityBlock.FACING) : BasePeripheralOwner() {
@@ -30,15 +32,12 @@ open class BlockPeripheralOwner(protected val blockPos: BlockPos, protected val 
 
     override val owner: Player?
         get() = null
-    override val dataStorage: CompoundTag by lazy {
-        CompoundTag()
+    override val dataStorage: IDataStorage by lazy {
+        CompoundTagDataStorage(CompoundTag()) { }
     }
 
     override val storage: SlottedAgnosticItemStorage?
         get() = null
-
-    override fun markDataStorageDirty() {
-    }
 
     override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T = throw IllegalArgumentException("Cannot perform player logic for block owner")
 

@@ -51,7 +51,7 @@ object LuaInterpretation {
 
     @Throws(LuaException::class)
     fun asID(id: String): ResourceLocation = try {
-        ResourceLocation(id)
+        ResourceLocation.parse(id)
     } catch (e: ResourceLocationException) {
         throw LuaException(e.message)
     }
@@ -119,7 +119,7 @@ object LuaInterpretation {
     fun asBlockState(table: Map<*, *>): BlockState {
         if (table.containsKey("block")) {
             val blockID = table["block"].toString()
-            val block = PlatformRegistries.BLOCKS.get(ResourceLocation(blockID))
+            val block = PlatformRegistries.BLOCKS.get(ResourceLocation.parse(blockID))
             if (block == net.minecraft.world.level.block.Blocks.AIR) {
                 throw LuaException(String.format("Cannot find block %s", table["block"]))
             }

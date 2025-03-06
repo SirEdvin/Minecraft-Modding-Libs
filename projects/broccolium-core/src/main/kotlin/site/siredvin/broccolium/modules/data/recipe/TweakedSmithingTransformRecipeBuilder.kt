@@ -1,66 +1,30 @@
 package site.siredvin.broccolium.modules.data.recipe
 
-import com.google.gson.JsonObject
-import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
-import site.siredvin.broccolium.modules.platform.PlatformRegistries
-import java.util.function.Consumer
+import net.minecraft.world.item.crafting.SmithingTransformRecipe
 
 class TweakedSmithingTransformRecipeBuilder(
-    private val type: RecipeSerializer<*>,
     private val template: Ingredient,
     private val base: Ingredient,
     private val addition: Ingredient,
     private val result: Item,
 ) {
 
-    companion object {
-        fun smithingTransform(template: Ingredient, base: Ingredient, addition: Ingredient, item: Item): TweakedSmithingTransformRecipeBuilder = TweakedSmithingTransformRecipeBuilder(RecipeSerializer.SMITHING_TRANSFORM, template, base, addition, item)
+    fun save(output: RecipeOutput, id: String) {
+        this.save(output, ResourceLocation.parse(id))
     }
 
-    fun save(consumer: Consumer<FinishedRecipe>) {
-        this.save(consumer, PlatformRegistries.ITEMS.getKey(result))
-    }
-
-    fun save(consumer: Consumer<FinishedRecipe>, resourceLocation: ResourceLocation) {
-        consumer.accept(
-            Result(
-                resourceLocation,
-                type,
-                template,
-                base,
-                addition,
-                result,
-            ),
+    fun save(output: RecipeOutput, id: ResourceLocation) {
+        val recipe = SmithingTransformRecipe(
+            this.template,
+            this.base,
+            this.addition,
+            ItemStack(this.result),
         )
-    }
-
-    class Result(
-        private val id: ResourceLocation,
-        private val type: RecipeSerializer<*>,
-        private val template: Ingredient,
-        private val base: Ingredient,
-        private val addition: Ingredient,
-        private val result: Item,
-    ) : FinishedRecipe {
-        override fun serializeRecipeData(jsonObject: JsonObject) {
-            jsonObject.add("template", template.toJson())
-            jsonObject.add("base", base.toJson())
-            jsonObject.add("addition", addition.toJson())
-            val jsonObject2 = JsonObject()
-            jsonObject2.addProperty("item", PlatformRegistries.ITEMS.getKey(result).toString())
-            jsonObject.add("result", jsonObject2)
-        }
-
-        override fun getId(): ResourceLocation = id
-
-        override fun getType(): RecipeSerializer<*> = type
-
-        override fun serializeAdvancement(): JsonObject? = null
-
-        override fun getAdvancementId(): ResourceLocation? = null
+        output.accept(id, recipe, null)
     }
 }

@@ -1,6 +1,6 @@
 package site.siredvin.broccolium.modules.platform
 
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformIngredients

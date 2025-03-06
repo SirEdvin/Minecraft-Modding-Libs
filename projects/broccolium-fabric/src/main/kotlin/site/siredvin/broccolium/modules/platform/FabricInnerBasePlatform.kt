@@ -1,7 +1,7 @@
 package site.siredvin.broccolium.modules.platform
 
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType
 import net.minecraft.core.Registry
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
@@ -51,9 +51,8 @@ abstract class FabricInnerBasePlatform : InnerBasePlatform {
         key: ResourceLocation,
         builder: MenuBuilder<M>,
     ): Supplier<MenuType<M>> {
-        val menuType = ExtendedScreenHandlerType(builder::build)
-        val registeredMenu = Registry.register(BuiltInRegistries.MENU, key, menuType)
-        return Supplier { registeredMenu }
+        // TODO: well, sort it out?
+        throw NotImplementedError()
     }
 
     override fun registerCreativeTab(key: ResourceLocation, tab: CreativeModeTab): Supplier<CreativeModeTab> {
@@ -80,5 +79,13 @@ abstract class FabricInnerBasePlatform : InnerBasePlatform {
     ): Supplier<T> {
         val registeredEntityType = Registry.register(BuiltInRegistries.ENTITY_TYPE, key, entityTypeSup.get())
         return Supplier { registeredEntityType }
+    }
+
+    override fun <T> registerDataComponent(
+        key: ResourceLocation,
+        dataComponent: DataComponentType.Builder<T>,
+    ): Supplier<DataComponentType<T>> {
+        val registered = Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, key, dataComponent.build())
+        return Supplier { registered }
     }
 }

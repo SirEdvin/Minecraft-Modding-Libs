@@ -20,7 +20,7 @@ import site.siredvin.broccolium.modules.base.api.ITickingBlockEntity
 import site.siredvin.broccolium.modules.base.util.BlockUtil
 
 abstract class BaseBlockEntityBlock<T : BlockEntity>(
-    private val belongToTickingEntity: Boolean,
+    val belongToTickingEntity: Boolean,
     properties: Properties = BlockUtil.defaultProperties(),
 ) : BaseEntityBlock(properties) {
 

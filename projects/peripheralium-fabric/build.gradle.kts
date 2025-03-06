@@ -7,12 +7,13 @@ plugins {
     id("site.siredvin.mod-publishing")
 }
 
-val modVersion: String by extra
+val peripheraliumVersion: String by extra
 val minecraftVersion: String by extra
 
 baseShaking {
     projectPart.set("fabric")
     projectName.set("peripheralium")
+    projectVersion.set(peripheraliumVersion)
     integrationRepositories.set(true)
     shake()
 }
@@ -63,18 +64,14 @@ dependencies {
     }
 
     modImplementation(project(":broccolium-fabric")) {
-        exclude("net.fabricmc.fabric-api")
-        exclude("net.fabricmc", "fabric-loader")
-        exclude("site.siredvin")
+        isTransitive = false
     }
 
     modImplementation(project(":tweakium-fabric")) {
-        exclude("net.fabricmc.fabric-api")
-        exclude("net.fabricmc", "fabric-loader")
-        exclude("site.siredvin")
+        isTransitive = false
     }
 
-    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
     testCompileOnly(libs.autoService)
     testAnnotationProcessor(libs.autoService)
     testImplementation(libs.byteBuddy)
@@ -89,6 +86,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(peripheraliumVersion)
     shake()
     project.publishing {
         publications {

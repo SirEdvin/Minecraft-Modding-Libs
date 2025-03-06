@@ -5,25 +5,26 @@ import dan200.computercraft.api.turtle.AbstractTurtleUpgrade
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.api.turtle.TurtleUpgradeType
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import site.siredvin.broccolium.modules.base.util.turtleAdjective
+import site.siredvin.broccolium.modules.base.util.turtleAdjectiveComponent
 import site.siredvin.tweakium.modules.peripheral.DisabledPeripheral
 import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
 
 abstract class BaseTurtleUpgrade<T : IOwnedPeripheral<*>>(
     id: ResourceLocation,
     type: TurtleUpgradeType,
-    adjective: String,
+    adjective: Component,
     stack: ItemStack,
-) : AbstractTurtleUpgrade(id, type, adjective, stack) {
+) : AbstractTurtleUpgrade(type, adjective, stack) {
 
     protected abstract fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T
 
     constructor(id: ResourceLocation, type: TurtleUpgradeType, stack: ItemStack) : this(
         id,
         type,
-        turtleAdjective(id),
+        turtleAdjectiveComponent(id),
         stack,
     )
 

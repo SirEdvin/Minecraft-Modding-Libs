@@ -4,13 +4,13 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import java.util.function.Supplier
+import site.siredvin.broccolium.modules.platform.api.RegistryEntry
 
 interface ModInformationHolder {
-    val items: List<Supplier<out Item>>
+    val items: List<RegistryEntry<out Item>>
         get() = emptyList()
-    val blocks: List<Supplier<out Block>>
+    val blocks: List<RegistryEntry<out Block>>
         get() = emptyList()
-    val customStats: List<Supplier<Stat<ResourceLocation>>>
+    val customStats: List<RegistryEntry<Stat<ResourceLocation>>>
         get() = emptyList()
 }

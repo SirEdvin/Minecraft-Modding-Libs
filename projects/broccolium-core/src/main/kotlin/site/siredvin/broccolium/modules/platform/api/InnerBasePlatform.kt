@@ -1,5 +1,6 @@
 package site.siredvin.broccolium.modules.platform.api
 
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
 import net.minecraft.stats.StatFormatter
@@ -19,6 +20,11 @@ import java.util.function.Supplier
 
 interface InnerBasePlatform {
     val modID: String
+
+    fun <T> registerDataComponent(
+        key: ResourceLocation,
+        dataComponent: DataComponentType.Builder<T>,
+    ): Supplier<DataComponentType<T>>
 
     fun <T : Item> registerItem(key: ResourceLocation, item: Supplier<T>): Supplier<T>
 

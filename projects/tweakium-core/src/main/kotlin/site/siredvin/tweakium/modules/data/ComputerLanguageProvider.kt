@@ -4,7 +4,6 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import site.siredvin.broccolium.modules.data.api.TextRecord
 import site.siredvin.broccolium.modules.data.lang.LanguageProvider
-import site.siredvin.tweakium.modules.platform.ComputerPlatformRegistries
 import java.util.stream.Stream
 
 abstract class ComputerLanguageProvider(
@@ -18,8 +17,8 @@ abstract class ComputerLanguageProvider(
     override fun getExpectedKeys(): Stream<String> = Stream.concat(
         super.getExpectedKeys(),
         Stream.of(
-            informationHolder.turtleSerializers.stream().map { ComputerPlatformRegistries.TURTLE_SERIALIZERS.getKey(it.get()).toTurtleTranslationKey() },
-            informationHolder.pocketSerializers.stream().map { ComputerPlatformRegistries.POCKET_SERIALIZERS.getKey(it.get()).toPocketTranslationKey() },
+            informationHolder.turtleUpgrades.stream().map { it.id.toTurtleTranslationKey() },
+            informationHolder.pocketUpgrades.stream().map { it.id.toPocketTranslationKey() },
         ).flatMap { it },
     )
 

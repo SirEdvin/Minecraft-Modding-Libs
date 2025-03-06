@@ -26,7 +26,7 @@ object PeripheralPluginUtils {
     private val ALWAYS_ITEM_STACK_TRUE: Predicate<ItemStack> = Predicate { true }
 
     fun builtItemNamePredicate(name: String): Predicate<ItemStack> {
-        val item = PlatformRegistries.ITEMS.get(ResourceLocation(name))
+        val item = PlatformRegistries.ITEMS.get(ResourceLocation.parse(name))
         if (item == Items.AIR) {
             throw LuaException("There is no item $name")
         }
@@ -38,7 +38,7 @@ object PeripheralPluginUtils {
     fun builtItemTagPredicate(tag: String): Predicate<ItemStack> = Predicate { itemStack -> itemStack.tags.anyMatch { it.location.toString() == tag } }
 
     fun builtNBTPredicate(nbt: String): Predicate<ItemStack> = Predicate {
-        nbt == ComputerPlatformToolkit.get().nbtHash(it.tag)
+        nbt == ComputerPlatformToolkit.get().nbtHash(it.componentsPatch)
     }
 
     fun itemQueryToPredicate(something: Any?): Predicate<ItemStack> {

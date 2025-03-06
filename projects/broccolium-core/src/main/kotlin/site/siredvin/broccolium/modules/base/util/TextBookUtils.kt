@@ -1,7 +1,6 @@
 package site.siredvin.broccolium.modules.base.util
 
-import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.ComponentUtils
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
@@ -9,37 +8,15 @@ object TextBookUtils {
     private const val BOOK_MAX_LINES = 14
     private const val MAX_WIDTH_PER_LINE = 95
 
-    private fun resolvePage(string: String): String {
-        var component: Component?
-        try {
-            component = Component.Serializer.fromJsonLenient(string)
-            if (component == null) {
-                throw IllegalArgumentException("Cannot parse it, fallback")
-            }
-            component = ComponentUtils.updateForEntity(null, component, null, 0)
-        } catch (var5: Exception) {
-            component = Component.translatable(string)
-        }
-        return component!!.string
-    }
-
     fun getBookText(book: ItemStack): List<String> {
         return when (book.item) {
             Items.WRITABLE_BOOK -> {
-                val pagesData = book.tag?.getList("pages", 8) ?: return emptyList()
-                val pages: MutableList<String> = mutableListOf()
-                for (i in 0 until pagesData.size) {
-                    pages.add(pagesData.getString(i))
-                }
-                return pages
+                val content = book.components.get(DataComponents.WRITABLE_BOOK_CONTENT) ?: return emptyList()
+                return content.getPages(false).toList()
             }
             Items.WRITTEN_BOOK -> {
-                val pagesData = book.tag?.getList("pages", 8) ?: return emptyList()
-                val pages: MutableList<String> = mutableListOf()
-                for (i in 0 until pagesData.size) {
-                    pages.add(resolvePage(pagesData.getString(i)))
-                }
-                return pages
+                val content = book.components.get(DataComponents.WRITTEN_BOOK_CONTENT) ?: return emptyList()
+                return content.getPages(false).map { it.string }
             }
             else -> emptyList()
         }

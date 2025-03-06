@@ -4,12 +4,13 @@ plugins {
     id("site.siredvin.publishing")
 }
 
-val modVersion: String by extra
 val minecraftVersion: String by extra
+val broccoliumVersion: String by extra
 
 baseShaking {
     projectPart.set("common")
     projectName.set("broccolium")
+    projectVersion.set(broccoliumVersion)
     shake()
 }
 
@@ -41,10 +42,10 @@ dependencies {
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
 
-    add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test"))
+    add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test-junit5"))
     add(sourceSets["testFixtures"].compileOnlyConfigurationName, libs.bundles.test)
 
-    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
     testImplementation(libs.bundles.test)
 }
 
@@ -58,5 +59,6 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(broccoliumVersion)
     shake()
 }

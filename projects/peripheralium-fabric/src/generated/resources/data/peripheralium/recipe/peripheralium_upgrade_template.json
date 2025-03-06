@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "P": {
       "item": "peripheralium:peripheralium_dust"
@@ -15,6 +16,7 @@
   ],
   "result": {
     "count": 4,
-    "item": "peripheralium:peripheralium_upgrade_template"
-  }
+    "id": "peripheralium:peripheralium_upgrade_template"
+  },
+  "show_notification": false
 }

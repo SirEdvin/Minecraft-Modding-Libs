@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.AccessibleAgnosticItemStorage
 import java.util.function.Predicate
-import kotlin.test.assertEquals
+import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 abstract class StorageTests {
 
@@ -86,7 +86,7 @@ abstract class StorageTests {
         val from = createStorage(argument.initialFrom, grassBlock, secondary = false)
         val to = createStorage(argument.initialTo, grassBlock, secondary = true)
         val movedAmount = from.moveTo(to, argument.moveLimit, takePredicate = ItemStorageUtils.ALWAYS)
-        assertEquals(argument.expectedMoveAmount, movedAmount)
+        assertEquals("expectedMove", argument.expectedMoveAmount, movedAmount)
         StorageTestHelpers.assertStorage(from, argument.expectedFrom, "from")
         StorageTestHelpers.assertStorage(to, argument.expectedTo, "to")
         StorageTestHelpers.assertNoOverlap(from, to)
@@ -99,7 +99,7 @@ abstract class StorageTests {
         val from = createStorage(argument.initialFrom, grassBlock, secondary = false)
         val to = createStorage(argument.initialTo, grassBlock, secondary = true)
         val movedAmount = to.moveFrom(from, argument.moveLimit, takePredicate = ItemStorageUtils.ALWAYS)
-        assertEquals(argument.expectedMoveAmount, movedAmount)
+        assertEquals("expectedMove", argument.expectedMoveAmount, movedAmount)
         StorageTestHelpers.assertStorage(from, argument.expectedFrom, "from")
         StorageTestHelpers.assertStorage(to, argument.expectedTo, "to")
         StorageTestHelpers.assertNoOverlap(from, to)
@@ -113,7 +113,7 @@ abstract class StorageTests {
             it.`is`(Items.WRITABLE_BOOK) || it.`is`(Items.WRITTEN_BOOK)
         }
         val movedAmount = from.moveTo(to, 1, takePredicate = predicate)
-        assertEquals(1, movedAmount)
+        assertEquals("expectedMove", 1, movedAmount)
         StorageTestHelpers.assertStorage(from, listOf(64, 32), "from")
         StorageTestHelpers.assertStorage(to, listOf(64, 1), "to")
         StorageTestHelpers.assertNoOverlap(from, to)
@@ -127,7 +127,7 @@ abstract class StorageTests {
             it.`is`(Items.REDSTONE)
         }
         val movedAmount = from.moveTo(to, 1, takePredicate = predicate)
-        assertEquals(0, movedAmount)
+        assertEquals("expectedMove", 0, movedAmount)
         StorageTestHelpers.assertStorage(from, listOf(64, 1, 32), "from")
         StorageTestHelpers.assertStorage(to, listOf(64), "to")
         StorageTestHelpers.assertNoOverlap(from, to)

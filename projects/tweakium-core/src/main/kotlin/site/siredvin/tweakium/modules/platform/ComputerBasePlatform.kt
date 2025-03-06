@@ -1,14 +1,13 @@
 package site.siredvin.tweakium.modules.platform
 
 import dan200.computercraft.api.pocket.IPocketUpgrade
-import dan200.computercraft.api.pocket.PocketUpgradeSerialiser
 import dan200.computercraft.api.turtle.ITurtleUpgrade
-import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
 import net.minecraft.resources.ResourceLocation
 import site.siredvin.broccolium.modules.platform.BasePlatform
+import site.siredvin.broccolium.modules.platform.SimpleRegistryEntry
+import site.siredvin.broccolium.modules.platform.api.RegistryEntry
 import site.siredvin.tweakium.modules.data.ComputerModInformationHolder
 import site.siredvin.tweakium.modules.platform.api.InnerComputerBasePlatform
-import java.util.function.Supplier
 
 abstract class ComputerBasePlatform : BasePlatform() {
     abstract override val baseInnerPlatform: InnerComputerBasePlatform
@@ -20,31 +19,21 @@ abstract class ComputerBasePlatform : BasePlatform() {
 
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         name: String,
-        serializer: TurtleUpgradeSerialiser<V>,
-    ): Supplier<TurtleUpgradeSerialiser<V>> = registerTurtleUpgrade(ResourceLocation(baseInnerPlatform.modID, name), serializer)
+        upgrade: V,
+    ): RegistryEntry<V> = registerTurtleUpgrade(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), upgrade)
 
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
-        serializer: TurtleUpgradeSerialiser<V>,
-    ): Supplier<TurtleUpgradeSerialiser<V>> {
-        val registered = baseInnerPlatform.registerTurtleUpgrade(key, serializer)
-        @Suppress("UNCHECKED_CAST")
-        modInformationTracker.internalTurtleUpgrades.add(registered as Supplier<TurtleUpgradeSerialiser<out ITurtleUpgrade>>)
-        return registered
-    }
+        upgrade: V,
+    ): RegistryEntry<V> = SimpleRegistryEntry(key, baseInnerPlatform.registerTurtleUpgrade(key, upgrade))
 
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         name: String,
-        serializer: PocketUpgradeSerialiser<V>,
-    ): Supplier<PocketUpgradeSerialiser<V>> = registerPocketUpgrade(ResourceLocation(baseInnerPlatform.modID, name), serializer)
+        upgrade: V,
+    ): RegistryEntry<V> = registerPocketUpgrade(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), upgrade)
 
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         key: ResourceLocation,
-        serializer: PocketUpgradeSerialiser<V>,
-    ): Supplier<PocketUpgradeSerialiser<V>> {
-        val registered = baseInnerPlatform.registerPocketUpgrade(key, serializer)
-        @Suppress("UNCHECKED_CAST")
-        modInformationTracker.internalPocketUpgrades.add(registered as Supplier<PocketUpgradeSerialiser<out IPocketUpgrade>>)
-        return registered
-    }
+        upgrade: V,
+    ): RegistryEntry<V> = SimpleRegistryEntry(key, baseInnerPlatform.registerPocketUpgrade(key, upgrade))
 }

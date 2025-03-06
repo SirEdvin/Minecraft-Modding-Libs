@@ -18,8 +18,8 @@ class ItemStackMatcher(private val stack: ItemStack) : TypeSafeMatcher<ItemStack
         fun isStack(item: Item, size: Int): Matcher<ItemStack> = ItemStackMatcher(ItemStack(item, size))
     }
     override fun describeTo(description: Description) {
-        description.appendValue(stack).appendValue(stack.tag)
+        description.appendValue(stack).appendValue(stack.components)
     }
 
-    override fun matchesSafely(item: ItemStack): Boolean = ItemStack.isSameItemSameTags(item, stack) && item.count == stack.count
+    override fun matchesSafely(item: ItemStack): Boolean = ItemStack.isSameItemSameComponents(item, stack) && item.count == stack.count
 }

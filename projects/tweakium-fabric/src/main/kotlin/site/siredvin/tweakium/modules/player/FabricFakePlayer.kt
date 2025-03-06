@@ -4,11 +4,13 @@ import com.mojang.authlib.GameProfile
 import net.fabricmc.fabric.api.entity.FakePlayer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.damagesource.DamageSource
-import net.minecraft.world.entity.EntityDimensions
-import net.minecraft.world.entity.Pose
 import net.minecraft.world.entity.player.Player
 
 class FabricFakePlayer(serverLevel: ServerLevel, gameProfile: GameProfile) : FakePlayer(serverLevel, gameProfile) {
+
+    init {
+        this.eyeHeight
+    }
 
     override fun canHarmPlayer(other: Player): Boolean = true
 
@@ -18,8 +20,6 @@ class FabricFakePlayer(serverLevel: ServerLevel, gameProfile: GameProfile) : Fak
         // Override this to make eye position correspond turtle eyes
         return y + 0.2
     }
-
-    override fun getStandingEyeHeight(pose: Pose, dimensions: EntityDimensions): Float = 0f
 
     override fun getAttackStrengthScale(f: Float): Float = 1f
 

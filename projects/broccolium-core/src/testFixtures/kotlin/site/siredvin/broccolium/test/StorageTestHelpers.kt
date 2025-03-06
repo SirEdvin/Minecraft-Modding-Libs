@@ -6,8 +6,8 @@ import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import java.util.*
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import kotlin.test.junit5.JUnit5Asserter.assertEquals
+import kotlin.test.junit5.JUnit5Asserter.assertTrue
 
 object StorageTestHelpers {
     fun assertNoOverlap(vararg storages: AgnosticItemStorage) {
@@ -40,28 +40,28 @@ object StorageTestHelpers {
         val notFoundExpected = expected.toMutableList()
         storage.getItems().forEach {
             if (!it.isEmpty) {
-                assertTrue(notFoundExpected.remove(it.count), "In $name storage found stack with unexpected count ${it.count}")
+                assertTrue("In $name storage found stack with unexpected count ${it.count}", notFoundExpected.remove(it.count))
             }
         }
-        assertTrue(notFoundExpected.isEmpty(), "Cannot find stack with this sizes: $notFoundExpected in $name storage")
+        assertTrue("Cannot find stack with this sizes: $notFoundExpected in $name storage", notFoundExpected.isEmpty())
     }
 
     fun assertFluidStorage(storage: AgnosticFluidStorage, expected: List<Long>, name: String) {
         val notFoundExpected = expected.toMutableList()
         storage.getFluids().forEach {
             if (!it.isEmpty) {
-                assertTrue(notFoundExpected.remove(it.amount), "In $name storage found stack with unexpected count ${it.amount}")
+                assertTrue("In $name storage found stack with unexpected count ${it.amount}", notFoundExpected.remove(it.amount))
             }
         }
-        assertTrue(notFoundExpected.isEmpty(), "Cannot find stack with this sizes: $notFoundExpected in $name storage")
+        assertTrue("Cannot find stack with this sizes: $notFoundExpected in $name storage", notFoundExpected.isEmpty())
     }
 
     fun assertSlottedStorage(storage: SlottedAgnosticItemStorage, expected: List<Int>, name: String) {
         expected.forEachIndexed { index, amount ->
             assertEquals(
+                "Item in slot $index for $name storage, has incorrect amount",
                 amount,
                 storage.getItem(index).count,
-                "Item in slot $index for $name storage, has incorrect amount",
             )
         }
     }

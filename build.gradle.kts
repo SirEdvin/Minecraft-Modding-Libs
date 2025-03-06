@@ -1,13 +1,17 @@
+import java.text.SimpleDateFormat
+import java.util.*
+
 plugins {
     java
-    id("site.siredvin.root") version "0.8.13"
-    id("site.siredvin.release") version "0.8.13"
+    id("site.siredvin.root") version "0.8.14"
+    id("site.siredvin.release") version "0.8.14"
     id("com.github.ben-manes.versions") version "0.51.0"
 }
 
 subprojectShaking {
     withKotlin.set(true)
     kotlinVersion.set("2.0.0")
+    javaVersion.set(JavaVersion.VERSION_21)
 }
 
 val setupSubproject = subprojectShaking::setupSubproject

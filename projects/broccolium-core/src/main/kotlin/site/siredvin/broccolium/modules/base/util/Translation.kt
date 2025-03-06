@@ -13,4 +13,8 @@ fun itemExtra(descriptionId: String, extra: String, vararg args: Any): MutableCo
 /* This strange piece of CC:T integrations is here because it is always in my heart */
 fun turtleAdjective(turtleID: ResourceLocation): String = java.lang.String.format("turtle.%s.%s", turtleID.namespace, turtleID.path)
 
+fun turtleAdjectiveComponent(turtleID: ResourceLocation): Component = Component.translatable(java.lang.String.format("turtle.%s.%s", turtleID.namespace, turtleID.path))
+
 fun pocketAdjective(pocketID: ResourceLocation): String = java.lang.String.format("pocket.%s.%s", pocketID.namespace, pocketID.path)
+
+fun pocketAdjectiveComponent(pocketID: ResourceLocation): Component = Component.translatable(java.lang.String.format("pocket.%s.%s", pocketID.namespace, pocketID.path))

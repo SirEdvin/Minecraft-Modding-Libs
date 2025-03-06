@@ -76,8 +76,8 @@ object LuaRepresentation {
     }
 
     fun forEnchantment(enchantment: Enchantment, level: Int = 1): MutableMap<String, Any> = mutableMapOf(
-        "displayName" to enchantment.getFullname(level).string,
-        "name" to fromLegacyToNewID(enchantment.descriptionId),
+        "displayName" to enchantment.description.string,
+        "name" to enchantment.description.string,
         "level" to level,
     )
 
@@ -94,8 +94,8 @@ object LuaRepresentation {
         RepresentationMode.DETAILED -> VanillaDetailRegistries.ITEM_STACK.getDetails(stack)
         RepresentationMode.FULL -> {
             val base = VanillaDetailRegistries.ITEM_STACK.getDetails(stack)
-            val tagData = stack.tag?.let { ComputerPlatformToolkit.get().nbtToLua(it) }
-            if (tagData != null) {
+            if (!stack.componentsPatch.isEmpty) {
+                val tagData = stack.componentsPatch.let { ComputerPlatformToolkit.get().componentToLua(it) }
                 base["rawNBT"] = tagData
             }
             base
@@ -112,8 +112,8 @@ object LuaRepresentation {
     fun forFluidStack(fluid: AgnosticFluidStack): MutableMap<String, Any?> {
         val baseInformation = forFluid(fluid.fluid)
         baseInformation["amount"] = fluid.amount
-        if (fluid.tag != null) {
-            baseInformation["nbt"] = ComputerPlatformToolkit.get().nbtHash(fluid.tag!!)
+        if (!fluid.components!!.isEmpty) {
+            baseInformation["nbt"] = ComputerPlatformToolkit.get().nbtHash(fluid.components)
         }
         return baseInformation
     }
@@ -128,7 +128,7 @@ object LuaRepresentation {
     )
 
     fun forMobEffectInstance(effectInstance: MobEffectInstance): MutableMap<String, Any> {
-        val base = forMobEffect(effectInstance.effect)
+        val base = forMobEffect(effectInstance.effect.value())
         base.putAll(
             mapOf(
                 "duration" to effectInstance.duration,

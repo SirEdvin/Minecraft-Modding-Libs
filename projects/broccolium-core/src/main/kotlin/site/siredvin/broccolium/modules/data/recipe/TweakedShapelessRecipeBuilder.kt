@@ -1,111 +1,58 @@
 package site.siredvin.broccolium.modules.data.recipe
 
-import com.google.common.collect.Lists
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.advancements.Criterion
+import net.minecraft.core.NonNullList
+import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.ShapelessRecipe
 import net.minecraft.world.level.ItemLike
-import site.siredvin.broccolium.modules.platform.PlatformRegistries
-import java.util.function.Consumer
+import java.util.*
 
-class TweakedShapelessRecipeBuilder(itemLike: ItemLike, private val count: Int) {
-    private var result: Item
-    private val ingredients: MutableList<Ingredient> = Lists.newArrayList()
+class TweakedShapelessRecipeBuilder(private val result: ItemLike, private val count: Int = 1, private val category: RecipeCategory = RecipeCategory.MISC) : RecipeBuilder {
+    private val ingredients: NonNullList<Ingredient> = NonNullList.create()
     private var group: String? = null
 
-    init {
-        result = itemLike.asItem()
+    fun requires(ing: TagKey<Item>, count: Int = 1): TweakedShapelessRecipeBuilder = this.requires(Ingredient.of(ing), count)
+
+    fun requires(ing: ItemLike, count: Int = 1): TweakedShapelessRecipeBuilder {
+        for (i in 0..<count) {
+            this.requires(Ingredient.of(*arrayOf(ing)))
+        }
+
+        return this
     }
 
-    companion object {
-        fun shapeless(itemLike: ItemLike): TweakedShapelessRecipeBuilder = TweakedShapelessRecipeBuilder(itemLike, 1)
-
-        fun shapeless(itemLike: ItemLike, i: Int): TweakedShapelessRecipeBuilder = TweakedShapelessRecipeBuilder(itemLike, i)
-    }
-
-    fun requires(tagKey: TagKey<Item>): TweakedShapelessRecipeBuilder = this.requires(Ingredient.of(tagKey))
-
-    fun requires(itemLike: ItemLike): TweakedShapelessRecipeBuilder = this.requires(itemLike, 1)
-
-    fun requires(itemLike: ItemLike?, i: Int): TweakedShapelessRecipeBuilder {
-        for (j in 0 until i) {
-            this.requires(Ingredient.of(*arrayOf(itemLike)))
+    fun requires(ing: Ingredient, count: Int = 1): TweakedShapelessRecipeBuilder {
+        for (i in 0..<count) {
+            ingredients.add(ing)
         }
         return this
     }
 
-    fun requires(ingredient: Ingredient): TweakedShapelessRecipeBuilder = this.requires(ingredient, 1)
+    override fun unlockedBy(id: String, criterion: Criterion<*>): TweakedShapelessRecipeBuilder = this
 
-    fun requires(ingredient: Ingredient, i: Int): TweakedShapelessRecipeBuilder {
-        for (j in 0 until i) {
-            ingredients.add(ingredient)
-        }
+    override fun group(group: String?): TweakedShapelessRecipeBuilder {
+        this.group = group
         return this
     }
 
-    fun group(string: String): TweakedShapelessRecipeBuilder {
-        group = string
-        return this
-    }
+    override fun getResult(): Item = this.result.asItem()
 
-    fun getResult(): Item = result
-
-    fun save(consumer: Consumer<FinishedRecipe>) {
-        this.save(consumer, PlatformRegistries.ITEMS.getKey(result))
-    }
-
-    fun save(consumer: Consumer<FinishedRecipe>, resourceLocation: ResourceLocation) {
-        val var10004 = result
-        val var10005 = count
-        val var10006 = if (group == null) "" else group!!
-        consumer.accept(
-            Result(
-                resourceLocation,
-                var10004,
-                var10005,
-                var10006,
-                ingredients,
+    override fun save(output: RecipeOutput, id: ResourceLocation) {
+        val recipe = ShapelessRecipe(
+            Objects.requireNonNullElse(this.group, "") as String,
+            RecipeBuilder.determineBookCategory(
+                this.category,
             ),
+            ItemStack(this.result, this.count),
+            this.ingredients,
         )
-    }
-
-    class Result(
-        private val id: ResourceLocation,
-        private val result: Item,
-        private val count: Int,
-        private val group: String,
-        private val ingredients: List<Ingredient>,
-    ) : FinishedRecipe {
-        override fun serializeRecipeData(jsonObject: JsonObject) {
-            if (group.isNotEmpty()) {
-                jsonObject.addProperty("group", group)
-            }
-            val jsonArray = JsonArray()
-            val var3: Iterator<*> = ingredients.iterator()
-            while (var3.hasNext()) {
-                val ingredient = var3.next() as Ingredient
-                jsonArray.add(ingredient.toJson())
-            }
-            jsonObject.add("ingredients", jsonArray)
-            val jsonObject2 = JsonObject()
-            jsonObject2.addProperty("item", PlatformRegistries.ITEMS.getKey(result).toString())
-            if (count > 1) {
-                jsonObject2.addProperty("count", count)
-            }
-            jsonObject.add("result", jsonObject2)
-        }
-
-        override fun getType(): RecipeSerializer<*> = RecipeSerializer.SHAPELESS_RECIPE
-
-        override fun getId(): ResourceLocation = id
-
-        override fun serializeAdvancement(): JsonObject? = null
-
-        override fun getAdvancementId(): ResourceLocation? = null
+        output.accept(id, recipe, null)
     }
 }

@@ -3,6 +3,7 @@ package site.siredvin.tweakium.modules.peripheral.blockentity
 import dan200.computercraft.api.peripheral.IComputerAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup.Provider
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -54,8 +55,8 @@ abstract class PeripheralBlockEntity<T : IOwnedPeripheral<*>>(
 
     protected abstract fun createPeripheral(side: Direction): T
 
-    override fun saveAdditional(compound: CompoundTag) {
-        super.saveAdditional(compound)
+    override fun saveAdditional(compound: CompoundTag, provider: Provider) {
+        super.saveAdditional(compound, provider)
         if (!peripheralSettings.isEmpty) {
             compound.put(PERIPHERAL_DATA_TAG, peripheralSettings)
         }
@@ -64,12 +65,12 @@ abstract class PeripheralBlockEntity<T : IOwnedPeripheral<*>>(
         }
     }
 
-    override fun load(compound: CompoundTag) {
+    override fun loadAdditional(compound: CompoundTag, provider: Provider) {
         if (compound.contains(PERIPHERAL_DATA_TAG)) peripheralSettings = compound.getCompound(PERIPHERAL_DATA_TAG)
         if (compound.contains(OWNER_PROFILE_TAG)) {
             ownerPlayerUUID = compound.getUUID(OWNER_PROFILE_TAG)
         }
-        super.load(compound)
+        super.loadAdditional(compound, provider)
     }
 
     override fun markSettingsChanged() {

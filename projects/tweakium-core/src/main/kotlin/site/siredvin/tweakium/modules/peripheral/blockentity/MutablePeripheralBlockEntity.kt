@@ -1,6 +1,7 @@
 package site.siredvin.tweakium.modules.peripheral.blockentity
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.world.level.block.Block
@@ -22,8 +23,8 @@ abstract class MutablePeripheralBlockEntity<T : IOwnedPeripheral<*>>(
 
     // Client-server sync logic
 
-    override fun getUpdateTag(): CompoundTag {
-        var base = super.getUpdateTag()
+    override fun getUpdateTag(provider: HolderLookup.Provider): CompoundTag {
+        var base = super.getUpdateTag(provider)
         base = saveInternalData(base)
         return base
     }
@@ -32,15 +33,15 @@ abstract class MutablePeripheralBlockEntity<T : IOwnedPeripheral<*>>(
 
     // Data save logic
 
-    override fun load(compound: CompoundTag) {
-        super.load(compound)
+    override fun loadAdditional(compound: CompoundTag, provider: HolderLookup.Provider) {
+        super.loadAdditional(compound, provider)
         loadInternalData(compound)
     }
 
-    override fun saveAdditional(compound: CompoundTag) {
+    override fun saveAdditional(compound: CompoundTag, provider: HolderLookup.Provider) {
         var tag: CompoundTag = compound
         tag = saveInternalData(tag)
-        return super.saveAdditional(tag)
+        return super.saveAdditional(tag, provider)
     }
 
     // Server->client sync logic

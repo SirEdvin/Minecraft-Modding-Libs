@@ -2,137 +2,62 @@ package site.siredvin.broccolium.modules.data.recipe
 
 import com.google.common.collect.Lists
 import com.google.common.collect.Maps
-import com.google.common.collect.Sets
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
-import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.advancements.Criterion
+import net.minecraft.data.recipes.RecipeBuilder
+import net.minecraft.data.recipes.RecipeCategory
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.ShapedRecipe
+import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
-import site.siredvin.broccolium.modules.platform.PlatformRegistries
-import java.util.function.Consumer
+import java.util.*
 
-class TweakedShapedRecipeBuilder(val _result: Item, val count: Int) {
+class TweakedShapedRecipeBuilder(private val result: ItemLike, private val count: Int = 1, private val category: RecipeCategory = RecipeCategory.MISC) : RecipeBuilder {
     private val rows: MutableList<String> = Lists.newArrayList()
     private val key: MutableMap<Char, Ingredient> = Maps.newLinkedHashMap()
     private var group: String? = null
 
-    companion object {
-        fun shaped(itemLike: ItemLike): TweakedShapedRecipeBuilder = shaped(itemLike, 1)
+    fun define(char: Char, ing: TagKey<Item>): TweakedShapedRecipeBuilder = this.define(char, Ingredient.of(ing))
 
-        fun shaped(itemLike: ItemLike, i: Int): TweakedShapedRecipeBuilder = TweakedShapedRecipeBuilder(itemLike.asItem(), i)
-    }
+    fun define(char: Char, ing: ItemLike): TweakedShapedRecipeBuilder = this.define(char, Ingredient.of(*arrayOf(ing)))
 
-    fun define(character: Char, tagKey: TagKey<Item>): TweakedShapedRecipeBuilder = this.define(character, Ingredient.of(tagKey))
-
-    fun define(character: Char, itemLike: ItemLike): TweakedShapedRecipeBuilder = this.define(character, Ingredient.of(itemLike))
-
-    fun define(character: Char, ingredient: Ingredient): TweakedShapedRecipeBuilder = if (key.containsKey(character)) {
-        throw IllegalArgumentException("Symbol '$character' is already defined!")
-    } else if (character == ' ') {
-        throw IllegalArgumentException("Symbol ' ' (whitespace) is reserved and cannot be defined")
-    } else {
-        key[character] = ingredient
-        this
-    }
-
-    fun pattern(string: String): TweakedShapedRecipeBuilder = if (rows.isNotEmpty() && string.length != rows[0].length) {
-        throw IllegalArgumentException("Pattern must be the same width on every line!")
-    } else {
-        rows.add(string)
-        this
-    }
-
-    fun group(string: String): TweakedShapedRecipeBuilder {
-        group = string
+    fun define(char: Char, ing: Ingredient): TweakedShapedRecipeBuilder {
+        require(!key.containsKey(char)) { "Symbol '$char' is already defined!" }
+        require(char != ' ') { "Symbol ' ' (whitespace) is reserved and cannot be defined" }
+        key[char] = ing
         return this
     }
 
-    val result: Item
-        get() = _result
-
-    fun save(consumer: Consumer<FinishedRecipe>) {
-        this.save(consumer, PlatformRegistries.ITEMS.getKey(result))
+    fun pattern(line: String): TweakedShapedRecipeBuilder {
+        require(!(rows.isNotEmpty() && line.length != rows[0].length)) { "Pattern must be the same width on every line!" }
+        rows.add(line)
+        return this
     }
 
-    fun save(consumer: Consumer<FinishedRecipe>, resourceLocation: ResourceLocation) {
-        ensureValid(resourceLocation)
-        val var10004 = result
-        val var10005 = count
-        val var10006 = if (group == null) "" else group!!
-        val var10007: List<String> = rows
-        val var10008: Map<Char, Ingredient> = key
-        consumer.accept(
-            Result(
-                resourceLocation,
-                var10004,
-                var10005,
-                var10006,
-                var10007,
-                var10008,
+    override fun unlockedBy(p0: String, p1: Criterion<*>): TweakedShapedRecipeBuilder = this
+
+    override fun group(group: String?): TweakedShapedRecipeBuilder {
+        this.group = group
+        return this
+    }
+
+    override fun getResult(): Item = result.asItem()
+
+    override fun save(output: RecipeOutput, id: ResourceLocation) {
+        val pattern = ShapedRecipePattern.of(this.key, this.rows)
+        val recipe = ShapedRecipe(
+            Objects.requireNonNullElse(this.group, "") as String,
+            RecipeBuilder.determineBookCategory(
+                this.category,
             ),
+            pattern,
+            ItemStack(this.result, this.count),
+            false,
         )
-    }
-
-    private fun ensureValid(resourceLocation: ResourceLocation) {
-        check(rows.isNotEmpty()) { "No pattern is defined for shaped recipe $resourceLocation!" }
-        val set: MutableSet<Char> = Sets.newHashSet(key.keys)
-        set.remove(' ')
-        val var3: Iterator<*> = rows.iterator()
-        while (var3.hasNext()) {
-            val string = var3.next() as String
-            for (element in string) {
-                check(!(!key.containsKey(element) && element != ' ')) { "Pattern in recipe $resourceLocation uses undefined symbol '$element'" }
-                set.remove(element)
-            }
-        }
-        check(set.isEmpty()) { "Ingredients are defined but not used in pattern for recipe $resourceLocation" }
-        check(!(rows.size == 1 && rows[0].length == 1)) { "Shaped recipe $resourceLocation only takes in a single item - should it be a shapeless recipe instead?" }
-    }
-
-    private class Result(
-        private val id: ResourceLocation,
-        private val result: Item,
-        private val count: Int,
-        private val group: String,
-        private val pattern: List<String>,
-        private val key: Map<Char, Ingredient>,
-    ) : FinishedRecipe {
-        override fun serializeRecipeData(jsonObject: JsonObject) {
-            if (group.isNotEmpty()) {
-                jsonObject.addProperty("group", group)
-            }
-            val jsonArray = JsonArray()
-            val var3: Iterator<*> = pattern.iterator()
-            while (var3.hasNext()) {
-                val string = var3.next() as String
-                jsonArray.add(string)
-            }
-            jsonObject.add("pattern", jsonArray)
-            val jsonObject2 = JsonObject()
-            val var7: Iterator<*> = key.entries.iterator()
-            while (var7.hasNext()) {
-                val (key1, value) = var7.next() as Map.Entry<*, *>
-                jsonObject2.add(key1.toString(), (value as Ingredient).toJson())
-            }
-            jsonObject.add("key", jsonObject2)
-            val jsonObject3 = JsonObject()
-            jsonObject3.addProperty("item", PlatformRegistries.ITEMS.getKey(result).toString())
-            if (count > 1) {
-                jsonObject3.addProperty("count", count)
-            }
-            jsonObject.add("result", jsonObject3)
-        }
-
-        override fun getType(): RecipeSerializer<*> = RecipeSerializer.SHAPED_RECIPE
-
-        override fun getId(): ResourceLocation = id
-
-        override fun serializeAdvancement(): JsonObject? = null
-
-        override fun getAdvancementId(): ResourceLocation? = null
+        output.accept(id, recipe, null)
     }
 }

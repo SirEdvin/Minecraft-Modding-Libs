@@ -8,7 +8,7 @@ import site.siredvin.broccolium.modules.storage.energy.EnergyStorageUtils
 import site.siredvin.broccolium.modules.storage.energy.EnergyUnit
 import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
 import java.util.function.Predicate
-import kotlin.test.assertEquals
+import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 abstract class EnergyStorageTests {
     companion object {
@@ -24,9 +24,9 @@ abstract class EnergyStorageTests {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, true)
         val to = createStorage(AgnosticEnergyStack(defaultUnits, 500), 1000, false)
         val moved = from.moveTo(to, 1000, EnergyStorageUtils.ALWAYS)
-        assertEquals(500, moved)
-        assertEquals(500, from.energy.amount)
-        assertEquals(1000, to.energy.amount)
+        assertEquals("count", 500L, moved)
+        assertEquals("from count", 500L, from.energy.amount)
+        assertEquals("to count", 1000L, to.energy.amount)
     }
 
     @Test
@@ -34,11 +34,11 @@ abstract class EnergyStorageTests {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, true)
         val to = createStorage(AgnosticEnergyStack(DUMMY_ENERGY, 500), 1000, false)
         val moved = from.moveTo(to, 1000, EnergyStorageUtils.ALWAYS)
-        assertEquals(0, moved)
-        assertEquals(1000, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(500, to.energy.amount)
-        assertEquals(DUMMY_ENERGY, to.energy.unit)
+        assertEquals("count", 0L, moved)
+        assertEquals("count", 1000L, from.energy.amount)
+        assertEquals("count", defaultUnits, from.energy.unit)
+        assertEquals("count", 500L, to.energy.amount)
+        assertEquals("count", DUMMY_ENERGY, to.energy.unit)
     }
 
     @Test
@@ -46,11 +46,11 @@ abstract class EnergyStorageTests {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, true)
         val to = createStorage(AgnosticEnergyStack(Energies.EMPTY, 0), 1000, false)
         val moved = from.moveTo(to, 1000, EnergyStorageUtils.ALWAYS)
-        assertEquals(1000, moved)
-        assertEquals(0, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(1000, to.energy.amount)
-        assertEquals(defaultUnits, to.energy.unit)
+        assertEquals("count", 1000L, moved)
+        assertEquals("count", 0L, from.energy.amount)
+        assertEquals("count", defaultUnits, from.energy.unit)
+        assertEquals("count", 1000L, to.energy.amount)
+        assertEquals("count", defaultUnits, to.energy.unit)
     }
 
     @Test
@@ -58,9 +58,9 @@ abstract class EnergyStorageTests {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, false)
         val to = createStorage(AgnosticEnergyStack(defaultUnits, 500), 1000, true)
         val moved = to.moveFrom(from, 1000, EnergyStorageUtils.ALWAYS)
-        assertEquals(500, moved)
-        assertEquals(500, from.energy.amount)
-        assertEquals(1000, to.energy.amount)
+        assertEquals("count", 500L, moved)
+        assertEquals("count", 500L, from.energy.amount)
+        assertEquals("count", 1000L, to.energy.amount)
     }
 
     @Test
@@ -68,11 +68,11 @@ abstract class EnergyStorageTests {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, false)
         val to = createStorage(AgnosticEnergyStack(DUMMY_ENERGY, 500), 1000, true)
         val moved = to.moveFrom(from, 1000, EnergyStorageUtils.ALWAYS)
-        assertEquals(0, moved)
-        assertEquals(1000, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(500, to.energy.amount)
-        assertEquals(DUMMY_ENERGY, to.energy.unit)
+        assertEquals("count", 0L, moved)
+        assertEquals("count", 1000L, from.energy.amount)
+        assertEquals("count", defaultUnits, from.energy.unit)
+        assertEquals("count", 500L, to.energy.amount)
+        assertEquals("count", DUMMY_ENERGY, to.energy.unit)
     }
 
     @Test
@@ -80,11 +80,11 @@ abstract class EnergyStorageTests {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, false)
         val to = createStorage(AgnosticEnergyStack(Energies.EMPTY, 0), 1000, true)
         val moved = to.moveFrom(from, 1000, EnergyStorageUtils.ALWAYS)
-        assertEquals(1000, moved)
-        assertEquals(0, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(1000, to.energy.amount)
-        assertEquals(defaultUnits, to.energy.unit)
+        assertEquals("count", 1000L, moved)
+        assertEquals("count", 0L, from.energy.amount)
+        assertEquals("count", defaultUnits, from.energy.unit)
+        assertEquals("count", 1000L, to.energy.amount)
+        assertEquals("count", defaultUnits, to.energy.unit)
     }
 
     @Test
@@ -95,11 +95,11 @@ abstract class EnergyStorageTests {
             it.unit == defaultUnits
         }
         val movedAmount = from.moveTo(to, 1000, takePredicate = predicate)
-        assertEquals(1000, movedAmount)
-        assertEquals(0, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(1000, to.energy.amount)
-        assertEquals(defaultUnits, to.energy.unit)
+        assertEquals("count", 1000L, movedAmount)
+        assertEquals("count", 0L, from.energy.amount)
+        assertEquals("count", defaultUnits, from.energy.unit)
+        assertEquals("count", 1000L, to.energy.amount)
+        assertEquals("count", defaultUnits, to.energy.unit)
     }
 
     @Test
@@ -110,10 +110,10 @@ abstract class EnergyStorageTests {
             it.unit == defaultUnits
         }
         val movedAmount = from.moveTo(to, 1000, takePredicate = predicate)
-        assertEquals(0, movedAmount)
-        assertEquals(1000, from.energy.amount)
-        assertEquals(DUMMY_ENERGY, from.energy.unit)
-        assertEquals(0, to.energy.amount)
-        assertEquals(Energies.EMPTY, to.energy.unit)
+        assertEquals("count", 0L, movedAmount)
+        assertEquals("count", 1000L, from.energy.amount)
+        assertEquals("count", DUMMY_ENERGY, from.energy.unit)
+        assertEquals("count", 0L, to.energy.amount)
+        assertEquals("count", Energies.EMPTY, to.energy.unit)
     }
 }

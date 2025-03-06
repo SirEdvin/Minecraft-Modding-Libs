@@ -3,7 +3,6 @@ package site.siredvin.tweakium.modules.peripheral.owner
 import dan200.computercraft.api.lua.LuaException
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
@@ -16,6 +15,7 @@ import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
 import site.siredvin.broccolium.modules.base.ext.toVec3
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import site.siredvin.tweakium.modules.player.FakePlayerProviderEntity
@@ -30,14 +30,10 @@ open class EntityProxyPeripheralOwner<T>(protected val blockEntity: T, protected
         get() = Direction.fromYRot(entity.yRot.toDouble())
     override val owner: Player?
         get() = (blockEntity as? IOwnedBlockEntity)?.player
-    override val dataStorage: CompoundTag
+    override val dataStorage: IDataStorage
         get() = DataStorageUtil.getDataStorage(blockEntity)
     override val storage: SlottedAgnosticItemStorage? by lazy {
         AgnosticItemStorageLookup.extractStorage(entity.level(), entity) as? SlottedAgnosticItemStorage
-    }
-
-    override fun markDataStorageDirty() {
-        blockEntity.setChanged()
     }
 
     override fun <T> withPlayer(

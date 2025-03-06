@@ -3,21 +3,18 @@ package site.siredvin.broccolium.modules.base.block
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.HorizontalDirectionalBlock
-import net.minecraft.world.level.block.Mirror
-import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import site.siredvin.broccolium.modules.base.util.BlockUtil
-import java.util.function.Supplier
+import site.siredvin.broccolium.modules.platform.api.RegistryEntry
 
-open class FacingBlockEntityBlock<T : BlockEntity>(
-    private val blockEntityTypeSup: Supplier<BlockEntityType<T>>,
-    private val isRotatable: Boolean,
+abstract class FacingBlockEntityBlock<T : BlockEntity>(
+    val blockEntityTypeSup: RegistryEntry<BlockEntityType<T>>,
+    val isRotatable: Boolean,
     belongToTickingEntity: Boolean = false,
     properties: Properties = BlockUtil.defaultProperties(),
 ) : BaseBlockEntityBlock<T>(belongToTickingEntity, properties) {

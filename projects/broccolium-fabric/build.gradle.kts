@@ -6,12 +6,13 @@ plugins {
     id("site.siredvin.publishing")
 }
 
-val modVersion: String by extra
 val minecraftVersion: String by extra
+val broccoliumVersion: String by extra
 
 baseShaking {
     projectPart.set("fabric")
     projectName.set("broccolium")
+    projectVersion.set(broccoliumVersion)
     integrationRepositories.set(true)
     shake()
 }
@@ -59,12 +60,13 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
     }
 
-    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
     testCompileOnly(libs.autoService)
     testAnnotationProcessor(libs.autoService)
     testImplementation(libs.byteBuddy)
     testImplementation(libs.byteBuddyAgent)
     testImplementation(libs.bundles.test)
+    testImplementation(libs.bundles.fabric.test)
 }
 
 tasks.test {
@@ -74,6 +76,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(broccoliumVersion)
     shake()
     project.publishing {
         publications {

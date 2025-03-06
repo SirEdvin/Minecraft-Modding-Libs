@@ -1,19 +1,20 @@
 package site.siredvin.broccolium.modules.base.block
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.BlockItemStateProperties
+import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
 import site.siredvin.broccolium.modules.base.api.ISyncingBlockEntity
 import site.siredvin.broccolium.modules.base.util.BlockUtil
-import site.siredvin.broccolium.modules.platform.PlatformRegistries
 
 abstract class BaseNBTBlock<T>(
     belongToTickingEntity: Boolean,
@@ -25,11 +26,18 @@ abstract class BaseNBTBlock<T>(
         val stack: ItemStack = createItemStack()
         val internalData = blockEntity.saveInternalData(CompoundTag())
         if (!internalData.isEmpty) {
-            stack.addTagElement(INTERNAL_DATA_TAG, internalData)
+            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(internalData))
         }
         val savableProperties: List<Property<*>> = savableProperties
         if (savableProperties.isNotEmpty() && !defaultBlockState().equals(state)) {
-            stack.addTagElement(BLOCK_STATE_TAG, NbtUtils.writeBlockState(state))
+            val value = state.properties.fold(BlockItemStateProperties.EMPTY) { acc, property ->
+                acc.with(
+                    property,
+                    state,
+                )
+            }
+
+            stack.set(DataComponents.BLOCK_STATE, value)
         }
         return stack
     }
@@ -37,7 +45,7 @@ abstract class BaseNBTBlock<T>(
     open val savableProperties: List<Property<*>>
         get() = emptyList()
 
-    override fun playerWillDestroy(level: Level, pos: BlockPos, state: BlockState, player: Player) {
+    override fun playerWillDestroy(level: Level, pos: BlockPos, state: BlockState, player: Player): BlockState {
         val blockEntity = level.getBlockEntity(pos)
         if (blockEntity is ISyncingBlockEntity) {
             if (!level.isClientSide && !player.isCreative) {
@@ -53,7 +61,7 @@ abstract class BaseNBTBlock<T>(
                 level.addFreshEntity(itemDrop)
             }
         }
-        super.playerWillDestroy(level, pos, state, player)
+        return super.playerWillDestroy(level, pos, state, player)
     }
 
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
@@ -63,32 +71,22 @@ abstract class BaseNBTBlock<T>(
         val blockEntity = level.getBlockEntity(pos)
         if (blockEntity is ISyncingBlockEntity) {
             if (!level.isClientSide) {
-                val data = stack.tag
-                if (data != null) {
-                    if (data.contains(BLOCK_STATE_TAG)) {
-                        val savedState: BlockState = NbtUtils.readBlockState(
-                            PlatformRegistries.BLOCKS,
-                            data.getCompound(
-                                BLOCK_STATE_TAG,
-                            ),
-                        )
-                        for (property in savableProperties) {
-                            @Suppress("UNCHECKED_CAST")
-                            property as Property<Comparable<Any>>
-                            state = state.setValue(property, savedState.getValue(property) as Comparable<Any>)
-                        }
+                stack.components
+                if (stack.components.has(DataComponents.BLOCK_STATE)) {
+                    val savedState: BlockState = stack.components.get(
+                        DataComponents.BLOCK_STATE,
+                    )!!.apply(this.defaultBlockState())
+                    for (property in savableProperties) {
+                        @Suppress("UNCHECKED_CAST")
+                        property as Property<Comparable<Any>>
+                        state = state.setValue(property, savedState.getValue(property) as Comparable<Any>)
                     }
-                    if (data.contains(INTERNAL_DATA_TAG)) {
-                        state = blockEntity.loadInternalData(data.getCompound(INTERNAL_DATA_TAG), state)
-                        blockEntity.pushInternalDataChangeToClient(state)
-                    }
+                }
+                if (stack.components.has(DataComponents.BLOCK_ENTITY_DATA)) {
+                    state = blockEntity.loadInternalData(stack.components.get(DataComponents.BLOCK_ENTITY_DATA)!!.copyTag(), state)
+                    blockEntity.pushInternalDataChangeToClient(state)
                 }
             }
         }
-    }
-
-    companion object {
-        const val INTERNAL_DATA_TAG = "internalData"
-        const val BLOCK_STATE_TAG = "blockState"
     }
 }

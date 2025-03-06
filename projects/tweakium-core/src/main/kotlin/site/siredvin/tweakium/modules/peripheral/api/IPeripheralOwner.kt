@@ -5,7 +5,6 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -26,10 +25,8 @@ interface IPeripheralOwner {
     val pos: BlockPos
     val facing: Direction
     val owner: Player?
-    val dataStorage: CompoundTag
+    val dataStorage: IDataStorage
     val storage: SlottedAgnosticItemStorage?
-
-    fun markDataStorageDirty()
 
     fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T
     val toolInMainHand: ItemStack

@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import site.siredvin.broccolium.modules.data.BroccoliumText
 import java.util.function.Function
@@ -19,11 +18,11 @@ open class HiddenDescriptiveBlockItem(block: Block, properties: Properties, priv
 
     override fun appendHoverText(
         itemStack: ItemStack,
-        level: Level?,
+        context: TooltipContext,
         list: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {
-        super.appendHoverText(itemStack, level, list, tooltipFlag)
+        super.appendHoverText(itemStack, context, list, tooltipFlag)
         if (alwaysShow || InputConstants.isKeyDown(Minecraft.getInstance().window.window, InputConstants.KEY_LSHIFT)) {
             list.addAll(tooltips)
         } else {

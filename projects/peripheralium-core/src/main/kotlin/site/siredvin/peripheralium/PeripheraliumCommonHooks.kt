@@ -9,7 +9,7 @@ object PeripheraliumCommonHooks {
         Blocks.doSomething()
         Items.doSomething()
         PeripheraliumPlatform.registerCreativeTab(
-            ResourceLocation(PeripheraliumCore.MOD_ID, "tab"),
+            ResourceLocation.fromNamespaceAndPath(PeripheraliumCore.MOD_ID, "tab"),
             PeripheraliumCore.configureCreativeTab(PlatformToolkit.get().createTabBuilder()).build(),
         )
     }

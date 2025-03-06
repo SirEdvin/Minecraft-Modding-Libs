@@ -4,7 +4,6 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -13,6 +12,7 @@ import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.ability.TurtleFuelBoon
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import site.siredvin.tweakium.modules.player.FakePlayerProviderTurtle
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
@@ -32,15 +32,11 @@ open class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide
             val owningPlayer = turtle.owningPlayer ?: return null
             return turtle.level.getPlayerByUUID(owningPlayer.id)
         }
-    override val dataStorage: CompoundTag
+    override val dataStorage: IDataStorage
         get() = DataStorageUtil.getDataStorage(turtle, side)
 
     override val storage: SlottedAgnosticItemStorage
         get() = ContainerWrapper(turtle.inventory)
-
-    override fun markDataStorageDirty() {
-        turtle.updateUpgradeNBTData(side)
-    }
 
     override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T = FakePlayerProviderTurtle.withPlayer(turtle, function, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
 
@@ -56,7 +52,7 @@ open class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide
     }
 
     override fun destroyUpgrade() {
-        turtle.setUpgradeWithData(side, null)
+        turtle.setUpgrade(side, null)
     }
 
     override fun isMovementPossible(level: Level, pos: BlockPos): Boolean {

@@ -1,6 +1,5 @@
 package site.siredvin.tweakium.modules.peripheral.representation
 
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
@@ -76,18 +75,17 @@ val beeNestAnalyze = BiConsumer<BlockEntity, MutableMap<String, Any>> { entity, 
     if (entity is BeehiveBlockEntity) {
         data["isSmoked"] = entity.isSedated
         data["isFull"] = entity.isFull
-        data["bees"] = entity.writeBees().map {
-            it as CompoundTag
+        data["bees"] = entity.bees.map {
             val beeData = hashMapOf<String, Any>()
-            beeData["ticksInHive"] = it.getInt("TicksInHive")
-            beeData["minOccupationTicks"] = it.getInt("MinOccupationTicks")
-            val entityData = it.getCompound("EntityData")
+            beeData["ticksInHive"] = it.ticksInHive
+            beeData["minTicksInHive"] = it.minTicksInHive
+            val entityData = it.entityData.copyTag()
             beeData["hasFlower"] = entityData.contains("FlowerPos")
             beeData["health"] = entityData.getInt("Health")
             beeData["hasStung"] = entityData.getBoolean("HasStung")
             beeData["hasNectar"] = entityData.getBoolean("HasNectar")
             beeData["id"] = entityData.getString("id")
-            beeData["name"] = PlatformRegistries.ENTITY_TYPES.get(ResourceLocation(beeData["id"] as String)).description.string
+            beeData["name"] = PlatformRegistries.ENTITY_TYPES.get(ResourceLocation.parse(beeData["id"] as String)).description.string
             return@map beeData
         }
     }

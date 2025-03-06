@@ -1,8 +1,11 @@
 package site.siredvin.tweakium.modules.turtle
 
 import dan200.computercraft.api.turtle.ITurtleAccess
+import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.turtle.TurtleSide
 import dan200.computercraft.api.turtle.TurtleUpgradeType
+import dan200.computercraft.api.upgrades.UpgradeType
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -11,7 +14,7 @@ import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeIDSupplier
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradePeripheralBuilder
 
 abstract class PeripheralTurtleUpgrade<T : IOwnedPeripheral<*>> : BaseTurtleUpgrade<T> {
-    constructor(id: ResourceLocation, adjective: String, item: ItemStack) : super(
+    constructor(id: ResourceLocation, adjective: Component, item: ItemStack) : super(
         id,
         TurtleUpgradeType.PERIPHERAL,
         adjective,
@@ -32,7 +35,10 @@ abstract class PeripheralTurtleUpgrade<T : IOwnedPeripheral<*>> : BaseTurtleUpgr
         turtleID: ResourceLocation,
         stack: ItemStack,
         private val constructor: TurtleUpgradePeripheralBuilder<T>,
+        type: UpgradeType<Dynamic<T>>? = null,
     ) : PeripheralTurtleUpgrade<T>(turtleID, stack) {
+        private val type = type ?: UpgradeType.simpleWithCustomItem { Dynamic(turtleID, stack, constructor) }
         override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T = constructor.build(turtle, side)
+        override fun getType(): UpgradeType<out ITurtleUpgrade> = type
     }
 }

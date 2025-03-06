@@ -44,7 +44,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
             Predicate { true }
         } else {
-            val fluid = PlatformRegistries.FLUIDS.get(ResourceLocation(fluidName.get()))
+            val fluid = PlatformRegistries.FLUIDS.get(ResourceLocation.parse(fluidName.get()))
             if (fluid.isSame(Fluids.EMPTY)) {
                 throw LuaException("There is no fluid ${fluidName.get()}")
             }
@@ -65,7 +65,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
             Predicate { true }
         } else {
-            val fluid = PlatformRegistries.FLUIDS.get(ResourceLocation(fluidName.get()))
+            val fluid = PlatformRegistries.FLUIDS.get(ResourceLocation.parse(fluidName.get()))
             if (fluid.isSame(Fluids.EMPTY)) {
                 throw LuaException("There is no fluid ${fluidName.get()}")
             }

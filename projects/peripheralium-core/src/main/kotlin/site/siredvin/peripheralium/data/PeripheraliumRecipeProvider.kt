@@ -1,39 +1,38 @@
 package site.siredvin.peripheralium.data
 
+import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.data.recipes.FinishedRecipe
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Ingredient
+import site.siredvin.broccolium.modules.data.recipe.TweakedCookingRecipeBuilder
 import site.siredvin.broccolium.modules.data.recipe.TweakedShapedRecipeBuilder
 import site.siredvin.broccolium.modules.data.recipe.TweakedShapelessRecipeBuilder
-import site.siredvin.broccolium.modules.data.recipe.TweakedSmeltingRecipeBuilder
 import site.siredvin.broccolium.modules.platform.PlatformIngredients
 import site.siredvin.peripheralium.Blocks
 import site.siredvin.peripheralium.Items
-import java.util.function.Consumer
+import java.util.concurrent.CompletableFuture
 
-class PeripheraliumRecipeProvider(output: PackOutput) : RecipeProvider(output) {
-    override fun buildRecipes(consumer: Consumer<FinishedRecipe>) {
+class PeripheraliumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) : RecipeProvider(output, registries) {
+
+    override fun buildRecipes(consumer: RecipeOutput) {
         val ingredients = PlatformIngredients.get()
 
-        TweakedShapelessRecipeBuilder.shapeless(Items.PERIPHERALIUM_DUST.get())
+        TweakedShapelessRecipeBuilder(Items.PERIPHERALIUM_DUST.get())
             .requires(ingredients.redstone)
             .requires(ingredients.glowstoneDust)
             .save(consumer)
 
-        TweakedShapelessRecipeBuilder.shapeless(Blocks.PERIPHERALIUM_BLOCK.get())
+        TweakedShapelessRecipeBuilder(Blocks.PERIPHERALIUM_BLOCK.get())
             .requires(Items.PERIPHERALIUM_DUST.get(), 9)
             .save(consumer)
 
-        TweakedShapelessRecipeBuilder.shapeless(Items.PERIPHERALIUM_DUST.get(), 9)
+        TweakedShapelessRecipeBuilder(Items.PERIPHERALIUM_DUST.get(), 9)
             .requires(Blocks.PERIPHERALIUM_BLOCK.get().asItem())
-            .save(consumer, ResourceLocation("peripheralium:peripheralium_block_uncraft"))
+            .save(consumer, ResourceLocation.parse("peripheralium:peripheralium_block_uncraft"))
 
-        TweakedSmeltingRecipeBuilder.smelting(Ingredient.of(Items.PERIPHERALIUM_BLEND.get()), Items.PERIPHERALIUM_DUST.get(), 0.7f, 200)
-            .save(consumer, ResourceLocation("peripheralium:peripheralium_dust_smelting"))
-
-        TweakedShapedRecipeBuilder.shaped(Items.PERIPHERALIUM_UPGRADE_TEMPLATE.get(), 4)
+        TweakedShapedRecipeBuilder(Items.PERIPHERALIUM_UPGRADE_TEMPLATE.get(), 4)
             .define('P', Ingredient.of(Items.PERIPHERALIUM_DUST.get()))
             .define('X', ingredients.xpBottle)
             .pattern("PPP")

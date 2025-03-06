@@ -1,6 +1,6 @@
 package site.siredvin.broccolium.modules.data.loot
 
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -17,11 +17,11 @@ import java.util.function.Supplier
 class LootTableHelper(private val informationHolder: ModInformationHolder) {
     private val registeredBlocks: MutableSet<Block> = mutableSetOf()
 
-    fun dropSelf(consumer: BiConsumer<ResourceLocation, LootTable.Builder>, wrapper: Supplier<out Block>) {
+    fun dropSelf(consumer: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>, wrapper: Supplier<out Block>) {
         dropBlock(consumer, wrapper, LootItem.lootTableItem(wrapper.get()), ExplosionCondition.survivesExplosion())
     }
 
-    fun dropNamedBlock(consumer: BiConsumer<ResourceLocation, LootTable.Builder>, wrapper: Supplier<out Block>) {
+    fun dropNamedBlock(consumer: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>, wrapper: Supplier<out Block>) {
         dropBlock(
             consumer,
             wrapper,
@@ -31,7 +31,7 @@ class LootTableHelper(private val informationHolder: ModInformationHolder) {
     }
 
     fun dropBlock(
-        consumer: BiConsumer<ResourceLocation, LootTable.Builder>,
+        consumer: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>,
         wrapper: Supplier<out Block>,
         drop: LootPoolEntryContainer.Builder<*>,
         condition: LootItemCondition.Builder,

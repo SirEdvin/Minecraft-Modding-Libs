@@ -50,9 +50,8 @@ object NBTUtil {
         if (base64 == null) return null
         try {
             Base64.getDecoder().wrap(ByteArrayInputStream(base64.toByteArray()))
-                .use { inputStream -> return NbtIo.readCompressed(inputStream) }
+                .use { inputStream -> return NbtIo.readCompressed(inputStream, NbtAccounter(1024, 10240)) }
         } catch (ex: IOException) {
-//            AdvancedPeripherals.debug("Could not parse binary data to NBT", Level.ERROR);
             ex.printStackTrace()
             return null
         }

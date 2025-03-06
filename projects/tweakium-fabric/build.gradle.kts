@@ -6,12 +6,13 @@ plugins {
     id("site.siredvin.publishing")
 }
 
-val modVersion: String by extra
+val tweakiumVersion: String by extra
 val minecraftVersion: String by extra
 
 baseShaking {
     projectPart.set("fabric")
     projectName.set("tweakium")
+    projectVersion.set(tweakiumVersion)
     integrationRepositories.set(true)
     shake()
 }
@@ -57,9 +58,7 @@ dependencies {
     }
 
     modImplementation(project(":broccolium-fabric")) {
-        exclude("net.fabricmc.fabric-api")
-        exclude("net.fabricmc", "fabric-loader")
-        exclude("site.siredvin")
+        isTransitive = false
     }
 
     modRuntimeOnly(libs.bundles.externalMods.fabric.runtime) {
@@ -82,6 +81,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(tweakiumVersion)
     shake()
     project.publishing {
         publications {

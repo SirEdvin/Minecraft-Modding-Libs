@@ -6,7 +6,6 @@ import net.minecraft.network.chat.contents.TranslatableContents
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.base.util.itemTooltip
 
 open class DescriptiveItem(properties: Properties) : Item(properties) {
@@ -15,7 +14,7 @@ open class DescriptiveItem(properties: Properties) : Item(properties) {
     }
     override fun appendHoverText(
         itemStack: ItemStack,
-        level: Level?,
+        context: TooltipContext,
         list: MutableList<Component>,
         tooltipFlag: TooltipFlag,
     ) {

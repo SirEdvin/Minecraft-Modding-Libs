@@ -58,7 +58,7 @@ object ItemStorageUtils {
         if (!ItemStack.isSameItem(first, second)) {
             return false
         }
-        return first.damageValue == second.damageValue && ItemStack.isSameItemSameTags(first, second)
+        return first.damageValue == second.damageValue && ItemStack.isSameItemSameComponents(first, second)
     }
 
     fun canMerge(first: ItemStack, second: ItemStack, stackLimit: Int = -1): Boolean {

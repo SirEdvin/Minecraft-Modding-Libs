@@ -12,13 +12,13 @@ import site.siredvin.tweakium.TweakiumCore
 import java.util.*
 
 val TURTLE_LEFT_UPGRADE = ModelTemplate(
-    Optional.of(ResourceLocation(TweakiumCore.MOD_ID, "base/upgrade_base_left")),
+    Optional.of(ResourceLocation.fromNamespaceAndPath(TweakiumCore.MOD_ID, "base/upgrade_base_left")),
     Optional.empty(),
     TextureSlot.TEXTURE,
 )
 
 val TURTLE_RIGHT_UPGRADE = ModelTemplate(
-    Optional.of(ResourceLocation(TweakiumCore.MOD_ID, "base/upgrade_base_right")),
+    Optional.of(ResourceLocation.fromNamespaceAndPath(TweakiumCore.MOD_ID, "base/upgrade_base_right")),
     Optional.empty(),
     TextureSlot.TEXTURE,
 )

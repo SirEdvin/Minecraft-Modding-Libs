@@ -1,6 +1,8 @@
 package site.siredvin.broccolium.modules.base.blockentity
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderLookup.Provider
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.world.level.block.Block
@@ -23,8 +25,8 @@ abstract class MutableNBTBlockEntity(
 
     // Client-server sync logic
 
-    override fun getUpdateTag(): CompoundTag {
-        var base = super.getUpdateTag()
+    override fun getUpdateTag(provider: HolderLookup.Provider): CompoundTag {
+        var base = super.getUpdateTag(provider)
         base = saveInternalData(base)
         return base
     }
@@ -33,15 +35,15 @@ abstract class MutableNBTBlockEntity(
 
     // Data save logic
 
-    override fun load(compound: CompoundTag) {
-        super.load(compound)
-        loadInternalData(compound)
+    override fun loadAdditional(tag: CompoundTag, provider: HolderLookup.Provider) {
+        super.loadAdditional(tag, provider)
+        loadInternalData(tag)
     }
 
-    override fun saveAdditional(compound: CompoundTag) {
+    override fun saveAdditional(compound: CompoundTag, provider: Provider) {
         var tag: CompoundTag = compound
         tag = saveInternalData(tag)
-        return super.saveAdditional(tag)
+        return super.saveAdditional(tag, provider)
     }
 
     // Server->client sync logic

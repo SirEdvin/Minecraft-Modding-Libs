@@ -40,7 +40,7 @@ fun createFlatItem(
     slots.forEachIndexed { index, textureSlot ->
         mapping.put(textureSlot, textures[index])
     }
-    ModelTemplate(Optional.of(ResourceLocation("item/generated")), Optional.empty(), *slots)
+    ModelTemplate(Optional.of(ResourceLocation.withDefaultNamespace("item/generated")), Optional.empty(), *slots)
         .create(model, mapping, generators.output)
 }
 

@@ -18,22 +18,22 @@ mixin = "0.8.5"
 asm = "9.3"
 
 # Fabric dependencies
-fabric-api = "0.92.3+1.20.1"
+fabric-api = "0.115.1+1.21.1"
 fabric-loader = "0.16.10"
 fabric-kotlin = "1.11.0+kotlin.2.0.0"
 forgeconfigapirt = "8.0.0"
-modmenu = "7.2.1"
+modmenu = "11.0.1"
 
 # Forge dependencies
 forge = "47.1.0"
 forge-kotlin = "4.4.0"
-parchment = "2023.07.16"
-parchmentMc = "1.20.1"
+parchment = "2024.11.17"
+parchmentMc = "1.21.1"
 # Extra mod dependencies
 
 # Dev mod dependenceis
 jei = "15.1.0.19"
-rei = "12.1.785"
+rei = "16.0.799"
 
 # Testing
 autoService = "1.1.1"
@@ -54,9 +54,9 @@ kotlin-plugin = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.r
 spotless-plugin = {module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref="spotless"}
 
 # Core mod dependencies
-cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.20.1-common", version.ref = "cc-tweaked"}
-cc-tweaked-common-api = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "cc-tweaked"}
-cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.20.1-core", version.ref = "cc-tweaked"}
+cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.21.1-common", version.ref = "cc-tweaked"}
+cc-tweaked-common-api = {module = "cc.tweaked:cc-tweaked-1.21.1-common-api", version.ref = "cc-tweaked"}
+cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.21.1-core", version.ref = "cc-tweaked"}
 common-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt"}
 mixin = { module = "org.spongepowered:mixin", version.ref = "mixin" }
 
@@ -68,12 +68,13 @@ fabric-loader = {module = "net.fabricmc:fabric-loader", version.ref = "fabric-lo
 fabric-api = {module = "net.fabricmc.fabric-api:fabric-api", version.ref="fabric-api"}
 fabric-kotlin = {module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-kotlin"}
 fabric-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "forgeconfigapirt"}
-cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric-api", version.ref = "cc-tweaked"}
-cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric", version.ref = "cc-tweaked"}
+fabric-junit = { module = "net.fabricmc:fabric-loader-junit", version.ref = "fabric-loader" }
+cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.21.1-fabric-api", version.ref = "cc-tweaked"}
+cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.21.1-fabric", version.ref = "cc-tweaked"}
 modmenu = {module = "com.terraformersmc:modmenu", version.ref="modmenu"}
 
 # Forge mod dependencies
-cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref="cc-tweaked"}
+cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.21.1-forge", version.ref="cc-tweaked"}
 forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-kotlin"}
 
 # Dev mod dependencies
@@ -105,7 +106,8 @@ apicommon = []
 ccfabric-api = ["cc-tweaked-fabric-api", "cc-tweaked-core"]
 ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core"]
 fabric-core = ["fabric-loader"]
-fabric = ["fabric-api", "fabric-kotlin", "fabric-config"]
+fabric = ["fabric-api", "fabric-kotlin"]
+fabric-test = ["fabric-junit"]
 forge-raw = ["forge-kotlin"]
 forge-base = []
 forge-cc = ["cc-tweaked-forge"]

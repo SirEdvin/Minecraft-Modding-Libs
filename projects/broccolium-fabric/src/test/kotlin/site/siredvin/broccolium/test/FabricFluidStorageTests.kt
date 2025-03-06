@@ -3,6 +3,7 @@ package site.siredvin.broccolium.test
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
+import org.junit.jupiter.api.extension.ExtendWith
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.FabricAgnosticFluidStorage
@@ -11,6 +12,7 @@ import site.siredvin.broccolium.modules.storage.fluid.toVariant
 import site.siredvin.broccolium.test.storage.DummyFluidStorage
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class FabricFluidStorageTests : FluidStorageTests() {
 
     override fun createStorage(fluids: List<AgnosticFluidStack>, secondary: Boolean): AgnosticFluidStorage {
@@ -33,6 +35,7 @@ internal class FabricFluidStorageTests : FluidStorageTests() {
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class FabricDummyFluidStorageTests : FluidStorageTests() {
 
     override fun createStorage(fluids: List<AgnosticFluidStack>, secondary: Boolean): AgnosticFluidStorage {
@@ -58,6 +61,7 @@ internal class FabricDummyFluidStorageTests : FluidStorageTests() {
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class FabricReverseDummyFluidStorageTests : FluidStorageTests() {
 
     override fun createStorage(fluids: List<AgnosticFluidStack>, secondary: Boolean): AgnosticFluidStorage {

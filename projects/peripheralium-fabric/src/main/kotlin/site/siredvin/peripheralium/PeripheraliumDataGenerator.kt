@@ -8,6 +8,6 @@ import site.siredvin.peripheralium.data.PeripheraliumDataProviders
 class PeripheraliumDataGenerator : DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
-        PeripheraliumDataProviders.add(FabricGeneratorSink(fabricDataGenerator.createPack()))
+        PeripheraliumDataProviders.add(FabricGeneratorSink(fabricDataGenerator.createPack(), fabricDataGenerator.registries))
     }
 }

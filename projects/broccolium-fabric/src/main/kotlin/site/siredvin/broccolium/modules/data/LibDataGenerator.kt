@@ -6,6 +6,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 class LibDataGenerator : DataGeneratorEntrypoint {
 
     override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
-        LibDataProviders.add(FabricGeneratorSink(fabricDataGenerator.createPack()))
+        LibDataProviders.add(FabricGeneratorSink(fabricDataGenerator.createPack(), fabricDataGenerator.registries))
     }
 }

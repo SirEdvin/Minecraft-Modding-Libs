@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.Block
 import java.util.function.Consumer
 
 interface GeneratorSink {
+    fun <T : DataProvider> add(factory: TweakedDataProviderFactory<T>): T
     fun <T : DataProvider> add(factory: DataProvider.Factory<T>): T
     fun lootTable(tables: List<LootTableProvider.SubProviderEntry>)
     fun blockTags(modID: String, tags: Consumer<TagConsumer<Block>>): TagsProvider<Block>

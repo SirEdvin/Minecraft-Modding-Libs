@@ -3,6 +3,7 @@ package site.siredvin.broccolium.test
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.item.ItemStack
+import org.junit.jupiter.api.extension.ExtendWith
 import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
 import site.siredvin.broccolium.modules.storage.item.FabricSlottedStorageWrapper
 import site.siredvin.broccolium.modules.storage.item.FabricStorageWrapper
@@ -20,6 +21,7 @@ internal class TweakedFabricStorageWrapper(private val inventoryStorage: Invento
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class FabricSlottedStorageTests : SlottedStorageTests() {
 
     override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticItemStorage {
@@ -34,6 +36,7 @@ internal class FabricSlottedStorageTests : SlottedStorageTests() {
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class FabricStorageTests : StorageTests() {
 
     override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
@@ -48,6 +51,7 @@ internal class FabricStorageTests : StorageTests() {
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class CompactFabricSlottedStorageTests : SlottedStorageTests() {
 
     override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticItemStorage {
@@ -71,6 +75,7 @@ internal class CompactFabricSlottedStorageTests : SlottedStorageTests() {
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class CompactFabricStorageTests : StorageTests() {
 
     override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
@@ -88,6 +93,7 @@ internal class CompactFabricStorageTests : StorageTests() {
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class VerificationFabricStorageTests : StorageTests() {
     override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
         if (secondary) {
@@ -110,6 +116,7 @@ internal class VerificationFabricStorageTests : StorageTests() {
 }
 
 @WithMinecraft
+@ExtendWith(BroccoliumInitialization::class)
 internal class ReverseVerificationFabricStorageTests : StorageTests() {
     override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
         if (!secondary) {

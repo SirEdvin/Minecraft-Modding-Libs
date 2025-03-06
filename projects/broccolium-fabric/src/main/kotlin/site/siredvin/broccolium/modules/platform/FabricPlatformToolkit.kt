@@ -4,14 +4,9 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
-import net.fabricmc.fabric.api.`object`.builder.v1.block.entity.FabricBlockEntityTypeBuilder
-import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricEntityTypeBuilder
-import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.client.Minecraft
 import net.minecraft.core.*
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.network.FriendlyByteBuf
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -23,9 +18,7 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
@@ -93,8 +86,8 @@ object FabricPlatformToolkit : InnerPlatformToolkit {
         if (result != InteractionResult.PASS) return result
         val block = player.level().getBlockState(hit.blockPos)
         if (!block.isAir && canUseBlock.test(block)) {
-            val useResult = block.use(player.level(), player, InteractionHand.MAIN_HAND, hit)
-            if (useResult.consumesAction()) return useResult
+            val useResult = block.useItemOn(stack, player.level(), player, InteractionHand.MAIN_HAND, hit)
+            if (useResult.consumesAction()) return useResult.result()
         }
         return stack.useOn(UseOnContext(player, InteractionHand.MAIN_HAND, hit))
     }
@@ -104,14 +97,14 @@ object FabricPlatformToolkit : InnerPlatformToolkit {
     override fun <T : Entity> createEntityType(
         name: ResourceLocation,
         factory: Function<Level, T>,
-    ): EntityType<T> = FabricEntityTypeBuilder.create(MobCategory.MISC) { _, level -> factory.apply(level) }.build()
+    ): EntityType<T> = EntityType.Builder.of({ _, level -> factory.apply(level) }, MobCategory.MISC).build()
 
     override fun <T : BlockEntity> createBlockEntityType(
         factory: BiFunction<BlockPos, BlockState, T>,
         block: Block,
-    ): BlockEntityType<T> = FabricBlockEntityTypeBuilder.create({ t: BlockPos, u: BlockState ->
+    ): BlockEntityType<T> = BlockEntityType.Builder.of({ t: BlockPos, u: BlockState ->
         factory.apply(t, u)
-    }).addBlock(block).build()
+    }, block).build()
 
     override fun createTabBuilder(): CreativeModeTab.Builder = FabricItemGroup.builder()
 
@@ -125,17 +118,19 @@ object FabricPlatformToolkit : InnerPlatformToolkit {
     }
 
     override fun openMenu(player: Player, owner: MenuProvider, savingFunction: SavingFunction) {
-        player.openMenu(WrappedMenuProvider(owner, savingFunction))
+        // TODO: well, figure out?
+        throw NotImplementedError()
+//        player.openMenu(WrappedMenuProvider(owner, savingFunction))
     }
 
-    @JvmRecord
-    private data class WrappedMenuProvider(val owner: MenuProvider, val savingFunction: SavingFunction) : ExtendedScreenHandlerFactory {
-        override fun createMenu(id: Int, inventory: Inventory, player: Player): AbstractContainerMenu? = owner.createMenu(id, inventory, player)
-
-        override fun getDisplayName(): Component = owner.displayName
-
-        override fun writeScreenOpeningData(player: ServerPlayer, buf: FriendlyByteBuf) {
-            savingFunction.toBytes(buf)
-        }
-    }
+//    @JvmRecord
+//    private data class WrappedMenuProvider(val owner: MenuProvider, val savingFunction: SavingFunction) : ExtendedScreenHandlerFactory {
+//        override fun createMenu(id: Int, inventory: Inventory, player: Player): AbstractContainerMenu? = owner.createMenu(id, inventory, player)
+//
+//        override fun getDisplayName(): Component = owner.displayName
+//
+//        override fun writeScreenOpeningData(player: ServerPlayer, buf: FriendlyByteBuf) {
+//            savingFunction.toBytes(buf)
+//        }
+//    }
 }

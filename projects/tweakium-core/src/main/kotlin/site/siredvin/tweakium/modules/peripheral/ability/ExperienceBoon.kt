@@ -4,16 +4,12 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
 import net.minecraft.core.BlockPos
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
-import site.siredvin.tweakium.modules.peripheral.api.IPeripheralFunction
-import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOperation
-import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
-import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
+import site.siredvin.tweakium.modules.peripheral.api.*
 import site.siredvin.tweakium.modules.peripheral.representation.LuaInterpretation
 import site.siredvin.tweakium.modules.peripheral.util.radiusCorrect
 import kotlin.math.min
@@ -22,7 +18,7 @@ class ExperienceBoon(val owner: IPeripheralOwner, private val interactionRadius:
     companion object {
         private const val COLLECTED_XP_AMOUNT = "CollectedXPAmount"
 
-        fun getStoredXP(dataStorage: CompoundTag): Double = dataStorage.getDouble(COLLECTED_XP_AMOUNT)
+        fun getStoredXP(dataStorage: IDataStorage): Double = dataStorage.getDouble(COLLECTED_XP_AMOUNT)
     }
 
     override val operations: List<IPeripheralOperation<*>>
@@ -36,7 +32,6 @@ class ExperienceBoon(val owner: IPeripheralOwner, private val interactionRadius:
 
     fun adjustStoredXP(amount: Double) {
         owner.dataStorage.putDouble(COLLECTED_XP_AMOUNT, owner.dataStorage.getDouble(COLLECTED_XP_AMOUNT) + amount)
-        owner.markDataStorageDirty()
     }
 
     @Throws(LuaException::class)

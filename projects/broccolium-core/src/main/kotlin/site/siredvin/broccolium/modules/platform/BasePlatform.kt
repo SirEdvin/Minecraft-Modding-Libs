@@ -1,5 +1,6 @@
 package site.siredvin.broccolium.modules.platform
 
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
 import net.minecraft.stats.StatFormatter
@@ -19,6 +20,7 @@ import site.siredvin.broccolium.modules.base.item.DescriptiveBlockItem
 import site.siredvin.broccolium.modules.data.api.ModInformationHolder
 import site.siredvin.broccolium.modules.platform.api.InnerBasePlatform
 import site.siredvin.broccolium.modules.platform.api.MenuBuilder
+import site.siredvin.broccolium.modules.platform.api.RegistryEntry
 import java.util.function.Supplier
 
 abstract class BasePlatform {
@@ -29,19 +31,25 @@ abstract class BasePlatform {
     open val holder: ModInformationHolder
         get() = modInformationTracker
 
-    fun <T : Item> registerItem(key: ResourceLocation, item: Supplier<T>): Supplier<T> {
-        val registeredItem = baseInnerPlatform.registerItem(key, item)
+    fun <T : Item> registerItem(key: ResourceLocation, item: Supplier<T>): RegistryEntry<T> {
+        val registeredItem = SimpleRegistryEntry(key, baseInnerPlatform.registerItem(key, item))
         modInformationTracker.internalItems.add(registeredItem)
         return registeredItem
     }
 
-    fun <T : Item> registerItem(name: String, item: Supplier<T>): Supplier<T> = registerItem(ResourceLocation(baseInnerPlatform.modID, name), item)
+    fun <T : DataComponentType<Z>, Z> registerDataComponent(key: ResourceLocation, dataComponent: DataComponentType.Builder<T>): RegistryEntry<DataComponentType<T>> = SimpleRegistryEntry(key, baseInnerPlatform.registerDataComponent(key, dataComponent))
 
-    fun <T : Block> registerBlock(key: ResourceLocation, block: Supplier<T>, itemFactory: (T) -> (Item)): Supplier<T> = baseInnerPlatform.registerBlock(key, block, itemFactory)
+    fun <T : Item> registerItem(name: String, item: Supplier<T>): RegistryEntry<T> = registerItem(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), item)
 
-    fun <T : Block> registerBlock(name: String, block: Supplier<T>, itemFactory: (T) -> (Item) = { DescriptiveBlockItem(it, Item.Properties()) }): Supplier<T> {
-        val registeredBlock = baseInnerPlatform
-            .registerBlock(ResourceLocation(baseInnerPlatform.modID, name), block, itemFactory)
+    fun <T : Block> registerBlock(key: ResourceLocation, block: Supplier<T>, itemFactory: (T) -> (Item)): RegistryEntry<T> = SimpleRegistryEntry(key, baseInnerPlatform.registerBlock(key, block, itemFactory))
+
+    fun <T : Block> registerBlock(name: String, block: Supplier<T>, itemFactory: (T) -> (Item) = { DescriptiveBlockItem(it, Item.Properties()) }): RegistryEntry<T> {
+        val id = ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name)
+        val registeredBlock = SimpleRegistryEntry(
+            id,
+            baseInnerPlatform
+                .registerBlock(id, block, itemFactory),
+        )
         modInformationTracker.internalBlocks.add(registeredBlock)
         return registeredBlock
     }
@@ -49,27 +57,27 @@ abstract class BasePlatform {
     fun <V : BlockEntity, T : BlockEntityType<V>> registerBlockEntity(
         name: String,
         blockEntityTypeSup: Supplier<T>,
-    ): Supplier<T> = registerBlockEntity(ResourceLocation(baseInnerPlatform.modID, name), blockEntityTypeSup)
+    ): RegistryEntry<T> = registerBlockEntity(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), blockEntityTypeSup)
 
     fun <V : BlockEntity, T : BlockEntityType<V>> registerBlockEntity(
         key: ResourceLocation,
         blockEntityTypeSup: Supplier<T>,
-    ): Supplier<T> = baseInnerPlatform.registerBlockEntity(key, blockEntityTypeSup)
+    ): RegistryEntry<T> = SimpleRegistryEntry(key, baseInnerPlatform.registerBlockEntity(key, blockEntityTypeSup))
 
     fun <M : AbstractContainerMenu> registerMenu(
         name: String,
         builder: MenuBuilder<M>,
-    ): Supplier<MenuType<M>> = baseInnerPlatform.registerMenu(ResourceLocation(baseInnerPlatform.modID, name), builder)
+    ): RegistryEntry<MenuType<M>> = SimpleRegistryEntry(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), baseInnerPlatform.registerMenu(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), builder))
 
-    fun registerCreativeTab(key: ResourceLocation, tab: CreativeModeTab): Supplier<CreativeModeTab> = baseInnerPlatform.registerCreativeTab(key, tab)
+    fun registerCreativeTab(key: ResourceLocation, tab: CreativeModeTab): RegistryEntry<CreativeModeTab> = SimpleRegistryEntry(key, baseInnerPlatform.registerCreativeTab(key, tab))
 
-    fun registerCustomStat(id: ResourceLocation, formatter: StatFormatter = StatFormatter.DEFAULT): Supplier<Stat<ResourceLocation>> {
-        val registered = baseInnerPlatform.registerCustomStat(id, formatter)
+    fun registerCustomStat(id: ResourceLocation, formatter: StatFormatter = StatFormatter.DEFAULT): RegistryEntry<Stat<ResourceLocation>> {
+        val registered = SimpleRegistryEntry(id, baseInnerPlatform.registerCustomStat(id, formatter))
         modInformationTracker.internalCustomStats.add(registered)
         return registered
     }
 
-    fun <C : Container, T : Recipe<C>> registerRecipeSerializer(key: ResourceLocation, serializer: RecipeSerializer<T>): Supplier<RecipeSerializer<T>> = baseInnerPlatform.registerRecipeSerializer(key, serializer)
+    fun <C : Container, T : Recipe<C>> registerRecipeSerializer(key: ResourceLocation, serializer: RecipeSerializer<T>): RegistryEntry<RecipeSerializer<T>> = SimpleRegistryEntry(key, baseInnerPlatform.registerRecipeSerializer(key, serializer))
 
-    fun <V : Entity, T : EntityType<V>> registerEntity(key: ResourceLocation, entityTypeSup: Supplier<T>): Supplier<T> = baseInnerPlatform.registerEntity(key, entityTypeSup)
+    fun <V : Entity, T : EntityType<V>> registerEntity(key: ResourceLocation, entityTypeSup: Supplier<T>): RegistryEntry<T> = SimpleRegistryEntry(key, baseInnerPlatform.registerEntity(key, entityTypeSup))
 }

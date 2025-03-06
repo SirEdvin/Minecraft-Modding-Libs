@@ -6,9 +6,13 @@ import dan200.computercraft.api.pocket.IPocketUpgrade
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.upgrades.UpgradeData
+import dan200.computercraft.shared.util.NBTUtil
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -23,16 +27,34 @@ interface InnerComputerPlatformToolkit {
     fun getPeripheral(level: ServerLevel, pos: BlockPos, side: Direction): IPeripheral?
 
     fun nbtHash(tag: CompoundTag?): String?
+    fun nbtHash(component: DataComponentPatch?): String? {
+        if (component == null) return null
+        return NBTUtil.getNBTHash(
+            DataComponentPatch.CODEC.encodeStart(
+                NbtOps.INSTANCE,
+                component,
+            ).result().orElse(null),
+        )
+    }
 
-    fun getTurtleUpgrade(stack: ItemStack): UpgradeData<ITurtleUpgrade>?
+    fun getTurtleUpgrade(registries: HolderLookup.Provider, stack: ItemStack): UpgradeData<ITurtleUpgrade>?
 
-    fun getPocketUpgrade(stack: ItemStack): UpgradeData<IPocketUpgrade>?
+    fun getPocketUpgrade(registries: HolderLookup.Provider, stack: ItemStack): UpgradeData<IPocketUpgrade>?
 
     fun getTurtleUpgrade(key: String): ITurtleUpgrade?
 
     fun getPocketUpgrade(key: String): IPocketUpgrade?
 
     fun nbtToLua(tag: Tag): Any?
+
+    fun componentToLua(component: DataComponentPatch): Any? {
+        val rawNBT = DataComponentPatch.CODEC.encodeStart(
+            NbtOps.INSTANCE,
+            component,
+        ).result()
+        if (rawNBT.isEmpty) return null
+        return NBTUtil.toLua(rawNBT.get())
+    }
 
     fun createTurtlesWithUpgrade(upgrade: UpgradeData<ITurtleUpgrade>): List<ItemStack>
     fun createPocketsWithUpgrade(upgrade: UpgradeData<IPocketUpgrade>): List<ItemStack>

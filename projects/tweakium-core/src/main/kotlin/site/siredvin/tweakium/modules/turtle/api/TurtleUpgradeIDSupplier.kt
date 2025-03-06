@@ -10,12 +10,12 @@ fun interface TurtleUpgradeIDSupplier {
         val WITHOUT_CORE = TurtleUpgradeIDSupplier {
             val base = IDENTIC.get(it)
             // To cutoff _core part
-            return@TurtleUpgradeIDSupplier ResourceLocation(base.namespace, base.path.replace("_core", ""))
+            return@TurtleUpgradeIDSupplier ResourceLocation.fromNamespaceAndPath(base.namespace, base.path.replace("_core", ""))
         }
         val WITHOUT_TURTLE = TurtleUpgradeIDSupplier {
             val base = IDENTIC.get(it)
             // To cutoff _core part
-            return@TurtleUpgradeIDSupplier ResourceLocation(base.namespace, base.path.replace("turtle_", ""))
+            return@TurtleUpgradeIDSupplier ResourceLocation.fromNamespaceAndPath(base.namespace, base.path.replace("turtle_", ""))
         }
     }
 

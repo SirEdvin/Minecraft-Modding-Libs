@@ -9,7 +9,7 @@ import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.FluidStorageUtils
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import java.util.function.Predicate
-import kotlin.test.assertEquals
+import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 abstract class FluidStorageTests {
     abstract fun createStorage(fluids: List<AgnosticFluidStack>, secondary: Boolean): AgnosticFluidStorage
@@ -85,7 +85,7 @@ abstract class FluidStorageTests {
         val from = createStorage(argument.initialFrom, water, secondary = false)
         val to = createStorage(argument.initialTo, water, secondary = true)
         val movedAmount = from.moveTo(to, argument.moveLimit, takePredicate = FluidStorageUtils.ALWAYS)
-        assertEquals(argument.expectedMoveAmount, movedAmount)
+        assertEquals("count", argument.expectedMoveAmount, movedAmount)
         StorageTestHelpers.assertFluidStorage(from, argument.expectedFrom, "from")
         StorageTestHelpers.assertFluidStorage(to, argument.expectedTo, "to")
         StorageTestHelpers.assertNoOverlap(from, to)
@@ -98,7 +98,7 @@ abstract class FluidStorageTests {
         val from = createStorage(argument.initialFrom, water, secondary = false)
         val to = createStorage(argument.initialTo, water, secondary = true)
         val movedAmount = to.moveFrom(from, argument.moveLimit, takePredicate = FluidStorageUtils.ALWAYS)
-        assertEquals(argument.expectedMoveAmount, movedAmount)
+        assertEquals("count", argument.expectedMoveAmount, movedAmount)
         StorageTestHelpers.assertFluidStorage(from, argument.expectedFrom, "from")
         StorageTestHelpers.assertFluidStorage(to, argument.expectedTo, "to")
         StorageTestHelpers.assertNoOverlap(from, to)
@@ -119,7 +119,7 @@ abstract class FluidStorageTests {
             it.fluid.isSame(Fluids.LAVA)
         }
         val movedAmount = from.moveTo(to, 1, takePredicate = predicate)
-        assertEquals(1, movedAmount)
+        assertEquals("count", 1L, movedAmount)
         StorageTestHelpers.assertFluidStorage(from, listOf(1000, 500), "from")
         StorageTestHelpers.assertFluidStorage(to, listOf(1000, 1), "to")
         StorageTestHelpers.assertNoOverlap(from, to)
@@ -140,7 +140,7 @@ abstract class FluidStorageTests {
             it.fluid.isSame(Fluids.LAVA)
         }
         val movedAmount = from.moveTo(to, 1, takePredicate = predicate)
-        assertEquals(0, movedAmount)
+        assertEquals("count", 0L, movedAmount)
         StorageTestHelpers.assertFluidStorage(from, listOf(500, 500, 500), "from")
         StorageTestHelpers.assertFluidStorage(to, listOf(1000), "to")
         StorageTestHelpers.assertNoOverlap(from, to)

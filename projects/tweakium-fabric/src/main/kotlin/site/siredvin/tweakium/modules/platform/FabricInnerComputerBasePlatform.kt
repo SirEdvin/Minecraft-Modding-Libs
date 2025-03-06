@@ -1,9 +1,7 @@
 package site.siredvin.tweakium.modules.platform
 
 import dan200.computercraft.api.pocket.IPocketUpgrade
-import dan200.computercraft.api.pocket.PocketUpgradeSerialiser
 import dan200.computercraft.api.turtle.ITurtleUpgrade
-import dan200.computercraft.api.turtle.TurtleUpgradeSerialiser
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
@@ -17,27 +15,27 @@ abstract class FabricInnerComputerBasePlatform :
 
     override fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
-        serializer: TurtleUpgradeSerialiser<V>,
-    ): Supplier<TurtleUpgradeSerialiser<V>> {
+        upgrade: V,
+    ): Supplier<V> {
         @Suppress("UNCHECKED_CAST")
-        val registry: Registry<TurtleUpgradeSerialiser<*>> = (
-            BuiltInRegistries.REGISTRY.get(TurtleUpgradeSerialiser.registryId().location())
+        val registry: Registry<ITurtleUpgrade> = (
+            BuiltInRegistries.REGISTRY.get(ITurtleUpgrade.REGISTRY.location())
                 ?: throw IllegalStateException("Something is not correct with turtle registry")
-            ) as Registry<TurtleUpgradeSerialiser<*>>
-        val registered = Registry.register(registry, key, serializer)
+            ) as Registry<ITurtleUpgrade>
+        val registered = Registry.register(registry, key, upgrade)
         return Supplier { registered }
     }
 
     override fun <V : IPocketUpgrade> registerPocketUpgrade(
         key: ResourceLocation,
-        serializer: PocketUpgradeSerialiser<V>,
-    ): Supplier<PocketUpgradeSerialiser<V>> {
+        upgrade: V,
+    ): Supplier<V> {
         @Suppress("UNCHECKED_CAST")
-        val registry: Registry<PocketUpgradeSerialiser<*>> = (
-            BuiltInRegistries.REGISTRY.get(PocketUpgradeSerialiser.registryId().location())
+        val registry: Registry<IPocketUpgrade> = (
+            BuiltInRegistries.REGISTRY.get(IPocketUpgrade.REGISTRY.location())
                 ?: throw IllegalStateException("Something is not correct with turtle registry")
-            ) as Registry<PocketUpgradeSerialiser<*>>
-        val registered = Registry.register(registry, key, serializer)
+            ) as Registry<IPocketUpgrade>
+        val registered = Registry.register(registry, key, upgrade)
         return Supplier { registered }
     }
 }
