@@ -6,7 +6,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Ingredient
-import site.siredvin.broccolium.modules.data.recipe.TweakedCookingRecipeBuilder
 import site.siredvin.broccolium.modules.data.recipe.TweakedShapedRecipeBuilder
 import site.siredvin.broccolium.modules.data.recipe.TweakedShapelessRecipeBuilder
 import site.siredvin.broccolium.modules.platform.PlatformIngredients
