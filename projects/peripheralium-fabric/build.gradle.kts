@@ -63,13 +63,8 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
     }
 
-    modImplementation(project(":broccolium-fabric")) {
-        isTransitive = false
-    }
-
-    modImplementation(project(":tweakium-fabric")) {
-        isTransitive = false
-    }
+    implementation(project(":broccolium-fabric").dependencyProject.sourceSets.main.get().output)
+    implementation(project(":tweakium-fabric").dependencyProject.sourceSets.main.get().output)
 
     testImplementation(kotlin("test-junit5"))
     testCompileOnly(libs.autoService)

@@ -58,7 +58,6 @@ artifacts {
     }
 }
 
-
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)
