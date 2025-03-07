@@ -26,7 +26,7 @@ abstract class BaseNBTBlock<T>(
         val stack: ItemStack = createItemStack()
         val internalData = blockEntity.saveInternalData(CompoundTag())
         if (!internalData.isEmpty) {
-            stack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(internalData))
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(internalData))
         }
         val savableProperties: List<Property<*>> = savableProperties
         if (savableProperties.isNotEmpty() && !defaultBlockState().equals(state)) {
@@ -71,7 +71,6 @@ abstract class BaseNBTBlock<T>(
         val blockEntity = level.getBlockEntity(pos)
         if (blockEntity is ISyncingBlockEntity) {
             if (!level.isClientSide) {
-                stack.components
                 if (stack.components.has(DataComponents.BLOCK_STATE)) {
                     val savedState: BlockState = stack.components.get(
                         DataComponents.BLOCK_STATE,
@@ -82,8 +81,8 @@ abstract class BaseNBTBlock<T>(
                         state = state.setValue(property, savedState.getValue(property) as Comparable<Any>)
                     }
                 }
-                if (stack.components.has(DataComponents.BLOCK_ENTITY_DATA)) {
-                    state = blockEntity.loadInternalData(stack.components.get(DataComponents.BLOCK_ENTITY_DATA)!!.copyTag(), state)
+                if (stack.components.has(DataComponents.CUSTOM_DATA)) {
+                    state = blockEntity.loadInternalData(stack.components.get(DataComponents.CUSTOM_DATA)!!.copyTag(), state)
                     blockEntity.pushInternalDataChangeToClient(state)
                 }
             }
