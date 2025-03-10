@@ -8,12 +8,11 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
-import net.minecraft.world.level.ItemLike
 import java.util.*
 
 class TweakedCookingRecipeBuilder private constructor(
     private val bookCategory: CookingBookCategory,
-    private val result: ItemLike,
+    private val result: ItemStack,
     private val ingredient: Ingredient,
     private val experience: Float,
     private val cookingTime: Int,
@@ -28,14 +27,14 @@ class TweakedCookingRecipeBuilder private constructor(
         return this
     }
 
-    override fun getResult(): Item = this.result.asItem()
+    override fun getResult(): Item = this.result.item
 
     override fun save(output: RecipeOutput, id: ResourceLocation) {
         val recipe = factory.create(
             Objects.requireNonNullElse(this.group, "") as String,
             this.bookCategory,
             this.ingredient,
-            ItemStack(this.result),
+            this.result,
             this.experience,
             this.cookingTime,
         )
@@ -45,7 +44,7 @@ class TweakedCookingRecipeBuilder private constructor(
     companion object {
         fun <T : AbstractCookingRecipe> generic(
             input: Ingredient,
-            result: ItemLike,
+            result: ItemStack,
             cookingTime: Float,
             count: Int,
             serializer: RecipeSerializer<T>,
@@ -61,7 +60,7 @@ class TweakedCookingRecipeBuilder private constructor(
 
         fun campfireCooking(
             input: Ingredient,
-            output: ItemLike,
+            output: ItemStack,
             cookingTime: Float,
             count: Int,
         ): TweakedCookingRecipeBuilder = TweakedCookingRecipeBuilder(
@@ -83,15 +82,15 @@ class TweakedCookingRecipeBuilder private constructor(
 
         fun blasting(
             input: Ingredient,
-            output: ItemLike,
-            cookingTime: Float,
-            count: Int,
+            output: ItemStack,
+            cookingTime: Int,
+            experience: Float,
         ): TweakedCookingRecipeBuilder = TweakedCookingRecipeBuilder(
             determineBlastingRecipeCategory(output),
             output,
             input,
-            cookingTime,
-            count,
+            cookingTime = cookingTime,
+            experience = experience,
         ) { `$$0`: String, `$$1`: CookingBookCategory, `$$2`: Ingredient, `$$3`: ItemStack, `$$4`: Float, `$$5`: Int ->
             BlastingRecipe(
                 `$$0`,
@@ -105,15 +104,15 @@ class TweakedCookingRecipeBuilder private constructor(
 
         fun smelting(
             input: Ingredient,
-            output: ItemLike,
-            cookingTime: Float,
-            count: Int,
+            output: ItemStack,
+            experience: Float,
+            cookingTime: Int,
         ): TweakedCookingRecipeBuilder = TweakedCookingRecipeBuilder(
             determineSmeltingRecipeCategory(output),
             output,
             input,
+            experience,
             cookingTime,
-            count,
         ) { `$$0`: String, `$$1`: CookingBookCategory, `$$2`: Ingredient, `$$3`: ItemStack, `$$4`: Float, `$$5`: Int ->
             SmeltingRecipe(
                 `$$0`,
@@ -127,15 +126,15 @@ class TweakedCookingRecipeBuilder private constructor(
 
         fun smoking(
             input: Ingredient,
-            output: ItemLike,
-            cookingTime: Float,
-            count: Int,
+            output: ItemStack,
+            experience: Float,
+            cookingTime: Int,
         ): TweakedCookingRecipeBuilder = TweakedCookingRecipeBuilder(
             CookingBookCategory.FOOD,
             output,
             input,
+            experience,
             cookingTime,
-            count,
         ) { `$$0`: String, `$$1`: CookingBookCategory, `$$2`: Ingredient, `$$3`: ItemStack, `$$4`: Float, `$$5`: Int ->
             SmokingRecipe(
                 `$$0`,
@@ -147,17 +146,17 @@ class TweakedCookingRecipeBuilder private constructor(
             )
         }
 
-        private fun determineSmeltingRecipeCategory(result: ItemLike): CookingBookCategory = if (result.asItem().components().has(DataComponents.FOOD)) {
+        private fun determineSmeltingRecipeCategory(result: ItemStack): CookingBookCategory = if (result.item.components().has(DataComponents.FOOD)) {
             CookingBookCategory.FOOD
         } else {
-            if (result.asItem() is BlockItem) CookingBookCategory.BLOCKS else CookingBookCategory.MISC
+            if (result.item is BlockItem) CookingBookCategory.BLOCKS else CookingBookCategory.MISC
         }
 
-        private fun determineBlastingRecipeCategory(result: ItemLike): CookingBookCategory = if (result.asItem() is BlockItem) CookingBookCategory.BLOCKS else CookingBookCategory.MISC
+        private fun determineBlastingRecipeCategory(result: ItemStack): CookingBookCategory = if (result.item is BlockItem) CookingBookCategory.BLOCKS else CookingBookCategory.MISC
 
         private fun determineRecipeCategory(
             serializer: RecipeSerializer<out AbstractCookingRecipe>,
-            result: ItemLike,
+            result: ItemStack,
         ): CookingBookCategory {
             if (serializer === RecipeSerializer.SMELTING_RECIPE) {
                 return determineSmeltingRecipeCategory(result)

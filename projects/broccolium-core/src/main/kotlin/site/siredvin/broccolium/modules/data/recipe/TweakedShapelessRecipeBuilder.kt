@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.ShapelessRecipe
 import net.minecraft.world.level.ItemLike
 import java.util.*
 
-class TweakedShapelessRecipeBuilder(private val result: ItemLike, private val count: Int = 1, private val category: RecipeCategory = RecipeCategory.MISC) : RecipeBuilder {
+class TweakedShapelessRecipeBuilder(private val result: ItemStack, private val category: RecipeCategory = RecipeCategory.MISC) : RecipeBuilder {
     private val ingredients: NonNullList<Ingredient> = NonNullList.create()
     private var group: String? = null
 
@@ -42,7 +42,7 @@ class TweakedShapelessRecipeBuilder(private val result: ItemLike, private val co
         return this
     }
 
-    override fun getResult(): Item = this.result.asItem()
+    override fun getResult(): Item = this.result.item
 
     override fun save(output: RecipeOutput, id: ResourceLocation) {
         val recipe = ShapelessRecipe(
@@ -50,7 +50,7 @@ class TweakedShapelessRecipeBuilder(private val result: ItemLike, private val co
             RecipeBuilder.determineBookCategory(
                 this.category,
             ),
-            ItemStack(this.result, this.count),
+            this.result,
             this.ingredients,
         )
         output.accept(id, recipe, null)

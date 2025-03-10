@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
 import java.util.*
 
-class TweakedShapedRecipeBuilder(private val result: ItemLike, private val count: Int = 1, private val category: RecipeCategory = RecipeCategory.MISC) : RecipeBuilder {
+class TweakedShapedRecipeBuilder(private val result: ItemStack, private val category: RecipeCategory = RecipeCategory.MISC) : RecipeBuilder {
     private val rows: MutableList<String> = Lists.newArrayList()
     private val key: MutableMap<Char, Ingredient> = Maps.newLinkedHashMap()
     private var group: String? = null
@@ -45,7 +45,7 @@ class TweakedShapedRecipeBuilder(private val result: ItemLike, private val count
         return this
     }
 
-    override fun getResult(): Item = result.asItem()
+    override fun getResult(): Item = result.item
 
     override fun save(output: RecipeOutput, id: ResourceLocation) {
         val pattern = ShapedRecipePattern.of(this.key, this.rows)
@@ -55,7 +55,7 @@ class TweakedShapedRecipeBuilder(private val result: ItemLike, private val count
                 this.category,
             ),
             pattern,
-            ItemStack(this.result, this.count),
+            this.result,
             false,
         )
         output.accept(id, recipe, null)

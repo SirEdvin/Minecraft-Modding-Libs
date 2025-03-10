@@ -2,7 +2,6 @@ package site.siredvin.broccolium.modules.data.recipe
 
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.SmithingTransformRecipe
@@ -11,7 +10,7 @@ class TweakedSmithingTransformRecipeBuilder(
     private val template: Ingredient,
     private val base: Ingredient,
     private val addition: Ingredient,
-    private val result: Item,
+    private val result: ItemStack,
 ) {
 
     fun save(output: RecipeOutput, id: String) {
@@ -23,7 +22,7 @@ class TweakedSmithingTransformRecipeBuilder(
             this.template,
             this.base,
             this.addition,
-            ItemStack(this.result),
+            this.result,
         )
         output.accept(id, recipe, null)
     }
