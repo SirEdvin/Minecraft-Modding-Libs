@@ -6,13 +6,14 @@ plugins {
     id("site.siredvin.publishing")
 }
 
-val modVersion: String by extra
 val minecraftVersion: String by extra
+val broccoliumVersion: String by extra
 
 baseShaking {
     projectPart.set("fabric")
     projectName.set("broccolium")
     integrationRepositories.set(true)
+    projectVersion.set(broccoliumVersion)
     shake()
 }
 
@@ -74,6 +75,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(broccoliumVersion)
     shake()
     project.publishing {
         publications {

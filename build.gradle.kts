@@ -1,7 +1,7 @@
 plugins {
     java
-    id("site.siredvin.root") version "0.8.13"
-    id("site.siredvin.release") version "0.8.13"
+    id("site.siredvin.root") version "0.8.14"
+    id("site.siredvin.release") version "0.8.14"
     id("com.github.ben-manes.versions") version "0.51.0"
 }
 

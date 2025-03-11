@@ -12,6 +12,8 @@ import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
 import site.siredvin.broccolium.modules.base.block.FacingBlockEntityBlock
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
+import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
 import site.siredvin.tweakium.modules.player.FakePlayerProviderBlockEntity
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
 import java.util.*
@@ -36,16 +38,12 @@ open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProper
     override val owner: Player?
         get() = (blockEntity as? IOwnedBlockEntity)?.player
 
-    override val dataStorage: CompoundTag by lazy {
-        CompoundTag()
+    override val dataStorage: IDataStorage by lazy {
+        CompoundTagDataStorage(CompoundTag()) {}
     }
 
     override val storage: SlottedAgnosticItemStorage? by lazy {
         AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity) as? SlottedAgnosticItemStorage
-    }
-
-    override fun markDataStorageDirty() {
-        blockEntity.setChanged()
     }
 
     override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T {

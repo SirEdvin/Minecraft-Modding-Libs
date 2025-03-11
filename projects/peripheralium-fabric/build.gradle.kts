@@ -7,12 +7,13 @@ plugins {
     id("site.siredvin.mod-publishing")
 }
 
-val modVersion: String by extra
+val peripheraliumVersion: String by extra
 val minecraftVersion: String by extra
 
 baseShaking {
     projectPart.set("fabric")
     projectName.set("peripheralium")
+    projectVersion.set(peripheraliumVersion)
     integrationRepositories.set(true)
     shake()
 }
@@ -80,6 +81,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(peripheraliumVersion)
     shake()
     project.publishing {
         publications {

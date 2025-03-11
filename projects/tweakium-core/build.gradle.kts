@@ -4,12 +4,13 @@ plugins {
     id("site.siredvin.publishing")
 }
 
-val modVersion: String by extra
+val tweakiumVersion: String by extra
 val minecraftVersion: String by extra
 
 baseShaking {
     projectPart.set("common")
     projectName.set("tweakium")
+    projectVersion.set(tweakiumVersion)
     shake()
 }
 
@@ -56,5 +57,6 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(tweakiumVersion)
     shake()
 }

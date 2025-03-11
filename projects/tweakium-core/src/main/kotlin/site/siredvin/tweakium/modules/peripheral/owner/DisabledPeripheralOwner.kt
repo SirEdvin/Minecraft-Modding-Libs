@@ -7,6 +7,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
+import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
 
 class DisabledPeripheralOwner : BasePeripheralOwner() {
@@ -18,14 +20,11 @@ class DisabledPeripheralOwner : BasePeripheralOwner() {
         get() = Direction.EAST
     override val owner: Player?
         get() = null
-    override val dataStorage: CompoundTag
-        get() = CompoundTag()
+    override val dataStorage: IDataStorage
+        get() = CompoundTagDataStorage(CompoundTag()) {}
 
     override val storage: SlottedAgnosticItemStorage?
         get() = null
-
-    override fun markDataStorageDirty() {
-    }
 
     override fun <T> withPlayer(
         function: (FakePlayerProxy) -> T,

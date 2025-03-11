@@ -18,7 +18,7 @@ class OperationBoon(private val owner: IPeripheralOwner, private val reduceRate:
     protected fun setCooldown(operation: IPeripheralOperation<*>, cooldown: Int) {
         if (cooldown > 0) {
             val dataStorage = owner.dataStorage
-            if (!dataStorage.contains(COOLDOWNS_TAG)) dataStorage.put(COOLDOWNS_TAG, CompoundTag())
+            if (!dataStorage.has(COOLDOWNS_TAG)) dataStorage.putCompound(COOLDOWNS_TAG, CompoundTag())
             dataStorage.getCompound(COOLDOWNS_TAG).putLong(
                 operation.settingsName(),
                 Timestamp.valueOf(LocalDateTime.now().plus(cooldown.toLong(), ChronoUnit.MILLIS)).time,
@@ -28,7 +28,7 @@ class OperationBoon(private val owner: IPeripheralOwner, private val reduceRate:
 
     protected fun getCooldown(operation: IPeripheralOperation<*>): Int {
         val dataStorage = owner.dataStorage
-        if (!dataStorage.contains(COOLDOWNS_TAG)) return 0
+        if (!dataStorage.has(COOLDOWNS_TAG)) return 0
         val cooldowns = dataStorage.getCompound(COOLDOWNS_TAG)
         val operationName = operation.settingsName()
         if (!cooldowns.contains(operationName)) return 0
