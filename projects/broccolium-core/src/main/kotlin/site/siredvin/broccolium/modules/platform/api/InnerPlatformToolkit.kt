@@ -1,6 +1,7 @@
 package site.siredvin.broccolium.modules.platform.api
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -31,6 +32,9 @@ import java.util.function.Predicate
 interface InnerPlatformToolkit {
     val fluidCompactDivider: Int
     val minecraftServer: MinecraftServer?
+
+    val registries: HolderLookup.Provider?
+        get() = minecraftServer?.registryAccess()
 
     fun <T> wrap(registry: ResourceKey<Registry<T>>): RegistryWrapper<T>
 

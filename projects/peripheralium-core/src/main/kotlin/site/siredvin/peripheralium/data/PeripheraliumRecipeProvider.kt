@@ -18,20 +18,20 @@ class PeripheraliumRecipeProvider(output: PackOutput, registries: CompletableFut
     override fun buildRecipes(consumer: RecipeOutput) {
         val ingredients = PlatformIngredients.get()
 
-        TweakedShapelessRecipeBuilder(Items.PERIPHERALIUM_DUST.get())
+        TweakedShapelessRecipeBuilder(Items.PERIPHERALIUM_DUST.get().defaultInstance)
             .requires(ingredients.redstone)
             .requires(ingredients.glowstoneDust)
             .save(consumer)
 
-        TweakedShapelessRecipeBuilder(Blocks.PERIPHERALIUM_BLOCK.get())
+        TweakedShapelessRecipeBuilder(Blocks.PERIPHERALIUM_BLOCK.get().asItem().defaultInstance)
             .requires(Items.PERIPHERALIUM_DUST.get(), 9)
             .save(consumer)
 
-        TweakedShapelessRecipeBuilder(Items.PERIPHERALIUM_DUST.get(), 9)
+        TweakedShapelessRecipeBuilder(Items.PERIPHERALIUM_DUST.get().defaultInstance.copyWithCount(9))
             .requires(Blocks.PERIPHERALIUM_BLOCK.get().asItem())
             .save(consumer, ResourceLocation.parse("peripheralium:peripheralium_block_uncraft"))
 
-        TweakedShapedRecipeBuilder(Items.PERIPHERALIUM_UPGRADE_TEMPLATE.get(), 4)
+        TweakedShapedRecipeBuilder(Items.PERIPHERALIUM_UPGRADE_TEMPLATE.get().defaultInstance.copyWithCount(4))
             .define('P', Ingredient.of(Items.PERIPHERALIUM_DUST.get()))
             .define('X', ingredients.xpBottle)
             .pattern("PPP")

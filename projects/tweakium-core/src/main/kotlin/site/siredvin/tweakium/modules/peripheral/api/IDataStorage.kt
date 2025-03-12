@@ -17,6 +17,8 @@ interface IDataStorage {
     fun getList(key: String, type: Int): ListTag
     fun putList(key: String, tag: ListTag)
 
+    fun getChild(key: String): IDataStorage
+
     fun remove(key: String)
     fun mutate(func: Consumer<CompoundTag>)
 }

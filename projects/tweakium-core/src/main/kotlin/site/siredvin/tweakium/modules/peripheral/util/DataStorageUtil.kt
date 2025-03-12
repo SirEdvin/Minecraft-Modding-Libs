@@ -8,11 +8,11 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.TypedDataComponent
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
 import net.minecraft.world.item.component.CustomData
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
 import java.util.Optional
-import net.minecraft.nbt.ListTag
 import java.util.function.Consumer
 
 class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: () -> Unit) : IDataStorage {
@@ -56,6 +56,8 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
         tag.put(key, tag)
         trigger()
     }
+
+    override fun getChild(key: String): IDataStorage = CompoundTagDataStorage(tag.getCompound(key), trigger)
 
     override fun mutate(func: Consumer<CompoundTag>) {
         func.accept(tag)
@@ -131,6 +133,30 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
         setCustomData(CustomData.of(copyTag))
     }
 
+    override fun getList(key: String, type: Int): ListTag {
+        val customData = extractCustomData()
+        if (customData.isEmpty) return ListTag()
+        return customData.get().copyTag().getList(key, type)
+    }
+
+    override fun putList(key: String, tag: ListTag) {
+        val customData = extractCustomData()
+        if (customData.isEmpty) return
+        val copyTag = customData.get().copyTag()
+        copyTag.put(key, tag)
+        setCustomData(CustomData.of(copyTag))
+    }
+
+    override fun remove(key: String) {
+        val customData = extractCustomData()
+        if (customData.isEmpty) return
+        val copyTag = customData.get().copyTag()
+        copyTag.remove(key)
+        setCustomData(CustomData.of(copyTag))
+    }
+
+    override fun getChild(key: String): IDataStorage = ChildCustomDataComputerDataStorage(key, this)
+
     override fun mutate(func: Consumer<CompoundTag>) {
         val customData = extractCustomData()
         if (customData.isEmpty) return
@@ -140,7 +166,17 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
     }
 }
 
-@Suppress("UNCHECKED_CAST")
+class ChildCustomDataComputerDataStorage(private val key: String, private val parent: CustomDataComputerDataStorage) : CustomDataComputerDataStorage() {
+    override fun extractCustomData(): Optional<CustomData> {
+        val innerCompound = parent.getCompound(key)
+        return if (innerCompound.isEmpty) Optional.empty() else Optional.of(CustomData.of(innerCompound))
+    }
+
+    override fun setCustomData(data: CustomData) {
+        parent.putCompound(key, data.copyTag())
+    }
+}
+
 class PocketComputerDataStorage(private val pocket: IPocketAccess) : CustomDataComputerDataStorage() {
     @Suppress("UNCHECKED_CAST")
     override fun extractCustomData(): Optional<CustomData> {
@@ -148,6 +184,7 @@ class PocketComputerDataStorage(private val pocket: IPocketAccess) : CustomDataC
         return data as Optional<CustomData>
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun setCustomData(data: CustomData) {
         val builder = DataComponentPatch.builder()
         pocket.upgradeData.entrySet().forEach {

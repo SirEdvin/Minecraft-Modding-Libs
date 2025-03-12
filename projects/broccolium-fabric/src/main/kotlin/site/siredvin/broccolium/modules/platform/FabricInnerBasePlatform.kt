@@ -7,7 +7,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
 import net.minecraft.stats.StatFormatter
 import net.minecraft.stats.Stats
-import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -15,6 +14,7 @@ import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -65,7 +65,7 @@ abstract class FabricInnerBasePlatform : InnerBasePlatform {
         return Supplier { Stats.CUSTOM.get(registeredStat, formatter) }
     }
 
-    override fun <C : Container, T : Recipe<C>> registerRecipeSerializer(
+    override fun <C : RecipeInput, T : Recipe<C>> registerRecipeSerializer(
         key: ResourceLocation,
         serializer: RecipeSerializer<T>,
     ): Supplier<RecipeSerializer<T>> {

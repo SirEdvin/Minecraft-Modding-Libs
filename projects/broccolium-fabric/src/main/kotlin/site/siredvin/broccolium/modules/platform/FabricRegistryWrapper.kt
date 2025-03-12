@@ -18,6 +18,8 @@ class FabricRegistryWrapper<T>(private val name: ResourceLocation, private val r
 
     override fun getKey(something: T): ResourceLocation = registry.getKey(something!!) ?: throw IllegalArgumentException()
 
+    override fun getResourceKey(something: T): Optional<ResourceKey<T>> = registry.getResourceKey(something!!)
+
     override fun get(location: ResourceLocation): T = registry.get(location) ?: throw IllegalArgumentException()
 
     override fun get(id: Int): T = registry.byId(id) ?: throw IllegalArgumentException()
