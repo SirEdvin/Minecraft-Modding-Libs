@@ -2,6 +2,7 @@ package site.siredvin.tweakium.modules.platform
 
 import dan200.computercraft.api.pocket.IPocketUpgrade
 import dan200.computercraft.api.turtle.ITurtleUpgrade
+import dan200.computercraft.api.upgrades.UpgradeType
 import net.minecraft.resources.ResourceLocation
 import site.siredvin.broccolium.modules.platform.BasePlatform
 import site.siredvin.broccolium.modules.platform.SimpleRegistryEntry
@@ -19,21 +20,21 @@ abstract class ComputerBasePlatform : BasePlatform() {
 
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         name: String,
-        upgrade: V,
-    ): RegistryEntry<V> = registerTurtleUpgrade(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), upgrade)
+        upgrade: UpgradeType<V>,
+    ): RegistryEntry<UpgradeType<V>> = registerTurtleUpgrade(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), upgrade)
 
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
-        upgrade: V,
-    ): RegistryEntry<V> = SimpleRegistryEntry(key, baseInnerPlatform.registerTurtleUpgrade(key, upgrade))
+        upgrade: UpgradeType<V>,
+    ): RegistryEntry<UpgradeType<V>> = SimpleRegistryEntry(key, baseInnerPlatform.registerTurtleUpgrade(key, upgrade))
 
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         name: String,
-        upgrade: V,
-    ): RegistryEntry<V> = registerPocketUpgrade(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), upgrade)
+        upgrade: UpgradeType<V>,
+    ): RegistryEntry<UpgradeType<V>> = registerPocketUpgrade(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), upgrade)
 
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         key: ResourceLocation,
-        upgrade: V,
-    ): RegistryEntry<V> = SimpleRegistryEntry(key, baseInnerPlatform.registerPocketUpgrade(key, upgrade))
+        upgrade: UpgradeType<V>,
+    ): RegistryEntry<UpgradeType<V>> = SimpleRegistryEntry(key, baseInnerPlatform.registerPocketUpgrade(key, upgrade))
 }

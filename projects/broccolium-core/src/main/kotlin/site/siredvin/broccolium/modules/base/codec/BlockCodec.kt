@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import site.siredvin.broccolium.modules.base.block.BaseBlockEntityBlock
 import site.siredvin.broccolium.modules.base.block.FacingBlockEntityBlock
+import site.siredvin.broccolium.modules.base.block.GenericBlockEntityBlock
 import site.siredvin.broccolium.modules.base.codec.api.BlockConstructor
 import site.siredvin.broccolium.modules.platform.api.RegistryEntry
 import java.util.function.Function
@@ -33,7 +34,7 @@ object BlockCodec {
             .fieldOf("block_entity") as MapCodec<RegistryEntry<E>>
         ).forGetter(getter)
 
-    fun <B : FacingBlockEntityBlock<T>, Z : BlockEntityType<T>, T : BlockEntity> buildCodec(constructor: BlockConstructor<B, Z, T>): MapCodec<B> {
+    fun <B : GenericBlockEntityBlock<T>, Z : BlockEntityType<T>, T : BlockEntity> buildCodec(constructor: BlockConstructor<B, Z, T>): MapCodec<B> {
         return RecordCodecBuilder.mapCodec {
             return@mapCodec it.group(
                 blockEntityCodec<B, Z, T> { b -> b.blockEntityTypeSup as RegistryEntry<Z> },
