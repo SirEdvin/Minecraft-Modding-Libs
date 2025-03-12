@@ -4,6 +4,7 @@ import dan200.computercraft.api.pocket.IPocketAccess
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.TurtleSide
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
 import java.util.function.Consumer
@@ -33,6 +34,17 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
     }
 
     override fun getCompound(key: String): CompoundTag = tag.getCompound(key)
+    override fun getList(key: String, type: Int): ListTag = tag.getList(key, type)
+
+    override fun putList(key: String, tag: ListTag) {
+        this.tag.put(key, tag)
+        trigger()
+    }
+
+    override fun remove(key: String) {
+        tag.remove(key)
+        trigger()
+    }
 
     override fun putCompound(key: String, tag: CompoundTag) {
         tag.put(key, tag)
