@@ -1,6 +1,7 @@
 package site.siredvin.tweakium.modules.peripheral.api
 
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
 import java.util.function.Consumer
 
 interface IDataStorage {
@@ -13,6 +14,9 @@ interface IDataStorage {
     fun putDouble(key: String, value: Double)
     fun putCompound(key: String, tag: CompoundTag)
     fun getCompound(key: String): CompoundTag
+    fun getList(key: String, type: Int): ListTag
+    fun putList(key: String, tag: ListTag)
 
+    fun remove(key: String)
     fun mutate(func: Consumer<CompoundTag>)
 }

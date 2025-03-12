@@ -4,8 +4,8 @@ plugins {
     id("site.siredvin.publishing")
 }
 
-val minecraftVersion: String by extra
 val broccoliumVersion: String by extra
+val minecraftVersion: String by extra
 
 baseShaking {
     projectPart.set("common")

@@ -7,9 +7,12 @@ plugins {
     id("site.siredvin.forge")
 }
 
+val peripheraliumVersion: String by extra
+
 baseShaking {
     projectPart.set("forge")
     projectName.set("peripheralium")
+    projectVersion.set(peripheraliumVersion)
     integrationRepositories.set(true)
     shake()
 }
@@ -62,6 +65,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(peripheraliumVersion)
     shake()
     project.publishing {
         publications {

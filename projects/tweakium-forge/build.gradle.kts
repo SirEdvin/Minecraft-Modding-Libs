@@ -6,11 +6,12 @@ plugins {
     id("site.siredvin.forge")
 }
 
-val modVersion: String by extra
+val tweakiumVersion: String by extra
 
 baseShaking {
     projectPart.set("forge")
     projectName.set("tweakium")
+    projectVersion.set(tweakiumVersion)
     integrationRepositories.set(true)
     shake()
 }
@@ -81,6 +82,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(tweakiumVersion)
     shake()
     project.publishing {
         publications {

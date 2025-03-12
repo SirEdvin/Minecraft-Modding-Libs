@@ -12,6 +12,7 @@ import net.minecraft.world.item.component.CustomData
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
 import java.util.Optional
+import net.minecraft.nbt.ListTag
 import java.util.function.Consumer
 
 class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: () -> Unit) : IDataStorage {
@@ -39,6 +40,17 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
     }
 
     override fun getCompound(key: String): CompoundTag = tag.getCompound(key)
+    override fun getList(key: String, type: Int): ListTag = tag.getList(key, type)
+
+    override fun putList(key: String, tag: ListTag) {
+        this.tag.put(key, tag)
+        trigger()
+    }
+
+    override fun remove(key: String) {
+        tag.remove(key)
+        trigger()
+    }
 
     override fun putCompound(key: String, tag: CompoundTag) {
         tag.put(key, tag)

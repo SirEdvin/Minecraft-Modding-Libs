@@ -14,6 +14,7 @@ baseShaking {
     projectName.set("broccolium")
     projectVersion.set(broccoliumVersion)
     integrationRepositories.set(true)
+    projectVersion.set(broccoliumVersion)
     shake()
 }
 

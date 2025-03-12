@@ -10,7 +10,7 @@ import site.siredvin.broccolium.modules.platform.ForgeInnerBasePlatform
 import site.siredvin.tweakium.modules.platform.api.InnerComputerBasePlatform
 import java.util.function.Supplier
 
-abstract class ForgeBaseInnerPlatform :
+abstract class ForgeInnerComputerBasePlatform :
     ForgeInnerBasePlatform(),
     InnerComputerBasePlatform {
     open val turtleSerializers: DeferredRegister<TurtleUpgradeSerialiser<*>>?

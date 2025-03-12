@@ -7,9 +7,12 @@ plugins {
     id("site.siredvin.forge")
 }
 
+val broccoliumVersion: String by extra
+
 baseShaking {
     projectPart.set("forge")
     projectName.set("broccolium")
+    projectVersion.set(broccoliumVersion)
     shake()
 }
 
@@ -78,6 +81,7 @@ tasks.test {
 }
 
 publishingShaking {
+    projectVersion.set(broccoliumVersion)
     shake()
     project.publishing {
         publications {
