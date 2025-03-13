@@ -73,6 +73,10 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
 }
 
 object DataStorageUtil {
+    fun getDataStorage(compoundTag: CompoundTag): IDataStorage = CompoundTagDataStorage(
+        compoundTag,
+    ) { }
+
     fun getDataStorage(access: ITurtleAccess, side: TurtleSide?): IDataStorage = CompoundTagDataStorage(
         access.getUpgradeNBTData(side),
     ) { access.updateUpgradeNBTData(side) }
