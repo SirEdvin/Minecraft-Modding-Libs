@@ -9,9 +9,11 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.TypedDataComponent
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
+import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.item.component.CustomData
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
+import java.util.*
 import java.util.Optional
 import java.util.function.Consumer
 
@@ -44,6 +46,20 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
 
     override fun putList(key: String, tag: ListTag) {
         this.tag.put(key, tag)
+        trigger()
+    }
+
+    override fun getUUID(key: String): UUID = this.tag.getUUID(key)
+
+    override fun putUUID(key: String, uuid: UUID) {
+        this.tag.putUUID(key, uuid)
+        trigger()
+    }
+
+    override fun getBoolean(key: String): Boolean = this.tag.getBoolean(key)
+
+    override fun putBoolean(key: String, value: Boolean) {
+        this.tag.putBoolean(key, value)
         trigger()
     }
 
@@ -147,6 +163,35 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
         setCustomData(CustomData.of(copyTag))
     }
 
+    override fun putUUID(key: String, uuid: UUID) {
+        val customData = extractCustomData()
+        if (customData.isEmpty) return
+        val copyTag = customData.get().copyTag()
+        copyTag.putUUID(key, uuid)
+        setCustomData(CustomData.of(copyTag))
+    }
+
+    override fun getUUID(key: String): UUID {
+        val customData = extractCustomData()
+        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+        if (customData.isEmpty) return NbtUtils.loadUUID(null)
+        return customData.get().copyTag().getUUID(key)
+    }
+
+    override fun putBoolean(key: String, value: Boolean) {
+        val customData = extractCustomData()
+        if (customData.isEmpty) return
+        val copyTag = customData.get().copyTag()
+        copyTag.putBoolean(key, value)
+        setCustomData(CustomData.of(copyTag))
+    }
+
+    override fun getBoolean(key: String): Boolean {
+        val customData = extractCustomData()
+        if (customData.isEmpty) return false
+        return customData.get().copyTag().getBoolean(key)
+    }
+
     override fun remove(key: String) {
         val customData = extractCustomData()
         if (customData.isEmpty) return
@@ -218,6 +263,10 @@ class TurtleComputerDataStorage(private val turtle: ITurtleAccess, private val s
 }
 
 object DataStorageUtil {
+    fun getDataStorage(compoundTag: CompoundTag): IDataStorage = CompoundTagDataStorage(
+        compoundTag,
+    ) { }
+
     fun getDataStorage(access: ITurtleAccess, side: TurtleSide): IDataStorage = TurtleComputerDataStorage(access, side)
 
     fun getDataStorage(tileEntity: IPeripheralBlockEntity): IDataStorage = CompoundTagDataStorage(tileEntity.peripheralSettings, tileEntity::markSettingsChanged)
