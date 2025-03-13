@@ -21,6 +21,8 @@ class TweakedShapedRecipeBuilder(private val result: ItemStack, private val cate
     private val key: MutableMap<Char, Ingredient> = Maps.newLinkedHashMap()
     private var group: String? = null
 
+    constructor(result: Item, category: RecipeCategory = RecipeCategory.MISC) : this(ItemStack(result), category)
+
     fun define(char: Char, ing: TagKey<Item>): TweakedShapedRecipeBuilder = this.define(char, Ingredient.of(ing))
 
     fun define(char: Char, ing: ItemLike): TweakedShapedRecipeBuilder = this.define(char, Ingredient.of(*arrayOf(ing)))

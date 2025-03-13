@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import kotlin.jvm.JvmOverloads
 
-class LimitedInventory(private val parent: Container, private val usedSlots: IntArray) : Container {
+open class LimitedInventory(private val parent: Container, private val usedSlots: IntArray) : Container {
     override fun getContainerSize(): Int = usedSlots.size
 
     override fun isEmpty(): Boolean {
@@ -17,7 +17,7 @@ class LimitedInventory(private val parent: Container, private val usedSlots: Int
 
     override fun getItem(slot: Int): ItemStack = parent.getItem(usedSlots[slot])
 
-    override fun removeItem(slot: Int, p_70298_2_: Int): ItemStack = parent.removeItem(usedSlots[slot], p_70298_2_)
+    override fun removeItem(slot: Int, p702982: Int): ItemStack = parent.removeItem(usedSlots[slot], p702982)
 
     override fun removeItemNoUpdate(slot: Int): ItemStack = parent.removeItemNoUpdate(usedSlots[slot])
 
@@ -36,7 +36,7 @@ class LimitedInventory(private val parent: Container, private val usedSlots: Int
         if (itemCount <= limit) {
             parent.setItem(usedSlots[slot], ItemStack.EMPTY)
         } else {
-            item.count = item.count - limit
+            item.count -= limit
             parent.setItem(usedSlots[slot], item)
         }
     }

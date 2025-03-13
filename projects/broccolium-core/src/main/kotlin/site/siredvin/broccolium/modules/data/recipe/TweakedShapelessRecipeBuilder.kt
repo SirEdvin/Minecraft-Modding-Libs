@@ -18,6 +18,8 @@ class TweakedShapelessRecipeBuilder(private val result: ItemStack, private val c
     private val ingredients: NonNullList<Ingredient> = NonNullList.create()
     private var group: String? = null
 
+    constructor(result: Item, category: RecipeCategory = RecipeCategory.MISC) : this(ItemStack(result), category)
+
     fun requires(ing: TagKey<Item>, count: Int = 1): TweakedShapelessRecipeBuilder = this.requires(Ingredient.of(ing), count)
 
     fun requires(ing: ItemLike, count: Int = 1): TweakedShapelessRecipeBuilder {
