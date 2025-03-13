@@ -29,8 +29,8 @@ class FabricGeneratorSink(private val pack: FabricDataGenerator.Pack, private va
     override fun <T : DataProvider> add(factory: TweakedDataProviderFactory<T>): T = pack.addProvider(DataProvider.Factory { factory.create(it, registryLookup) })
     override fun <T : DataProvider> add(factory: DataProvider.Factory<T>): T = pack.addProvider(factory)
 
-    override fun addRegistryPatch(factory: Function<CompletableFuture<HolderLookup.Provider>, CompletableFuture<RegistrySetBuilder.PatchedRegistries>>) {
-        pack.addProvider(FabricDataGenerator.Pack.Factory { AutomaticDynamicRegistryProvider(it, factory.apply(registryLookup)) })
+    override fun addRegistryPatch(name: String, factory: Function<CompletableFuture<HolderLookup.Provider>, CompletableFuture<RegistrySetBuilder.PatchedRegistries>>) {
+        pack.addProvider(FabricDataGenerator.Pack.Factory { AutomaticDynamicRegistryProvider(name, it, factory.apply(registryLookup)) })
     }
 
     override fun lootTable(tables: List<LootTableProvider.SubProviderEntry>) {

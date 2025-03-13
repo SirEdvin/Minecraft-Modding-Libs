@@ -9,26 +9,25 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.broccolium.modules.base.util.pocketAdjectiveComponent
 import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
 import site.siredvin.tweakium.modules.pocket.api.PockerUpgradePeripheralBuilder
+import java.util.function.Supplier
 
-class StatefulPeripheralPocketUpgrade<T : IOwnedPeripheral<*>>(
+open class StatefulPeripheralPocketUpgrade<T : IOwnedPeripheral<*>>(
     id: ResourceLocation,
     adjective: Component,
     stack: ItemStack,
+    private val typeSup: Supplier<UpgradeType<StatefulPeripheralPocketUpgrade<T>>>,
     private val constructor: PockerUpgradePeripheralBuilder<T>,
-    type: UpgradeType<StatefulPeripheralPocketUpgrade<T>>? = null,
 ) : StatefulPocketUpgrade<T>(id, adjective, stack) {
 
-    private val type: UpgradeType<StatefulPeripheralPocketUpgrade<T>> = type ?: UpgradeType.simpleWithCustomItem { StatefulPeripheralPocketUpgrade(id, adjective, stack, constructor) }
-
-    constructor(id: ResourceLocation, stack: ItemStack, constructor: PockerUpgradePeripheralBuilder<T>, type: UpgradeType<StatefulPeripheralPocketUpgrade<T>>? = null) : this(
+    constructor(id: ResourceLocation, stack: ItemStack, constructor: PockerUpgradePeripheralBuilder<T>, typeSup: Supplier<UpgradeType<StatefulPeripheralPocketUpgrade<T>>>) : this(
         id,
         pocketAdjectiveComponent(id),
         stack,
+        typeSup,
         constructor,
-        type,
     )
 
     override fun getPeripheral(access: IPocketAccess): T = constructor.build(access)
 
-    override fun getType(): UpgradeType<out IPocketUpgrade> = type
+    override fun getType(): UpgradeType<out IPocketUpgrade> = typeSup.get()
 }

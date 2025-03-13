@@ -23,7 +23,9 @@ abstract class FabricInnerComputerBasePlatform :
             BuiltInRegistries.REGISTRY.get(ITurtleUpgrade.typeRegistry().location())
                 ?: throw IllegalStateException("Something is not correct with turtle registry")
             ) as Registry<UpgradeType<ITurtleUpgrade>>
-        val registered = Registry.register(registry, key, upgrade)
+
+        @Suppress("UNCHECKED_CAST")
+        val registered = Registry.register(registry, key, upgrade as UpgradeType<ITurtleUpgrade>) as UpgradeType<V>
         return Supplier { registered }
     }
 
@@ -36,7 +38,9 @@ abstract class FabricInnerComputerBasePlatform :
             BuiltInRegistries.REGISTRY.get(IPocketUpgrade.typeRegistry().location())
                 ?: throw IllegalStateException("Something is not correct with pocket registry")
             ) as Registry<UpgradeType<IPocketUpgrade>>
-        val registered = Registry.register(registry, key, upgrade)
+
+        @Suppress("UNCHECKED_CAST")
+        val registered = Registry.register(registry, key, upgrade as UpgradeType<IPocketUpgrade>) as UpgradeType<V>
         return Supplier { registered }
     }
 }

@@ -12,10 +12,11 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradeIDSupplier
 import site.siredvin.tweakium.modules.turtle.api.TurtleUpgradePeripheralBuilder
+import java.util.function.Supplier
 
 abstract class StatefulPeripheralTurtleUpgrade<T : IOwnedPeripheral<*>> : StatefulTurtleUpgrade<T> {
     companion object {
-        fun <T : IOwnedPeripheral<*>> dynamic(item: Item, constructor: TurtleUpgradePeripheralBuilder<T>, idBuilder: TurtleUpgradeIDSupplier): StatefulPeripheralTurtleUpgrade<T> = Dynamic(idBuilder.get(item), item.defaultInstance, constructor)
+        fun <T : IOwnedPeripheral<*>> dynamic(item: Item, constructor: TurtleUpgradePeripheralBuilder<T>, typeSup: Supplier<UpgradeType<StatefulPeripheralTurtleUpgrade<T>>>, idBuilder: TurtleUpgradeIDSupplier): StatefulPeripheralTurtleUpgrade<T> = Dynamic(idBuilder.get(item), item.defaultInstance, typeSup, constructor)
     }
     constructor(id: ResourceLocation, adjective: Component, item: ItemStack) : super(
         id,
@@ -33,13 +34,10 @@ abstract class StatefulPeripheralTurtleUpgrade<T : IOwnedPeripheral<*>> : Statef
     private class Dynamic<T : IOwnedPeripheral<*>>(
         turtleID: ResourceLocation,
         stack: ItemStack,
+        private val typeSup: Supplier<UpgradeType<StatefulPeripheralTurtleUpgrade<T>>>,
         private val constructor: TurtleUpgradePeripheralBuilder<T>,
-        type: UpgradeType<Dynamic<T>>? = null,
     ) : StatefulPeripheralTurtleUpgrade<T>(turtleID, stack) {
-
-        private val type: UpgradeType<Dynamic<T>> = type ?: UpgradeType.simpleWithCustomItem { stack -> Dynamic(turtleID, stack, constructor) }
-
         override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): T = constructor.build(turtle, side)
-        override fun getType(): UpgradeType<out ITurtleUpgrade> = type
+        override fun getType(): UpgradeType<out ITurtleUpgrade> = typeSup.get()
     }
 }

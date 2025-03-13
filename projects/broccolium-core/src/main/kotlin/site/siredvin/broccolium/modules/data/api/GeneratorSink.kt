@@ -17,7 +17,7 @@ import java.util.function.Function
 interface GeneratorSink {
     fun <T : DataProvider> add(factory: TweakedDataProviderFactory<T>): T
     fun <T : DataProvider> add(factory: DataProvider.Factory<T>): T
-    fun addRegistryPatch(factory: Function<CompletableFuture<HolderLookup.Provider>, CompletableFuture<PatchedRegistries>>)
+    fun addRegistryPatch(name: String, factory: Function<CompletableFuture<HolderLookup.Provider>, CompletableFuture<PatchedRegistries>>)
     fun lootTable(tables: List<LootTableProvider.SubProviderEntry>)
     fun blockTags(modID: String, tags: Consumer<TagConsumer<Block>>): TagsProvider<Block>
 

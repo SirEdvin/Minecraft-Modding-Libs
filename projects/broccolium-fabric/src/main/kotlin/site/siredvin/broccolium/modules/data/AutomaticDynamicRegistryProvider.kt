@@ -7,10 +7,10 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistrySetBuilder
 import java.util.concurrent.CompletableFuture
 
-class AutomaticDynamicRegistryProvider(output: FabricDataOutput, registries: CompletableFuture<RegistrySetBuilder.PatchedRegistries>) : FabricDynamicRegistryProvider(output, registries.thenApply(RegistrySetBuilder.PatchedRegistries::patches)) {
+class AutomaticDynamicRegistryProvider(private val name: String, output: FabricDataOutput, registries: CompletableFuture<RegistrySetBuilder.PatchedRegistries>) : FabricDynamicRegistryProvider(output, registries.thenApply(RegistrySetBuilder.PatchedRegistries::patches)) {
     override fun configure(registries: HolderLookup.Provider, entries: Entries) {
         for (r in DynamicRegistries.getDynamicRegistries()) entries.addAll(registries.lookupOrThrow(r.key()))
     }
 
-    override fun getName(): String = "Registries"
+    override fun getName(): String = name
 }

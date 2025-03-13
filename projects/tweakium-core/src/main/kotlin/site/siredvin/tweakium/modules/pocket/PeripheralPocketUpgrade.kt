@@ -9,28 +9,29 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.broccolium.modules.base.util.pocketAdjectiveComponent
 import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
 import site.siredvin.tweakium.modules.pocket.api.PockerUpgradePeripheralBuilder
+import java.util.function.Supplier
 
-class PeripheralPocketUpgrade<T : IOwnedPeripheral<*>> : BasePocketUpgrade<T> {
+open class PeripheralPocketUpgrade<T : IOwnedPeripheral<*>> : BasePocketUpgrade<T> {
 
     private val constructor: PockerUpgradePeripheralBuilder<T>
-    private val type: UpgradeType<PeripheralPocketUpgrade<T>>
+    private val typeSup: Supplier<UpgradeType<PeripheralPocketUpgrade<T>>>
 
-    constructor(adjective: Component, stack: ItemStack, constructor: PockerUpgradePeripheralBuilder<T>, type: UpgradeType<PeripheralPocketUpgrade<T>>? = null) : super(
+    constructor(adjective: Component, stack: ItemStack, constructor: PockerUpgradePeripheralBuilder<T>, typeSup: Supplier<UpgradeType<PeripheralPocketUpgrade<T>>>) : super(
         adjective,
         stack,
     ) {
         this.constructor = constructor
-        this.type = type ?: UpgradeType.simpleWithCustomItem { PeripheralPocketUpgrade(adjective, stack, constructor) }
+        this.typeSup = typeSup
     }
 
-    constructor(id: ResourceLocation, stack: ItemStack, constructor: PockerUpgradePeripheralBuilder<T>, type: UpgradeType<PeripheralPocketUpgrade<T>>? = null) : super(
+    constructor(id: ResourceLocation, stack: ItemStack, constructor: PockerUpgradePeripheralBuilder<T>, typeSup: Supplier<UpgradeType<PeripheralPocketUpgrade<T>>>) : super(
         pocketAdjectiveComponent(id),
         stack,
     ) {
         this.constructor = constructor
-        this.type = type ?: UpgradeType.simpleWithCustomItem { PeripheralPocketUpgrade(adjective, stack, constructor) }
+        this.typeSup = typeSup
     }
 
     override fun getPeripheral(access: IPocketAccess): T = constructor.build(access)
-    override fun getType(): UpgradeType<out IPocketUpgrade> = this.type
+    override fun getType(): UpgradeType<out IPocketUpgrade> = this.typeSup.get()
 }

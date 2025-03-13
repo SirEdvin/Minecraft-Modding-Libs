@@ -26,7 +26,12 @@ abstract class ComputerBasePlatform : BasePlatform() {
     fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
         upgrade: UpgradeType<V>,
-    ): RegistryEntry<UpgradeType<V>> = SimpleRegistryEntry(key, baseInnerPlatform.registerTurtleUpgrade(key, upgrade))
+    ): RegistryEntry<UpgradeType<V>> {
+        val result = SimpleRegistryEntry(key, baseInnerPlatform.registerTurtleUpgrade(key, upgrade))
+        @Suppress("UNCHECKED_CAST")
+        modInformationTracker.internalTurtleUpgrades.add(result as RegistryEntry<UpgradeType<out ITurtleUpgrade>>)
+        return result
+    }
 
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         name: String,
@@ -36,5 +41,10 @@ abstract class ComputerBasePlatform : BasePlatform() {
     fun <V : IPocketUpgrade> registerPocketUpgrade(
         key: ResourceLocation,
         upgrade: UpgradeType<V>,
-    ): RegistryEntry<UpgradeType<V>> = SimpleRegistryEntry(key, baseInnerPlatform.registerPocketUpgrade(key, upgrade))
+    ): RegistryEntry<UpgradeType<V>> {
+        val result = SimpleRegistryEntry(key, baseInnerPlatform.registerPocketUpgrade(key, upgrade))
+        @Suppress("UNCHECKED_CAST")
+        modInformationTracker.internalPocketUpgrades.add(result as RegistryEntry<UpgradeType<out IPocketUpgrade>>)
+        return result
+    }
 }
