@@ -1,5 +1,6 @@
 package site.siredvin.broccolium.modules.platform
 
+import com.mojang.serialization.Codec
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
@@ -15,6 +16,8 @@ class FabricRegistryWrapper<T>(private val name: ResourceLocation, private val r
         if (id == -1) throw IllegalArgumentException()
         return id
     }
+
+    override fun byNameCodec(): Codec<T> = registry.byNameCodec()
 
     override fun getKey(something: T): ResourceLocation = registry.getKey(something!!) ?: throw IllegalArgumentException()
 

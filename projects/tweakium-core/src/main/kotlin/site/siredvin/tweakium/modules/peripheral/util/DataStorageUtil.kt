@@ -95,8 +95,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun putString(key: String, value: String) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         copyTag.putString(key, value)
         setCustomData(CustomData.of(copyTag))
     }
@@ -109,8 +108,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun putInt(key: String, value: Int) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         copyTag.putInt(key, value)
         setCustomData(CustomData.of(copyTag))
     }
@@ -129,8 +127,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun putDouble(key: String, value: Double) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         copyTag.putDouble(key, value)
         setCustomData(CustomData.of(copyTag))
     }
@@ -143,8 +140,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun putCompound(key: String, tag: CompoundTag) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         copyTag.put(key, tag)
         setCustomData(CustomData.of(copyTag))
     }
@@ -157,16 +153,14 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun putList(key: String, tag: ListTag) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         copyTag.put(key, tag)
         setCustomData(CustomData.of(copyTag))
     }
 
     override fun putUUID(key: String, uuid: UUID) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         copyTag.putUUID(key, uuid)
         setCustomData(CustomData.of(copyTag))
     }
@@ -180,8 +174,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun putBoolean(key: String, value: Boolean) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         copyTag.putBoolean(key, value)
         setCustomData(CustomData.of(copyTag))
     }
@@ -204,8 +197,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun mutate(func: Consumer<CompoundTag>) {
         val customData = extractCustomData()
-        if (customData.isEmpty) return
-        val copyTag = customData.get().copyTag()
+        val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
         func.accept(copyTag)
         setCustomData(CustomData.of(copyTag))
     }

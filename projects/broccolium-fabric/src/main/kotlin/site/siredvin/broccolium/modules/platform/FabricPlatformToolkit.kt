@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
+import site.siredvin.broccolium.modules.platform.api.RegistryLookup
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import site.siredvin.broccolium.modules.platform.api.SavingFunction
 import java.util.*
@@ -55,6 +56,11 @@ object FabricPlatformToolkit : InnerPlatformToolkit {
         @Suppress("UNCHECKED_CAST")
         val targetRegistry: Registry<T> = (BuiltInRegistries.REGISTRY.get(registry.location()) ?: throw IllegalArgumentException("Cannot find registry $registry")) as Registry<T>
         return FabricRegistryWrapper(registry.location(), targetRegistry)
+    }
+
+    override fun <T> lookup(registry: ResourceKey<Registry<T>>): RegistryLookup<T> {
+        val targetRegistry = registries!!.lookupOrThrow(registry)
+        return FabricLookupWrapper(registry, targetRegistry)
     }
 
     override fun isBlockProtected(pos: BlockPos, state: BlockState, player: ServerPlayer): Boolean {

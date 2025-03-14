@@ -38,6 +38,8 @@ interface InnerPlatformToolkit {
 
     fun <T> wrap(registry: ResourceKey<Registry<T>>): RegistryWrapper<T>
 
+    fun <T> lookup(registry: ResourceKey<Registry<T>>): RegistryLookup<T>
+
     fun isBlockProtected(pos: BlockPos, state: BlockState, player: ServerPlayer): Boolean
 
     fun interactWithEntity(player: ServerPlayer, hand: InteractionHand, entity: Entity, hit: EntityHitResult): InteractionResult
