@@ -1,4 +1,4 @@
-package site.siredvin.tweakium.modules.peripheral.ability
+package site.siredvin.tweakium.modules.peripheral.boon
 
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult

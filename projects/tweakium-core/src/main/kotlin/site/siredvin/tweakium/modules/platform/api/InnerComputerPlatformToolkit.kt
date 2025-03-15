@@ -9,15 +9,20 @@ import dan200.computercraft.api.upgrades.UpgradeData
 import dan200.computercraft.shared.util.NBTUtil
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
+import site.siredvin.broccolium.modules.base.util.DataComponentUtil
+import site.siredvin.tweakium.modules.platform.ComputerPlatformRegistries
+import java.util.*
 
 interface InnerComputerPlatformToolkit {
     fun createFakePlayer(level: ServerLevel, profile: GameProfile): ServerPlayer
@@ -26,24 +31,20 @@ interface InnerComputerPlatformToolkit {
 
     fun getPeripheral(level: ServerLevel, pos: BlockPos, side: Direction): IPeripheral?
 
-    fun nbtHash(tag: CompoundTag?): String?
-    fun nbtHash(component: DataComponentPatch?): String? {
-        if (component == null) return null
-        return NBTUtil.getNBTHash(
-            DataComponentPatch.CODEC.encodeStart(
-                NbtOps.INSTANCE,
-                component,
-            ).result().orElse(null),
-        )
-    }
+    fun nbtHash(tag: Tag?): String?
+    fun nbtHash(component: DataComponentPatch?): String? = nbtHash(DataComponentUtil.patchToNBT(component))
 
     fun getTurtleUpgrade(registries: HolderLookup.Provider, stack: ItemStack): UpgradeData<ITurtleUpgrade>?
 
     fun getPocketUpgrade(registries: HolderLookup.Provider, stack: ItemStack): UpgradeData<IPocketUpgrade>?
 
-    fun getTurtleUpgrade(key: String): ITurtleUpgrade?
+    fun getTurtleUpgrade(key: String): Optional<Holder.Reference<ITurtleUpgrade>> = ComputerPlatformRegistries.TURTLE_UPGRADES.get(
+        ResourceKey.create(ITurtleUpgrade.REGISTRY, ResourceLocation.parse(key)),
+    )
 
-    fun getPocketUpgrade(key: String): IPocketUpgrade?
+    fun getPocketUpgrade(key: String): Optional<Holder.Reference<IPocketUpgrade>> = ComputerPlatformRegistries.POCKET_UPGRADES.get(
+        ResourceKey.create(IPocketUpgrade.REGISTRY, ResourceLocation.parse(key)),
+    )
 
     fun nbtToLua(tag: Tag): Any?
 

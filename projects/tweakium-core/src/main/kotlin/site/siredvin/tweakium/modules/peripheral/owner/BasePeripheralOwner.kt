@@ -1,10 +1,10 @@
 package site.siredvin.tweakium.modules.peripheral.owner
 
-import site.siredvin.tweakium.modules.peripheral.ability.OperationBoon
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.boon.OperationBoon
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 
 abstract class BasePeripheralOwner : IPeripheralOwner {
     private val _abilities: MutableMap<IPeripheralOwnerBoonKey<*>, IPeripheralOwnerBoon> = HashMap()

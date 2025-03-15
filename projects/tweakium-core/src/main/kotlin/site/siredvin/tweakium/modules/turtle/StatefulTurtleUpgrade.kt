@@ -2,6 +2,7 @@ package site.siredvin.tweakium.modules.turtle
 
 import dan200.computercraft.api.turtle.TurtleUpgradeType
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -16,8 +17,8 @@ abstract class StatefulTurtleUpgrade<T : IOwnedPeripheral<*>>(
     adjective: Component,
     stack: ItemStack,
 ) : BaseTurtleUpgrade<T>(id, type, adjective, stack) {
-    companion object {
-    }
+    open val importantComponents: List<DataComponentType<*>>
+        get() = listOf(DataComponents.CUSTOM_DATA)
 
     constructor(id: ResourceLocation, type: TurtleUpgradeType, stack: ItemStack) : this(
         id,
@@ -27,26 +28,35 @@ abstract class StatefulTurtleUpgrade<T : IOwnedPeripheral<*>>(
     )
 
     override fun getUpgradeData(stack: ItemStack): DataComponentPatch {
-        val customData = stack.componentsPatch.get(DataComponents.CUSTOM_DATA) ?: Optional.empty()
-        if (customData.isEmpty) return DataComponentPatch.EMPTY
-        return DataComponentPatch.builder().set(DataComponents.CUSTOM_DATA, customData.get()).build()
+        val builder = DataComponentPatch.builder()
+        for (component in importantComponents) {
+            val data = stack.get(component)
+            if (data != null) {
+                @Suppress("UNCHECKED_CAST")
+                builder.set(component as DataComponentType<Any>, data)
+            }
+        }
+        return builder.build()
     }
 
     override fun getUpgradeItem(upgradeData: DataComponentPatch): ItemStack {
         if (upgradeData.isEmpty) return craftingItem
         val base = craftingItem.copy()
-        val customData = upgradeData.get(DataComponents.CUSTOM_DATA) ?: Optional.empty()
-        if (customData.isPresent) {
-            base.applyComponents(DataComponentPatch.builder().set(DataComponents.CUSTOM_DATA, customData.get()).build())
+        for (component in importantComponents) {
+            val data = upgradeData.get(component) ?: Optional.empty()
+            if (data.isPresent) {
+                @Suppress("UNCHECKED_CAST")
+                base.set(component as DataComponentType<Any>, data.get())
+            }
         }
         return base
     }
 
     override fun isItemSuitable(stack: ItemStack): Boolean {
-        val customData = stack.componentsPatch.get(DataComponents.CUSTOM_DATA) ?: Optional.empty()
-        if (customData.isEmpty || customData.get().isEmpty) return super.isItemSuitable(stack)
+        val hasExtraData = importantComponents.any { stack.has(it) }
+        if (!hasExtraData) return super.isItemSuitable(stack)
         val tweakedStack = stack.copy()
-        tweakedStack.applyComponents(DataComponentPatch.builder().set(DataComponents.CUSTOM_DATA, customData.get()).build())
+        importantComponents.forEach { tweakedStack.remove(it) }
         return super.isItemSuitable(tweakedStack)
     }
 }

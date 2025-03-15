@@ -31,7 +31,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
-import site.siredvin.broccolium.modules.platform.api.RegistryLookup
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import site.siredvin.broccolium.modules.platform.api.SavingFunction
 import java.util.*
@@ -58,10 +57,7 @@ object FabricPlatformToolkit : InnerPlatformToolkit {
         return FabricRegistryWrapper(registry.location(), targetRegistry)
     }
 
-    override fun <T> lookup(registry: ResourceKey<Registry<T>>): RegistryLookup<T> {
-        val targetRegistry = registries!!.lookupOrThrow(registry)
-        return FabricLookupWrapper(registry, targetRegistry)
-    }
+    override fun <T> lookup(registry: ResourceKey<Registry<T>>): HolderLookup.RegistryLookup<T> = registries!!.lookupOrThrow(registry)
 
     override fun isBlockProtected(pos: BlockPos, state: BlockState, player: ServerPlayer): Boolean {
         if (player.server.isUnderSpawnProtection(player.serverLevel(), pos, player)) {

@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.item.component.CustomData
+import site.siredvin.broccolium.modules.base.util.DataComponentUtil
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
 import java.util.*
@@ -18,6 +19,19 @@ import java.util.Optional
 import java.util.function.Consumer
 
 class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: () -> Unit) : IDataStorage {
+    companion object {
+        const val PATCH_STORAGE = "__patch_storage__"
+    }
+
+    override var patch: DataComponentPatch
+        get() = DataComponentUtil.nbtToPatch(tag.get(PATCH_STORAGE)) ?: DataComponentPatch.EMPTY
+        set(value) {
+            val nbt = DataComponentUtil.patchToNBT(value)
+            if (nbt != null) {
+                tag.put(PATCH_STORAGE, nbt)
+            }
+        }
+
     override fun has(key: String): Boolean = tag.contains(key)
 
     override fun putString(key: String, value: String) {
@@ -72,8 +86,6 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
         tag.put(key, tag)
         trigger()
     }
-
-    override fun getChild(key: String): IDataStorage = CompoundTagDataStorage(tag.getCompound(key), trigger)
 
     override fun mutate(func: Consumer<CompoundTag>) {
         func.accept(tag)
@@ -193,8 +205,6 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
         setCustomData(CustomData.of(copyTag))
     }
 
-    override fun getChild(key: String): IDataStorage = ChildCustomDataComputerDataStorage(key, this)
-
     override fun mutate(func: Consumer<CompoundTag>) {
         val customData = extractCustomData()
         val copyTag = if (customData.isPresent) customData.get().copyTag() else CompoundTag()
@@ -203,18 +213,14 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
     }
 }
 
-class ChildCustomDataComputerDataStorage(private val key: String, private val parent: CustomDataComputerDataStorage) : CustomDataComputerDataStorage() {
-    override fun extractCustomData(): Optional<CustomData> {
-        val innerCompound = parent.getCompound(key)
-        return if (innerCompound.isEmpty) Optional.empty() else Optional.of(CustomData.of(innerCompound))
-    }
-
-    override fun setCustomData(data: CustomData) {
-        parent.putCompound(key, data.copyTag())
-    }
-}
-
 class PocketComputerDataStorage(private val pocket: IPocketAccess) : CustomDataComputerDataStorage() {
+
+    override var patch: DataComponentPatch
+        get() = pocket.upgradeData
+        set(value) {
+            pocket.upgradeData = value
+        }
+
     @Suppress("UNCHECKED_CAST")
     override fun extractCustomData(): Optional<CustomData> {
         val data = pocket.upgradeData.get(DataComponents.CUSTOM_DATA) ?: return Optional.empty()
@@ -235,6 +241,13 @@ class PocketComputerDataStorage(private val pocket: IPocketAccess) : CustomDataC
 }
 
 class TurtleComputerDataStorage(private val turtle: ITurtleAccess, private val side: TurtleSide) : CustomDataComputerDataStorage() {
+
+    override var patch: DataComponentPatch
+        get() = turtle.getUpgradeData(side)
+        set(value) {
+            turtle.setUpgradeData(side, value)
+        }
+
     @Suppress("UNCHECKED_CAST")
     override fun extractCustomData(): Optional<CustomData> {
         val data = turtle.getUpgradeData(side).get(DataComponents.CUSTOM_DATA) ?: return Optional.empty()

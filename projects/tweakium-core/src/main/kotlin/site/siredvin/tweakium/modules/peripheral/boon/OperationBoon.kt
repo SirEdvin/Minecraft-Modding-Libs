@@ -1,9 +1,8 @@
-package site.siredvin.tweakium.modules.peripheral.ability
+package site.siredvin.tweakium.modules.peripheral.boon
 
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.lua.MethodResult
-import net.minecraft.nbt.CompoundTag
 import site.siredvin.tweakium.modules.peripheral.api.*
 import java.sql.Timestamp
 import java.time.LocalDateTime
@@ -18,11 +17,12 @@ class OperationBoon(private val owner: IPeripheralOwner, private val reduceRate:
     protected fun setCooldown(operation: IPeripheralOperation<*>, cooldown: Int) {
         if (cooldown > 0) {
             val dataStorage = owner.dataStorage
-            if (!dataStorage.has(COOLDOWNS_TAG)) dataStorage.putCompound(COOLDOWNS_TAG, CompoundTag())
-            dataStorage.getCompound(COOLDOWNS_TAG).putLong(
+            val cooldowns = dataStorage.getCompound(COOLDOWNS_TAG)
+            cooldowns.putLong(
                 operation.settingsName(),
                 Timestamp.valueOf(LocalDateTime.now().plus(cooldown.toLong(), ChronoUnit.MILLIS)).time,
             )
+            dataStorage.putCompound(COOLDOWNS_TAG, cooldowns)
         }
     }
 

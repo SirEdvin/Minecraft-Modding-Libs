@@ -9,8 +9,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
-import site.siredvin.tweakium.modules.peripheral.ability.OperationBoon
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.boon.OperationBoon
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
 import java.util.function.BiConsumer
 import java.util.function.Consumer

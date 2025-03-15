@@ -37,7 +37,7 @@ abstract class BasePlatform {
         return registeredItem
     }
 
-    fun <T : DataComponentType<Z>, Z> registerDataComponent(key: ResourceLocation, dataComponent: DataComponentType.Builder<T>): RegistryEntry<DataComponentType<T>> = SimpleRegistryEntry(key, baseInnerPlatform.registerDataComponent(key, dataComponent))
+    fun <T> registerDataComponent(key: ResourceLocation, dataComponent: DataComponentType.Builder<T>): RegistryEntry<DataComponentType<T>> = SimpleRegistryEntry(key, baseInnerPlatform.registerDataComponent(key, dataComponent))
 
     fun <T : Item> registerItem(name: String, item: Supplier<T>): RegistryEntry<T> = registerItem(ResourceLocation.fromNamespaceAndPath(baseInnerPlatform.modID, name), item)
 

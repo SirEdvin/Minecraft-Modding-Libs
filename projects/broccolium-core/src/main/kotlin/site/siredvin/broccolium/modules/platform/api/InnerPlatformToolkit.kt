@@ -38,7 +38,7 @@ interface InnerPlatformToolkit {
 
     fun <T> wrap(registry: ResourceKey<Registry<T>>): RegistryWrapper<T>
 
-    fun <T> lookup(registry: ResourceKey<Registry<T>>): RegistryLookup<T>
+    fun <T> lookup(registry: ResourceKey<Registry<T>>): HolderLookup.RegistryLookup<T>
 
     fun isBlockProtected(pos: BlockPos, state: BlockState, player: ServerPlayer): Boolean
 

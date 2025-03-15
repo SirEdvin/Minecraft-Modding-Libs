@@ -10,8 +10,8 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.base.ext.xor
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.api.*
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Consumer
