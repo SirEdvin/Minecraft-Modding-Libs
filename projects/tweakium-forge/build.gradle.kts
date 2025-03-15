@@ -7,6 +7,7 @@ plugins {
 }
 
 val tweakiumVersion: String by extra
+val broccoliumVersion: String by extra
 
 baseShaking {
     projectPart.set("forge")
@@ -24,6 +25,11 @@ forgeShaking {
     extraVersionMappings.set(
         mapOf(
             "computercraft" to "cc-tweaked",
+        ),
+    )
+    extraRawVersionMappings.set(
+        mapOf(
+            "broccolium" to broccoliumVersion,
         ),
     )
     shake()

@@ -8,6 +8,7 @@ plugins {
 
 val tweakiumVersion: String by extra
 val minecraftVersion: String by extra
+val broccoliumVersion: String by extra
 
 baseShaking {
     projectPart.set("fabric")
@@ -24,6 +25,11 @@ fabricShaking {
     extraVersionMappings.set(
         mapOf(
             "computercraft" to "cc-tweaked",
+        ),
+    )
+    extraRawVersionMappings.set(
+        mapOf(
+            "broccolium" to broccoliumVersion,
         ),
     )
     shake()

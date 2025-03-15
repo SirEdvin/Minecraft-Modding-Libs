@@ -1,4 +1,4 @@
-package site.siredvin.tweakium.modules.peripheral.ability
+package site.siredvin.tweakium.modules.peripheral.boon
 
 import net.minecraft.world.food.FoodData
 import site.siredvin.tweakium.modules.peripheral.owner.PocketPeripheralOwner

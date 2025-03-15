@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
+import site.siredvin.tweakium.ForgeTweakium
 import thedarkcolour.kotlinforforge.forge.MOD_CONTEXT
 
 @Mod(PeripheraliumCore.MOD_ID)
@@ -22,6 +23,7 @@ object ForgePeripheralium {
         DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), PeripheraliumCore.MOD_ID)
 
     init {
+        sayHi()
         PeripheraliumCore.configure(ForgePeripheraliumPlatform)
         // Register extract storages
         val eventBus = MOD_CONTEXT.getKEventBus()
@@ -32,5 +34,6 @@ object ForgePeripheralium {
     }
 
     fun sayHi() {
+        ForgeTweakium.sayHi()
     }
 }

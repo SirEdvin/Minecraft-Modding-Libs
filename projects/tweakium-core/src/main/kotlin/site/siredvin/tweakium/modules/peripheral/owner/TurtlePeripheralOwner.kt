@@ -10,9 +10,9 @@ import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.storage.item.ContainerUtils
 import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
-import site.siredvin.tweakium.modules.peripheral.ability.PeripheralOwnerBoonKey
-import site.siredvin.tweakium.modules.peripheral.ability.TurtleFuelBoon
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
+import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
+import site.siredvin.tweakium.modules.peripheral.boon.TurtleFuelBoon
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import site.siredvin.tweakium.modules.player.FakePlayerProviderTurtle
 import site.siredvin.tweakium.modules.player.FakePlayerProxy

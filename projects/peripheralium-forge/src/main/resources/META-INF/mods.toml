@@ -35,13 +35,13 @@ side="BOTH"
 [[dependencies.peripheralium]]
 modId="broccolium"
 mandatory=true
-versionRange="[${version},)"
+versionRange="[${broccoliumVersion},)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.peripheralium]]
 modId="tweakium"
 mandatory=true
-versionRange="[${version},)"
+versionRange="[${tweakiumVersion},)"
 ordering="NONE"
 side="BOTH"

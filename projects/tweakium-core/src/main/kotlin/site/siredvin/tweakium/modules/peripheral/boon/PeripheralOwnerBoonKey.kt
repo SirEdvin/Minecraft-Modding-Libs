@@ -1,4 +1,4 @@
-package site.siredvin.tweakium.modules.peripheral.ability
+package site.siredvin.tweakium.modules.peripheral.boon
 
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoonKey
