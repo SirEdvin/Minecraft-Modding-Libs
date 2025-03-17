@@ -10,9 +10,6 @@ import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.client.Minecraft
 import net.minecraft.core.*
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.data.PackOutput
-import net.minecraft.data.advancements.AdvancementProvider
-import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -44,7 +41,6 @@ import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import site.siredvin.broccolium.modules.platform.api.SavingFunction
 import java.util.*
-import java.util.concurrent.CompletableFuture
 import java.util.function.BiFunction
 import java.util.function.Function
 import java.util.function.Predicate
