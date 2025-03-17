@@ -1,7 +1,11 @@
 package site.siredvin.broccolium.modules.platform.api
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.Registry
+import net.minecraft.data.PackOutput
+import net.minecraft.data.advancements.AdvancementProvider
+import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -24,6 +28,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import java.util.*
+import java.util.concurrent.CompletableFuture
 import java.util.function.BiFunction
 import java.util.function.Function
 import java.util.function.Predicate

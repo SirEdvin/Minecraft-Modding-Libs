@@ -2,6 +2,9 @@ package site.siredvin.broccolium.modules.platform
 
 import net.minecraft.client.Minecraft
 import net.minecraft.core.*
+import net.minecraft.data.PackOutput
+import net.minecraft.data.advancements.AdvancementProvider
+import net.minecraft.data.advancements.AdvancementSubProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -28,6 +31,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.common.data.ForgeAdvancementProvider
 import net.minecraftforge.common.world.ForgeChunkManager
 import net.minecraftforge.event.level.BlockEvent.BreakEvent
 import net.minecraftforge.eventbus.api.Event
@@ -39,6 +43,7 @@ import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import site.siredvin.broccolium.modules.platform.api.SavingFunction
 import java.util.*
+import java.util.concurrent.CompletableFuture
 import java.util.function.BiFunction
 import java.util.function.Function
 import java.util.function.Predicate

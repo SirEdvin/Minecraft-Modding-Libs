@@ -15,11 +15,11 @@ val setupSubproject = subprojectShaking::setupSubproject
 subprojects {
     setupSubproject(this)
 }
-//
-//githubShaking {
-//    modBranch.set("1.20")
-//    shake()
-//}
+
+githubShaking {
+    modBranch.set("1.20")
+    shake()
+}
 
 repositories {
     mavenCentral()
