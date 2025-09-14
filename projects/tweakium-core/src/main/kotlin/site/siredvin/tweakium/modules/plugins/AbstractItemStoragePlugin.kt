@@ -34,6 +34,10 @@ abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
         return result
     }
 
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        data["itemStorageTransferLimit"] = itemStorageTransferLimit
+    }
+
     @LuaFunction(mainThread = true)
     fun items(arguments: IArguments): List<Map<String, *>> {
         val isDetailed = arguments.optBoolean(0, true)

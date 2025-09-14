@@ -16,7 +16,7 @@ import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Consumer
 
-abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O) :
+abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O, private val peripheralImplementationProvider: String? = null) :
     IOwnedPeripheral<O>,
     IDynamicPeripheral,
     IExpandedPeripheral {
@@ -52,7 +52,11 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
     open val peripheralConfiguration: MutableMap<String, Any>
         get() {
             val data: MutableMap<String, Any> = HashMap()
+            if (peripheralImplementationProvider != null) {
+                data["implementationProvider"] = peripheralImplementationProvider
+            }
             peripheralOwner.abilities.forEach(Consumer { ability: IPeripheralOwnerBoon -> ability.collectConfiguration(data) })
+            plugins.forEach { it.collectConfiguration(data) }
             return data
         }
 

@@ -24,6 +24,10 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
 
     protected abstract val storage: AgnosticFluidStorage
 
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        data["fluidStorageTransferLimit"] = fluidStorageTransferLimit
+    }
+
     @LuaFunction(mainThread = true)
     fun tanks(): List<Map<String, *>> {
         val data: MutableList<Map<String, *>> = mutableListOf()

@@ -39,7 +39,11 @@ abstract class AbstractInventoryPlugin : IPeripheralPlugin {
         return if (stack.isEmpty) null else LuaRepresentation.forItemStack(stack)
     }
 
-    open fun getItemLimitImpl(slot: Int): Int = storage.getItem(slot).maxStackSize
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        data["inventoryAPIVersion"] = "1.1"
+    }
+
+    open fun getItemLimitImpl(slot: Int): Long = storage.getItemLimit(slot)
 
     @LuaFunction(mainThread = true)
     fun size(): Int = sizeImpl()
@@ -54,7 +58,7 @@ abstract class AbstractInventoryPlugin : IPeripheralPlugin {
     }
 
     @LuaFunction(mainThread = true)
-    fun getItemLimit(slot: Int): Int {
+    fun getItemLimit(slot: Int): Long {
         assertBetween(slot, 1, storage.size, "slot")
         return getItemLimitImpl(slot - 1)
     }

@@ -21,4 +21,5 @@ interface IPeripheralPlugin {
 
     fun onFirstAttach() {}
     fun onLastDetach() {}
+    fun collectConfiguration(data: MutableMap<String, Any>) {}
 }

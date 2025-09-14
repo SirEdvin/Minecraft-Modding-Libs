@@ -136,6 +136,7 @@ class FabricSlottedStorageWrapper(internal val storage: SlottedStorage<ItemVaria
     fun getSingleSlot(slot: Int): SingleSlotStorage<ItemVariant> = storage.getSlot(slot)
 
     override fun canPlaceItem(slot: Int, item: ItemStack): Boolean = true
+    override fun getItemLimit(slot: Int): Long = storage.getSlot(slot - 1).getCapacity()
 
     override fun storeItem(stack: ItemStack, startSlot: Int, endSlot: Int): ItemStack {
         Transaction.openOuter().use {

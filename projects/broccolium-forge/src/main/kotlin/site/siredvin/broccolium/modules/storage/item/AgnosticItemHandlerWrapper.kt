@@ -46,6 +46,7 @@ class AgnosticItemHandlerWrapper(private val handler: IItemHandler) : SlottedAgn
     override fun getItem(slot: Int): ItemStack = handler.getStackInSlot(slot)
 
     override fun canPlaceItem(slot: Int, item: ItemStack): Boolean = true
+    override fun getItemLimit(slot: Int): Long = handler.getSlotLimit(slot).toLong()
 
     override fun storeItem(stack: ItemStack, startSlot: Int, endSlot: Int): ItemStack {
         var slidingItemStack = stack
