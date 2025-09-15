@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
 import java.util.function.Function
+import java.util.function.Supplier
 
 object FakePlayerProviderPocket {
     private val registeredPlayers: WeakHashMap<IPocketAccess, FakePlayerProxy> =
@@ -38,7 +39,7 @@ object FakePlayerProviderPocket {
         } else if (direction == Direction.DOWN) {
             90f
         } else {
-            0f
+            realPlayer.xRot
         }
         val yaw: Float =
             if (direction == Direction.SOUTH) {
@@ -47,8 +48,10 @@ object FakePlayerProviderPocket {
                 90f
             } else if (direction == Direction.NORTH) {
                 180f
-            } else {
+            } else if (direction == Direction.EAST) {
                 -90f
+            } else {
+                realPlayer.yRot
             }
         val sideVec = direction.normal
         val a = direction.axis
@@ -106,6 +109,16 @@ object FakePlayerProviderPocket {
             ?: throw LuaException("Cannot init player for this pocket computer for some reason")
         val player: FakePlayerProxy =
             getPlayer(pocket, realPlayer.gameProfile ?: FakePlayerProxy.DUMMY_PROFILE)
+        load(player.fakePlayer, realPlayer, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
+        val result = function.apply(player)
+        unload(player.fakePlayer, realPlayer, skipInventory = skipInventory)
+        return result
+    }
+
+    fun <T> withPlayerTweaked(pocket: IPocketAccess, function: Function<FakePlayerProxy, T>, playerProvider: Supplier<FakePlayerProxy>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
+        val realPlayer = pocket.entity as? Player
+            ?: throw LuaException("Cannot init player for this pocket computer for some reason")
+        val player: FakePlayerProxy = playerProvider.get()
         load(player.fakePlayer, realPlayer, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
         val result = function.apply(player)
         unload(player.fakePlayer, realPlayer, skipInventory = skipInventory)
