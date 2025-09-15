@@ -1,5 +1,6 @@
 package site.siredvin.tweakium.modules.peripheral.representation
 
+import dan200.computercraft.api.detail.BlockReference
 import dan200.computercraft.api.detail.VanillaDetailRegistries
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -17,6 +18,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.trading.Merchant
 import net.minecraft.world.item.trading.MerchantOffer
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import site.siredvin.broccolium.modules.base.ext.toRelative
@@ -34,6 +36,13 @@ object LuaRepresentation {
         data["name"] = PlatformRegistries.BLOCKS.getKey(state.block).toString()
         data["displayName"] = state.block.name.string
         data["tags"] = tagsToList(state.tags)
+        return data
+    }
+
+    fun forBlockV2(level: Level, pos: BlockPos): MutableMap<String, Any> {
+        val reference = BlockReference(level, pos)
+        val data = VanillaDetailRegistries.BLOCK_IN_WORLD.getDetails(reference)
+        data["displayName"] = reference.state.block.name.string
         return data
     }
 
