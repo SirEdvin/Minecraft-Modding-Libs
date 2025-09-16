@@ -16,42 +16,51 @@ object ItemStorageUtils {
     val ALWAYS: Predicate<ItemStack> = Predicate { true }
 
     fun naiveMove(from: AgnosticItemStorage, to: AgnosticItemSink, limit: Int, fromSlot: Int = -1, toSlot: Int = -1, takePredicate: Predicate<ItemStack>): Int {
-        // TODO: This is not critical, but ideally this function should be able to move limit above (!) maxStackSize
-        // Get stack to move
-        val stack = if (fromSlot < 0) {
-            from.takeItems(takePredicate, limit)
-        } else {
-            if (from !is SlottedAgnosticItemStorage) {
-                BroccoliumCore.LOGGER.warn("From storage doesn't support slotting, so we just ignoring it")
+        var slidingLimit = limit
+        var slidingCount = 0
+        while (slidingLimit > 0) {
+            // Get stack to move
+            val stack = if (fromSlot < 0) {
                 from.takeItems(takePredicate, limit)
             } else {
-                from.takeItems(limit, fromSlot, fromSlot, takePredicate)
+                if (from !is SlottedAgnosticItemStorage) {
+                    BroccoliumCore.LOGGER.warn("From storage doesn't support slotting, so we just ignoring it")
+                    from.takeItems(takePredicate, limit)
+                } else {
+                    from.takeItems(limit, fromSlot, fromSlot, takePredicate)
+                }
             }
-        }
-        if (stack.isEmpty) {
-            return 0
-        }
+            if (stack.isEmpty) {
+                return slidingCount
+            }
 
-        val stackCount = stack.count
+            val stackCount = stack.count
 
-        // Move item to
-        val remainder = if (toSlot < 0 || to !is SlottedAgnosticItemStorage) {
-            to.storeItem(stack)
-        } else {
-            to.storeItem(stack, toSlot, toSlot)
-        }
-
-        // Calculate items moved
-        val count = stackCount - remainder.count
-        if (!remainder.isEmpty) {
-            // Put reminder back
-            if (fromSlot < 0 || from !is SlottedAgnosticItemStorage) {
-                from.storeItem(remainder)
+            // Move item to
+            val remainder = if (toSlot < 0 || to !is SlottedAgnosticItemStorage) {
+                to.storeItem(stack)
             } else {
-                from.storeItem(remainder, fromSlot, fromSlot)
+                to.storeItem(stack, toSlot, toSlot)
             }
+
+            // Calculate items moved
+            val movedCount = stackCount - remainder.count
+            if (!remainder.isEmpty) {
+                // Put reminder back
+                if (fromSlot < 0 || from !is SlottedAgnosticItemStorage) {
+                    from.storeItem(remainder)
+                } else {
+                    from.storeItem(remainder, fromSlot, fromSlot)
+                }
+            }
+            // Break cycle if nothing can be stored in target
+            if (movedCount == 0) {
+                return slidingCount
+            }
+            slidingLimit -= movedCount
+            slidingCount += movedCount
         }
-        return count
+        return slidingCount
     }
 
     fun canStack(first: ItemStack, second: ItemStack): Boolean {

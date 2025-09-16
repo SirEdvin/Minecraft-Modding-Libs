@@ -22,6 +22,7 @@ import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
 import site.siredvin.tweakium.modules.peripheral.util.assertBetween
+import site.siredvin.tweakium.modules.plugins.PeripheralPluginUtils
 import java.util.Optional
 import java.util.function.BiConsumer
 import java.util.function.Predicate
@@ -56,6 +57,21 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
         }
         override fun scan(ability: ScanningBoon<T>, radius: Int, options: Optional<Map<*, *>>): MethodResult {
             val result = mutableListOf<MutableMap<String, Any>>()
+            if (options.isPresent) {
+                val unpackedOptions = options.get()
+                if (unpackedOptions.contains("filter")) {
+                    val filter = PeripheralPluginUtils.blockQueryToPredicate(unpackedOptions["filter"])
+                    ScanUtils.traverseBlocks(
+                        ability.owner.level!!,
+                        ability.owner.pos,
+                        min(radius, ability.maxRadius),
+                        { state, pos -> result.add(blockStateConverterSelector(state, pos, ability.owner.facing, ability.owner.pos, ability.owner.level!!, options)) },
+                        relativePosition = false,
+                        filter,
+                    )
+                    return MethodResult.of(result)
+                }
+            }
             ScanUtils.traverseBlocks(
                 ability.owner.level!!,
                 ability.owner.pos,
