@@ -16,7 +16,7 @@ import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Consumer
 
-abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O, private val peripheralImplementationProvider: String? = null) :
+abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O, private val peripheralImplementationProvider: String?) :
     IOwnedPeripheral<O>,
     IDynamicPeripheral,
     IExpandedPeripheral {
@@ -26,6 +26,8 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
     protected open var plugins: MutableList<IPeripheralPlugin> = mutableListOf()
     protected open var internalMethodNames = Array(0) { "" }
     protected open var connectedComputersLock: ReentrantLock = ReentrantLock()
+
+    constructor(peripheralType: String, peripheralOwner: O) : this(peripheralType, peripheralOwner, null)
 
     @get:LuaFunction
     val configuration: Map<String, Any>

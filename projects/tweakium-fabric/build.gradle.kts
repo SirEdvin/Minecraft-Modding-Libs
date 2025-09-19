@@ -35,6 +35,20 @@ fabricShaking {
     shake()
 }
 
+sourceSets {
+    create("testFixtures") {
+        compileClasspath += main.get().compileClasspath
+        compileClasspath += main.get().output
+        runtimeClasspath += main.get().output
+    }
+    test {
+        compileClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
+        runtimeClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
+        compileClasspath += sourceSets["testFixtures"].output
+        runtimeClasspath += sourceSets["testFixtures"].output
+    }
+}
+
 repositories {
     // location of the maven that hosts JEI files since January 2023
     maven {
@@ -69,6 +83,9 @@ dependencies {
         exclude("net.fabricmc.fabric-api")
         exclude("net.fabricmc", "fabric-loader")
     }
+
+    add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test"))
+    add(sourceSets["testFixtures"].compileOnlyConfigurationName, libs.bundles.test)
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)

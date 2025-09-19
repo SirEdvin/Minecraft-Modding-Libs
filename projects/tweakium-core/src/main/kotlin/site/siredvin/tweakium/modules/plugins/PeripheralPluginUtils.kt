@@ -54,14 +54,15 @@ object PeripheralPluginUtils {
         nbt == ComputerPlatformToolkit.get().nbtHash(it.tag)
     }
 
-    fun buildOrItemQueryPredicate(something: Any): Predicate<ItemStack> {
+    fun buildOrItemQueryPredicate(something: Any?): Predicate<ItemStack> {
         if (something !is Map<*, *>) {
             throw LuaException("Or predicate should contain table with another predicate maps")
         }
-        return something.values.filter { it is Map<*, *> }.map { itemQueryToPredicate(it) }.reduce(Predicate<ItemStack>::or)
+        val predicates = something.values.filter { it is Map<*, *> }.map { itemQueryToPredicate(it) }
+        return predicates.reduce(Predicate<ItemStack>::or)
     }
 
-    fun buildAndItemQueryPredicate(something: Any): Predicate<ItemStack> {
+    fun buildAndItemQueryPredicate(something: Any?): Predicate<ItemStack> {
         if (something !is Map<*, *>) {
             throw LuaException("And predicate should contain table with another predicate maps")
         }
@@ -76,10 +77,10 @@ object PeripheralPluginUtils {
             return builtItemNamePredicate(something)
         } else if (something is Map<*, *>) {
             if (something.contains(ConditionQueryField.OR)) {
-                return buildOrItemQueryPredicate(something)
+                return buildOrItemQueryPredicate(something[ConditionQueryField.OR])
             }
             if (something.contains(ConditionQueryField.AND)) {
-                return buildAndItemQueryPredicate(something)
+                return buildAndItemQueryPredicate(something[ConditionQueryField.AND])
             }
             var aggregatedPredicate = ALWAYS_ITEM_STACK_TRUE
             if (something.contains(ObjectQueryField.NAME)) {
@@ -111,14 +112,14 @@ object PeripheralPluginUtils {
 
     fun builtBlockTagPredicate(tag: String): Predicate<BlockState> = Predicate { blockState -> blockState.tags.anyMatch { it.location.toString() == tag } }
 
-    fun buildOrBlockQueryPredicate(something: Any): Predicate<BlockState> {
+    fun buildOrBlockQueryPredicate(something: Any?): Predicate<BlockState> {
         if (something !is Map<*, *>) {
             throw LuaException("Or predicate should contain table with another predicate maps")
         }
         return something.values.filter { it is Map<*, *> }.map { blockQueryToPredicate(it) }.reduce(Predicate<BlockState>::or)
     }
 
-    fun buildAndBlockQueryPredicate(something: Any): Predicate<BlockState> {
+    fun buildAndBlockQueryPredicate(something: Any?): Predicate<BlockState> {
         if (something !is Map<*, *>) {
             throw LuaException("And predicate should contain table with another predicate maps")
         }
@@ -133,10 +134,10 @@ object PeripheralPluginUtils {
             return builtBlockNamePredicate(something)
         } else if (something is Map<*, *>) {
             if (something.contains(ConditionQueryField.OR)) {
-                return buildOrBlockQueryPredicate(something)
+                return buildOrBlockQueryPredicate(something[ConditionQueryField.OR])
             }
             if (something.contains(ConditionQueryField.AND)) {
-                return buildAndBlockQueryPredicate(something)
+                return buildAndBlockQueryPredicate(something[ConditionQueryField.AND])
             }
             var aggregatedPredicate = ALWAYS_BLOCK_STATE_TRUE
             if (something.contains(ObjectQueryField.NAME)) {
