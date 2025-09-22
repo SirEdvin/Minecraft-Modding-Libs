@@ -12,6 +12,7 @@ import java.util.function.Predicate
 
 object PeripheralPluginUtils {
     object Type {
+        const val INVENTORY_VIEW = "inventory_view"
         const val INVENTORY = "inventory"
         const val FLUID_STORAGE = "fluid_storage"
         const val ITEM_STORAGE = "item_storage"

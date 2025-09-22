@@ -1,8 +1,10 @@
 package site.siredvin.broccolium.modules.storage.fluid
 
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
 
 data class AgnosticFluidStack(val fluid: Fluid, var amount: Long, var tag: CompoundTag? = null) {
@@ -15,6 +17,24 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Long, var tag: Compo
                 return false
             }
             return first.tag == second.tag
+        }
+
+        fun of(targetTag: CompoundTag): AgnosticFluidStack {
+            val fluidID = targetTag.getString("fluid")
+            val fluid = PlatformRegistries.FLUIDS.tryGet(ResourceLocation(fluidID)) ?: return EMPTY
+            val amount = targetTag.getLong("amount")
+            if (amount == 0L) {
+                return EMPTY
+            }
+            return AgnosticFluidStack(
+                fluid,
+                amount,
+                if (targetTag.contains("tag")) {
+                    targetTag.getCompound("tag")
+                } else {
+                    null
+                },
+            )
         }
     }
     val isEmpty: Boolean
@@ -41,5 +61,14 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Long, var tag: Compo
 
     fun shrink(amount: Long) {
         this.amount -= amount
+    }
+
+    fun save(targetTag: CompoundTag): CompoundTag {
+        targetTag.putString("fluid", PlatformRegistries.FLUIDS.getKey(fluid).toString())
+        targetTag.putLong("amount", amount)
+        if (tag != null) {
+            targetTag.put("tag", tag!!)
+        }
+        return targetTag
     }
 }

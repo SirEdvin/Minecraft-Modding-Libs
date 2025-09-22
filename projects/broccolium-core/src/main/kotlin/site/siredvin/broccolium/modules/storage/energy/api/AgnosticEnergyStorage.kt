@@ -9,6 +9,8 @@ interface AgnosticEnergyStorage : AgnosticEnergySink {
     val capacity: Long
     fun takeEnergy(predicate: Predicate<AgnosticEnergyStack>, limit: Long): AgnosticEnergyStack
 
+    val canExtract: Boolean
+
     fun moveTo(to: AgnosticEnergySink, limit: Long, takePredicate: Predicate<AgnosticEnergyStack>): Long {
         if (movableType != null) {
             throw IllegalStateException("With movable type you should redefine this function")

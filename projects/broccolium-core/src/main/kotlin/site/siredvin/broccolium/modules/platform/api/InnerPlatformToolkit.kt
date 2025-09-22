@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
+import site.siredvin.broccolium.modules.storage.energy.EnergyUnit
 import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Function
@@ -30,6 +31,7 @@ import java.util.function.Predicate
 
 interface InnerPlatformToolkit {
     val fluidCompactDivider: Int
+    val commonEnergy: EnergyUnit
     val minecraftServer: MinecraftServer?
 
     fun <T> wrap(registry: ResourceKey<Registry<T>>): RegistryWrapper<T>

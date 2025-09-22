@@ -26,6 +26,8 @@ import site.siredvin.tweakium.modules.player.FabricFakePlayer
 
 object FabricComputerPlatformToolkit : InnerComputerPlatformToolkit {
 
+    private var genericRegistered: Boolean = false
+
     override fun createFakePlayer(level: ServerLevel, profile: GameProfile): ServerPlayer = FabricFakePlayer.create(level, profile)
 
     override fun getTurtleAccess(entity: BlockEntity): ITurtleAccess? {
@@ -60,11 +62,14 @@ object FabricComputerPlatformToolkit : InnerComputerPlatformToolkit {
     )
 
     override fun registerGenericPeripheralLookup() {
-        PeripheralLookup.get().registerFallback { _, _, _, blockEntity, context ->
-            if (blockEntity is IPeripheralProvider<*>) {
-                return@registerFallback blockEntity.getPeripheral(context)
+        if (!genericRegistered) {
+            PeripheralLookup.get().registerFallback { _, _, _, blockEntity, context ->
+                if (blockEntity is IPeripheralProvider<*>) {
+                    return@registerFallback blockEntity.getPeripheral(context)
+                }
+                return@registerFallback null
             }
-            return@registerFallback null
+            genericRegistered = true
         }
     }
 }

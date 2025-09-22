@@ -38,6 +38,8 @@ import net.minecraftforge.server.ServerLifecycleHooks
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import site.siredvin.broccolium.modules.platform.api.SavingFunction
+import site.siredvin.broccolium.modules.storage.energy.Energies
+import site.siredvin.broccolium.modules.storage.energy.EnergyUnit
 import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Function
@@ -75,6 +77,8 @@ object ForgeInnerPlatformToolkit : InnerPlatformToolkit {
 
     override val fluidCompactDivider: Int
         get() = 1
+    override val commonEnergy: EnergyUnit
+        get() = Energies.FORGE
 
     override val minecraftServer: MinecraftServer
         get() = ServerLifecycleHooks.getCurrentServer()

@@ -2,6 +2,7 @@ package site.siredvin.broccolium.modules.storage.energy.api
 
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
 import site.siredvin.broccolium.modules.storage.energy.EnergyStorageUtils
+import site.siredvin.broccolium.modules.storage.energy.EnergyUnit
 import java.util.function.Predicate
 
 interface AgnosticEnergySink {
@@ -16,6 +17,9 @@ interface AgnosticEnergySink {
     }
     fun storeEnergy(stack: AgnosticEnergyStack): AgnosticEnergyStack
     fun setChanged()
+
+    val canReceive: Boolean
+    val unit: EnergyUnit
 
     val movableType: String?
         get() = null

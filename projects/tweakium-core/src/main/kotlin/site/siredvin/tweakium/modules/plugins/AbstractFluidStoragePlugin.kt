@@ -43,7 +43,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             ?: throw LuaException("Target '$toName' does not exist")
 
         val toStorage = AgnosticFluidStorageLookup.extractFluidSinkFromUnknown(level, location.target)
-            ?: throw LuaException("Target '$toName' is not an fluid inventory")
+            ?: throw LuaException("Target '$toName' is not an fluid storage")
 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
             Predicate { true }
@@ -64,7 +64,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             ?: throw LuaException("Target '$fromName' does not exist")
 
         val fromStorage = AgnosticFluidStorageLookup.extractFluidStorageFromUnknown(level, location.target)
-            ?: throw LuaException("Target '$fromName' is not an fluid inventory")
+            ?: throw LuaException("Target '$fromName' is not an fluid storage")
 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
             Predicate { true }

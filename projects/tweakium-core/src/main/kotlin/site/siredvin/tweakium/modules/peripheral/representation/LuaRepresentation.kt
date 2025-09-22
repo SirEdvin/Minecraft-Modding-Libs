@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import site.siredvin.broccolium.modules.base.ext.toRelative
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.stream.Collectors
@@ -126,6 +127,11 @@ object LuaRepresentation {
         }
         return baseInformation
     }
+
+    fun forEnergyStack(energy: AgnosticEnergyStack): MutableMap<String, Any?> = mutableMapOf(
+        "amount" to energy.amount,
+        "unit" to energy.unit.name,
+    )
 
     fun forFluid(fluid: Fluid): MutableMap<String, Any?> = mutableMapOf(
         "name" to PlatformRegistries.FLUIDS.getKey(fluid).toString(),

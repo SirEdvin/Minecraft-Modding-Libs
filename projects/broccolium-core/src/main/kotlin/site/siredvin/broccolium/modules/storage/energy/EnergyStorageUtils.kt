@@ -10,16 +10,26 @@ object EnergyStorageUtils {
     val ALWAYS: Predicate<AgnosticEnergyStack> = Predicate { true }
 
     fun naiveMove(from: AgnosticEnergyStorage, to: AgnosticEnergySink, limit: Long, takePredicate: Predicate<AgnosticEnergyStack>): Long {
+        val conversionMode = from.unit != to.unit
+        if (conversionMode && !EnergyRegistry.isConvertible(from.unit, to.unit)) {
+            return 0
+        }
         // Get stack to move
-        val stack = from.takeEnergy(takePredicate, limit)
+        var stack = from.takeEnergy(takePredicate, limit)
         if (stack.isEmpty) {
             return 0
         }
 
         val stackCount = stack.amount
+        if (conversionMode) {
+            stack = EnergyRegistry.convert(stack, to.unit)
+        }
 
         // Move item to
-        val remainder = to.storeEnergy(stack)
+        var remainder = to.storeEnergy(stack)
+        if (conversionMode) {
+            remainder = EnergyRegistry.convert(remainder, from.unit, true)
+        }
 
         // Calculate items moved
         val count = stackCount - remainder.amount
@@ -50,9 +60,6 @@ object EnergyStorageUtils {
         val mergeSize = minOf(second.amount, mergeLimit - first.amount)
         first.grow(mergeSize)
         second.shrink(mergeSize)
-        if (second.isEmpty) {
-            return AgnosticEnergyStack.EMPTY
-        }
         return second
     }
 }
