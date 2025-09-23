@@ -62,7 +62,7 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
     }
 
     override fun putCompound(key: String, tag: CompoundTag) {
-        tag.put(key, tag)
+        this.tag.put(key, tag)
         trigger()
     }
 
