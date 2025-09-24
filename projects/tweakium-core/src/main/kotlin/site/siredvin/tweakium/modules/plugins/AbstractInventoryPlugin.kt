@@ -41,7 +41,7 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
         }
         if (fromSlot is Number) {
             assertBetween(fromSlot.toInt(), 1, storage.size, "fromSlot")
-            storage.moveTo(toStorage, actualLimit, fromSlot.toInt() - 1, toSlot.orElse(0) - 1, ItemStorageUtils.ALWAYS)
+            return storage.moveTo(toStorage, actualLimit, fromSlot.toInt() - 1, toSlot.orElse(0) - 1, ItemStorageUtils.ALWAYS)
         }
         return storage.moveTo(toStorage, actualLimit, toSlot.orElse(0) - 1, PeripheralPluginUtils.itemQueryToPredicate(fromSlot))
     }
@@ -66,7 +66,7 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
         }
         if (fromSlot is Number) {
             assertBetween(fromSlot.toInt(), 1, fromStorage.size, "fromSlot")
-            storage.moveFrom(fromStorage, actualLimit, toSlot.orElse(0) - 1, fromSlot.toInt() - 1, ItemStorageUtils.ALWAYS)
+            return storage.moveFrom(fromStorage, actualLimit, toSlot.orElse(0) - 1, fromSlot.toInt() - 1, ItemStorageUtils.ALWAYS)
         }
         if (toSlot.isPresent) {
             assertBetween(toSlot.get(), 1, storage.size, "toSlot")
