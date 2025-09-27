@@ -1,6 +1,7 @@
 package site.siredvin.tweakium.modules.player
 
-import com.mojang.authlib.GameProfile
+import com.google.common.cache.CacheBuilder
+import com.google.common.cache.CacheLoader
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.pocket.IPocketAccess
 import net.minecraft.core.Direction
@@ -13,21 +14,15 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.function.Function
 import java.util.function.Supplier
 
 object FakePlayerProviderPocket {
-    private val registeredPlayers: WeakHashMap<IPocketAccess, FakePlayerProxy> =
-        WeakHashMap<IPocketAccess, FakePlayerProxy>()
+    private val registeredPlayers = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).weakKeys()
+        .maximumSize(3_000).build(CacheLoader.from(::buildPlayer))
 
-    private fun getPlayer(pocket: IPocketAccess, profile: GameProfile): FakePlayerProxy {
-        var fake: FakePlayerProxy? = registeredPlayers[pocket]
-        if (fake == null) {
-            fake = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(pocket.entity!!.level() as ServerLevel, profile))
-            registeredPlayers[pocket] = fake
-        }
-        return fake
-    }
+    private fun buildPlayer(pocket: IPocketAccess): FakePlayerProxy = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(pocket.level as ServerLevel, (pocket.entity as? ServerPlayer)?.gameProfile ?: FakePlayerProxy.DUMMY_PROFILE))
 
     private fun load(player: ServerPlayer, realPlayer: Player, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
         val direction = overwrittenDirection ?: realPlayer.direction
@@ -107,8 +102,7 @@ object FakePlayerProviderPocket {
     fun <T> withPlayer(pocket: IPocketAccess, function: Function<FakePlayerProxy, T>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
         val realPlayer = pocket.entity as? Player
             ?: throw LuaException("Cannot init player for this pocket computer for some reason")
-        val player: FakePlayerProxy =
-            getPlayer(pocket, realPlayer.gameProfile ?: FakePlayerProxy.DUMMY_PROFILE)
+        val player: FakePlayerProxy = registeredPlayers.get(pocket)
         load(player.fakePlayer, realPlayer, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
         val result = function.apply(player)
         unload(player.fakePlayer, realPlayer, skipInventory = skipInventory)

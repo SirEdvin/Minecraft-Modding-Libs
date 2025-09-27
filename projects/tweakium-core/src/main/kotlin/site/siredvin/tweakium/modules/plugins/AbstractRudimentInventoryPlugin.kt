@@ -1,7 +1,9 @@
 package site.siredvin.tweakium.modules.plugins
 
+import dan200.computercraft.api.lua.IArguments
 import dan200.computercraft.api.lua.LuaFunction
 import net.minecraft.world.level.Level
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
@@ -17,12 +19,20 @@ abstract class AbstractRudimentInventoryPlugin : IPeripheralPlugin {
 
     open fun sizeImpl(): Int = storage.size
 
-    open fun listImpl(): Map<Int, Map<String, *>> {
+    open fun listImpl(arguments: IArguments): Map<Int, Map<String, *>> {
+        val detailed = arguments.optBoolean(0, false)
+        val filterArg = arguments.get(1)
+        val mode = if (detailed) RepresentationMode.DETAILED else RepresentationMode.BASE
+        val filter = if (filterArg != null) {
+            PeripheralPluginUtils.itemQueryToPredicate(filterArg)
+        } else {
+            ItemStorageUtils.ALWAYS
+        }
         val result: MutableMap<Int, Map<String, *>> = hashMapOf()
         val size = storage.size
         for (i in 0 until size) {
             val stack = storage.getItem(i)
-            if (!stack.isEmpty) result[i + 1] = LuaRepresentation.forItemStack(stack, RepresentationMode.BASE)
+            if (!stack.isEmpty && filter.test(stack)) result[i + 1] = LuaRepresentation.forItemStack(stack, mode)
         }
         return result
     }
@@ -42,7 +52,7 @@ abstract class AbstractRudimentInventoryPlugin : IPeripheralPlugin {
     fun size(): Int = sizeImpl()
 
     @LuaFunction(mainThread = true)
-    fun list(): Map<Int, Map<String, *>> = listImpl()
+    fun list(arguments: IArguments): Map<Int, Map<String, *>> = listImpl(arguments)
 
     @LuaFunction(mainThread = true)
     fun getItemDetail(slot: Int): Map<String, *>? {

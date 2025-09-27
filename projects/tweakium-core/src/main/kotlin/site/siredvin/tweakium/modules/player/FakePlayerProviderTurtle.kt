@@ -1,6 +1,7 @@
 package site.siredvin.tweakium.modules.player
 
-import com.mojang.authlib.GameProfile
+import com.google.common.cache.CacheBuilder
+import com.google.common.cache.CacheLoader
 import dan200.computercraft.api.turtle.ITurtleAccess
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -12,23 +13,17 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.broccolium.modules.storage.item.ContainerUtils
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.function.Function
 
 object FakePlayerProviderTurtle {
     /*
     Highly inspired by https://github.com/SquidDev-CC/plethora/blob/minecraft-1.12/src/main/java/org/squiddev/plethora/integration/computercraft/FakePlayerProviderTurtle.java
      */
-    private val registeredPlayers: WeakHashMap<ITurtleAccess, FakePlayerProxy> =
-        WeakHashMap<ITurtleAccess, FakePlayerProxy>()
+    private val registeredPlayers = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).weakKeys()
+        .maximumSize(3_000).build(CacheLoader.from(::buildPlayer))
 
-    private fun getPlayer(turtle: ITurtleAccess, profile: GameProfile): FakePlayerProxy {
-        var fake: FakePlayerProxy? = registeredPlayers[turtle]
-        if (fake == null) {
-            fake = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(turtle.level as ServerLevel, profile))
-            registeredPlayers[turtle] = fake
-        }
-        return fake
-    }
+    private fun buildPlayer(turtle: ITurtleAccess): FakePlayerProxy = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(turtle.level as ServerLevel, turtle.owningPlayer ?: FakePlayerProxy.DUMMY_PROFILE))
 
     private fun load(player: ServerPlayer, turtle: ITurtleAccess, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
         val direction = overwrittenDirection ?: turtle.direction
@@ -115,7 +110,7 @@ object FakePlayerProviderTurtle {
     }
 
     fun <T> withPlayer(turtle: ITurtleAccess, function: Function<FakePlayerProxy, T>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
-        val player: FakePlayerProxy = getPlayer(turtle, turtle.owningPlayer ?: FakePlayerProxy.DUMMY_PROFILE)
+        val player: FakePlayerProxy = registeredPlayers.get(turtle)
         load(player.fakePlayer, turtle, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
         val result = function.apply(player)
         unload(player.fakePlayer, turtle, skipInventory = skipInventory)
