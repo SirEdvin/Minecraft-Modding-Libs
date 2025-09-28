@@ -41,4 +41,38 @@ class PredicateTests {
         assert(expandedPredicate.test(Items.STONE.defaultInstance))
         assertFalse(expandedPredicate.test(Items.GRASS_BLOCK.defaultInstance))
     }
+
+    @Test
+    fun testInPredicate() {
+        val expandedPredicate = PeripheralPluginUtils.itemQueryToPredicate(
+            mapOf(
+                "name" to mapOf<Any, Any>(
+                    "in" to mapOf(
+                        1 to "minecraft:cobblestone",
+                        2 to "minecraft:stone",
+                    ),
+                ),
+            ),
+        )
+        assert(expandedPredicate.test(Items.COBBLESTONE.defaultInstance))
+        assert(expandedPredicate.test(Items.STONE.defaultInstance))
+        assertFalse(expandedPredicate.test(Items.GRASS_BLOCK.defaultInstance))
+    }
+
+    @Test
+    fun testNotInPredicate() {
+        val expandedPredicate = PeripheralPluginUtils.itemQueryToPredicate(
+            mapOf(
+                "name" to mapOf<Any, Any>(
+                    "not_in" to mapOf(
+                        1 to "minecraft:cobblestone",
+                        2 to "minecraft:stone",
+                    ),
+                ),
+            ),
+        )
+        assertFalse(expandedPredicate.test(Items.COBBLESTONE.defaultInstance))
+        assertFalse(expandedPredicate.test(Items.STONE.defaultInstance))
+        assert(expandedPredicate.test(Items.GRASS_BLOCK.defaultInstance))
+    }
 }

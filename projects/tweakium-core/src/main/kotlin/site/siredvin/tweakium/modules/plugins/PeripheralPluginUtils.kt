@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
+import java.util.function.Function
 import java.util.function.Predicate
 
 object PeripheralPluginUtils {
@@ -22,12 +23,18 @@ object PeripheralPluginUtils {
     private object ConditionQueryField {
         const val OR = "or"
         const val AND = "and"
+        const val NOT = "not"
     }
 
     private object ObjectQueryField {
         const val NAME = "name"
         const val DISPLAY_NAME = "displayName"
         const val TAG = "tag"
+    }
+
+    private object StringQueryField {
+        const val IN = "in"
+        const val NOT_IN = "not_in"
     }
 
     private object ItemQueryField {
@@ -39,7 +46,29 @@ object PeripheralPluginUtils {
     private val ALWAYS_ITEM_STACK_TRUE: Predicate<ItemStack> = Predicate { true }
     private val ALWAYS_BLOCK_STATE_TRUE: Predicate<BlockState> = Predicate { true }
 
-    fun builtItemNamePredicate(name: String): Predicate<ItemStack> {
+    private fun <T> buildOrPredicate(something: Any?, predicateBuilder: Function<Map<*, *>, Predicate<T>>): Predicate<T> {
+        if (something !is Map<*, *>) {
+            throw LuaException("Or predicate should contain table with another predicate maps")
+        }
+        val predicates = something.values.filter { it is Map<*, *> }.map { predicateBuilder.apply(it as Map<*, *>) }
+        return predicates.reduce(Predicate<T>::or)
+    }
+
+    private fun <T> buildAndPredicate(something: Any?, predicateBuilder: Function<Map<*, *>, Predicate<T>>): Predicate<T> {
+        if (something !is Map<*, *>) {
+            throw LuaException("And predicate should contain table with another predicate maps")
+        }
+        return something.values.filter { it is Map<*, *> }.map { predicateBuilder.apply(it as Map<*, *>) }.reduce(Predicate<T>::and)
+    }
+
+    private fun <T> buildNotPredicate(something: Any?, predicateBuilder: Function<Map<*, *>, Predicate<T>>): Predicate<T> {
+        if (something !is Map<*, *>) {
+            throw LuaException("And predicate should contain table with another predicate maps")
+        }
+        return predicateBuilder.apply(something as Map<*, *>).negate()
+    }
+
+    private fun builtItemNamePredicate(name: String): Predicate<ItemStack> {
         val item = PlatformRegistries.ITEMS.get(ResourceLocation(name))
         if (item == Items.AIR) {
             throw LuaException("There is no item $name")
@@ -47,27 +76,20 @@ object PeripheralPluginUtils {
         return Predicate { it.`is`(item) }
     }
 
-    fun builtItemDisplayNamePredicate(displayName: String): Predicate<ItemStack> = Predicate { it.hoverName.string == displayName }
+    private fun builtItemNameInPredicate(names: Set<String>): Predicate<ItemStack> {
+        val items = names.map { PlatformRegistries.ITEMS.get(ResourceLocation(it)) }.filter { it != Items.AIR }.toSet()
+        if (items.isEmpty()) {
+            throw LuaException("Zero valid items for filtering by name")
+        }
+        return Predicate { items.contains(it.item) }
+    }
 
-    fun builtItemTagPredicate(tag: String): Predicate<ItemStack> = Predicate { itemStack -> itemStack.tags.anyMatch { it.location.toString() == tag } }
+    private fun builtItemDisplayNamePredicate(displayName: String): Predicate<ItemStack> = Predicate { it.hoverName.string == displayName }
 
-    fun builtNBTPredicate(nbt: String): Predicate<ItemStack> = Predicate {
+    private fun builtItemTagPredicate(tag: String): Predicate<ItemStack> = Predicate { itemStack -> itemStack.tags.anyMatch { it.location.toString() == tag } }
+
+    private fun builtNBTPredicate(nbt: String): Predicate<ItemStack> = Predicate {
         nbt == ComputerPlatformToolkit.get().nbtHash(it.tag)
-    }
-
-    fun buildOrItemQueryPredicate(something: Any?): Predicate<ItemStack> {
-        if (something !is Map<*, *>) {
-            throw LuaException("Or predicate should contain table with another predicate maps")
-        }
-        val predicates = something.values.filter { it is Map<*, *> }.map { itemQueryToPredicate(it) }
-        return predicates.reduce(Predicate<ItemStack>::or)
-    }
-
-    fun buildAndItemQueryPredicate(something: Any?): Predicate<ItemStack> {
-        if (something !is Map<*, *>) {
-            throw LuaException("And predicate should contain table with another predicate maps")
-        }
-        return something.values.filter { it is Map<*, *> }.map { itemQueryToPredicate(it) }.reduce(Predicate<ItemStack>::and)
     }
 
     fun itemQueryToPredicate(something: Any?): Predicate<ItemStack> {
@@ -78,14 +100,30 @@ object PeripheralPluginUtils {
             return builtItemNamePredicate(something)
         } else if (something is Map<*, *>) {
             if (something.contains(ConditionQueryField.OR)) {
-                return buildOrItemQueryPredicate(something[ConditionQueryField.OR])
+                return buildOrPredicate(something[ConditionQueryField.OR], ::itemQueryToPredicate)
             }
             if (something.contains(ConditionQueryField.AND)) {
-                return buildAndItemQueryPredicate(something[ConditionQueryField.AND])
+                return buildAndPredicate(something[ConditionQueryField.AND], ::itemQueryToPredicate)
+            }
+            if (something.contains(ConditionQueryField.NOT)) {
+                return buildNotPredicate(something[ConditionQueryField.NOT], ::itemQueryToPredicate)
             }
             var aggregatedPredicate = ALWAYS_ITEM_STACK_TRUE
             if (something.contains(ObjectQueryField.NAME)) {
-                aggregatedPredicate = aggregatedPredicate.and(builtItemNamePredicate(something[ObjectQueryField.NAME].toString()))
+                val condition = something[ObjectQueryField.NAME]
+                if (condition is String) {
+                    aggregatedPredicate = aggregatedPredicate.and(builtItemNamePredicate(condition))
+                } else if (condition is Map<*, *>) {
+                    if (condition.contains(StringQueryField.IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtItemNameInPredicate((condition[StringQueryField.IN] as Map<*, *>).values.map { it.toString() }.toSet()))
+                    } else if (condition.contains(StringQueryField.NOT_IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtItemNameInPredicate((condition[StringQueryField.NOT_IN] as Map<*, *>).values.map { it.toString() }.toSet()).negate())
+                    } else {
+                        throw LuaException("Unsupported argument for name filter")
+                    }
+                } else {
+                    throw LuaException("Unsupported argument for name filter")
+                }
             }
             if (something.contains(ObjectQueryField.DISPLAY_NAME)) {
                 aggregatedPredicate = aggregatedPredicate.and(builtItemDisplayNamePredicate(something[ObjectQueryField.DISPLAY_NAME].toString()))
@@ -101,7 +139,7 @@ object PeripheralPluginUtils {
         throw LuaException("Item query should be string or table")
     }
 
-    fun builtBlockNamePredicate(name: String): Predicate<BlockState> {
+    private fun builtBlockNamePredicate(name: String): Predicate<BlockState> {
         val block = PlatformRegistries.BLOCKS.get(ResourceLocation(name))
         if (block == Blocks.AIR) {
             throw LuaException("There is no item $name")
@@ -109,23 +147,17 @@ object PeripheralPluginUtils {
         return Predicate { it.`is`(block) }
     }
 
-    fun builtBlockDisplayNamePredicate(displayName: String): Predicate<BlockState> = Predicate { it.block.descriptionId == displayName }
-
-    fun builtBlockTagPredicate(tag: String): Predicate<BlockState> = Predicate { blockState -> blockState.tags.anyMatch { it.location.toString() == tag } }
-
-    fun buildOrBlockQueryPredicate(something: Any?): Predicate<BlockState> {
-        if (something !is Map<*, *>) {
-            throw LuaException("Or predicate should contain table with another predicate maps")
+    private fun builtBlockNameInPredicate(names: Set<String>): Predicate<BlockState> {
+        val items = names.map { PlatformRegistries.BLOCKS.get(ResourceLocation(it)) }.filter { it != Blocks.AIR }.toSet()
+        if (items.isEmpty()) {
+            throw LuaException("Zero valid items for filtering by name")
         }
-        return something.values.filter { it is Map<*, *> }.map { blockQueryToPredicate(it) }.reduce(Predicate<BlockState>::or)
+        return Predicate { items.contains(it.block) }
     }
 
-    fun buildAndBlockQueryPredicate(something: Any?): Predicate<BlockState> {
-        if (something !is Map<*, *>) {
-            throw LuaException("And predicate should contain table with another predicate maps")
-        }
-        return something.values.filter { it is Map<*, *> }.map { blockQueryToPredicate(it) }.reduce(Predicate<BlockState>::and)
-    }
+    private fun builtBlockDisplayNamePredicate(displayName: String): Predicate<BlockState> = Predicate { it.block.descriptionId == displayName }
+
+    private fun builtBlockTagPredicate(tag: String): Predicate<BlockState> = Predicate { blockState -> blockState.tags.anyMatch { it.location.toString() == tag } }
 
     fun blockQueryToPredicate(something: Any?): Predicate<BlockState> {
         if (something == null) {
@@ -135,14 +167,30 @@ object PeripheralPluginUtils {
             return builtBlockNamePredicate(something)
         } else if (something is Map<*, *>) {
             if (something.contains(ConditionQueryField.OR)) {
-                return buildOrBlockQueryPredicate(something[ConditionQueryField.OR])
+                return buildOrPredicate(something[ConditionQueryField.OR], ::blockQueryToPredicate)
             }
             if (something.contains(ConditionQueryField.AND)) {
-                return buildAndBlockQueryPredicate(something[ConditionQueryField.AND])
+                return buildAndPredicate(something[ConditionQueryField.AND], ::blockQueryToPredicate)
+            }
+            if (something.contains(ConditionQueryField.NOT)) {
+                return buildNotPredicate(something[ConditionQueryField.NOT], ::blockQueryToPredicate)
             }
             var aggregatedPredicate = ALWAYS_BLOCK_STATE_TRUE
             if (something.contains(ObjectQueryField.NAME)) {
-                aggregatedPredicate = aggregatedPredicate.and(builtBlockNamePredicate(something[ObjectQueryField.NAME].toString()))
+                val condition = something[ObjectQueryField.NAME]
+                if (condition is String) {
+                    aggregatedPredicate = aggregatedPredicate.and(builtBlockNamePredicate(condition))
+                } else if (condition is Map<*, *>) {
+                    if (condition.contains(StringQueryField.IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtBlockNameInPredicate((condition[StringQueryField.IN] as Map<*, *>).values.map { it.toString() }.toSet()))
+                    } else if (condition.contains(StringQueryField.NOT_IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtBlockNameInPredicate((condition[StringQueryField.NOT_IN] as Map<*, *>).values.map { it.toString() }.toSet()).negate())
+                    } else {
+                        throw LuaException("Unsupported argument for name filter")
+                    }
+                } else {
+                    throw LuaException("Unsupported argument for name filter")
+                }
             }
             if (something.contains(ObjectQueryField.DISPLAY_NAME)) {
                 aggregatedPredicate = aggregatedPredicate.and(builtBlockDisplayNamePredicate(something[ObjectQueryField.DISPLAY_NAME].toString()))

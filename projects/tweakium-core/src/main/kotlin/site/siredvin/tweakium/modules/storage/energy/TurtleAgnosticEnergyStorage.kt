@@ -18,7 +18,7 @@ class TurtleAgnosticEnergyStorage(private val turtle: ITurtleAccess) : AgnosticE
     override fun takeEnergy(predicate: Predicate<AgnosticEnergyStack>, limit: Long): AgnosticEnergyStack {
         if (!predicate.test(energy)) return AgnosticEnergyStack(Energies.TURTLE_FUEL, 0)
         val extractedEnergy = minOf(limit, turtle.fuelLevel.toLong())
-        turtle.addFuel(-extractedEnergy.toInt())
+        turtle.consumeFuel(extractedEnergy.toInt())
         return AgnosticEnergyStack(Energies.TURTLE_FUEL, extractedEnergy)
     }
 
