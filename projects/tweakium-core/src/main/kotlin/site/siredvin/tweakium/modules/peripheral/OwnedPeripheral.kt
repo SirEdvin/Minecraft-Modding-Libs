@@ -73,7 +73,7 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
 
     protected open fun collectPlugin(server: MinecraftServer, plugin: IPeripheralPlugin) {
         pluggedMethods.addAll(plugin.getMethods(server))
-        if (plugin.additionalType != null) addAdditionalType(plugin.additionalType!!)
+        additionalTypeStorage.addAll(plugin.additionalTypes)
         plugin.connectedPeripheral = this
         addOperations(plugin.operations)
     }
@@ -83,10 +83,6 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
         peripheralOwner.abilities.forEach {
             collectPlugin(server, it)
         }
-    }
-
-    open fun addAdditionalType(additionalType: String) {
-        if (additionalType != peripheralType) additionalTypeStorage.add(additionalType)
     }
 
     protected open fun buildPlugins() {
@@ -101,9 +97,7 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
 
     fun addPlugin(plugin: IPeripheralPlugin) {
         plugins.add(plugin)
-        if (plugin.additionalType != null) {
-            addAdditionalType(plugin.additionalType!!)
-        }
+        additionalTypeStorage.addAll(plugin.additionalTypes)
     }
 
     override fun attach(computer: IComputerAccess) {

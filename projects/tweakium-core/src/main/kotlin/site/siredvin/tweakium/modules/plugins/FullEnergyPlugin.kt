@@ -10,8 +10,9 @@ import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
 import java.util.*
 
 open class FullEnergyPlugin(protected val level: Level, storage: AgnosticEnergyStorage, private val energyStorageTransferLimit: Int) : EnergyPlugin(storage) {
-    override val additionalType: String
-        get() = PeripheralPluginUtils.Type.ENERGY_STORAGE
+
+    override val additionalTypes: List<String>
+        get() = listOf(PeripheralPluginUtils.Type.ENERGY_STORAGE, PeripheralPluginUtils.Type.ENERGY_STORAGE_EXTENDED)
 
     @LuaFunction(mainThread = true)
     fun pushEnergy(computer: IComputerAccess, toName: String, limit: Optional<Long>): Long {

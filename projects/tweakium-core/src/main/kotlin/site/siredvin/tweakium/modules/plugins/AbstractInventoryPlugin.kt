@@ -16,6 +16,9 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
     override val additionalType: String
         get() = PeripheralPluginUtils.Type.INVENTORY
 
+    override val additionalTypes: List<String>
+        get() = listOf(PeripheralPluginUtils.Type.INVENTORY, PeripheralPluginUtils.Type.INVENTORY_EXTENDED)
+
     @LuaFunction(mainThread = true)
     @Throws(LuaException::class)
     fun pushItems(computer: IComputerAccess, toName: String, fromSlot: Any, limit: Optional<Int>, toSlot: Optional<Int>): Int {

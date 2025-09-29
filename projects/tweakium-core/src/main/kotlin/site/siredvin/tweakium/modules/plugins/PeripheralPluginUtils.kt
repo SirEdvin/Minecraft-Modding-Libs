@@ -15,9 +15,11 @@ object PeripheralPluginUtils {
     object Type {
         const val INVENTORY_VIEW = "inventory_view"
         const val INVENTORY = "inventory"
+        const val INVENTORY_EXTENDED = "inventory_extended"
         const val FLUID_STORAGE = "fluid_storage"
         const val ITEM_STORAGE = "item_storage"
         const val ENERGY_STORAGE = "energy_storage"
+        const val ENERGY_STORAGE_EXTENDED = "energy_storage_extended"
     }
 
     private object ConditionQueryField {
@@ -88,6 +90,8 @@ object PeripheralPluginUtils {
 
     private fun builtItemTagPredicate(tag: String): Predicate<ItemStack> = Predicate { itemStack -> itemStack.tags.anyMatch { it.location.toString() == tag } }
 
+    private fun builtItemTagInPredicate(tags: Set<String>): Predicate<ItemStack> = Predicate { itemStack -> itemStack.tags.anyMatch { tags.contains(it.location.toString()) } }
+
     private fun builtNBTPredicate(nbt: String): Predicate<ItemStack> = Predicate {
         nbt == ComputerPlatformToolkit.get().nbtHash(it.tag)
     }
@@ -129,7 +133,20 @@ object PeripheralPluginUtils {
                 aggregatedPredicate = aggregatedPredicate.and(builtItemDisplayNamePredicate(something[ObjectQueryField.DISPLAY_NAME].toString()))
             }
             if (something.contains(ObjectQueryField.TAG)) {
-                aggregatedPredicate = aggregatedPredicate.and(builtItemTagPredicate(something[ObjectQueryField.TAG].toString()))
+                val condition = something[ObjectQueryField.TAG]
+                if (condition is String) {
+                    aggregatedPredicate = aggregatedPredicate.and(builtItemTagPredicate(condition))
+                } else if (condition is Map<*, *>) {
+                    if (condition.contains(StringQueryField.IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtItemTagInPredicate((condition[StringQueryField.IN] as Map<*, *>).values.map { it.toString() }.toSet()))
+                    } else if (condition.contains(StringQueryField.NOT_IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtItemTagInPredicate((condition[StringQueryField.NOT_IN] as Map<*, *>).values.map { it.toString() }.toSet()).negate())
+                    } else {
+                        throw LuaException("Unsupported argument for name filter")
+                    }
+                } else {
+                    throw LuaException("Unsupported argument for name filter")
+                }
             }
             if (something.contains(ItemQueryField.NBT)) {
                 aggregatedPredicate = aggregatedPredicate.and(builtNBTPredicate(something[ItemQueryField.NBT].toString()))
@@ -158,6 +175,8 @@ object PeripheralPluginUtils {
     private fun builtBlockDisplayNamePredicate(displayName: String): Predicate<BlockState> = Predicate { it.block.descriptionId == displayName }
 
     private fun builtBlockTagPredicate(tag: String): Predicate<BlockState> = Predicate { blockState -> blockState.tags.anyMatch { it.location.toString() == tag } }
+
+    private fun builtBlockTagInPredicate(tags: Set<String>): Predicate<BlockState> = Predicate { blockState -> blockState.tags.anyMatch { tags.contains(it.location.toString()) } }
 
     fun blockQueryToPredicate(something: Any?): Predicate<BlockState> {
         if (something == null) {
@@ -196,7 +215,20 @@ object PeripheralPluginUtils {
                 aggregatedPredicate = aggregatedPredicate.and(builtBlockDisplayNamePredicate(something[ObjectQueryField.DISPLAY_NAME].toString()))
             }
             if (something.contains(ObjectQueryField.TAG)) {
-                aggregatedPredicate = aggregatedPredicate.and(builtBlockTagPredicate(something[ObjectQueryField.TAG].toString()))
+                val condition = something[ObjectQueryField.TAG]
+                if (condition is String) {
+                    aggregatedPredicate = aggregatedPredicate.and(builtBlockTagPredicate(condition))
+                } else if (condition is Map<*, *>) {
+                    if (condition.contains(StringQueryField.IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtBlockTagInPredicate((condition[StringQueryField.IN] as Map<*, *>).values.map { it.toString() }.toSet()))
+                    } else if (condition.contains(StringQueryField.NOT_IN)) {
+                        aggregatedPredicate = aggregatedPredicate.and(builtBlockTagInPredicate((condition[StringQueryField.NOT_IN] as Map<*, *>).values.map { it.toString() }.toSet()).negate())
+                    } else {
+                        throw LuaException("Unsupported argument for name filter")
+                    }
+                } else {
+                    throw LuaException("Unsupported argument for name filter")
+                }
             }
             return aggregatedPredicate
         }
