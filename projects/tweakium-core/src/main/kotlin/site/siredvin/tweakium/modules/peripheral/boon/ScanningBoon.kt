@@ -50,11 +50,12 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
             } else {
                 Predicate<BlockState> { !it.isAir }
             }
+            val level = ability.owner.level ?: return MethodResult.of(emptyMap<String, Any>())
             ScanUtils.traverseBlocks(
-                ability.owner.level!!,
+                level,
                 ability.owner.pos,
                 min(radius, ability.maxRadius),
-                { state, pos -> result.add(blockStateConverter(state, pos, ability.owner.facing, ability.owner.pos, ability.owner.level!!)) },
+                { state, pos -> result.add(blockStateConverter(state, pos, ability.owner.facing, ability.owner.pos, level)) },
                 relativePosition = false,
                 predicate = predicate,
             )
@@ -85,13 +86,16 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
 
         abstract fun convert(entity: V, ability: ScanningBoon<T>): Map<String, Any>
 
-        override fun scan(ability: ScanningBoon<T>, radius: Int, filter: Any?): MethodResult = MethodResult.of(
-            ability.owner.level!!.getEntitiesOfClass(entityClass, getBox(ability, ability.owner.pos, radius)).filter(
-                predicate::test,
-            ).map {
-                convert(it, ability)
-            },
-        )
+        override fun scan(ability: ScanningBoon<T>, radius: Int, filter: Any?): MethodResult {
+            val level = ability.owner.level ?: return MethodResult.of(emptyMap<String, Any>())
+            return MethodResult.of(
+                level.getEntitiesOfClass(entityClass, getBox(ability, ability.owner.pos, radius)).filter(
+                    predicate::test,
+                ).map {
+                    convert(it, ability)
+                },
+            )
+        }
     }
 
     class ItemEntityScanningMethod<T : IPeripheralOwner>(
