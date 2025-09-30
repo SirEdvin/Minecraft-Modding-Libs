@@ -21,6 +21,10 @@ object ForgeBroccolium {
         AgnosticFluidStorageLookup.addFluidStorageExtractor(ForgeStorageUtils::extractFluidStorageFromBlock)
         AgnosticEnergyStorageLookup.addEnergyStorageExtractor(ForgeStorageUtils::extractEnergyStorageFromBlock)
         AgnosticEnergyStorageLookup.addEnergyStorageExtractor(ForgeStorageUtils::extractEnergyStorageFromItem)
+        AgnosticItemStorageLookup.addItemStorageExtractor { level, entity ->
+            ForgeStorageUtils.extractStorageFromEntity(level, entity)
+        }
+        AgnosticFluidStorageLookup.addFluidStorageExtractor(ForgeStorageUtils::extractFluidStorageFromEntity)
     }
 
     fun sayHi() {

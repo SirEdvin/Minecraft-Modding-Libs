@@ -2,6 +2,7 @@ package site.siredvin.broccolium.modules.storage
 
 import net.minecraft.core.BlockPos
 import net.minecraft.world.Container
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -17,6 +18,7 @@ import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
 import site.siredvin.broccolium.modules.storage.fluid.ForgeAgnosticFluidStorage
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemHandlerWrapper
+import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 
 object ForgeStorageUtils {
@@ -56,9 +58,21 @@ object ForgeStorageUtils {
     }
 
     @Suppress("UNUSED_PARAMETER")
+    fun extractStorageFromEntity(level: Level, entity: Entity): AgnosticItemStorage? {
+        val itemHandler = entity as? IItemHandler ?: return null
+        return AgnosticItemHandlerWrapper(itemHandler)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
     fun extractFluidStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?): AgnosticFluidStorage? {
         if (blockEntity == null) return null
         val fluidHandler = extractFluidHandler(blockEntity) ?: return null
+        return ForgeAgnosticFluidStorage(fluidHandler)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun extractFluidStorageFromEntity(level: Level, entity: Entity): AgnosticFluidStorage? {
+        val fluidHandler = entity as? IFluidHandler ?: return null
         return ForgeAgnosticFluidStorage(fluidHandler)
     }
 
