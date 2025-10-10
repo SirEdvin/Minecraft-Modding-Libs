@@ -49,10 +49,11 @@ object LuaRepresentation {
 
     fun forEntity(entity: Entity): MutableMap<String, Any> {
         val data: MutableMap<String, Any> = HashMap()
-        data["name"] = entity.id
+        val entityId = PlatformRegistries.ENTITY_TYPES.getKey(entity.type).toString()
+        data["name"] = entityId
         data["uuid"] = entity.stringUUID
         data["category"] = entity.type.category.name
-        data["type"] = entity.type.description.string
+        data["type"] = entity.type.descriptionId
         data["displayName"] = entity.name.string
         data["tags"] = entity.tags
         return data
