@@ -20,47 +20,66 @@ object PeripheralPluginUtils {
         const val ITEM_STORAGE = "item_storage"
         const val ENERGY_STORAGE = "energy_storage"
         const val ENERGY_STORAGE_EXTENDED = "energy_storage_extended"
+        const val FLUID_STORAGE_EXTENDED = "fluid_storage_extended"
     }
 
     private object ConditionQueryField {
         val OR = setOf(
-            "or", "or_", "owo", "any"
+            "or",
+            "or_",
+            "owo",
+            "any",
         )
         val AND = setOf(
-            "and", "and_", "uwu", "all"
+            "and",
+            "and_",
+            "uwu",
+            "all",
         )
         val NOT = setOf(
-            "not", "no", "not_", "negate", "nawu"
+            "not",
+            "no",
+            "not_",
+            "negate",
+            "nawu",
         )
         val NONE = setOf(
-            "none", "nuwu"
+            "none",
+            "nuwu",
         )
     }
 
     private object ObjectQueryField {
         val NAME = setOf(
-            "name", "namae"
+            "name",
+            "namae",
         )
         val DISPLAY_NAME = setOf(
-            "displayName", "tekisuto"
+            "displayName",
+            "tekisuto",
         )
         val TAG = setOf(
-            "tag", "taguru"
+            "tag",
+            "taguru",
         )
     }
 
     private object StringQueryField {
         val IN = setOf(
-            "in", "in_", "naibu"
+            "in",
+            "in_",
+            "naibu",
         )
         val NOT_IN = setOf(
-            "not_in", "wanai"
+            "not_in",
+            "wanai",
         )
     }
 
     private object ItemQueryField {
         val NBT = setOf(
-            "nbt", "nebeturu"
+            "nbt",
+            "nebeturu",
         )
     }
 
@@ -166,10 +185,11 @@ object PeripheralPluginUtils {
             var aggregatedPredicate = ALWAYS_ITEM_STACK_TRUE
             for (entry in something.entries) {
                 for (instruction in ITEM_OPERATION_CONFIGURATION) {
-                    if (instruction.first.contains(entry.key) && entry.value != null)
+                    if (instruction.first.contains(entry.key) && entry.value != null) {
                         aggregatedPredicate = aggregatedPredicate.and(
-                            instruction.second.apply(entry.value!!)
+                            instruction.second.apply(entry.value!!),
                         )
+                    }
                 }
             }
             return aggregatedPredicate
@@ -219,10 +239,11 @@ object PeripheralPluginUtils {
             var aggregatedPredicate = ALWAYS_BLOCK_STATE_TRUE
             for (entry in something.entries) {
                 for (instruction in BLOCK_OPERATION_CONFIGURATION) {
-                    if (instruction.first.contains(entry.key) && entry.value != null)
+                    if (instruction.first.contains(entry.key) && entry.value != null) {
                         aggregatedPredicate = aggregatedPredicate.and(
-                            instruction.second.apply(entry.value!!)
+                            instruction.second.apply(entry.value!!),
                         )
+                    }
                 }
             }
             return aggregatedPredicate

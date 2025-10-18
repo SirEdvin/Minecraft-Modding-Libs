@@ -10,13 +10,15 @@ class ForgeAgnosticFluidStorage(private val handler: IFluidHandler) : AgnosticFl
         handler.getFluidInTank(it).toVanilla()
     }.iterator()
 
-    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Long): AgnosticFluidStack {
+    override fun getCapacities(): List<Double> = (0 until handler.tanks).map { handler.getTankCapacity(it).toDouble() }
+
+    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Double): AgnosticFluidStack {
         var realLimit = limit
         var forgeStack = ForgeFluidStack.EMPTY
         for (i in 0 until handler.tanks) {
             val storedFluid = handler.getFluidInTank(i)
             if (predicate.test(storedFluid.toVanilla()) && (forgeStack.isEmpty || storedFluid.isFluidEqual(forgeStack))) {
-                val extractedStack = handler.drain(storedFluid.copyWithCount(minOf(storedFluid.amount.toLong(), realLimit).toInt()), IFluidHandler.FluidAction.EXECUTE)
+                val extractedStack = handler.drain(storedFluid.copyWithCount(minOf(storedFluid.amount.toDouble(), realLimit).toInt()), IFluidHandler.FluidAction.EXECUTE)
                 if (!extractedStack.isEmpty) {
                     if (!forgeStack.isEmpty) {
                         forgeStack.amount += extractedStack.amount

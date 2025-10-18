@@ -5,8 +5,9 @@ import java.util.function.Predicate
 
 object EmptyAgnosticFluidStorage : AgnosticFluidStorage {
     override fun getFluids(): Iterator<AgnosticFluidStack> = emptyList<AgnosticFluidStack>().iterator()
+    override fun getCapacities(): List<Double> = emptyList()
 
-    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Long): AgnosticFluidStack = AgnosticFluidStack.EMPTY
+    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Double): AgnosticFluidStack = AgnosticFluidStack.EMPTY
 
     override fun storeFluid(stack: AgnosticFluidStack): AgnosticFluidStack = stack
 

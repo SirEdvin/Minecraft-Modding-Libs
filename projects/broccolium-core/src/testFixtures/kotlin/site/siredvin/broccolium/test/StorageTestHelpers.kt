@@ -46,7 +46,7 @@ object StorageTestHelpers {
         assertTrue(notFoundExpected.isEmpty(), "Cannot find stack with this sizes: $notFoundExpected in $name storage")
     }
 
-    fun assertFluidStorage(storage: AgnosticFluidStorage, expected: List<Long>, name: String) {
+    fun assertFluidStorage(storage: AgnosticFluidStorage, expected: List<Double>, name: String) {
         val notFoundExpected = expected.toMutableList()
         storage.getFluids().forEach {
             if (!it.isEmpty) {

@@ -17,9 +17,12 @@ import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentatio
 import java.util.*
 import java.util.function.Predicate
 
-abstract class AbstractFluidStoragePlugin(protected val level: Level, protected val fluidStorageTransferLimit: Int) : IPeripheralPlugin {
-    override val additionalType: String
-        get() = PeripheralPluginUtils.Type.FLUID_STORAGE
+abstract class AbstractFluidStoragePlugin(protected val level: Level, protected val fluidStorageTransferLimit: Double) : IPeripheralPlugin {
+    override val additionalTypes: List<String>
+        get() = listOf(
+            PeripheralPluginUtils.Type.FLUID_STORAGE,
+            PeripheralPluginUtils.Type.FLUID_STORAGE_EXTENDED,
+        )
 
     protected open fun fluidInformation(fluid: AgnosticFluidStack): MutableMap<String, Any?> = LuaRepresentation.forFluidStack(fluid)
 
@@ -27,6 +30,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
 
     override fun collectConfiguration(data: MutableMap<String, Any>) {
         data["fluidStorageTransferLimit"] = fluidStorageTransferLimit / PlatformToolkit.get().fluidCompactDivider
+        data["fluidStorageAPIVersion"] = listOf(1, 2)
     }
 
     @LuaFunction(mainThread = true)
@@ -39,7 +43,10 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
     }
 
     @LuaFunction(mainThread = true)
-    fun pushFluid(computer: IComputerAccess, toName: String, limit: Optional<Long>, fluidName: Optional<String>): Double {
+    fun capacities(): List<Double> = storage.getCapacities()
+
+    @LuaFunction(mainThread = true)
+    fun pushFluid(computer: IComputerAccess, toName: String, limit: Optional<Double>, fluidName: Optional<String>): Double {
         val location: IPeripheral = computer.getAvailablePeripheral(toName)
             ?: throw LuaException("Target '$toName' does not exist")
 
@@ -55,12 +62,12 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             }
             Predicate { it.fluid.isSame(fluid) }
         }
-        val realLimit = minOf(fluidStorageTransferLimit.toLong(), limit.orElse(Long.MAX_VALUE))
-        return storage.moveTo(toStorage, realLimit, predicate).toDouble()
+        val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))
+        return storage.moveTo(toStorage, realLimit, predicate)
     }
 
     @LuaFunction(mainThread = true)
-    fun pullFluid(computer: IComputerAccess, fromName: String, limit: Optional<Long>, fluidName: Optional<String>): Double {
+    fun pullFluid(computer: IComputerAccess, fromName: String, limit: Optional<Double>, fluidName: Optional<String>): Double {
         val location: IPeripheral = computer.getAvailablePeripheral(fromName)
             ?: throw LuaException("Target '$fromName' does not exist")
 
@@ -76,7 +83,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             }
             Predicate { it.fluid.isSame(fluid) }
         }
-        val realLimit = minOf(fluidStorageTransferLimit.toLong(), limit.orElse(Long.MAX_VALUE))
-        return storage.moveFrom(fromStorage, realLimit, predicate).toDouble()
+        val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))
+        return storage.moveFrom(fromStorage, realLimit, predicate)
     }
 }

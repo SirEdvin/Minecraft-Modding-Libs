@@ -7,9 +7,9 @@ import net.minecraft.world.level.material.Fluids
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
 
-data class AgnosticFluidStack(val fluid: Fluid, var amount: Long, var tag: CompoundTag? = null) {
+data class AgnosticFluidStack(val fluid: Fluid, var amount: Double, var tag: CompoundTag? = null) {
     companion object {
-        val EMPTY = AgnosticFluidStack(Fluids.EMPTY, 0)
+        val EMPTY = AgnosticFluidStack(Fluids.EMPTY, 0.0)
         fun isSameFluid(first: AgnosticFluidStack, second: AgnosticFluidStack): Boolean = first.fluid.isSame(second.fluid)
 
         fun isSameFluidSameTags(first: AgnosticFluidStack, second: AgnosticFluidStack): Boolean {
@@ -22,8 +22,8 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Long, var tag: Compo
         fun of(targetTag: CompoundTag): AgnosticFluidStack {
             val fluidID = targetTag.getString("fluid")
             val fluid = PlatformRegistries.FLUIDS.tryGet(ResourceLocation(fluidID)) ?: return EMPTY
-            val amount = targetTag.getLong("amount")
-            if (amount == 0L) {
+            val amount = targetTag.getDouble("amount")
+            if (amount == 0.0) {
                 return EMPTY
             }
             return AgnosticFluidStack(
@@ -40,32 +40,24 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Long, var tag: Compo
     val isEmpty: Boolean
         get() = fluid.isSame(Fluids.EMPTY)
 
-    val platformAmount: Long
+    val platformAmount: Double
         get() = this.amount * PlatformToolkit.get().fluidCompactDivider
 
     fun copy(): AgnosticFluidStack = AgnosticFluidStack(fluid, amount, tag?.copy())
 
-    fun copyWithCount(count: Long): AgnosticFluidStack = AgnosticFluidStack(fluid, count, tag?.copy())
+    fun copyWithCount(count: Double): AgnosticFluidStack = AgnosticFluidStack(fluid, count, tag?.copy())
 
-    fun grow(amount: Int) {
-        this.amount += amount.toLong()
-    }
-
-    fun shrink(amount: Int) {
-        this.amount -= amount.toLong()
-    }
-
-    fun grow(amount: Long) {
+    fun grow(amount: Double) {
         this.amount += amount
     }
 
-    fun shrink(amount: Long) {
+    fun shrink(amount: Double) {
         this.amount -= amount
     }
 
     fun save(targetTag: CompoundTag): CompoundTag {
         targetTag.putString("fluid", PlatformRegistries.FLUIDS.getKey(fluid).toString())
-        targetTag.putLong("amount", amount)
+        targetTag.putDouble("amount", amount)
         if (tag != null) {
             targetTag.put("tag", tag!!)
         }

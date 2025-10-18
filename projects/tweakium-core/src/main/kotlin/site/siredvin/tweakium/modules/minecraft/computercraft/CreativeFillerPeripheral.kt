@@ -63,7 +63,7 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
             val storage = AgnosticFluidStorageLookup.extractFluidSinkFromUnknown(owner.level!!, location.target)
                 ?: throw LuaException("Source '$target' is not an inventory")
             val fluid = PlatformRegistries.FLUIDS.tryGet(ResourceLocation(id)) ?: throw LuaException("There is no fluid $id")
-            storage.storeFluid(AgnosticFluidStack(fluid, limit.toLong()))
+            storage.storeFluid(AgnosticFluidStack(fluid, limit.toDouble()))
         }
     }
 

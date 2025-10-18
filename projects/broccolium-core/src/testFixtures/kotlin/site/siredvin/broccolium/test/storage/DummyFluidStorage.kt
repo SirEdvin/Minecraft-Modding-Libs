@@ -29,7 +29,9 @@ class DummyFluidStorage(private val maxSlots: Int, initialItems: List<AgnosticFl
 
     override fun getFluids(): Iterator<AgnosticFluidStack> = fluids.iterator()
 
-    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Long): AgnosticFluidStack {
+    override fun getCapacities(): List<Double> = fluids.map { 10000.0 }
+
+    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Double): AgnosticFluidStack {
         var slidingStack = AgnosticFluidStack.EMPTY
         var slidingLimit = limit
         val toRemove = mutableListOf<Int>()

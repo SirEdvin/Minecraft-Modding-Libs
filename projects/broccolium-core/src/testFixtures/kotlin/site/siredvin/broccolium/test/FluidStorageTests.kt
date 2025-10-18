@@ -14,9 +14,9 @@ import kotlin.test.assertEquals
 abstract class FluidStorageTests {
     abstract fun createStorage(fluids: List<AgnosticFluidStack>, secondary: Boolean): AgnosticFluidStorage
 
-    fun createStorage(sizes: List<Long>, stack: AgnosticFluidStack, secondary: Boolean): AgnosticFluidStorage = createStorage(
+    fun createStorage(sizes: List<Double>, stack: AgnosticFluidStack, secondary: Boolean): AgnosticFluidStorage = createStorage(
         sizes.map {
-            if (it == 0L) {
+            if (it == 0.0) {
                 AgnosticFluidStack.EMPTY
             } else {
                 stack.copyWithCount(it)
@@ -26,12 +26,12 @@ abstract class FluidStorageTests {
     )
 
     data class MoveArguments(
-        val initialFrom: List<Long>,
-        val initialTo: List<Long>,
-        val moveLimit: Long,
-        val expectedMoveAmount: Long,
-        val expectedFrom: List<Long>,
-        val expectedTo: List<Long>,
+        val initialFrom: List<Double>,
+        val initialTo: List<Double>,
+        val moveLimit: Double,
+        val expectedMoveAmount: Double,
+        val expectedFrom: List<Double>,
+        val expectedTo: List<Double>,
     )
 
     companion object {
@@ -46,32 +46,32 @@ abstract class FluidStorageTests {
             return listOf(
                 Arguments.of(
                     MoveArguments(
-                        listOf(1000, 1000, 1000),
-                        listOf(1000, 1000, 0),
-                        1000,
-                        1000,
-                        listOf(1000, 1000),
-                        listOf(1000, 1000, 1000),
+                        listOf(1000.0, 1000.0, 1000.0),
+                        listOf(1000.0, 1000.0, 0.0),
+                        1000.0,
+                        1000.0,
+                        listOf(1000.0, 1000.0),
+                        listOf(1000.0, 1000.0, 1000.0),
                     ),
                 ),
                 Arguments.of(
                     MoveArguments(
-                        listOf(1000, 1000, 1000),
-                        listOf(1000, 1000, 1000),
-                        2000,
-                        0,
-                        listOf(1000, 1000, 1000),
-                        listOf(1000, 1000, 1000),
+                        listOf(1000.0, 1000.0, 1000.0),
+                        listOf(1000.0, 1000.0, 1000.0),
+                        2000.0,
+                        0.0,
+                        listOf(1000.0, 1000.0, 1000.0),
+                        listOf(1000.0, 1000.0, 1000.0),
                     ),
                 ),
                 Arguments.of(
                     MoveArguments(
-                        listOf(1000, 1000, 1000),
-                        listOf(1000, 1000, 500),
-                        2000,
-                        500,
-                        listOf(500, 1000, 1000),
-                        listOf(1000, 1000, 1000),
+                        listOf(1000.0, 1000.0, 1000.0),
+                        listOf(1000.0, 1000.0, 500.0),
+                        2000.0,
+                        500.0,
+                        listOf(500.0, 1000.0, 1000.0),
+                        listOf(1000.0, 1000.0, 1000.0),
                     ),
                 ),
             )
@@ -81,7 +81,7 @@ abstract class FluidStorageTests {
     @ParameterizedTest
     @MethodSource("generateMoveToParameters")
     fun testMoveTo(argument: MoveArguments) {
-        val water = AgnosticFluidStack(Fluids.WATER, 1000)
+        val water = AgnosticFluidStack(Fluids.WATER, 1000.0)
         val from = createStorage(argument.initialFrom, water, secondary = false)
         val to = createStorage(argument.initialTo, water, secondary = true)
         val movedAmount = from.moveTo(to, argument.moveLimit, takePredicate = FluidStorageUtils.ALWAYS)
@@ -94,7 +94,7 @@ abstract class FluidStorageTests {
     @ParameterizedTest
     @MethodSource("generateMoveToParameters")
     fun testMoveFrom(argument: MoveArguments) {
-        val water = AgnosticFluidStack(Fluids.WATER, 1000)
+        val water = AgnosticFluidStack(Fluids.WATER, 1000.0)
         val from = createStorage(argument.initialFrom, water, secondary = false)
         val to = createStorage(argument.initialTo, water, secondary = true)
         val movedAmount = to.moveFrom(from, argument.moveLimit, takePredicate = FluidStorageUtils.ALWAYS)
@@ -108,20 +108,20 @@ abstract class FluidStorageTests {
     fun testPredicateSearch() {
         val from = createStorage(
             listOf(
-                AgnosticFluidStack(Fluids.WATER, 1000),
-                AgnosticFluidStack(Fluids.LAVA, 1),
-                AgnosticFluidStack(Fluids.WATER, 500),
+                AgnosticFluidStack(Fluids.WATER, 1000.0),
+                AgnosticFluidStack(Fluids.LAVA, 1.0),
+                AgnosticFluidStack(Fluids.WATER, 500.0),
             ),
             true,
         )
-        val to = createStorage(listOf(1000, 0, 0), AgnosticFluidStack(Fluids.WATER, 1000), true)
+        val to = createStorage(listOf(100.0, 0.0, 0.0), AgnosticFluidStack(Fluids.WATER, 1000.0), true)
         val predicate: Predicate<AgnosticFluidStack> = Predicate {
             it.fluid.isSame(Fluids.LAVA)
         }
-        val movedAmount = from.moveTo(to, 1, takePredicate = predicate)
-        assertEquals(1, movedAmount)
-        StorageTestHelpers.assertFluidStorage(from, listOf(1000, 500), "from")
-        StorageTestHelpers.assertFluidStorage(to, listOf(1000, 1), "to")
+        val movedAmount = from.moveTo(to, 1.0, takePredicate = predicate)
+        assertEquals(1.0, movedAmount)
+        StorageTestHelpers.assertFluidStorage(from, listOf(1000.0, 500.0), "from")
+        StorageTestHelpers.assertFluidStorage(to, listOf(1000.0, 1.0), "to")
         StorageTestHelpers.assertNoOverlap(from, to)
     }
 
@@ -129,20 +129,20 @@ abstract class FluidStorageTests {
     fun testFailedPredicateSearch() {
         val from = createStorage(
             listOf(
-                AgnosticFluidStack(Fluids.WATER, 500),
-                AgnosticFluidStack(Fluids.WATER, 500),
-                AgnosticFluidStack(Fluids.WATER, 500),
+                AgnosticFluidStack(Fluids.WATER, 500.0),
+                AgnosticFluidStack(Fluids.WATER, 500.0),
+                AgnosticFluidStack(Fluids.WATER, 500.0),
             ),
             true,
         )
-        val to = createStorage(listOf(1000, 0, 0), AgnosticFluidStack(Fluids.WATER, 1000), true)
+        val to = createStorage(listOf(1000.0, 0.0, 0.0), AgnosticFluidStack(Fluids.WATER, 1000.0), true)
         val predicate: Predicate<AgnosticFluidStack> = Predicate {
             it.fluid.isSame(Fluids.LAVA)
         }
-        val movedAmount = from.moveTo(to, 1, takePredicate = predicate)
-        assertEquals(0, movedAmount)
-        StorageTestHelpers.assertFluidStorage(from, listOf(500, 500, 500), "from")
-        StorageTestHelpers.assertFluidStorage(to, listOf(1000), "to")
+        val movedAmount = from.moveTo(to, 1.0, takePredicate = predicate)
+        assertEquals(0.0, movedAmount)
+        StorageTestHelpers.assertFluidStorage(from, listOf(500.0, 500.0, 500.0), "from")
+        StorageTestHelpers.assertFluidStorage(to, listOf(1000.0), "to")
         StorageTestHelpers.assertNoOverlap(from, to)
     }
 }
