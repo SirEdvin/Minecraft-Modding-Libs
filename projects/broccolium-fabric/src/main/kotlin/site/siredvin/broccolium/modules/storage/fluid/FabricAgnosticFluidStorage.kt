@@ -19,7 +19,7 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
     override fun getCapacities(): List<Double> {
         val result = mutableListOf<Double>()
         this.storage.iterator().forEach {
-            result.add(it.capacity.toDouble())
+            result.add(it.capacity.toDouble() / PlatformToolkit.get().fluidCompactDivider)
         }
         return result
     }

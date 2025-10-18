@@ -114,15 +114,15 @@ object LuaRepresentation {
     }
 
     fun forItem(item: Item): MutableMap<String, Any> {
-        val map: MutableMap<String, Any> = HashMap()
-        map["name"] = item.descriptionId
-        map["displayName"] = item.description.string
-        return map
+        val base = forItemStack(item.defaultInstance)
+        base.remove("count")
+        return base
     }
 
     fun forFluidStack(fluid: AgnosticFluidStack): MutableMap<String, Any?> {
         val baseInformation = forFluid(fluid.fluid)
-        baseInformation["amount"] = fluid.amount
+        baseInformation["amount"] = fluid.amount.toLong()
+        baseInformation["precise_amount"] = fluid.amount
         if (fluid.tag != null) {
             baseInformation["nbt"] = ComputerPlatformToolkit.get().nbtHash(fluid.tag!!)
         }

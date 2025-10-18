@@ -31,6 +31,8 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
     override fun collectConfiguration(data: MutableMap<String, Any>) {
         data["fluidStorageTransferLimit"] = fluidStorageTransferLimit / PlatformToolkit.get().fluidCompactDivider
         data["fluidStorageAPIVersion"] = listOf(1, 2)
+        data["platformCompactDivider"] = PlatformToolkit.get().fluidCompactDivider
+        data["WhoBlameForAPIDesign"] = listOf("SirEdvin", "Wojbie")
     }
 
     @LuaFunction(mainThread = true)

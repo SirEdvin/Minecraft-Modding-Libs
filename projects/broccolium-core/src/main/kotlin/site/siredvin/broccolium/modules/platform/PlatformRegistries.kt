@@ -8,4 +8,6 @@ object PlatformRegistries {
     val FLUIDS by lazy { PlatformToolkit.get().wrap(Registries.FLUID) }
     val ENTITY_TYPES by lazy { PlatformToolkit.get().wrap(Registries.ENTITY_TYPE) }
     val RECIPE_TYPES by lazy { PlatformToolkit.get().wrap(Registries.RECIPE_TYPE) }
+    val CONFIGURED_FEATURE by lazy { PlatformToolkit.get().wrap(Registries.CONFIGURED_FEATURE) }
+    val STAT_TYPE by lazy { PlatformToolkit.get().wrap(Registries.STAT_TYPE) }
 }

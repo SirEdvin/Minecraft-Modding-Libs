@@ -42,7 +42,7 @@ abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
 
     override fun collectConfiguration(data: MutableMap<String, Any>) {
         data["itemStorageTransferLimit"] = itemStorageTransferLimit
-        data["itemStorageAPI"] = "1.1"
+        data["itemStorageAPI"] = listOf(1, 1)
     }
 
     @LuaFunction(mainThread = true)

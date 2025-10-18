@@ -121,7 +121,7 @@ abstract class FluidStorageTests {
         val movedAmount = from.moveTo(to, 1.0, takePredicate = predicate)
         assertEquals(1.0, movedAmount)
         StorageTestHelpers.assertFluidStorage(from, listOf(1000.0, 500.0), "from")
-        StorageTestHelpers.assertFluidStorage(to, listOf(1000.0, 1.0), "to")
+        StorageTestHelpers.assertFluidStorage(to, listOf(100.0, 1.0), "to")
         StorageTestHelpers.assertNoOverlap(from, to)
     }
 
