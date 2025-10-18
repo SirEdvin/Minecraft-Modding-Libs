@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluids
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStorageLookup
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
@@ -25,7 +26,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
     protected abstract val storage: AgnosticFluidStorage
 
     override fun collectConfiguration(data: MutableMap<String, Any>) {
-        data["fluidStorageTransferLimit"] = fluidStorageTransferLimit
+        data["fluidStorageTransferLimit"] = fluidStorageTransferLimit / PlatformToolkit.get().fluidCompactDivider
     }
 
     @LuaFunction(mainThread = true)
