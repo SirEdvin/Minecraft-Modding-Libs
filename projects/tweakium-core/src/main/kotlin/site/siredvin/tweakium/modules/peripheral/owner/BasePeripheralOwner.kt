@@ -5,12 +5,16 @@ import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.boon.OperationBoon
 import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
+import java.util.UUID
 
 abstract class BasePeripheralOwner : IPeripheralOwner {
     private val _abilities: MutableMap<IPeripheralOwnerBoonKey<*>, IPeripheralOwnerBoon> = HashMap()
 
     override val abilities: Collection<IPeripheralOwnerBoon>
         get() = _abilities.values
+
+    override val ownerUUID: UUID?
+        get() = owner?.uuid
 
     override fun <T : IPeripheralOwnerBoon> attachBoon(ability: IPeripheralOwnerBoonKey<T>, abilityImplementation: T) {
         if (_abilities.containsKey(ability)) {

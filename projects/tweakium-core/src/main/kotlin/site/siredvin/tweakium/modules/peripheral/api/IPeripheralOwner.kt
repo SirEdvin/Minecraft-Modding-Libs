@@ -12,6 +12,7 @@ import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStor
 import site.siredvin.tweakium.modules.peripheral.boon.OperationBoon
 import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
+import java.util.UUID
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 
@@ -24,6 +25,7 @@ interface IPeripheralOwner {
     val level: Level?
     val pos: BlockPos
     val facing: Direction
+    val ownerUUID: UUID?
     val owner: Player?
     val dataStorage: IDataStorage
     val storage: SlottedAgnosticItemStorage?

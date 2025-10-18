@@ -27,7 +27,7 @@ abstract class PeripheralBlockEntity<T : IOwnedPeripheral<*>>(
         protected set
 
     protected var peripheral: T? = null
-    protected var ownerPlayerUUID: UUID? = null
+    override var ownerPlayerUUID: UUID? = null
     override var player: Player?
         get() = ownerPlayerUUID?.let { level?.getPlayerByUUID(it) }
         set(value) {
