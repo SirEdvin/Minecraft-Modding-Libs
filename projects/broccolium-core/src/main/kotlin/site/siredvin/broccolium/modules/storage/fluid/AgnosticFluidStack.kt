@@ -2,7 +2,6 @@ package site.siredvin.broccolium.modules.storage.fluid
 
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtUtils
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
@@ -63,8 +62,9 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Double, var componen
         targetTag.putDouble("amount", amount)
         if (!components.isEmpty) {
             val potentialTag = DataComponentUtil.patchToNBT(components)
-            if (potentialTag != null)
+            if (potentialTag != null) {
                 targetTag.put("tag", potentialTag)
+            }
         }
         return targetTag
     }
