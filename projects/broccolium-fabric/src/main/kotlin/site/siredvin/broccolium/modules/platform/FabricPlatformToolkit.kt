@@ -33,6 +33,8 @@ import net.minecraft.world.phys.EntityHitResult
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import site.siredvin.broccolium.modules.platform.api.SavingFunction
+import site.siredvin.broccolium.modules.storage.energy.Energies
+import site.siredvin.broccolium.modules.storage.energy.EnergyUnit
 import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Function
@@ -44,6 +46,8 @@ object FabricPlatformToolkit : InnerPlatformToolkit {
 
     override val fluidCompactDivider: Int
         get() = FORGE_COMPACT_DEVIDER
+    override val commonEnergy: EnergyUnit
+        get() = Energies.REDSTONE_FLUX
 
     override var minecraftServer: MinecraftServer?
         get() = minecraftServerCache

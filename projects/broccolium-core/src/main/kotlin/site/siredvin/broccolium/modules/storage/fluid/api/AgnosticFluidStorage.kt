@@ -6,9 +6,10 @@ import java.util.function.Predicate
 
 interface AgnosticFluidStorage : AgnosticFluidSink {
     fun getFluids(): Iterator<AgnosticFluidStack>
-    fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Long): AgnosticFluidStack
+    fun getCapacities(): List<Double>
+    fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Double): AgnosticFluidStack
 
-    fun moveTo(to: AgnosticFluidSink, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+    fun moveTo(to: AgnosticFluidSink, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         if (movableType != null) {
             throw IllegalStateException("With movable type you should redefine this function")
         }

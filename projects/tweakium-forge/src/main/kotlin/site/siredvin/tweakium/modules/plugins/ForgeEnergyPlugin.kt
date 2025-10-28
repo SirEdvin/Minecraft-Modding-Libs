@@ -15,5 +15,5 @@ class ForgeEnergyPlugin(private val storage: IEnergyStorage) : IPeripheralPlugin
     fun getEnergyCapacity(): Int = storage.maxEnergyStored
 
     @LuaFunction(mainThread = true)
-    fun getEnergyUnit(): String = "RF"
+    fun getEnergyUnit(): String = "FE"
 }

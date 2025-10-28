@@ -1,5 +1,6 @@
 package site.siredvin.tweakium.modules.peripheral.representation
 
+import dan200.computercraft.api.detail.BlockReference
 import dan200.computercraft.api.detail.VanillaDetailRegistries
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -17,10 +18,12 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.trading.Merchant
 import net.minecraft.world.item.trading.MerchantOffer
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import site.siredvin.broccolium.modules.base.ext.toRelative
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.stream.Collectors
@@ -37,12 +40,20 @@ object LuaRepresentation {
         return data
     }
 
+    fun forBlockV2(level: Level, pos: BlockPos): MutableMap<String, Any> {
+        val reference = BlockReference(level, pos)
+        val data = VanillaDetailRegistries.BLOCK_IN_WORLD.getDetails(reference)
+        data["displayName"] = reference.state.block.name.string
+        return data
+    }
+
     fun forEntity(entity: Entity): MutableMap<String, Any> {
         val data: MutableMap<String, Any> = HashMap()
-        data["name"] = entity.id
+        val entityId = PlatformRegistries.ENTITY_TYPES.getKey(entity.type).toString()
+        data["name"] = entityId
         data["uuid"] = entity.stringUUID
         data["category"] = entity.type.category.name
-        data["type"] = entity.type.description.string
+        data["type"] = entity.type.descriptionId
         data["displayName"] = entity.name.string
         data["tags"] = entity.tags
         return data
@@ -103,20 +114,25 @@ object LuaRepresentation {
     }
 
     fun forItem(item: Item): MutableMap<String, Any> {
-        val map: MutableMap<String, Any> = HashMap()
-        map["name"] = item.descriptionId
-        map["displayName"] = item.description.string
-        return map
+        val base = forItemStack(item.defaultInstance)
+        base.remove("count")
+        return base
     }
 
     fun forFluidStack(fluid: AgnosticFluidStack): MutableMap<String, Any?> {
         val baseInformation = forFluid(fluid.fluid)
-        baseInformation["amount"] = fluid.amount
-        if (!fluid.components!!.isEmpty) {
+        baseInformation["amount"] = fluid.amount.toLong()
+        baseInformation["precise_amount"] = fluid.amount
+        if (!fluid.components.isEmpty) {
             baseInformation["nbt"] = ComputerPlatformToolkit.get().nbtHash(fluid.components)
         }
         return baseInformation
     }
+
+    fun forEnergyStack(energy: AgnosticEnergyStack): MutableMap<String, Any?> = mutableMapOf(
+        "amount" to energy.amount,
+        "unit" to energy.unit.name,
+    )
 
     fun forFluid(fluid: Fluid): MutableMap<String, Any?> = mutableMapOf(
         "name" to PlatformRegistries.FLUIDS.getKey(fluid).toString(),

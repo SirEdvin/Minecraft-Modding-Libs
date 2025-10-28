@@ -16,8 +16,15 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
         get() = FabricStorageUtils.MOVABLE_TYPE
 
     override fun getFluids(): Iterator<AgnosticFluidStack> = this.storage.map { it.toVanilla() }.iterator()
+    override fun getCapacities(): List<Double> {
+        val result = mutableListOf<Double>()
+        this.storage.iterator().forEach {
+            result.add(it.capacity.toDouble() / PlatformToolkit.get().fluidCompactDivider)
+        }
+        return result
+    }
 
-    override fun moveTo(to: AgnosticFluidSink, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+    override fun moveTo(to: AgnosticFluidSink, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         if (to.movableType == FabricStorageUtils.MOVABLE_TYPE) {
             return to.moveFrom(this, limit, takePredicate)
         }
@@ -27,16 +34,16 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
         throw IllegalStateException("Cannot mix movable type, this should be impossible here")
     }
 
-    override fun moveFrom(from: AgnosticFluidStorage, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+    override fun moveFrom(from: AgnosticFluidStorage, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         if (from.movableType == FabricStorageUtils.MOVABLE_TYPE) {
             if (from !is FabricAgnosticFluidStorage) throw IllegalStateException("For fabricTransfer please use FabricFluidStorage")
             return StorageUtil.move(
                 from.storage,
                 storage,
-                { takePredicate.test(it.toVanilla(1)) },
-                limit * PlatformToolkit.get().fluidCompactDivider,
+                { takePredicate.test(it.toVanilla(1.0)) },
+                (limit * PlatformToolkit.get().fluidCompactDivider).toLong(),
                 null,
-            ) / PlatformToolkit.get().fluidCompactDivider
+            ) / PlatformToolkit.get().fluidCompactDivider.toDouble()
         }
         if (from.movableType == null) {
             return FabricStorageUtils.moveFromTargetable(from, this.storage, limit, takePredicate)
@@ -44,7 +51,7 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
         throw IllegalStateException("Cannot mix movable type, this should be impossible here")
     }
 
-    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Long): AgnosticFluidStack {
+    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Double): AgnosticFluidStack {
         val platformLimit = limit * PlatformToolkit.get().fluidCompactDivider
         if (!storage.supportsExtraction()) return AgnosticFluidStack.Companion.EMPTY
         val extractableTarget = StorageUtil.findExtractableContent(storage, {
@@ -53,18 +60,18 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
         if (extractableTarget == null || extractableTarget.amount == 0L) {
             return AgnosticFluidStack.Companion.EMPTY
         }
-        val realLimit = minOf(extractableTarget.amount, platformLimit)
+        val realLimit = minOf(extractableTarget.amount.toDouble(), platformLimit)
         Transaction.openOuter().use {
-            val extracted = storage.extract(extractableTarget.resource, realLimit, it)
+            val extracted = storage.extract(extractableTarget.resource, realLimit.toLong(), it)
             it.commit()
-            return extractableTarget.resource.toVanilla(extracted)
+            return extractableTarget.resource.toVanilla(extracted.toDouble())
         }
     }
 
     override fun storeFluid(stack: AgnosticFluidStack): AgnosticFluidStack {
         if (!storage.supportsInsertion()) return stack
         Transaction.openOuter().use {
-            val inserted = storage.insert(stack.toVariant(), stack.platformAmount, it)
+            val inserted = storage.insert(stack.toVariant(), stack.platformAmount.toLong(), it)
             if (inserted == 0L) {
                 it.abort()
                 return stack

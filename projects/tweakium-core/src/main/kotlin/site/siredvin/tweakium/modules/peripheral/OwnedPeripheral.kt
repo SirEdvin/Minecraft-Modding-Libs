@@ -16,7 +16,7 @@ import java.util.*
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Consumer
 
-abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O) :
+abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripheralType: String, final override val peripheralOwner: O, private val peripheralImplementationProvider: String?) :
     IOwnedPeripheral<O>,
     IDynamicPeripheral,
     IExpandedPeripheral {
@@ -26,6 +26,8 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
     protected open var plugins: MutableList<IPeripheralPlugin> = mutableListOf()
     protected open var internalMethodNames = Array(0) { "" }
     protected open var connectedComputersLock: ReentrantLock = ReentrantLock()
+
+    constructor(peripheralType: String, peripheralOwner: O) : this(peripheralType, peripheralOwner, null)
 
     @get:LuaFunction
     val configuration: Map<String, Any>
@@ -52,7 +54,11 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
     open val peripheralConfiguration: MutableMap<String, Any>
         get() {
             val data: MutableMap<String, Any> = HashMap()
+            if (peripheralImplementationProvider != null) {
+                data["implementationProvider"] = peripheralImplementationProvider
+            }
             peripheralOwner.abilities.forEach(Consumer { ability: IPeripheralOwnerBoon -> ability.collectConfiguration(data) })
+            plugins.forEach { it.collectConfiguration(data) }
             return data
         }
 
@@ -67,7 +73,7 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
 
     protected open fun collectPlugin(server: MinecraftServer, plugin: IPeripheralPlugin) {
         pluggedMethods.addAll(plugin.getMethods(server))
-        if (plugin.additionalType != null) addAdditionalType(plugin.additionalType!!)
+        additionalTypeStorage.addAll(plugin.additionalTypes)
         plugin.connectedPeripheral = this
         addOperations(plugin.operations)
     }
@@ -77,10 +83,6 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
         peripheralOwner.abilities.forEach {
             collectPlugin(server, it)
         }
-    }
-
-    open fun addAdditionalType(additionalType: String) {
-        if (additionalType != peripheralType) additionalTypeStorage.add(additionalType)
     }
 
     protected open fun buildPlugins() {
@@ -95,9 +97,7 @@ abstract class OwnedPeripheral<O : IPeripheralOwner>(protected open val peripher
 
     fun addPlugin(plugin: IPeripheralPlugin) {
         plugins.add(plugin)
-        if (plugin.additionalType != null) {
-            addAdditionalType(plugin.additionalType!!)
-        }
+        additionalTypeStorage.addAll(plugin.additionalTypes)
     }
 
     override fun attach(computer: IComputerAccess) {

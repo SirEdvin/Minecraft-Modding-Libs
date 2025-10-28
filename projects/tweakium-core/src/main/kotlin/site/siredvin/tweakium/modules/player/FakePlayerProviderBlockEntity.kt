@@ -1,6 +1,7 @@
 package site.siredvin.tweakium.modules.player
 
-import com.mojang.authlib.GameProfile
+import com.google.common.cache.CacheBuilder
+import com.google.common.cache.CacheLoader
 import dan200.computercraft.api.lua.LuaException
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponents
@@ -18,22 +19,18 @@ import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.function.Function
 
 object FakePlayerProviderBlockEntity {
-    private val registeredPlayers: WeakHashMap<BlockEntity, FakePlayerProxy> =
-        WeakHashMap<BlockEntity, FakePlayerProxy>()
+    private val registeredPlayers = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).weakKeys()
+        .maximumSize(3_000).build(CacheLoader.from(::buildPlayer))
 
-    private fun getPlayer(blockEntity: BlockEntity, profile: GameProfile): FakePlayerProxy {
+    private fun buildPlayer(blockEntity: BlockEntity): FakePlayerProxy {
         if (blockEntity !is IOwnedBlockEntity || blockEntity.player == null) {
             throw IllegalArgumentException("Cannot use fake player logic without owned block entity")
         }
-        var fake: FakePlayerProxy? = registeredPlayers[blockEntity]
-        if (fake == null) {
-            fake = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(blockEntity.player!!.level() as ServerLevel, profile))
-            registeredPlayers[blockEntity] = fake
-        }
-        return fake
+        return FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(blockEntity.level as ServerLevel, blockEntity.player!!.gameProfile))
     }
 
     private fun load(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticItemStorage?, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
@@ -138,8 +135,7 @@ object FakePlayerProviderBlockEntity {
         }
         val realPlayer = blockEntity.player
             ?: throw LuaException("Cannot init player for this block entity computer for some reason")
-        val player: FakePlayerProxy =
-            getPlayer(blockEntity, realPlayer.gameProfile)
+        val player: FakePlayerProxy = registeredPlayers.get(blockEntity)
         val storage = AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity = null) as? SlottedAgnosticItemStorage
         if (!skipInventory && storage == null) {
             throw IllegalArgumentException("Cannot init fake player with storage and with block entity without storage")

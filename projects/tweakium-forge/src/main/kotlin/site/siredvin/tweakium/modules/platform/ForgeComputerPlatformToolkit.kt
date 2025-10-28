@@ -29,6 +29,8 @@ import site.siredvin.tweakium.modules.player.ForgeFakePlayer
 @Suppress("UnstableApiUsage")
 object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
 
+    private var genericRegistered: Boolean = false
+
     override fun createFakePlayer(level: ServerLevel, profile: GameProfile): ServerPlayer = ForgeFakePlayer(level, profile)
 
     override fun getTurtleAccess(entity: BlockEntity): ITurtleAccess? {
@@ -63,15 +65,18 @@ object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
     )
 
     override fun registerGenericPeripheralLookup() {
-        ForgeComputerCraftAPI.registerPeripheralProvider { world, pos, side ->
-            val entity = world.getBlockEntity(pos)
-            if (entity is IPeripheralProvider<*>) {
-                val foundPeripheral = entity.getPeripheral(side)
-                if (foundPeripheral != null) {
-                    return@registerPeripheralProvider LazyOptional.of { foundPeripheral }
+        if (!genericRegistered) {
+            ForgeComputerCraftAPI.registerPeripheralProvider { world, pos, side ->
+                val entity = world.getBlockEntity(pos)
+                if (entity is IPeripheralProvider<*>) {
+                    val foundPeripheral = entity.getPeripheral(side)
+                    if (foundPeripheral != null) {
+                        return@registerPeripheralProvider LazyOptional.of { foundPeripheral }
+                    }
                 }
+                return@registerPeripheralProvider LazyOptional.empty()
             }
-            return@registerPeripheralProvider LazyOptional.empty()
+            genericRegistered = true
         }
     }
 }

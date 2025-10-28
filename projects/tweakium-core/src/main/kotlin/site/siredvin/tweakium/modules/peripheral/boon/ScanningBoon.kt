@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import site.siredvin.broccolium.modules.base.util.world.ScanUtils
@@ -21,29 +22,42 @@ import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwnerBoon
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
 import site.siredvin.tweakium.modules.peripheral.util.assertBetween
+import site.siredvin.tweakium.modules.plugins.PeripheralPluginUtils
 import java.util.function.BiConsumer
 import java.util.function.Predicate
 import kotlin.math.min
 
 class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPeripheralOwnerBoon {
     abstract class ScanningMethod<T : IPeripheralOwner>(val name: String, val operation: IPeripheralOperation<SphereOperationContext>) {
-        abstract fun scan(ability: ScanningBoon<T>, radius: Int): MethodResult
+        abstract fun scan(ability: ScanningBoon<T>, radius: Int, filter: Any?): MethodResult
     }
 
     class BlockScanningMethod<T : IPeripheralOwner>(operation: IPeripheralOperation<SphereOperationContext>, private val enriches: Array<out BiConsumer<BlockState, MutableMap<String, Any>>>) : ScanningMethod<T>("block", operation) {
-        private fun blockStateConverter(state: BlockState, pos: BlockPos, facing: Direction, center: BlockPos): MutableMap<String, Any> {
-            val base = LuaRepresentation.withPos(state, pos, facing, center, LuaRepresentation::forBlockState)
+        private fun blockStateConverter(state: BlockState, pos: BlockPos, facing: Direction, center: BlockPos, level: Level): MutableMap<String, Any> {
+            val base = LuaRepresentation.withPos(state, pos, facing, center) { data ->
+                LuaRepresentation.forBlockV2(
+                    level,
+                    pos,
+                )
+            }
             enriches.forEach { it.accept(state, base) }
             return base
         }
-        override fun scan(ability: ScanningBoon<T>, radius: Int): MethodResult {
+        override fun scan(ability: ScanningBoon<T>, radius: Int, filter: Any?): MethodResult {
             val result = mutableListOf<MutableMap<String, Any>>()
+            val predicate = if (filter != null) {
+                PeripheralPluginUtils.blockQueryToPredicate(filter)
+            } else {
+                Predicate<BlockState> { !it.isAir }
+            }
+            val level = ability.owner.level ?: return MethodResult.of(emptyMap<String, Any>())
             ScanUtils.traverseBlocks(
-                ability.owner.level!!,
+                level,
                 ability.owner.pos,
                 min(radius, ability.maxRadius),
-                { state, pos -> result.add(blockStateConverter(state, pos, ability.owner.facing, ability.owner.pos)) },
+                { state, pos -> result.add(blockStateConverter(state, pos, ability.owner.facing, ability.owner.pos, level)) },
                 relativePosition = false,
+                predicate = predicate,
             )
             return MethodResult.of(result)
         }
@@ -72,13 +86,16 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
 
         abstract fun convert(entity: V, ability: ScanningBoon<T>): Map<String, Any>
 
-        override fun scan(ability: ScanningBoon<T>, radius: Int): MethodResult = MethodResult.of(
-            ability.owner.level!!.getEntitiesOfClass(entityClass, getBox(ability, ability.owner.pos, radius)).filter(
-                predicate::test,
-            ).map {
-                convert(it, ability)
-            },
-        )
+        override fun scan(ability: ScanningBoon<T>, radius: Int, filter: Any?): MethodResult {
+            val level = ability.owner.level ?: return MethodResult.of(emptyMap<String, Any>())
+            return MethodResult.of(
+                level.getEntitiesOfClass(entityClass, getBox(ability, ability.owner.pos, radius)).filter(
+                    predicate::test,
+                ).map {
+                    convert(it, ability)
+                },
+            )
+        }
     }
 
     class ItemEntityScanningMethod<T : IPeripheralOwner>(
@@ -132,6 +149,7 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
     override fun collectConfiguration(data: MutableMap<String, Any>) {
         data["maxRadius"] = maxRadius
         data["scanMethods"] = scanningMethods.keys.toList()
+        data["scanAPIVersion"] = listOf(1, 2)
     }
 
     fun attachBlockScan(operation: IPeripheralOperation<SphereOperationContext>, vararg enriches: BiConsumer<BlockState, MutableMap<String, Any>>): ScanningBoon<T> = attachScanningMethod(BlockScanningMethod(operation, enriches))
@@ -156,7 +174,7 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
         assertBetween(radius, 1, maxRadius, "radius")
         val scanningMethod = scanningMethods[mode] ?: throw LuaException("There is no scanning method $mode")
         return owner.withOperation(scanningMethod.operation, SphereOperationContext.of(radius), {
-            scanningMethod.scan(this, radius)
+            scanningMethod.scan(this, radius, arguments.get(2))
         })
     }
 

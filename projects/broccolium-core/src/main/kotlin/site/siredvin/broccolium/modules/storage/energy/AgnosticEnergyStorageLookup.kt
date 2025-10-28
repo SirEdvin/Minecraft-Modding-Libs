@@ -43,6 +43,9 @@ object AgnosticEnergyStorageLookup {
     }
 
     fun extractEnergyStorage(level: Level, pos: BlockPos, blockEntity: BlockEntity?): AgnosticEnergyStorage? {
+        if (blockEntity is AgnosticEnergyStorageProvider) {
+            return blockEntity.energyStorage
+        }
         for (extractor in ENERGY_STORAGE_EXTRACTORS) {
             val result = extractor.extract(level, pos, blockEntity)
             if (result != null) {
@@ -96,6 +99,10 @@ object AgnosticEnergyStorageLookup {
         val storage = extractEnergyStorage(level, pos, blockEntity)
         if (storage != null) {
             return storage
+        }
+
+        if (blockEntity is AgnosticEnergySinkProvider) {
+            return blockEntity.energySink
         }
 
         for (extractor in ENERGY_SINK_EXTRACTORS) {

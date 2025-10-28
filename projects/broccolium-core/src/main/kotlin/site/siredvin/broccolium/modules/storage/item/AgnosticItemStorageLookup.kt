@@ -56,6 +56,9 @@ object AgnosticItemStorageLookup {
     }
 
     fun extractStorage(level: Level, pos: BlockPos, blockEntity: BlockEntity?): AgnosticItemStorage? {
+        if (blockEntity is AgnosticItemStorageProvider) {
+            return blockEntity.itemStorage
+        }
         for (extractor in ADDITIONAL_ITEM_STORAGE_EXTRACTORS) {
             val result = extractor.extract(level, pos, blockEntity)
             if (result != null) {
@@ -119,6 +122,9 @@ object AgnosticItemStorageLookup {
         val storage = extractStorage(level, pos, blockEntity)
         if (storage != null) {
             return storage
+        }
+        if (blockEntity is AgnosticItemSinkProvider) {
+            return blockEntity.itemSink
         }
 
         for (extractor in ADDITIONAL_ITEM_SINK_EXTRACTOR) {

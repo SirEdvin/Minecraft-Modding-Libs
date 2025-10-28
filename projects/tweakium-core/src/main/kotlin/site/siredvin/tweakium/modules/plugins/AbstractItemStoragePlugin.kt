@@ -8,6 +8,7 @@ import dan200.computercraft.api.peripheral.IPeripheral
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
@@ -24,20 +25,30 @@ abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
     override val additionalType: String
         get() = PeripheralPluginUtils.Type.ITEM_STORAGE
 
-    open fun itemsImpl(mode: RepresentationMode = RepresentationMode.DETAILED): List<MutableMap<String, *>> {
+    open fun itemsImpl(mode: RepresentationMode = RepresentationMode.DETAILED, filter: Any?): List<MutableMap<String, *>> {
         val result: MutableList<MutableMap<String, *>> = mutableListOf()
+        val predicate = if (filter != null) {
+            PeripheralPluginUtils.itemQueryToPredicate(filter)
+        } else {
+            ItemStorageUtils.ALWAYS
+        }
         storage.getItems().forEach {
-            if (!it.isEmpty) {
+            if (!it.isEmpty && predicate.test(it)) {
                 result.add(LuaRepresentation.forItemStack(it, mode))
             }
         }
         return result
     }
 
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        data["itemStorageTransferLimit"] = itemStorageTransferLimit
+        data["itemStorageAPI"] = listOf(1, 1)
+    }
+
     @LuaFunction(mainThread = true)
     fun items(arguments: IArguments): List<Map<String, *>> {
         val isDetailed = arguments.optBoolean(0, true)
-        return itemsImpl(mode = if (isDetailed) RepresentationMode.DETAILED else RepresentationMode.BASE)
+        return itemsImpl(mode = if (isDetailed) RepresentationMode.DETAILED else RepresentationMode.BASE, arguments.get(1))
     }
 
     @LuaFunction(mainThread = true)

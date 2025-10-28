@@ -11,15 +11,23 @@ class AgnosticEnergyHandlerWrapper(private val handler: IEnergyStorage) : Agnost
         get() = handler.maxEnergyStored.toLong()
 
     override fun takeEnergy(predicate: Predicate<AgnosticEnergyStack>, limit: Long): AgnosticEnergyStack {
-        if (!predicate.test(energy)) return AgnosticEnergyStack.EMPTY
+        if (!predicate.test(energy)) return AgnosticEnergyStack(Energies.FORGE, 0)
         val extractedEnergy = handler.extractEnergy(limit.toInt(), false)
         return AgnosticEnergyStack(Energies.FORGE, extractedEnergy.toLong())
     }
 
+    override val canExtract: Boolean
+        get() = handler.canExtract()
+
+    override val canReceive: Boolean
+        get() = handler.canReceive()
+    override val unit: EnergyUnit
+        get() = Energies.FORGE
+
     override fun storeEnergy(stack: AgnosticEnergyStack): AgnosticEnergyStack {
         if (!stack.`is`(Energies.FORGE)) return stack
         val storedEnergy = handler.receiveEnergy(stack.amount.toInt(), false)
-        return AgnosticEnergyStack(Energies.FORGE, storedEnergy.toLong())
+        return AgnosticEnergyStack(Energies.FORGE, stack.amount - storedEnergy)
     }
 
     override fun setChanged() {

@@ -43,6 +43,9 @@ object AgnosticFluidStorageLookup {
     }
 
     fun extractFluidStorage(level: Level, pos: BlockPos, blockEntity: BlockEntity?): AgnosticFluidStorage? {
+        if (blockEntity is AgnosticFluidStorageProvider) {
+            return blockEntity.fluidStorage
+        }
         for (extractor in FLUID_STORAGE_EXTRACTORS) {
             val result = extractor.extract(level, pos, blockEntity)
             if (result != null) {
@@ -95,6 +98,10 @@ object AgnosticFluidStorageLookup {
         val storage = extractFluidStorage(level, pos, blockEntity)
         if (storage != null) {
             return storage
+        }
+
+        if (blockEntity is AgnosticFluidSinkProvider) {
+            return blockEntity.fluidSink
         }
 
         for (extractor in FLUID_SINK_EXTRACTORS) {

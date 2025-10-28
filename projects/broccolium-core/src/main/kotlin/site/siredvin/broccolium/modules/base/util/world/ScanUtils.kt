@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.BiConsumer
+import java.util.function.Predicate
 
 object ScanUtils {
 
@@ -13,6 +14,7 @@ object ScanUtils {
         radius: Int,
         consumer: BiConsumer<BlockState, BlockPos>,
         relativePosition: Boolean = false,
+        predicate: Predicate<BlockState> = Predicate { !it.isAir },
     ) {
         val x = center.x
         val y = center.y
@@ -22,7 +24,7 @@ object ScanUtils {
                 for (oZ in z - radius..z + radius) {
                     val subPos = BlockPos(oX, oY, oZ)
                     val blockState = world.getBlockState(subPos)
-                    if (!blockState.isAir) {
+                    if (predicate.test(blockState)) {
                         if (relativePosition) {
                             consumer.accept(blockState, BlockPos(oX - x, oY - y, oZ - z))
                         } else {

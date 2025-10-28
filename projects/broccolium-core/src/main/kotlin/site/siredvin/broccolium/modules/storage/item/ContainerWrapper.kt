@@ -11,6 +11,7 @@ class ContainerWrapper(private val container: Container) : SlottedAgnosticItemSt
     override fun getItem(slot: Int): ItemStack = container.getItem(slot)
 
     override fun canPlaceItem(slot: Int, item: ItemStack): Boolean = container.canPlaceItem(slot, item)
+    override fun getItemLimit(slot: Int): Long = container.maxStackSize.toLong()
 
     override fun storeItem(stack: ItemStack, startSlot: Int, endSlot: Int): ItemStack = ContainerUtils.storeItem(container, stack, startSlot, endSlot)
 

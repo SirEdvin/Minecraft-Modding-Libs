@@ -4,7 +4,7 @@ import dan200.computercraft.api.lua.LuaFunction
 import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
 
-class EnergyPlugin(private val storage: AgnosticEnergyStorage) : IPeripheralPlugin {
+open class EnergyPlugin(protected val storage: AgnosticEnergyStorage) : IPeripheralPlugin {
     override val additionalType: String
         get() = PeripheralPluginUtils.Type.ENERGY_STORAGE
 

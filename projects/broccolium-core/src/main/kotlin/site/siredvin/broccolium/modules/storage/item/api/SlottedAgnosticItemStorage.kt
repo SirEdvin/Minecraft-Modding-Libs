@@ -14,6 +14,8 @@ interface SlottedAgnosticItemStorage :
 
     fun canPlaceItem(slot: Int, item: ItemStack): Boolean
 
+    fun getItemLimit(slot: Int): Long
+
     override fun getItems(): Iterator<ItemStack> = SlottedStorageIterator(this)
 
     override fun takeItems(predicate: Predicate<ItemStack>, limit: Int): ItemStack = takeItems(limit, 0, size - 1, predicate)

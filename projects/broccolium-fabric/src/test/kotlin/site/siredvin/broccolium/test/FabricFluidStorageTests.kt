@@ -23,7 +23,7 @@ internal class FabricFluidStorageTests : FluidStorageTests() {
                         SingleFluidStorage.withFixedCapacity(1000L * PlatformToolkit.get().fluidCompactDivider.toLong()) {}
                     if (!stack.isEmpty) {
                         Transaction.openOuter().use {
-                            storage.insert(stack.toVariant(), stack.platformAmount, it)
+                            storage.insert(stack.toVariant(), stack.platformAmount.toLong(), it)
                             it.commit()
                         }
                     }
@@ -49,7 +49,7 @@ internal class FabricDummyFluidStorageTests : FluidStorageTests() {
                         SingleFluidStorage.withFixedCapacity(1000L * PlatformToolkit.get().fluidCompactDivider.toLong()) {}
                     if (!stack.isEmpty) {
                         Transaction.openOuter().use {
-                            storage.insert(stack.toVariant(), stack.platformAmount, it)
+                            storage.insert(stack.toVariant(), stack.platformAmount.toLong(), it)
                             it.commit()
                         }
                     }
@@ -75,7 +75,7 @@ internal class FabricReverseDummyFluidStorageTests : FluidStorageTests() {
                         SingleFluidStorage.withFixedCapacity(1000L * PlatformToolkit.get().fluidCompactDivider.toLong()) {}
                     if (!stack.isEmpty) {
                         Transaction.openOuter().use {
-                            storage.insert(stack.toVariant(), stack.platformAmount, it)
+                            storage.insert(stack.toVariant(), stack.platformAmount.toLong(), it)
                             it.commit()
                         }
                     }

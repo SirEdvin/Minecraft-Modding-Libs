@@ -74,12 +74,12 @@ abstract class BaseBlockEntityBlock<T : BlockEntity>(
         blockState: BlockState,
         level: Level,
         blockPos: BlockPos,
-        newState: BlockState,
+        oldState: BlockState,
         bl: Boolean,
     ) {
         @Suppress("DEPRECATION")
-        super.onPlace(blockState, level, blockPos, newState, bl)
-        if (newState.block === this) {
+        super.onPlace(blockState, level, blockPos, oldState, bl)
+        if (blockState.block === this && oldState.block !== this) {
             val tile = level.getBlockEntity(blockPos)
             if (tile is IObservingBlockEntity) {
                 tile.placed()

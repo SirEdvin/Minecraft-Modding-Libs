@@ -9,11 +9,11 @@ object FluidStorageUtils {
 
     val ALWAYS: Predicate<AgnosticFluidStack> = Predicate { true }
 
-    fun naiveMove(from: AgnosticFluidStorage, to: AgnosticFluidSink, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+    fun naiveMove(from: AgnosticFluidStorage, to: AgnosticFluidSink, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         // Get stack to move
         val stack = from.takeFluid(takePredicate, limit)
         if (stack.isEmpty) {
-            return 0
+            return 0.0
         }
 
         val stackCount = stack.amount

@@ -19,6 +19,14 @@ interface IPeripheralPlugin {
     val additionalType: String?
         get() = null
 
+    val additionalTypes: List<String>
+        get() = if (additionalType == null) {
+            emptyList()
+        } else {
+            listOf(additionalType!!)
+        }
+
     fun onFirstAttach() {}
     fun onLastDetach() {}
+    fun collectConfiguration(data: MutableMap<String, Any>) {}
 }

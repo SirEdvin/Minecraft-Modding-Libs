@@ -1,12 +1,20 @@
 package site.siredvin.broccolium.modules.storage.energy
 
+import net.minecraft.nbt.CompoundTag
+
 data class AgnosticEnergyStack(val unit: EnergyUnit, var amount: Long) {
     companion object {
-        val EMPTY = AgnosticEnergyStack(Energies.EMPTY, 0)
         fun isSameEnergy(first: AgnosticEnergyStack, second: AgnosticEnergyStack): Boolean = first.unit == second.unit
+
+        fun of(targetTag: CompoundTag): AgnosticEnergyStack {
+            val energyId = targetTag.getString("energy")
+            val energy = EnergyRegistry.ENERGIES[energyId]!!
+            val amount = targetTag.getLong("amount")
+            return AgnosticEnergyStack(energy, amount)
+        }
     }
     val isEmpty: Boolean
-        get() = unit == Energies.EMPTY
+        get() = amount == 0L
 
     fun copy(): AgnosticEnergyStack = AgnosticEnergyStack(unit, amount)
 
@@ -38,5 +46,11 @@ data class AgnosticEnergyStack(val unit: EnergyUnit, var amount: Long) {
         }
         this.shrink(amount)
         return this.copyWithCount(amount)
+    }
+
+    fun save(targetTag: CompoundTag): CompoundTag {
+        targetTag.putString("energy", unit.name)
+        targetTag.putLong("amount", amount)
+        return targetTag
     }
 }

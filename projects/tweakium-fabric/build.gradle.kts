@@ -8,6 +8,7 @@ plugins {
 
 val tweakiumVersion: String by extra
 val minecraftVersion: String by extra
+val broccoliumVersion: String by extra
 
 baseShaking {
     projectPart.set("fabric")
@@ -26,7 +27,26 @@ fabricShaking {
             "computercraft" to "cc-tweaked",
         ),
     )
+    extraRawVersionMappings.set(
+        mapOf(
+            "broccolium" to broccoliumVersion,
+        ),
+    )
     shake()
+}
+
+sourceSets {
+    create("testFixtures") {
+        compileClasspath += main.get().compileClasspath
+        compileClasspath += main.get().output
+        runtimeClasspath += main.get().output
+    }
+    test {
+        compileClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
+        runtimeClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
+        compileClasspath += sourceSets["testFixtures"].output
+        runtimeClasspath += sourceSets["testFixtures"].output
+    }
 }
 
 repositories {
@@ -63,6 +83,9 @@ dependencies {
         exclude("net.fabricmc.fabric-api")
         exclude("net.fabricmc", "fabric-loader")
     }
+
+    add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test"))
+    add(sourceSets["testFixtures"].compileOnlyConfigurationName, libs.bundles.test)
 
     testImplementation(kotlin("test"))
     testCompileOnly(libs.autoService)

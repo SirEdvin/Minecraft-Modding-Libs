@@ -107,51 +107,51 @@ object FabricStorageUtils {
         }
     }
 
-    fun moveToTargetable(storage: FabricStorage<FluidVariant>, to: AgnosticFluidSink, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+    fun moveToTargetable(storage: FabricStorage<FluidVariant>, to: AgnosticFluidSink, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         assert(to.movableType != MOVABLE_TYPE)
 
-        val platformLimit = limit * PlatformToolkit.get().fluidCompactDivider
+        val platformLimit = (limit * PlatformToolkit.get().fluidCompactDivider).toLong()
 
         val transaction = Transaction.openOuter()
         transaction.use {
             val resource =
                 StorageUtil.findExtractableResource(storage, wrapFluid(takePredicate), it)
-                    ?: return 0
+                    ?: return 0.0
             val extractedAmount = storage.extract(resource, platformLimit, it)
             if (extractedAmount == 0L) {
-                return 0L
+                return 0.0
             }
-            val insertionStack = resource.toVanilla(extractedAmount)
+            val insertionStack = resource.toVanilla(extractedAmount.toDouble())
             val remainder = to.storeFluid(insertionStack)
             val insertedCount = extractedAmount - remainder.platformAmount
             if (!remainder.isEmpty) {
-                storage.insert(resource, remainder.platformAmount, it)
+                storage.insert(resource, remainder.platformAmount.toLong(), it)
             }
             it.commit()
             return insertedCount / PlatformToolkit.get().fluidCompactDivider
         }
     }
 
-    fun moveFromTargetable(from: AgnosticFluidStorage, to: FabricStorage<FluidVariant>, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+    fun moveFromTargetable(from: AgnosticFluidStorage, to: FabricStorage<FluidVariant>, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         assert(from.movableType != MOVABLE_TYPE)
 
         val platformLimit = limit * PlatformToolkit.get().fluidCompactDivider
 
         val insertionStack = from.takeFluid(takePredicate, platformLimit)
         if (insertionStack.isEmpty) {
-            return 0
+            return 0.0
         }
 
         val transaction = Transaction.openOuter()
         transaction.use {
-            val insertedAmount = to.insert(insertionStack.toVariant(), insertionStack.platformAmount, it)
+            val insertedAmount = to.insert(insertionStack.toVariant(), insertionStack.platformAmount.toLong(), it)
 
             val remainCount = insertionStack.platformAmount - insertedAmount
             if (remainCount > 0) {
                 from.storeFluid(insertionStack.copyWithCount(remainCount / PlatformToolkit.get().fluidCompactDivider))
             }
             it.commit()
-            return insertedAmount / PlatformToolkit.get().fluidCompactDivider
+            return insertedAmount / PlatformToolkit.get().fluidCompactDivider.toDouble()
         }
     }
 

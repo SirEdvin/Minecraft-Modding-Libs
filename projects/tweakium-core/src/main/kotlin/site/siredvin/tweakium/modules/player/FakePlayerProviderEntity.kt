@@ -1,6 +1,7 @@
 package site.siredvin.tweakium.modules.player
 
-import com.mojang.authlib.GameProfile
+import com.google.common.cache.CacheBuilder
+import com.google.common.cache.CacheLoader
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
@@ -16,20 +17,14 @@ import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.function.Function
 
 object FakePlayerProviderEntity {
-    private val registeredPlayers: WeakHashMap<Entity, FakePlayerProxy> =
-        WeakHashMap<Entity, FakePlayerProxy>()
+    private val registeredPlayers = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).weakKeys()
+        .maximumSize(3_000).build(CacheLoader.from(::buildPlayer))
 
-    private fun getPlayer(entity: Entity, profile: GameProfile): FakePlayerProxy {
-        var fake: FakePlayerProxy? = registeredPlayers[entity]
-        if (fake == null) {
-            fake = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(entity.level() as ServerLevel, profile))
-            registeredPlayers[entity] = fake
-        }
-        return fake
-    }
+    private fun buildPlayer(pair: Pair<Entity, ServerPlayer>): FakePlayerProxy = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(pair.first.level() as ServerLevel, pair.second.gameProfile))
 
     private fun load(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticItemStorage?, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
         val direction = overwrittenDirection ?: realPlayer.direction
@@ -128,8 +123,7 @@ object FakePlayerProviderEntity {
     }
 
     fun <T> withPlayer(entity: Entity, realPlayer: ServerPlayer, function: Function<FakePlayerProxy, T>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
-        val player: FakePlayerProxy =
-            getPlayer(entity, realPlayer.gameProfile)
+        val player: FakePlayerProxy = registeredPlayers.get(Pair(entity, realPlayer))
         val storage = AgnosticItemStorageLookup.extractStorage(entity.level(), entity) as? SlottedAgnosticItemStorage
         if (!skipInventory && storage == null) {
             throw IllegalArgumentException("Cannot init fake player with storage and with block entity without storage")

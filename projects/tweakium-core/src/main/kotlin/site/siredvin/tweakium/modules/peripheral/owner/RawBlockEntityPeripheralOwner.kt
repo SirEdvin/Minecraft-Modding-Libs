@@ -35,6 +35,8 @@ open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProper
             return Direction.NORTH
         }
 
+    override val ownerUUID: UUID?
+        get() = (blockEntity as? IOwnedBlockEntity)?.ownerPlayerUUID
     override val owner: Player?
         get() = (blockEntity as? IOwnedBlockEntity)?.player
 

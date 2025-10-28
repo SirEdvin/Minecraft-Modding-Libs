@@ -5,7 +5,7 @@ import site.siredvin.broccolium.modules.storage.fluid.FluidStorageUtils
 import java.util.function.Predicate
 
 interface AgnosticFluidSink {
-    fun moveFrom(from: AgnosticFluidStorage, limit: Long, takePredicate: Predicate<AgnosticFluidStack>): Long {
+    fun moveFrom(from: AgnosticFluidStorage, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         if (movableType != null) {
             throw IllegalStateException("With movable type you should redefine this function")
         }
