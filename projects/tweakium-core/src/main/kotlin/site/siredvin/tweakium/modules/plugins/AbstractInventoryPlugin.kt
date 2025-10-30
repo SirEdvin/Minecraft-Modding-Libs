@@ -55,12 +55,8 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
         // Find location to transfer to
         val location =
             computer.getAvailablePeripheral(fromName) ?: throw LuaException("Source '$fromName' does not exist")
-        val fromStorage = AgnosticItemStorageLookup.extractItemSinkFromUnknown(level, location.target)
+        val fromStorage = AgnosticItemStorageLookup.extractStorageFromUnknown(level, location.target)
             ?: throw LuaException("Source '$fromName' is not an inventory")
-
-        if (fromStorage !is SlottedAgnosticItemStorage) {
-            throw LuaException("Source '$fromName' is not slotted storage")
-        }
 
         // Validate slots
         val actualLimit = limit.orElse(Int.MAX_VALUE)
@@ -68,12 +64,15 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
             return 0
         }
         if (fromSlot is Number) {
+            if (fromStorage !is SlottedAgnosticItemStorage) {
+                throw LuaException("Source '$fromName' is not slotted storage")
+            }
             assertBetween(fromSlot.toInt(), 1, fromStorage.size, "fromSlot")
             return storage.moveFrom(fromStorage, actualLimit, toSlot.orElse(0) - 1, fromSlot.toInt() - 1, ItemStorageUtils.ALWAYS)
         }
         if (toSlot.isPresent) {
             assertBetween(toSlot.get(), 1, storage.size, "toSlot")
         }
-        return storage.moveFrom(fromStorage, actualLimit, toSlot.orElse(0) - 1, 0, PeripheralPluginUtils.itemQueryToPredicate(fromSlot))
+        return storage.moveFrom(fromStorage, actualLimit, takePredicate = PeripheralPluginUtils.itemQueryToPredicate(fromSlot))
     }
 }
