@@ -62,6 +62,7 @@ object ContainerUtils {
                 }
                 if (slidingStack.count <= maxStackSize) {
                     container.setItem(currentSlot, slidingStack)
+                    container.setChanged()
                     return ItemStack.EMPTY
                 } else {
                     container.setItem(currentSlot, slidingStack.split(maxStackSize))
