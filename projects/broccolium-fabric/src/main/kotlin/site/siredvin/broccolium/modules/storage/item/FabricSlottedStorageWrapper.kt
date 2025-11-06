@@ -15,6 +15,10 @@ import java.util.function.Predicate
 
 class FabricSlottedStorageWrapper(internal val storage: SlottedStorage<ItemVariant>) : SlottedAgnosticItemStorage {
 
+    override val maxStackSize: Int by lazy {
+        storage.slots.map { it.capacity }.min().toInt()
+    }
+
     override fun moveTo(
         to: AgnosticItemSink,
         limit: Int,

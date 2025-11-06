@@ -9,6 +9,9 @@ class DummyStorage(private val maxSlots: Int, initialItems: List<ItemStack>) : A
 
     val items: MutableList<ItemStack> = mutableListOf()
 
+    override val maxStackSize: Int
+        get() = 64
+
     init {
         if (initialItems.size > maxSlots) {
             throw IllegalArgumentException("Max slots is too low for you?")

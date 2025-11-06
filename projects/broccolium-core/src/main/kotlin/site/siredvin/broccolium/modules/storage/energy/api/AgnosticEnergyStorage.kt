@@ -10,6 +10,8 @@ interface AgnosticEnergyStorage : AgnosticEnergySink {
     fun takeEnergy(predicate: Predicate<AgnosticEnergyStack>, limit: Long): AgnosticEnergyStack
 
     val canExtract: Boolean
+    val extractRateLimit: Long
+        get() = Long.MAX_VALUE
 
     fun moveTo(to: AgnosticEnergySink, limit: Long, takePredicate: Predicate<AgnosticEnergyStack>): Long {
         if (movableType != null) {

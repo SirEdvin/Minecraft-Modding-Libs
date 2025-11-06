@@ -21,4 +21,7 @@ class ContainerWrapper(private val container: Container) : SlottedAgnosticItemSt
 
     override val size: Int
         get() = container.containerSize
+
+    override val maxStackSize: Int
+        get() = container.maxStackSize
 }

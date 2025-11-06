@@ -8,4 +8,7 @@ class VoidItemSink : AgnosticItemSink {
 
     override fun setChanged() {
     }
+
+    override val maxStackSize: Int
+        get() = 64
 }

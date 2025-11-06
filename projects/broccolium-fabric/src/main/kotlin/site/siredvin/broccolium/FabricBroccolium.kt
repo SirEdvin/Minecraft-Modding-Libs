@@ -14,9 +14,9 @@ object FabricBroccolium : ModInitializer {
     init {
         BroccoliumCore.configure(FabricPlatformToolkit, FabricPlatformTags, FabricPlatformIngredients)
         // Register extract storages
-        AgnosticItemStorageLookup.addItemStorageExtractor(FabricStorageUtils::extractStorage)
-        AgnosticFluidStorageLookup.addFluidStorageExtractor(FabricStorageUtils::extractFluidStorage)
-        AgnosticFluidStorageLookup.addFluidStorageExtractor(FabricStorageUtils::extractFluidStorageFromItem)
+        AgnosticItemStorageLookup.addBlockLookup(FabricStorageUtils::extractStorage)
+        AgnosticFluidStorageLookup.addBlockLookup(FabricStorageUtils::extractFluidStorage)
+        AgnosticFluidStorageLookup.addInventoryItemLookup(FabricStorageUtils::extractFluidStorageFromItem)
         ServerWorldEvents.LOAD.register(
             ServerWorldEvents.Load { server, _ ->
                 FabricPlatformToolkit.minecraftServer = server

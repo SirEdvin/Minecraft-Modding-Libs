@@ -29,6 +29,7 @@ interface AgnosticItemSink {
     fun storeItem(stack: ItemStack): ItemStack
     fun setChanged()
 
+    val maxStackSize: Int
     val movableType: String?
         get() = null
 }

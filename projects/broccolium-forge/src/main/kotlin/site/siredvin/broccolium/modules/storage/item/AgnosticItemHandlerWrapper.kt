@@ -5,6 +5,7 @@ import net.minecraftforge.items.IItemHandler
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import java.util.function.Predicate
+import kotlin.math.min
 
 class AgnosticItemHandlerWrapper(private val handler: IItemHandler) : SlottedAgnosticItemStorage {
     override fun takeItems(limit: Int, startSlot: Int, endSlot: Int, predicate: Predicate<ItemStack>): ItemStack {
@@ -64,4 +65,12 @@ class AgnosticItemHandlerWrapper(private val handler: IItemHandler) : SlottedAgn
 
     override val size: Int
         get() = handler.slots
+
+    override val maxStackSize: Int by lazy {
+        var slidingLimit = Int.MAX_VALUE
+        for (i in 0..handler.slots) {
+            slidingLimit = min(slidingLimit, handler.getSlotLimit(i))
+        }
+        return@lazy slidingLimit
+    }
 }

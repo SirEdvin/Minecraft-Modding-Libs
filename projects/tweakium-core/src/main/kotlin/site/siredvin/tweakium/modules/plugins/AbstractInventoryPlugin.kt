@@ -4,10 +4,12 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemSinkLookup
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemSink
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.tweakium.modules.peripheral.api.ISidedPeripheral
 import site.siredvin.tweakium.modules.peripheral.util.assertBetween
 import java.util.*
 
@@ -26,7 +28,9 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
         val location: IPeripheral = computer.getAvailablePeripheral(toName)
             ?: throw LuaException("Target '$toName' does not exist")
 
-        val toStorage = AgnosticItemStorageLookup.extractItemSinkFromUnknown(level, location.target)
+        val direction = if (location is ISidedPeripheral) location.side else null
+
+        val toStorage = AgnosticItemSinkLookup.extractFromUnknown(level, location.target, direction)
             ?: throw LuaException("Target '$toName' is not an inventory")
 
         // Validate slots
@@ -55,7 +59,9 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
         // Find location to transfer to
         val location =
             computer.getAvailablePeripheral(fromName) ?: throw LuaException("Source '$fromName' does not exist")
-        val fromStorage = AgnosticItemStorageLookup.extractStorageFromUnknown(level, location.target)
+
+        val direction = if (location is ISidedPeripheral) location.side else null
+        val fromStorage = AgnosticItemStorageLookup.extractFromUnknown(level, location.target, direction)
             ?: throw LuaException("Source '$fromName' is not an inventory")
 
         // Validate slots

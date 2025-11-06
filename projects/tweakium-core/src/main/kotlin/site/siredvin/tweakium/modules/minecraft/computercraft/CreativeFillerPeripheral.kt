@@ -6,14 +6,15 @@ import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.peripheral.IComputerAccess
 import net.minecraft.resources.ResourceLocation
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergySinkLookup
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
-import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStorageLookup
 import site.siredvin.broccolium.modules.storage.energy.EnergyRegistry
+import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidSinkLookup
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
-import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStorageLookup
-import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemSinkLookup
 import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralOwner
+import site.siredvin.tweakium.modules.peripheral.api.ISidedPeripheral
 
 class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPeripheralOwner>(TYPE, owner) {
     override val isEnabled: Boolean
@@ -42,7 +43,8 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
         ) {
             val location =
                 access.getAvailablePeripheral(target) ?: throw LuaException("Target '$target' does not exist")
-            val storage = AgnosticItemStorageLookup.extractItemSinkFromUnknown(owner.level!!, location.target)
+            val direction = if (location is ISidedPeripheral) location.side else null
+            val storage = AgnosticItemSinkLookup.extractFromUnknown(owner.level!!, location.target, direction)
                 ?: throw LuaException("Source '$target' is not an inventory")
             val item = PlatformRegistries.ITEMS.tryGet(ResourceLocation(id)) ?: throw LuaException("There is no item $id")
             @Suppress("DEPRECATION")
@@ -60,7 +62,8 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
         ) {
             val location =
                 access.getAvailablePeripheral(target) ?: throw LuaException("Target '$target' does not exist")
-            val storage = AgnosticFluidStorageLookup.extractFluidSinkFromUnknown(owner.level!!, location.target)
+            val direction = if (location is ISidedPeripheral) location.side else null
+            val storage = AgnosticFluidSinkLookup.extractFromUnknown(owner.level!!, location.target, direction)
                 ?: throw LuaException("Source '$target' is not an inventory")
             val fluid = PlatformRegistries.FLUIDS.tryGet(ResourceLocation(id)) ?: throw LuaException("There is no fluid $id")
             storage.storeFluid(AgnosticFluidStack(fluid, limit.toDouble()))
@@ -77,7 +80,8 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
         ) {
             val location =
                 access.getAvailablePeripheral(target) ?: throw LuaException("Target '$target' does not exist")
-            val storage = AgnosticEnergyStorageLookup.extractEnergySinkFromUnknown(owner.level!!, location.target)
+            val direction = if (location is ISidedPeripheral) location.side else null
+            val storage = AgnosticEnergySinkLookup.extractFromUnknown(owner.level!!, location.target, direction)
                 ?: throw LuaException("Source '$target' is not an inventory")
             val energy = EnergyRegistry.ENERGIES.get(id) ?: throw LuaException("There is no energy $id")
             storage.storeEnergy(AgnosticEnergyStack(energy, limit.toLong()))

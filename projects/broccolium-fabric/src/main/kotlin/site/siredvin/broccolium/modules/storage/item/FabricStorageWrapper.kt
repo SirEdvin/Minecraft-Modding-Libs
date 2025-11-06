@@ -14,6 +14,10 @@ import net.fabricmc.fabric.api.transfer.v1.storage.Storage as FabricStorage
 
 open class FabricStorageWrapper(internal val storage: FabricStorage<ItemVariant>) : AgnosticItemStorage {
 
+    override val maxStackSize: Int by lazy {
+        storage.nonEmptyViews().map { it.capacity }.min().toInt()
+    }
+
     override fun moveTo(to: AgnosticItemSink, limit: Int, toSlot: Int, takePredicate: Predicate<ItemStack>): Int {
         if (to is FabricSlottedStorageWrapper) {
             return to.moveFrom(this, limit, toSlot, -1, takePredicate)

@@ -45,7 +45,7 @@ open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProper
     }
 
     override val storage: SlottedAgnosticItemStorage? by lazy {
-        AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity) as? SlottedAgnosticItemStorage
+        AgnosticItemStorageLookup.extractFromBlock(blockEntity.level!!, blockEntity.blockPos, blockEntity, null) as? SlottedAgnosticItemStorage
     }
 
     override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T {

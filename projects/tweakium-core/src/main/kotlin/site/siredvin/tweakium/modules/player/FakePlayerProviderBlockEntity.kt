@@ -131,7 +131,7 @@ object FakePlayerProviderBlockEntity {
         val realPlayer = blockEntity.player
             ?: throw LuaException("Cannot init player for this block entity computer for some reason")
         val player: FakePlayerProxy = registeredPlayers.get(blockEntity)
-        val storage = AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity = null) as? SlottedAgnosticItemStorage
+        val storage = AgnosticItemStorageLookup.extractFromBlock(blockEntity.level!!, blockEntity.blockPos, blockEntity = blockEntity, null) as? SlottedAgnosticItemStorage
         if (!skipInventory && storage == null) {
             throw IllegalArgumentException("Cannot init fake player with storage and with block entity without storage")
         }

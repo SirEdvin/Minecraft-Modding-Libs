@@ -33,7 +33,7 @@ open class EntityProxyPeripheralOwner<T>(protected val blockEntity: T, protected
     override val dataStorage: IDataStorage
         get() = DataStorageUtil.getDataStorage(blockEntity)
     override val storage: SlottedAgnosticItemStorage? by lazy {
-        AgnosticItemStorageLookup.extractStorage(entity.level(), entity) as? SlottedAgnosticItemStorage
+        AgnosticItemStorageLookup.extractFromEntity(entity.level(), entity, null) as? SlottedAgnosticItemStorage
     }
 
     override fun <T> withPlayer(

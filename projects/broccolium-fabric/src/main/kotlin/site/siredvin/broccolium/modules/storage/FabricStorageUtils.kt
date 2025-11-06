@@ -6,8 +6,10 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -21,6 +23,7 @@ import site.siredvin.broccolium.modules.storage.fluid.toVanilla
 import site.siredvin.broccolium.modules.storage.fluid.toVariant
 import site.siredvin.broccolium.modules.storage.item.FabricSlottedStorageWrapper
 import site.siredvin.broccolium.modules.storage.item.FabricStorageWrapper
+import site.siredvin.broccolium.modules.storage.item.SlottedAgnosticItemStorageWrapper
 import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSink
 import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemSink
@@ -155,8 +158,22 @@ object FabricStorageUtils {
         }
     }
 
-    fun extractStorage(level: Level, pos: BlockPos, @Suppress("UNUSED_PARAMETER") blockEntity: BlockEntity?): AgnosticItemStorage? {
-        val itemStorage = ItemStorage.SIDED.find(level, pos, null) ?: return null
+    fun getSlot(storage: SlottedAgnosticItemStorage, slot: Int): SingleSlotStorage<ItemVariant> {
+        if (storage is FabricSlottedStorageWrapper) {
+            return storage.storage.getSlot(slot)
+        }
+        return SlottedAgnosticItemStorageWrapper.of(storage).getSlot(slot)
+    }
+
+    fun extractStorage(level: Level, pos: BlockPos, @Suppress("UNUSED_PARAMETER") blockEntity: BlockEntity?, direction: Direction?): AgnosticItemStorage? {
+        var itemStorage = ItemStorage.SIDED.find(level, pos, null)
+        if (itemStorage == null) {
+            if (direction != null) {
+                itemStorage = ItemStorage.SIDED.find(level, pos, direction) ?: return null
+            } else {
+                return null
+            }
+        }
 
         return if (itemStorage is net.fabricmc.fabric.api.transfer.v1.storage.SlottedStorage) {
             FabricSlottedStorageWrapper(itemStorage)
@@ -165,13 +182,20 @@ object FabricStorageUtils {
         }
     }
 
-    fun extractFluidStorage(level: Level, pos: BlockPos, @Suppress("UNUSED_PARAMETER") blockEntity: BlockEntity?): AgnosticFluidStorage? {
-        val fluidStorage = FluidStorage.SIDED.find(level, pos, null) ?: return null
+    fun extractFluidStorage(level: Level, pos: BlockPos, @Suppress("UNUSED_PARAMETER") blockEntity: BlockEntity?, direction: Direction?): AgnosticFluidStorage? {
+        var fluidStorage = FluidStorage.SIDED.find(level, pos, null)
+        if (fluidStorage == null) {
+            if (direction != null) {
+                fluidStorage = FluidStorage.SIDED.find(level, pos, direction) ?: return null
+            } else {
+                return null
+            }
+        }
         return FabricAgnosticFluidStorage(fluidStorage)
     }
 
-    fun extractFluidStorageFromItem(@Suppress("UNUSED_PARAMETER") level: Level, stack: ItemStack): AgnosticFluidStorage? {
-        val fluidStorage = FluidStorage.ITEM.find(stack, ContainerItemContext.withConstant(stack)) ?: return null
+    fun extractFluidStorageFromItem(@Suppress("UNUSED_PARAMETER") level: Level, origin: SlottedAgnosticItemStorage, slot: Int): AgnosticFluidStorage? {
+        val fluidStorage = FluidStorage.ITEM.find(origin.getItem(slot), ContainerItemContext.ofSingleSlot(getSlot(origin, slot))) ?: return null
         return FabricAgnosticFluidStorage(fluidStorage)
     }
 }

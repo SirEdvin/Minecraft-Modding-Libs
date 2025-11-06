@@ -119,7 +119,7 @@ object FakePlayerProviderEntity {
 
     fun <T> withPlayer(entity: Entity, realPlayer: ServerPlayer, function: Function<FakePlayerProxy, T>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
         val player: FakePlayerProxy = registeredPlayers.get(Pair(entity, realPlayer))
-        val storage = AgnosticItemStorageLookup.extractStorage(entity.level(), entity) as? SlottedAgnosticItemStorage
+        val storage = AgnosticItemStorageLookup.extractFromEntity(entity.level(), entity, null) as? SlottedAgnosticItemStorage
         if (!skipInventory && storage == null) {
             throw IllegalArgumentException("Cannot init fake player with storage and with block entity without storage")
         }

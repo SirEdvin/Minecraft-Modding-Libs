@@ -3,7 +3,6 @@ package site.siredvin.tweakium
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStorageLookup
-import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorageExtractor
 import site.siredvin.tweakium.modules.minecraft.xplat.TweakiumPlatform
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import site.siredvin.tweakium.modules.platform.api.InnerComputerBasePlatform
@@ -18,15 +17,13 @@ object TweakiumCore {
     fun configure(computerPlatform: InnerComputerPlatformToolkit, basePlatform: InnerComputerBasePlatform) {
         ComputerPlatformToolkit.configure(computerPlatform)
         TweakiumPlatform.configure(basePlatform)
-        AgnosticEnergyStorageLookup.addEnergyStorageExtractor(
-            AgnosticEnergyStorageExtractor { _, _, blockEntity ->
-                if (blockEntity != null) {
-                    val turtle = ComputerPlatformToolkit.get().getTurtleAccess(blockEntity)
-                    if (turtle != null) return@AgnosticEnergyStorageExtractor TurtleAgnosticEnergyStorage(turtle)
-                }
-                return@AgnosticEnergyStorageExtractor null
-            },
-        )
+        AgnosticEnergyStorageLookup.addBlockLookup { _, _, blockEntity, _ ->
+            if (blockEntity != null) {
+                val turtle = ComputerPlatformToolkit.get().getTurtleAccess(blockEntity)
+                if (turtle != null) return@addBlockLookup TurtleAgnosticEnergyStorage(turtle)
+            }
+            return@addBlockLookup null
+        }
         ComputerPlatformToolkit.get().registerGenericPeripheralLookup()
     }
 }

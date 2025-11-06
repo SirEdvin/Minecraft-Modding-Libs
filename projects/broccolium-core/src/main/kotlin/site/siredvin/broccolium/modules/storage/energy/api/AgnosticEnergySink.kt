@@ -19,6 +19,8 @@ interface AgnosticEnergySink {
     fun setChanged()
 
     val canReceive: Boolean
+    val receiveRateLimit: Long
+        get() = Long.MAX_VALUE
     val unit: EnergyUnit
 
     val movableType: String?
