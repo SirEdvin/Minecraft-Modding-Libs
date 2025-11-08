@@ -23,6 +23,7 @@ fabric-loader = "0.16.10"
 fabric-kotlin = "1.11.0+kotlin.2.0.0"
 forgeconfigapirt = "8.0.0"
 modmenu = "7.2.1"
+teamreborn-energy = "3.0.0"
 
 # Forge dependencies
 forge = "47.1.0"
@@ -71,6 +72,7 @@ fabric-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", v
 cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric-api", version.ref = "cc-tweaked"}
 cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric", version.ref = "cc-tweaked"}
 modmenu = {module = "com.terraformersmc:modmenu", version.ref="modmenu"}
+teamreborn-energy = {module = "teamreborn:energy", version.ref = "teamreborn-energy"}
 
 # Forge mod dependencies
 cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref="cc-tweaked"}
@@ -105,6 +107,7 @@ apicommon = []
 ccfabric-api = ["cc-tweaked-fabric-api", "cc-tweaked-core"]
 ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core"]
 fabric-core = ["fabric-loader"]
+fabric-api = ["teamreborn-energy"]
 fabric = ["fabric-api", "fabric-kotlin", "fabric-config"]
 forge-raw = ["forge-kotlin"]
 forge-base = []

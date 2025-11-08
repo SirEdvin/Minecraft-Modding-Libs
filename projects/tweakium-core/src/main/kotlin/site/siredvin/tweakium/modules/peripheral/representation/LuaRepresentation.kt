@@ -36,7 +36,12 @@ object LuaRepresentation {
         val data: MutableMap<String, Any> = HashMap()
         data["name"] = PlatformRegistries.BLOCKS.getKey(state.block).toString()
         data["displayName"] = state.block.name.string
-        data["tags"] = tagsToList(state.tags)
+        val properties = mutableMapOf<String, String>()
+        state.values.entries.forEach {
+            properties[it.key.name] = it.value.toString()
+        }
+        data["state"] = properties
+        data["tags"] = tagsToMap(state.tags)
         return data
     }
 
@@ -156,6 +161,13 @@ object LuaRepresentation {
     }
 
     fun <T> tagsToList(tags: Stream<TagKey<T>>): List<String> = tags.map { key -> key.location.toString() }.collect(Collectors.toList())
+
+    fun <T> tagsToMap(tags: Stream<TagKey<T>>): Map<String, Boolean> = tags.map { key -> key.location.toString() }.collect(
+        Collectors.toMap(
+            { it },
+            { true },
+        ),
+    )
 
     fun forMerchantOffers(merchant: Merchant): Map<Int, Map<String, Any>> {
         val offers = mutableMapOf<Int, Map<String, Any>>()

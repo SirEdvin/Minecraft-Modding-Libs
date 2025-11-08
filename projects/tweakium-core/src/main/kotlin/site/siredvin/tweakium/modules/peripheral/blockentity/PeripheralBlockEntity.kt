@@ -77,7 +77,7 @@ abstract class PeripheralBlockEntity<T : IOwnedPeripheral<*>>(
     }
 
     companion object {
-        private const val PERIPHERAL_DATA_TAG = "peripheralData"
-        private const val OWNER_PROFILE_TAG = "ownerProfile"
+        const val PERIPHERAL_DATA_TAG = "peripheralData"
+        const val OWNER_PROFILE_TAG = "ownerProfile"
     }
 }

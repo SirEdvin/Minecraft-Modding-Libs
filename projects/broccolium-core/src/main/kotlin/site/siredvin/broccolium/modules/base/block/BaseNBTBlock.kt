@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
+import site.siredvin.broccolium.modules.base.api.ISavableBlockEntity
 import site.siredvin.broccolium.modules.base.api.ISyncingBlockEntity
 import site.siredvin.broccolium.modules.base.util.BlockUtil
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
@@ -18,14 +19,19 @@ import site.siredvin.broccolium.modules.platform.PlatformRegistries
 abstract class BaseNBTBlock<T>(
     belongToTickingEntity: Boolean,
     properties: Properties = BlockUtil.defaultProperties(),
-) : BaseBlockEntityBlock<T>(belongToTickingEntity, properties) where T : BlockEntity, T : ISyncingBlockEntity {
+) : BaseBlockEntityBlock<T>(belongToTickingEntity, properties) where T : BlockEntity, T : ISavableBlockEntity {
     abstract fun createItemStack(): ItemStack
 
-    open fun prepareItemStack(blockEntity: ISyncingBlockEntity, state: BlockState): ItemStack {
+    open val savableProperties: List<Property<*>>
+        get() = emptyList()
+    open val internalDataTag: String
+        get() = INTERNAL_DATA_TAG
+
+    open fun prepareItemStack(blockEntity: ISavableBlockEntity, state: BlockState): ItemStack {
         val stack: ItemStack = createItemStack()
-        val internalData = blockEntity.saveInternalData(CompoundTag())
+        val internalData = blockEntity.saveSavableData(CompoundTag())
         if (!internalData.isEmpty) {
-            stack.addTagElement(INTERNAL_DATA_TAG, internalData)
+            stack.addTagElement(internalDataTag, internalData)
         }
         val savableProperties: List<Property<*>> = savableProperties
         if (savableProperties.isNotEmpty() && !defaultBlockState().equals(state)) {
@@ -34,12 +40,9 @@ abstract class BaseNBTBlock<T>(
         return stack
     }
 
-    open val savableProperties: List<Property<*>>
-        get() = emptyList()
-
     override fun playerWillDestroy(level: Level, pos: BlockPos, state: BlockState, player: Player) {
         val blockEntity = level.getBlockEntity(pos)
-        if (blockEntity is ISyncingBlockEntity) {
+        if (blockEntity is ISavableBlockEntity) {
             if (!level.isClientSide && !player.isCreative) {
                 val stack = prepareItemStack(blockEntity, state)
                 val itemDrop = ItemEntity(
@@ -61,7 +64,7 @@ abstract class BaseNBTBlock<T>(
         var state = initialState
         super.setPlacedBy(level, pos, state, entity, stack)
         val blockEntity = level.getBlockEntity(pos)
-        if (blockEntity is ISyncingBlockEntity) {
+        if (blockEntity is ISavableBlockEntity) {
             if (!level.isClientSide) {
                 val data = stack.tag
                 if (data != null) {
@@ -78,9 +81,11 @@ abstract class BaseNBTBlock<T>(
                             state = state.setValue(property, savedState.getValue(property) as Comparable<Any>)
                         }
                     }
-                    if (data.contains(INTERNAL_DATA_TAG)) {
-                        state = blockEntity.loadInternalData(data.getCompound(INTERNAL_DATA_TAG), state)
-                        blockEntity.pushInternalDataChangeToClient(state)
+                    if (data.contains(internalDataTag)) {
+                        state = blockEntity.loadSavableData(data.getCompound(internalDataTag), state)
+                        if (blockEntity is ISyncingBlockEntity) {
+                            blockEntity.pushInternalDataChangeToClient(state)
+                        }
                     }
                 }
             }

@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.world.phys.Vec3
 import site.siredvin.broccolium.modules.base.ext.fromRelative
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
 
@@ -37,6 +38,41 @@ object LuaInterpretation {
     fun asBlockPos(center: BlockPos, table: Map<*, *>, facing: Direction): BlockPos {
         val relative = asBlockPos(table).fromRelative(facing)
         return BlockPos(center.x + relative.x, center.y + relative.y, center.z + relative.z)
+    }
+
+    // Vec3 tricks
+    @Throws(LuaException::class)
+    fun asVec3(table: Map<*, *>): Vec3 {
+        if (!table.containsKey("x") || !table.containsKey("y") || !table.containsKey("z")) throw LuaException("Table should be block position table")
+        val x = table["x"]
+        val y = table["y"]
+        val z = table["z"]
+        if (x !is Number || y !is Number || z !is Number) throw LuaException("Table should be block position table")
+        return Vec3(x.toDouble(), y.toDouble(), z.toDouble())
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: Vec3, table: Map<*, *>): Vec3 {
+        val relative = asVec3(table)
+        return Vec3(center.x + relative.x, center.y + relative.y, center.z + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: BlockPos, table: Map<*, *>): Vec3 {
+        val relative = asVec3(table)
+        return Vec3(center.x.toDouble() + relative.x, center.y.toDouble() + relative.y, center.z.toDouble() + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: BlockPos, table: Map<*, *>, facing: Direction): Vec3 {
+        val relative = asVec3(table).fromRelative(facing)
+        return Vec3(center.x.toDouble() + relative.x, center.y.toDouble() + relative.y, center.z.toDouble() + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: Vec3, table: Map<*, *>, facing: Direction): Vec3 {
+        val relative = asVec3(table).fromRelative(facing)
+        return Vec3(center.x + relative.x, center.y + relative.y, center.z + relative.z)
     }
 
     @Throws(LuaException::class)
