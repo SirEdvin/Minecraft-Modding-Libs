@@ -24,68 +24,68 @@ abstract class EnergyStorageTests {
     fun testMoveTo() {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, true)
         val to = createStorage(AgnosticEnergyStack(defaultUnits, 500), 1000, false)
-        val moved = from.moveTo(to, 1000, EnergyStorageUtils.ALWAYS)
+        val moved = from.moveTo(to, 1000, -1, EnergyStorageUtils.ALWAYS)
         assertEquals(500, moved)
-        assertEquals(500, from.energy.amount)
-        assertEquals(1000, to.energy.amount)
+        assertEquals(500, from.firstEnergy.amount)
+        assertEquals(1000, to.firstEnergy.amount)
     }
 
     @Test
     fun testMoveToFailed() {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, true)
         val to = createStorage(AgnosticEnergyStack(DUMMY_ENERGY, 500), 1000, false)
-        val moved = from.moveTo(to, 1000, EnergyStorageUtils.ALWAYS)
+        val moved = from.moveTo(to, 1000, -1, EnergyStorageUtils.ALWAYS)
         assertEquals(0, moved)
-        assertEquals(1000, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(500, to.energy.amount)
-        assertEquals(DUMMY_ENERGY, to.energy.unit)
+        assertEquals(1000, from.firstEnergy.amount)
+        assertEquals(defaultUnits, from.firstEnergy.unit)
+        assertEquals(500, to.firstEnergy.amount)
+        assertEquals(DUMMY_ENERGY, to.firstEnergy.unit)
     }
 
     @Test
     fun testMoveToEmpty() {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, true)
         val to = createStorage(AgnosticEnergyStack(defaultUnits, 0), 1000, false)
-        val moved = from.moveTo(to, 1000, EnergyStorageUtils.ALWAYS)
+        val moved = from.moveTo(to, 1000, -1, EnergyStorageUtils.ALWAYS)
         assertEquals(1000, moved)
-        assertEquals(0, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(1000, to.energy.amount)
-        assertEquals(defaultUnits, to.energy.unit)
+        assertEquals(0, from.firstEnergy.amount)
+        assertEquals(defaultUnits, from.firstEnergy.unit)
+        assertEquals(1000, to.firstEnergy.amount)
+        assertEquals(defaultUnits, to.firstEnergy.unit)
     }
 
     @Test
     fun testMoveFrom() {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, false)
         val to = createStorage(AgnosticEnergyStack(defaultUnits, 500), 1000, true)
-        val moved = to.moveFrom(from, 1000, EnergyStorageUtils.ALWAYS)
+        val moved = to.moveFrom(from, 1000, -1, EnergyStorageUtils.ALWAYS)
         assertEquals(500, moved)
-        assertEquals(500, from.energy.amount)
-        assertEquals(1000, to.energy.amount)
+        assertEquals(500, from.firstEnergy.amount)
+        assertEquals(1000, to.firstEnergy.amount)
     }
 
     @Test
     fun testMoveFromFailed() {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, false)
         val to = createStorage(AgnosticEnergyStack(DUMMY_ENERGY, 500), 1000, true)
-        val moved = to.moveFrom(from, 1000, EnergyStorageUtils.ALWAYS)
+        val moved = to.moveFrom(from, 1000, -1, EnergyStorageUtils.ALWAYS)
         assertEquals(0, moved)
-        assertEquals(1000, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(500, to.energy.amount)
-        assertEquals(DUMMY_ENERGY, to.energy.unit)
+        assertEquals(1000, from.firstEnergy.amount)
+        assertEquals(defaultUnits, from.firstEnergy.unit)
+        assertEquals(500, to.firstEnergy.amount)
+        assertEquals(DUMMY_ENERGY, to.firstEnergy.unit)
     }
 
     @Test
     fun testMoveFromEmpty() {
         val from = createStorage(AgnosticEnergyStack(defaultUnits, 1000), 1000, false)
         val to = createStorage(AgnosticEnergyStack(defaultUnits, 0), 1000, true)
-        val moved = to.moveFrom(from, 1000, EnergyStorageUtils.ALWAYS)
+        val moved = to.moveFrom(from, 1000, -1, EnergyStorageUtils.ALWAYS)
         assertEquals(1000, moved)
-        assertEquals(0, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(1000, to.energy.amount)
-        assertEquals(defaultUnits, to.energy.unit)
+        assertEquals(0, from.firstEnergy.amount)
+        assertEquals(defaultUnits, from.firstEnergy.unit)
+        assertEquals(1000, to.firstEnergy.amount)
+        assertEquals(defaultUnits, to.firstEnergy.unit)
     }
 
     @Test
@@ -97,10 +97,10 @@ abstract class EnergyStorageTests {
         }
         val movedAmount = from.moveTo(to, 1000, takePredicate = predicate)
         assertEquals(1000, movedAmount)
-        assertEquals(0, from.energy.amount)
-        assertEquals(defaultUnits, from.energy.unit)
-        assertEquals(1000, to.energy.amount)
-        assertEquals(defaultUnits, to.energy.unit)
+        assertEquals(0, from.firstEnergy.amount)
+        assertEquals(defaultUnits, from.firstEnergy.unit)
+        assertEquals(1000, to.firstEnergy.amount)
+        assertEquals(defaultUnits, to.firstEnergy.unit)
     }
 
     @Test
@@ -112,9 +112,9 @@ abstract class EnergyStorageTests {
         }
         val movedAmount = from.moveTo(to, 1000, takePredicate = predicate)
         assertEquals(0, movedAmount)
-        assertEquals(1000, from.energy.amount)
-        assertEquals(DUMMY_ENERGY, from.energy.unit)
-        assertEquals(0, to.energy.amount)
-        assertEquals(defaultUnits, to.energy.unit)
+        assertEquals(1000, from.firstEnergy.amount)
+        assertEquals(DUMMY_ENERGY, from.firstEnergy.unit)
+        assertEquals(0, to.firstEnergy.amount)
+        assertEquals(defaultUnits, to.firstEnergy.unit)
     }
 }

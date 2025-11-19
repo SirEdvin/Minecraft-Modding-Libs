@@ -7,15 +7,17 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.vehicle.AbstractMinecartContainer
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.ChestBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.ChestBlockEntity
 import site.siredvin.broccolium.modules.lookup.BaseLookup
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.api.*
 
-object AgnosticItemStorageLookup : BaseLookup<AgnosticItemStorage>() {
-    override fun extractFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticItemStorage? {
+object AgnosticItemStorageLookup : BaseLookup<AgnosticStorage<ItemStack, Int>>() {
+    override fun extractFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticStorage<ItemStack, Int>? {
         val result = super.extractFromEntity(level, entity, direction)
         if (result != null) {
             return result
@@ -53,7 +55,7 @@ object AgnosticItemStorageLookup : BaseLookup<AgnosticItemStorage>() {
         pos: BlockPos,
         blockEntity: BlockEntity?,
         direction: Direction?,
-    ): AgnosticItemStorage? {
+    ): AgnosticStorage<ItemStack, Int>? {
         if (blockEntity is AgnosticItemStorageProvider) {
             return blockEntity.itemStorage
         }

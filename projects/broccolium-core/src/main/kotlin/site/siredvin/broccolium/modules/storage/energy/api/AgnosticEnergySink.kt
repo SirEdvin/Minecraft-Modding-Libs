@@ -1,28 +1,10 @@
 package site.siredvin.broccolium.modules.storage.energy.api
 
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticSink
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
-import site.siredvin.broccolium.modules.storage.energy.EnergyStorageUtils
-import site.siredvin.broccolium.modules.storage.energy.EnergyUnit
-import java.util.function.Predicate
 
-interface AgnosticEnergySink {
-    fun moveFrom(from: AgnosticEnergyStorage, limit: Long, takePredicate: Predicate<AgnosticEnergyStack>): Long {
-        if (movableType != null) {
-            throw IllegalStateException("With movable type you should redefine this function")
-        }
-        if (from.movableType == null) {
-            return EnergyStorageUtils.naiveMove(from, this, limit, takePredicate)
-        }
-        return from.moveTo(this, limit, takePredicate)
-    }
-    fun storeEnergy(stack: AgnosticEnergyStack): AgnosticEnergyStack
-    fun setChanged()
-
+interface AgnosticEnergySink : AgnosticSink<AgnosticEnergyStack, Long> {
     val canReceive: Boolean
     val receiveRateLimit: Long
         get() = Long.MAX_VALUE
-    val unit: EnergyUnit
-
-    val movableType: String?
-        get() = null
 }

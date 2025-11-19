@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraftforge.common.capabilities.ForgeCapabilities
@@ -13,13 +14,13 @@ import net.minecraftforge.energy.IEnergyStorage
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.wrapper.InvWrapper
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyHandlerWrapper
 import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
 import site.siredvin.broccolium.modules.storage.fluid.ForgeAgnosticFluidStorage
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemHandlerWrapper
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 
 object ForgeStorageUtils {
     private fun extractEnergyStorage(something: Any?, direction: Direction?): IEnergyStorage? {
@@ -61,7 +62,7 @@ object ForgeStorageUtils {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun extractStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?, direction: Direction?): SlottedAgnosticItemStorage? {
+    fun extractStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?, direction: Direction?): SlottedAgnosticStorage<ItemStack, Int>? {
         if (blockEntity == null) {
             return null
         }
@@ -70,14 +71,14 @@ object ForgeStorageUtils {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun extractStorageFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticItemStorage? {
+    fun extractStorageFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticStorage<ItemStack, Int>? {
         val itemHandler = entity as? IItemHandler ?: return null
         return AgnosticItemHandlerWrapper(itemHandler)
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun extractItemStorageFromItem(level: Level, origin: SlottedAgnosticItemStorage, slot: Int): AgnosticItemStorage? {
-        val storage = extractItemHandler(origin.getItem(slot), null) ?: return null
+    fun extractItemStorageFromItem(level: Level, origin: SlottedAgnosticStorage<ItemStack, Int>, slot: Int): AgnosticStorage<ItemStack, Int>? {
+        val storage = extractItemHandler(origin.get(slot), null) ?: return null
         return AgnosticItemHandlerWrapper(storage)
     }
 
@@ -95,8 +96,8 @@ object ForgeStorageUtils {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun extractFluidStorageFromItem(level: Level, origin: SlottedAgnosticItemStorage, slot: Int): AgnosticFluidStorage? {
-        val storage = extractFluidHandler(origin.getItem(slot), null) ?: return null
+    fun extractFluidStorageFromItem(level: Level, origin: SlottedAgnosticStorage<ItemStack, Int>, slot: Int): AgnosticFluidStorage? {
+        val storage = extractFluidHandler(origin.get(slot), null) ?: return null
         return ForgeAgnosticFluidStorage(storage)
     }
 
@@ -108,8 +109,8 @@ object ForgeStorageUtils {
     }
 
     @Suppress("UNUSED_PARAMETER")
-    fun extractEnergyStorageFromItem(level: Level, origin: SlottedAgnosticItemStorage, slot: Int): AgnosticEnergyStorage? {
-        val energyStorage = extractEnergyStorage(origin.getItem(slot), null) ?: return null
+    fun extractEnergyStorageFromItem(level: Level, origin: SlottedAgnosticStorage<ItemStack, Int>, slot: Int): AgnosticEnergyStorage? {
+        val energyStorage = extractEnergyStorage(origin.get(slot), null) ?: return null
         return AgnosticEnergyHandlerWrapper(energyStorage)
     }
 

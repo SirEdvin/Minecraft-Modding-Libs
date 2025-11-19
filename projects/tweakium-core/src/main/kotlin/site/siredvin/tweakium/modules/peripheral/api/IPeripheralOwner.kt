@@ -8,7 +8,7 @@ import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.tweakium.modules.peripheral.boon.OperationBoon
 import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
@@ -28,7 +28,7 @@ interface IPeripheralOwner {
     val ownerUUID: UUID?
     val owner: Player?
     val dataStorage: IDataStorage
-    val storage: SlottedAgnosticItemStorage?
+    val storage: SlottedAgnosticStorage<ItemStack, Int>?
 
     fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T
     val toolInMainHand: ItemStack

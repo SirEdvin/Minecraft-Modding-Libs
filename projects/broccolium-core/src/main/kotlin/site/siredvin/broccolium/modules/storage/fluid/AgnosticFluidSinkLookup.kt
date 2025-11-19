@@ -5,17 +5,17 @@ import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import site.siredvin.broccolium.modules.lookup.ChainedBaseLookup
-import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidSink
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticSink
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidSinkProvider
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 
-object AgnosticFluidSinkLookup : ChainedBaseLookup<AgnosticFluidSink, AgnosticFluidStorage>(AgnosticFluidStorageLookup) {
+object AgnosticFluidSinkLookup : ChainedBaseLookup<AgnosticSink<AgnosticFluidStack, Double>, AgnosticFluidStorage>(AgnosticFluidStorageLookup) {
     override fun extractFromBlock(
         level: Level,
         pos: BlockPos,
         blockEntity: BlockEntity?,
         direction: Direction?,
-    ): AgnosticFluidSink? {
+    ): AgnosticSink<AgnosticFluidStack, Double>? {
         if (blockEntity is AgnosticFluidSinkProvider) {
             return blockEntity.fluidSink
         }

@@ -6,7 +6,9 @@ import net.fabricmc.fabric.api.transfer.v1.storage.StorageUtil
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
 import site.siredvin.broccolium.modules.storage.FabricStorageUtils
-import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidSink
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticSink
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SomethingOperator
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import java.util.function.Predicate
 
@@ -15,7 +17,7 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
     override val movableType: String
         get() = FabricStorageUtils.MOVABLE_TYPE
 
-    override fun getFluids(): Iterator<AgnosticFluidStack> = this.storage.map { it.toVanilla() }.iterator()
+    override fun getContent(): Iterator<AgnosticFluidStack> = this.storage.map { it.toVanilla() }.iterator()
     override fun getCapacities(): List<Double> {
         val result = mutableListOf<Double>()
         this.storage.iterator().forEach {
@@ -24,9 +26,14 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
         return result
     }
 
-    override fun moveTo(to: AgnosticFluidSink, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
+    override fun moveTo(
+        to: AgnosticSink<AgnosticFluidStack, Double>,
+        limit: Double,
+        toSlot: Int,
+        takePredicate: Predicate<AgnosticFluidStack>,
+    ): Double {
         if (to.movableType == FabricStorageUtils.MOVABLE_TYPE) {
-            return to.moveFrom(this, limit, takePredicate)
+            return to.moveFrom(this, limit, toSlot, takePredicate)
         }
         if (to.movableType == null) {
             return FabricStorageUtils.moveToTargetable(this.storage, to, limit, takePredicate)
@@ -34,7 +41,12 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
         throw IllegalStateException("Cannot mix movable type, this should be impossible here")
     }
 
-    override fun moveFrom(from: AgnosticFluidStorage, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
+    override fun moveFrom(
+        from: AgnosticStorage<AgnosticFluidStack, Double>,
+        limit: Double,
+        fromSlot: Int,
+        takePredicate: Predicate<AgnosticFluidStack>,
+    ): Double {
         if (from.movableType == FabricStorageUtils.MOVABLE_TYPE) {
             if (from !is FabricAgnosticFluidStorage) throw IllegalStateException("For fabricTransfer please use FabricFluidStorage")
             return StorageUtil.move(
@@ -51,24 +63,28 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
         throw IllegalStateException("Cannot mix movable type, this should be impossible here")
     }
 
-    override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Double): AgnosticFluidStack {
+    override fun take(predicate: Predicate<AgnosticFluidStack>, limit: Double, simulate: Boolean): AgnosticFluidStack {
         val platformLimit = limit * PlatformToolkit.get().fluidCompactDivider
-        if (!storage.supportsExtraction()) return AgnosticFluidStack.Companion.EMPTY
+        if (!storage.supportsExtraction()) return AgnosticFluidStack.EMPTY
         val extractableTarget = StorageUtil.findExtractableContent(storage, {
             predicate.test(it.toVanilla())
         }, null)
         if (extractableTarget == null || extractableTarget.amount == 0L) {
-            return AgnosticFluidStack.Companion.EMPTY
+            return AgnosticFluidStack.EMPTY
         }
-        val realLimit = minOf(extractableTarget.amount.toDouble(), platformLimit)
+        val realLimit = minOf(maxStackSize, platformLimit)
         Transaction.openOuter().use {
             val extracted = storage.extract(extractableTarget.resource, realLimit.toLong(), it)
-            it.commit()
+            if (!simulate) {
+                it.commit()
+            } else {
+                it.abort()
+            }
             return extractableTarget.resource.toVanilla(extracted.toDouble())
         }
     }
 
-    override fun storeFluid(stack: AgnosticFluidStack): AgnosticFluidStack {
+    override fun store(stack: AgnosticFluidStack, simulate: Boolean): AgnosticFluidStack {
         if (!storage.supportsInsertion()) return stack
         Transaction.openOuter().use {
             val inserted = storage.insert(stack.toVariant(), stack.platformAmount.toLong(), it)
@@ -76,11 +92,20 @@ open class FabricAgnosticFluidStorage(private val storage: Storage<FluidVariant>
                 it.abort()
                 return stack
             }
-            it.commit()
+            if (!simulate) {
+                it.commit()
+            } else {
+                it.abort()
+            }
             return stack.copyWithCount((stack.platformAmount - inserted) / PlatformToolkit.get().fluidCompactDivider)
         }
     }
 
     override fun setChanged() {
     }
+
+    override val maxStackSize: Double
+        get() = (Long.MAX_VALUE / PlatformToolkit.get().fluidCompactDivider).toDouble()
+    override val operator: SomethingOperator<AgnosticFluidStack, Double>
+        get() = FluidStorageUtils
 }

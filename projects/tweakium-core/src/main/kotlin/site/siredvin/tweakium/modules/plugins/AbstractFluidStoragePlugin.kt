@@ -40,7 +40,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
     @LuaFunction(mainThread = true)
     fun tanks(): List<Map<String, *>> {
         val data: MutableList<Map<String, *>> = mutableListOf()
-        storage.getFluids().forEach {
+        storage.getContent().forEach {
             data.add(fluidInformation(it))
         }
         return data
@@ -69,7 +69,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             Predicate { it.fluid.isSame(fluid) }
         }
         val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))
-        return storage.moveTo(toStorage, realLimit, predicate)
+        return storage.moveTo(toStorage, realLimit, -1, predicate)
     }
 
     @LuaFunction(mainThread = true)
@@ -92,6 +92,6 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             Predicate { it.fluid.isSame(fluid) }
         }
         val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))
-        return storage.moveFrom(fromStorage, realLimit, predicate)
+        return storage.moveFrom(fromStorage, realLimit, -1, predicate)
     }
 }

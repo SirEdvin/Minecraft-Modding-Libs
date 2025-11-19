@@ -48,7 +48,7 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
                 ?: throw LuaException("Source '$target' is not an inventory")
             val item = PlatformRegistries.ITEMS.tryGet(ResourceLocation(id)) ?: throw LuaException("There is no item $id")
             @Suppress("DEPRECATION")
-            storage.storeItem(item.defaultInstance.copyWithCount(limit.coerceAtMost(item.maxStackSize)))
+            storage.store(item.defaultInstance.copyWithCount(limit.coerceAtMost(item.maxStackSize)), false)
         }
     }
 
@@ -66,7 +66,7 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
             val storage = AgnosticFluidSinkLookup.extractFromUnknown(owner.level!!, location.target, direction)
                 ?: throw LuaException("Source '$target' is not an inventory")
             val fluid = PlatformRegistries.FLUIDS.tryGet(ResourceLocation(id)) ?: throw LuaException("There is no fluid $id")
-            storage.storeFluid(AgnosticFluidStack(fluid, limit.toDouble()))
+            storage.store(AgnosticFluidStack(fluid, limit.toDouble()), false)
         }
     }
 
@@ -83,8 +83,8 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
             val direction = if (location is ISidedPeripheral) location.side else null
             val storage = AgnosticEnergySinkLookup.extractFromUnknown(owner.level!!, location.target, direction)
                 ?: throw LuaException("Source '$target' is not an inventory")
-            val energy = EnergyRegistry.ENERGIES.get(id) ?: throw LuaException("There is no energy $id")
-            storage.storeEnergy(AgnosticEnergyStack(energy, limit.toLong()))
+            val energy = EnergyRegistry.ENERGIES[id] ?: throw LuaException("There is no energy $id")
+            storage.store(AgnosticEnergyStack(energy, limit.toLong()), false)
         }
     }
 

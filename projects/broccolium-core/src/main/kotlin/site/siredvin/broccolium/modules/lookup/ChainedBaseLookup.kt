@@ -3,9 +3,10 @@ package site.siredvin.broccolium.modules.lookup
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 
 open class ChainedBaseLookup<T, V : T>(private val above: BaseLookup<V>) : BaseLookup<T>() {
     override fun extractFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?, direction: Direction?): T? {
@@ -24,7 +25,7 @@ open class ChainedBaseLookup<T, V : T>(private val above: BaseLookup<V>) : BaseL
         return super.extractFromEntity(level, entity, direction)
     }
 
-    override fun extractFromInventoryStack(level: Level, origin: SlottedAgnosticItemStorage, slot: Int): T? {
+    override fun extractFromInventoryStack(level: Level, origin: SlottedAgnosticStorage<ItemStack, Int>, slot: Int): T? {
         val aboveResult = above.extractFromInventoryStack(level, origin, slot)
         if (aboveResult != null) {
             return aboveResult

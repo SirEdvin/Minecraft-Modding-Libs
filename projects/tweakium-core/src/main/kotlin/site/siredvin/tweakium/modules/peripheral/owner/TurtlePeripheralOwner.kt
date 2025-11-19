@@ -7,9 +7,9 @@ import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.ContainerUtils
 import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.boon.PeripheralOwnerBoonKey
 import site.siredvin.tweakium.modules.peripheral.boon.TurtleFuelBoon
@@ -35,7 +35,7 @@ open class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide
     override val dataStorage: IDataStorage
         get() = DataStorageUtil.getDataStorage(turtle, side)
 
-    override val storage: SlottedAgnosticItemStorage
+    override val storage: SlottedAgnosticStorage<ItemStack, Int>
         get() = ContainerWrapper(turtle.inventory)
 
     override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T = FakePlayerProviderTurtle.withPlayer(turtle, function, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
@@ -44,9 +44,9 @@ open class TurtlePeripheralOwner(val turtle: ITurtleAccess, val side: TurtleSide
         get() = turtle.inventory.getItem(turtle.selectedSlot)
 
     override fun storeItem(stored: ItemStack): ItemStack {
-        val remainder = ContainerUtils.storeItem(turtle.inventory, stored, turtle.selectedSlot)
+        val remainder = ContainerUtils.storeItem(turtle.inventory, stored, turtle.selectedSlot, simulate = false)
         if (!remainder.isEmpty && turtle.selectedSlot > 1) {
-            return ContainerUtils.storeItem(turtle.inventory, remainder, 0, turtle.selectedSlot - 1)
+            return ContainerUtils.storeItem(turtle.inventory, remainder, 0, turtle.selectedSlot - 1, false)
         }
         return remainder
     }

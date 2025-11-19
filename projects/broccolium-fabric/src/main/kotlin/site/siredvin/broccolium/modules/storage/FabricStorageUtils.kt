@@ -15,19 +15,18 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import site.siredvin.broccolium.BroccoliumCore
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticSink
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticSink
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.FabricAgnosticFluidStorage
-import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidSink
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import site.siredvin.broccolium.modules.storage.fluid.toVanilla
 import site.siredvin.broccolium.modules.storage.fluid.toVariant
 import site.siredvin.broccolium.modules.storage.item.FabricSlottedStorageWrapper
 import site.siredvin.broccolium.modules.storage.item.FabricStorageWrapper
 import site.siredvin.broccolium.modules.storage.item.SlottedAgnosticItemStorageWrapper
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSink
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemSink
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import java.util.function.Predicate
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage as FabricStorage
 
@@ -46,7 +45,7 @@ object FabricStorageUtils {
     /**
      * Generic move to any targetable storage, should be used only after make sure that to is not fabric one related!
      */
-    fun moveToTargetable(storage: FabricStorage<ItemVariant>, to: AgnosticItemSink, limit: Int, toSlot: Int, takePredicate: Predicate<ItemStack>): Int {
+    fun moveToTargetable(storage: FabricStorage<ItemVariant>, to: AgnosticSink<ItemStack, Int>, limit: Int, toSlot: Int, takePredicate: Predicate<ItemStack>): Int {
         assert(to.movableType != MOVABLE_TYPE)
 
         val transaction = Transaction.openOuter()
@@ -60,9 +59,9 @@ object FabricStorageUtils {
             }
             val insertionStack = resource.toStack(extractedAmount)
             val remainder = if (toSlot < 0) {
-                to.storeItem(insertionStack)
+                to.store(insertionStack, false)
             } else {
-                (to as SlottedAgnosticItemSink).storeItem(insertionStack, toSlot, toSlot)
+                (to as SlottedAgnosticSink<ItemStack, Int>).store(insertionStack, toSlot, toSlot, false)
             }
             val insertedCount = extractedAmount - remainder.count
             if (!remainder.isEmpty) {
@@ -76,17 +75,17 @@ object FabricStorageUtils {
     /**
      * Generic move from any targetable storage, should be used only after make sure that to is not fabric one related!
      */
-    fun moveFromTargetable(from: AgnosticItemStorage, to: FabricStorage<ItemVariant>, limit: Int, fromSlot: Int, takePredicate: Predicate<ItemStack>): Int {
+    fun moveFromTargetable(from: AgnosticStorage<ItemStack, Int>, to: FabricStorage<ItemVariant>, limit: Int, fromSlot: Int, takePredicate: Predicate<ItemStack>): Int {
         assert(from.movableType != MOVABLE_TYPE)
 
         val insertionStack = if (fromSlot < 0) {
-            from.takeItems(takePredicate, limit)
+            from.take(takePredicate, limit, false)
         } else {
-            if (from !is SlottedAgnosticItemStorage) {
+            if (from !is SlottedAgnosticStorage<ItemStack, Int>) {
                 BroccoliumCore.LOGGER.warn("From doesn't support slotting, so slot is just ignore")
-                from.takeItems(takePredicate, limit)
+                from.take(takePredicate, limit, false)
             } else {
-                from.takeItems(limit, fromSlot, fromSlot, takePredicate)
+                from.take(limit, fromSlot, fromSlot, takePredicate, false)
             }
         }
         if (insertionStack.isEmpty) {
@@ -99,10 +98,10 @@ object FabricStorageUtils {
 
             val remainCount = insertionStack.count - insertedAmount
             if (remainCount > 0) {
-                if (fromSlot > -1 && from is SlottedAgnosticItemStorage) {
-                    from.storeItem(insertionStack.copyWithCount(remainCount.toInt()), fromSlot, fromSlot)
+                if (fromSlot > -1 && from is SlottedAgnosticStorage<ItemStack, Int>) {
+                    from.store(insertionStack.copyWithCount(remainCount.toInt()), fromSlot, fromSlot, false)
                 } else {
-                    from.storeItem(insertionStack.copyWithCount(remainCount.toInt()))
+                    from.store(insertionStack.copyWithCount(remainCount.toInt()), false)
                 }
             }
             it.commit()
@@ -110,7 +109,7 @@ object FabricStorageUtils {
         }
     }
 
-    fun moveToTargetable(storage: FabricStorage<FluidVariant>, to: AgnosticFluidSink, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
+    fun moveToTargetable(storage: FabricStorage<FluidVariant>, to: AgnosticSink<AgnosticFluidStack, Double>, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         assert(to.movableType != MOVABLE_TYPE)
 
         val platformLimit = (limit * PlatformToolkit.get().fluidCompactDivider).toLong()
@@ -125,7 +124,7 @@ object FabricStorageUtils {
                 return 0.0
             }
             val insertionStack = resource.toVanilla(extractedAmount.toDouble())
-            val remainder = to.storeFluid(insertionStack)
+            val remainder = to.store(insertionStack, false)
             val insertedCount = extractedAmount - remainder.platformAmount
             if (!remainder.isEmpty) {
                 storage.insert(resource, remainder.platformAmount.toLong(), it)
@@ -135,12 +134,12 @@ object FabricStorageUtils {
         }
     }
 
-    fun moveFromTargetable(from: AgnosticFluidStorage, to: FabricStorage<FluidVariant>, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
+    fun moveFromTargetable(from: AgnosticStorage<AgnosticFluidStack, Double>, to: FabricStorage<FluidVariant>, limit: Double, takePredicate: Predicate<AgnosticFluidStack>): Double {
         assert(from.movableType != MOVABLE_TYPE)
 
         val platformLimit = limit * PlatformToolkit.get().fluidCompactDivider
 
-        val insertionStack = from.takeFluid(takePredicate, platformLimit)
+        val insertionStack = from.take(takePredicate, platformLimit, false)
         if (insertionStack.isEmpty) {
             return 0.0
         }
@@ -151,21 +150,21 @@ object FabricStorageUtils {
 
             val remainCount = insertionStack.platformAmount - insertedAmount
             if (remainCount > 0) {
-                from.storeFluid(insertionStack.copyWithCount(remainCount / PlatformToolkit.get().fluidCompactDivider))
+                from.store(insertionStack.copyWithCount(remainCount / PlatformToolkit.get().fluidCompactDivider), false)
             }
             it.commit()
             return insertedAmount / PlatformToolkit.get().fluidCompactDivider.toDouble()
         }
     }
 
-    fun getSlot(storage: SlottedAgnosticItemStorage, slot: Int): SingleSlotStorage<ItemVariant> {
+    fun getSlot(storage: SlottedAgnosticStorage<ItemStack, Int>, slot: Int): SingleSlotStorage<ItemVariant> {
         if (storage is FabricSlottedStorageWrapper) {
             return storage.storage.getSlot(slot)
         }
         return SlottedAgnosticItemStorageWrapper.of(storage).getSlot(slot)
     }
 
-    fun extractStorage(level: Level, pos: BlockPos, @Suppress("UNUSED_PARAMETER") blockEntity: BlockEntity?, direction: Direction?): AgnosticItemStorage? {
+    fun extractStorage(level: Level, pos: BlockPos, @Suppress("UNUSED_PARAMETER") blockEntity: BlockEntity?, direction: Direction?): AgnosticStorage<ItemStack, Int>? {
         var itemStorage = ItemStorage.SIDED.find(level, pos, null)
         if (itemStorage == null) {
             if (direction != null) {
@@ -194,8 +193,8 @@ object FabricStorageUtils {
         return FabricAgnosticFluidStorage(fluidStorage)
     }
 
-    fun extractFluidStorageFromItem(@Suppress("UNUSED_PARAMETER") level: Level, origin: SlottedAgnosticItemStorage, slot: Int): AgnosticFluidStorage? {
-        val fluidStorage = FluidStorage.ITEM.find(origin.getItem(slot), ContainerItemContext.ofSingleSlot(getSlot(origin, slot))) ?: return null
+    fun extractFluidStorageFromItem(@Suppress("UNUSED_PARAMETER") level: Level, origin: SlottedAgnosticStorage<ItemStack, Int>, slot: Int): AgnosticFluidStorage? {
+        val fluidStorage = FluidStorage.ITEM.find(origin.get(slot), ContainerItemContext.ofSingleSlot(getSlot(origin, slot))) ?: return null
         return FabricAgnosticFluidStorage(fluidStorage)
     }
 }

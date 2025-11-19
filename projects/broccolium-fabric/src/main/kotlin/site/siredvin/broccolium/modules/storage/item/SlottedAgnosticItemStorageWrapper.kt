@@ -6,18 +6,19 @@ import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.base.SnapshotParticipant
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import net.minecraft.world.item.ItemStack
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import java.util.*
 
-class SlottedAgnosticItemStorageWrapper(val storage: SlottedAgnosticItemStorage) :
+class SlottedAgnosticItemStorageWrapper(val storage: SlottedAgnosticStorage<ItemStack, Int>) :
     CombinedStorage<ItemVariant, SingleSlotStorage<ItemVariant>>(mutableListOf()),
     InventoryStorage {
     companion object {
         // We copy caching logic from fabric API
-        val WRAPPERS: MutableMap<SlottedAgnosticItemStorage, SlottedAgnosticItemStorageWrapper> =
-            MapMaker().weakValues().makeMap<SlottedAgnosticItemStorage, SlottedAgnosticItemStorageWrapper>()
+        val WRAPPERS: MutableMap<SlottedAgnosticStorage<ItemStack, Int>, SlottedAgnosticItemStorageWrapper> =
+            MapMaker().weakValues().makeMap<SlottedAgnosticStorage<ItemStack, Int>, SlottedAgnosticItemStorageWrapper>()
 
-        fun of(inventory: SlottedAgnosticItemStorage): SlottedAgnosticItemStorageWrapper {
+        fun of(inventory: SlottedAgnosticStorage<ItemStack, Int>): SlottedAgnosticItemStorageWrapper {
             val storage = WRAPPERS.computeIfAbsent(inventory) { inv ->
                 return@computeIfAbsent SlottedAgnosticItemStorageWrapper(inv)
             }
@@ -44,7 +45,7 @@ class SlottedAgnosticItemStorageWrapper(val storage: SlottedAgnosticItemStorage)
     }
 
     // Boolean is used to prevent allocation. Null values are not allowed by SnapshotParticipant.
-    class MarkDirtyParticipant(private val storage: SlottedAgnosticItemStorage) : SnapshotParticipant<Boolean?>() {
+    class MarkDirtyParticipant(private val storage: SlottedAgnosticStorage<ItemStack, Int>) : SnapshotParticipant<Boolean?>() {
         override fun createSnapshot(): Boolean = true
 
         override fun readSnapshot(snapshot: Boolean?) {

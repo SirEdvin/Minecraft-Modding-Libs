@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import site.siredvin.broccolium.modules.storage.base.api.AccessibleAgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
-import site.siredvin.broccolium.modules.storage.item.api.AccessibleAgnosticItemStorage
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import kotlin.test.assertEquals
 
 abstract class SlottedStorageTests : StorageTests() {
 
-    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage = createSlottedStorage(items, secondary)
-    abstract fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticItemStorage
+    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticStorage<ItemStack, Int> = createSlottedStorage(items, secondary)
+    abstract fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int>
 
-    fun createSlottedStorage(sizes: List<Int>, stack: ItemStack, secondary: Boolean): SlottedAgnosticItemStorage = createSlottedStorage(
+    fun createSlottedStorage(sizes: List<Int>, stack: ItemStack, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int> = createSlottedStorage(
         sizes.map {
             if (it == 0) {
                 ItemStack.EMPTY

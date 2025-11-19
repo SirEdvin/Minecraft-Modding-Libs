@@ -7,10 +7,10 @@ import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemSinkLookup
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
 import site.siredvin.tweakium.modules.peripheral.api.ISidedPeripheral
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
@@ -20,7 +20,7 @@ import java.util.function.Predicate
 import kotlin.math.min
 
 abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
-    abstract val storage: AgnosticItemStorage
+    abstract val storage: AgnosticStorage<ItemStack, Int>
     abstract val level: Level
     abstract val itemStorageTransferLimit: Int
 
@@ -34,7 +34,7 @@ abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
         } else {
             ItemStorageUtils.ALWAYS
         }
-        storage.getItems().forEach {
+        storage.getContent().forEach {
             if (!it.isEmpty && predicate.test(it)) {
                 result.add(LuaRepresentation.forItemStack(it, mode))
             }

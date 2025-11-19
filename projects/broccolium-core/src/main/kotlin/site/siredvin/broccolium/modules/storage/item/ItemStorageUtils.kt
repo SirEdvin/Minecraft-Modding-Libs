@@ -4,88 +4,42 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.Containers
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import site.siredvin.broccolium.BroccoliumCore
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSink
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticSink
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SomethingOperator
 import java.util.function.Predicate
 
 @Suppress("MemberVisibilityCanBePrivate")
-object ItemStorageUtils {
+object ItemStorageUtils : SomethingOperator<ItemStack, Int> {
 
     val ALWAYS: Predicate<ItemStack> = Predicate { true }
+    override fun isEmpty(something: ItemStack): Boolean = something.isEmpty
 
-    fun naiveMove(from: AgnosticItemStorage, to: AgnosticItemSink, limit: Int, fromSlot: Int = -1, toSlot: Int = -1, takePredicate: Predicate<ItemStack>): Int {
-        var slidingLimit = limit
-        var slidingCount = 0
-        while (slidingLimit > 0) {
-            // Get stack to move
-            val stack = if (fromSlot < 0) {
-                from.takeItems(takePredicate, limit)
-            } else {
-                if (from !is SlottedAgnosticItemStorage) {
-                    BroccoliumCore.LOGGER.warn("From storage doesn't support slotting, so we just ignoring it")
-                    from.takeItems(takePredicate, limit)
-                } else {
-                    from.takeItems(limit, fromSlot, fromSlot, takePredicate)
-                }
-            }
-            if (stack.isEmpty) {
-                return slidingCount
-            }
+    override fun getSize(something: ItemStack): Int = something.count
 
-            val stackCount = stack.count
-
-            // Move item to
-            val remainder = if (toSlot < 0 || to !is SlottedAgnosticItemStorage) {
-                to.storeItem(stack)
-            } else {
-                to.storeItem(stack, toSlot, toSlot)
-            }
-
-            // Calculate items moved
-            val movedCount = stackCount - remainder.count
-            if (!remainder.isEmpty) {
-                // Put reminder back
-                if (fromSlot < 0 || from !is SlottedAgnosticItemStorage) {
-                    from.storeItem(remainder)
-                } else {
-                    from.storeItem(remainder, fromSlot, fromSlot)
-                }
-            }
-            // Break cycle if nothing can be stored in target
-            if (movedCount == 0) {
-                return slidingCount
-            }
-            slidingLimit -= movedCount
-            slidingCount += movedCount
-        }
-        return slidingCount
-    }
-
-    fun canStack(first: ItemStack, second: ItemStack): Boolean {
+    override fun canStack(first: ItemStack, second: ItemStack): Boolean {
         if (!ItemStack.isSameItem(first, second)) {
             return false
         }
         return first.damageValue == second.damageValue && ItemStack.isSameItemSameTags(first, second)
     }
 
-    fun canMerge(first: ItemStack, second: ItemStack, stackLimit: Int = -1): Boolean {
+    override fun canMerge(first: ItemStack, second: ItemStack, stackLimit: Int?): Boolean {
         if (!canStack(first, second)) {
             return false
         }
-        val realStackLimit = if (stackLimit == -1) first.maxStackSize else minOf(stackLimit, first.maxStackSize)
+        val realStackLimit = if (stackLimit == null) first.maxStackSize else minOf(stackLimit, first.maxStackSize)
         return first.count < realStackLimit
     }
 
     /**
      * Merge second item stack into first one and returns remains
      */
-    fun inplaceMerge(first: ItemStack, second: ItemStack, mergeLimit: Int = Int.MAX_VALUE): ItemStack {
+    override fun inplaceMerge(first: ItemStack, second: ItemStack, mergeLimit: Int?): ItemStack {
         if (!canMerge(first, second, mergeLimit)) {
             return second
         }
-        val mergeSize = minOf(second.count, first.maxStackSize - first.count, mergeLimit)
+        val mergeSize = minOf(second.count, first.maxStackSize - first.count, mergeLimit ?: Int.MAX_VALUE)
         first.grow(mergeSize)
         second.shrink(mergeSize)
         if (second.isEmpty) {
@@ -94,17 +48,29 @@ object ItemStorageUtils {
         return second
     }
 
-    fun toInventoryOrToWorld(output: ItemStack, inventory: AgnosticItemSink, outputPos: BlockPos, level: Level) {
-        val rest = inventory.storeItem(output)
+    override fun getZero(): Int = 0
+
+    override fun isZero(value: Int): Boolean = value == 0
+
+    override fun biggerThanZero(value: Int): Boolean = value > 0
+
+    override fun min(first: Int, second: Int): Int = first.coerceAtMost(second)
+
+    override fun subtract(first: Int, second: Int): Int = first - second
+
+    override fun add(first: Int, second: Int): Int = first + second
+
+    fun toInventoryOrToWorld(output: ItemStack, inventory: AgnosticSink<ItemStack, Int>, outputPos: BlockPos, level: Level) {
+        val rest = inventory.store(output, false)
         if (!rest.isEmpty) {
             Containers.dropItemStack(level, outputPos.x.toDouble(), outputPos.y.toDouble(), outputPos.z.toDouble(), rest)
         }
     }
 
-    fun toInventoryOrToWorld(output: ItemStack, inventory: SlottedAgnosticItemStorage, startSlot: Int, outputPos: BlockPos, level: Level) {
-        var rest = inventory.storeItem(output, startSlot)
+    fun toInventoryOrToWorld(output: ItemStack, inventory: SlottedAgnosticStorage<ItemStack, Int>, startSlot: Int, outputPos: BlockPos, level: Level) {
+        var rest = inventory.store(output, startSlot, false)
         if (!rest.isEmpty && startSlot > 0) {
-            rest = inventory.storeItem(rest, 0, startSlot - 1)
+            rest = inventory.store(rest, 0, startSlot - 1, false)
         }
         if (!rest.isEmpty) {
             Containers.dropItemStack(level, outputPos.x.toDouble(), outputPos.y.toDouble(), outputPos.z.toDouble(), rest)

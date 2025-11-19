@@ -27,7 +27,7 @@ open class FullEnergyPlugin(protected val level: Level, storage: AgnosticEnergyS
             ?: throw LuaException("Target '$toName' is not an energy storage")
 
         val realLimit = minOf(energyStorageTransferLimit.toLong(), limit.orElse(Long.MAX_VALUE))
-        return storage.moveTo(toStorage, realLimit, { true })
+        return storage.moveTo(toStorage, realLimit, -1, { true })
     }
 
     @LuaFunction(mainThread = true)
@@ -41,6 +41,6 @@ open class FullEnergyPlugin(protected val level: Level, storage: AgnosticEnergyS
             ?: throw LuaException("Target '$fromName' is not an energy storage")
 
         val realLimit = minOf(energyStorageTransferLimit.toLong(), limit.orElse(Long.MAX_VALUE))
-        return storage.moveFrom(fromStorage, realLimit, { true }).toDouble()
+        return storage.moveFrom(fromStorage, realLimit, -1, { true }).toDouble()
     }
 }

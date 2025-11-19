@@ -10,10 +10,10 @@ import kotlin.math.min
 class SlottedAgnosticItemStorageSlotWrapper(private val storage: SlottedAgnosticItemStorageWrapper, private val slot: Int) : SingleStackStorage() {
     private var lastReleasedSnapshot: ItemStack? = null
 
-    override fun getStack(): ItemStack = storage.storage.getItem(slot)
+    override fun getStack(): ItemStack = storage.storage.get(slot)
 
     override fun setStack(stack: ItemStack) {
-        storage.storage.storeItem(stack, slot, slot)
+        storage.storage.store(stack, slot, slot, false)
     }
 
     override fun insert(insertedVariant: ItemVariant, maxAmount: Long, transaction: TransactionContext?): Long {
@@ -25,7 +25,7 @@ class SlottedAgnosticItemStorageSlotWrapper(private val storage: SlottedAgnostic
         return ret
     }
 
-    private fun canInsert(slot: Int, stack: ItemStack): Boolean = storage.storage.canPlaceItem(slot, stack)
+    private fun canInsert(slot: Int, stack: ItemStack): Boolean = storage.storage.canPlace(slot, stack)
 
     override fun extract(variant: ItemVariant?, maxAmount: Long, transaction: TransactionContext?): Long {
         val ret = super.extract(variant, maxAmount, transaction)
