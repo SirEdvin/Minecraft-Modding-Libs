@@ -70,18 +70,8 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
         private val predicate: Predicate<V> = Predicate { true },
     ) : ScanningMethod<T>(name, operation) {
         private fun getBox(ability: ScanningBoon<T>, pos: BlockPos, radius: Int): AABB {
-            val x: Int = pos.x
-            val y: Int = pos.y
-            val z: Int = pos.z
             val interactionRadius = min(radius, ability.maxRadius)
-            return AABB(
-                (x - interactionRadius).toDouble(),
-                (y - interactionRadius).toDouble(),
-                (z - interactionRadius).toDouble(),
-                (x + interactionRadius).toDouble(),
-                (y + interactionRadius).toDouble(),
-                (z + interactionRadius).toDouble(),
-            ).inflate(0.99)
+            return ScanUtils.getBox(pos, interactionRadius.toDouble())
         }
 
         abstract fun convert(entity: V, ability: ScanningBoon<T>): Map<String, Any>
