@@ -139,7 +139,7 @@ class ScanningBoon<T : IPeripheralOwner>(val owner: T, val maxRadius: Int) : IPe
     override fun collectConfiguration(data: MutableMap<String, Any>) {
         data["maxRadius"] = maxRadius
         data["scanMethods"] = scanningMethods.keys.toList()
-        data["scanAPIVersion"] = listOf(1, 2)
+        data["scanAPIVersion"] = listOf(1, 3)
     }
 
     fun attachBlockScan(operation: IPeripheralOperation<SphereOperationContext>, vararg enriches: BiConsumer<BlockState, MutableMap<String, Any>>): ScanningBoon<T> = attachScanningMethod(BlockScanningMethod(operation, enriches))
