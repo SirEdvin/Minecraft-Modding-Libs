@@ -1,8 +1,8 @@
 package site.siredvin.broccolium.test
 
-import net.minecraftforge.fluids.IFluidTank
-import net.minecraftforge.fluids.capability.IFluidHandler
-import net.minecraftforge.fluids.capability.templates.FluidTank
+import net.neoforged.neoforge.fluids.IFluidTank
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.ForgeAgnosticFluidStorage
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
@@ -13,13 +13,13 @@ import site.siredvin.broccolium.test.storage.DummyFluidStorage
 internal class CombinedTanks(private val tanks: List<IFluidTank>) : IFluidHandler {
     override fun getTanks(): Int = tanks.size
 
-    override fun getFluidInTank(tank: Int): net.minecraftforge.fluids.FluidStack = tanks[tank].fluid
+    override fun getFluidInTank(tank: Int): net.neoforged.neoforge.fluids.FluidStack = tanks[tank].fluid
 
     override fun getTankCapacity(tank: Int): Int = tanks[tank].capacity
 
-    override fun isFluidValid(tank: Int, stack: net.minecraftforge.fluids.FluidStack): Boolean = tanks[tank].isFluidValid(stack)
+    override fun isFluidValid(tank: Int, stack: net.neoforged.neoforge.fluids.FluidStack): Boolean = tanks[tank].isFluidValid(stack)
 
-    override fun fill(resource: net.minecraftforge.fluids.FluidStack, action: IFluidHandler.FluidAction): Int {
+    override fun fill(resource: net.neoforged.neoforge.fluids.FluidStack, action: IFluidHandler.FluidAction): Int {
         val slidingStack = resource.copy()
         var filledAmount = 0
         tanks.forEach {
@@ -33,9 +33,9 @@ internal class CombinedTanks(private val tanks: List<IFluidTank>) : IFluidHandle
     }
 
     override fun drain(
-        resource: net.minecraftforge.fluids.FluidStack,
+        resource: net.neoforged.neoforge.fluids.FluidStack,
         action: IFluidHandler.FluidAction,
-    ): net.minecraftforge.fluids.FluidStack {
+    ): net.neoforged.neoforge.fluids.FluidStack {
         val collectedStack = resource.copyWithCount(0)
         val slidingDrain = resource.copy()
         tanks.forEach {
@@ -46,9 +46,9 @@ internal class CombinedTanks(private val tanks: List<IFluidTank>) : IFluidHandle
         return collectedStack
     }
 
-    override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): net.minecraftforge.fluids.FluidStack {
+    override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): net.neoforged.neoforge.fluids.FluidStack {
         var slidingMaxDrain = maxDrain
-        var currentStack = net.minecraftforge.fluids.FluidStack.EMPTY
+        var currentStack = net.neoforged.neoforge.fluids.FluidStack.EMPTY
         tanks.forEach {
             if (currentStack.isEmpty) {
                 val drainedStack = it.drain(slidingMaxDrain, action)

@@ -17,14 +17,6 @@ baseShaking {
     shake()
 }
 
-//forgeShaking {
-//    commonProjectName.set("broccolium-core")
-//    projectName.set("broccolium")
-//    useAT.set(true)
-//    useMixins.set(true) // So, we need this for correct task order in gradle, like, what?
-//    shake()
-//}
-
 val extractedLibs = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
 val projectName = "broccolium"
 val commonProjectName = "broccolium-core"
@@ -45,10 +37,8 @@ neoForge {
     // These can be tweaked, removed, or duplicated as needed.
     runs {
         all {
-            systemProperty("forge.logging.markers", "REGISTRIES")
-            systemProperty("forge.logging.console.level", "debug")
-//            property("mixin.env.remapRefMap", "true")
-//            property("mixin.env.refMapRemappingFile", "${targetProject.projectDir}/build/createSrgToMcp/output.srg")
+            systemProperty("neoforge.logging.markers", "REGISTRIES")
+            systemProperty("neoforge.logging.console.level", "debug")
         }
 
         val client by registering {
@@ -73,15 +63,6 @@ neoForge {
             )
         }
     }
-
-//    mods {
-//        // define mod <-> source bindings
-//        // these are used to tell the game which sources are for which mod
-//        // multi mod projects should define one per mod
-//        "$projectName" {
-//            sourceSet(sourceSets.main)
-//        }
-//    }
 }
 
 repositories {
@@ -97,8 +78,12 @@ repositories {
 
 sourceSets {
     test {
+        compileClasspath += sourceSets["main"].compileClasspath + sourceSets["main"].output
+        runtimeClasspath += sourceSets["main"].runtimeClasspath + sourceSets["main"].output
         compileClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
         runtimeClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
+        compileClasspath += project(":broccolium-core").sourceSets["main"].output
+        runtimeClasspath += project(":broccolium-core").sourceSets["main"].output
     }
 }
 

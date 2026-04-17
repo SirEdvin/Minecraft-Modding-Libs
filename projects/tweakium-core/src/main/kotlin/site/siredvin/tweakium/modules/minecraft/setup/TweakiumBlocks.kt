@@ -9,4 +9,4 @@ object TweakiumBlocks {
         { GenericBlockEntityBlock({ TweakiumBlockEntityTypes.CREATIVE_FILLER.get() }, false) },
     )
     fun doSomething() {}
-}
+}/m

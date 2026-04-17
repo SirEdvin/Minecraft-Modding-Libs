@@ -2,7 +2,7 @@ package site.siredvin.broccolium.test
 
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.item.ItemStack
-import net.minecraftforge.items.wrapper.InvWrapper
+import net.neoforged.neoforge.items.wrapper.InvWrapper
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemHandlerWrapper
 import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage

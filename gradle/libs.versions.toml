@@ -32,7 +32,7 @@ parchmentMc = "1.21.1"
 # Extra mod dependencies
 
 # Dev mod dependenceis
-jei = "15.1.0.19"
+jei = "19.27.0.340"
 rei = "16.0.799"
 
 # Testing
@@ -78,7 +78,7 @@ cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.21.1-forge", version.ref=
 forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-kotlin"}
 
 # Dev mod dependencies
-jei-forge = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei" }
+jei-forge = { module = "mezz.jei:jei-1.21.1-neoforge", version.ref = "jei" }
 rei-fabric = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei"}
 rei-forge = {module = "me.shedaniel:RoughlyEnoughItems-forge", version.ref = "rei"}
 

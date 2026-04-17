@@ -9,13 +9,6 @@ import site.siredvin.broccolium.BroccoliumCore
 object ForgeDataGenerators {
     @SubscribeEvent
     fun genData(event: GatherDataEvent) {
-        val generator = event.generator
-        LibDataProviders.add(
-            ForgeGeneratorSink(
-                generator.getVanillaPack(true),
-                event.existingFileHelper,
-                event.lookupProvider,
-            ),
-        )
+        LibDataProviders.add(ForgeGeneratorSink(event.generator, event))
     }
 }

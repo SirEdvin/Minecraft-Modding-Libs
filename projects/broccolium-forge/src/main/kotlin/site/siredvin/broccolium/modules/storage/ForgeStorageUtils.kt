@@ -1,6 +1,7 @@
 package site.siredvin.broccolium.modules.storage
 
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
@@ -21,31 +22,31 @@ object ForgeStorageUtils {
 
     @Suppress("UNUSED_PARAMETER")
     fun extractStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?): SlottedAgnosticItemStorage? {
-        val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null) ?: return null
+        val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null as Direction) ?: return null
         return AgnosticItemHandlerWrapper(itemHandler)
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun extractStorageFromEntity(level: Level, entity: Entity): AgnosticItemStorage? {
-        val itemHandler = entity.getCapability(Capabilities.ItemHandler.ENTITY, null) ?: return null
+        val itemHandler = entity.getCapability(Capabilities.ItemHandler.ENTITY, null as Void) ?: return null
         return AgnosticItemHandlerWrapper(itemHandler)
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun extractFluidStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?): AgnosticFluidStorage? {
-        val fluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, null) ?: return null
+        val fluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, null as Direction) ?: return null
         return ForgeAgnosticFluidStorage(fluidHandler)
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun extractFluidStorageFromEntity(level: Level, entity: Entity): AgnosticFluidStorage? {
-        val fluidHandler = entity.getCapability(Capabilities.FluidHandler.ENTITY, null) ?: return null
+        val fluidHandler = entity.getCapability(Capabilities.FluidHandler.ENTITY, null as Direction) ?: return null
         return ForgeAgnosticFluidStorage(fluidHandler)
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun extractEnergyStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?): AgnosticEnergyStorage? {
-        val energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, null) ?: return null
+        val energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, null as Direction) ?: return null
         return AgnosticEnergyHandlerWrapper(energyStorage)
     }
 

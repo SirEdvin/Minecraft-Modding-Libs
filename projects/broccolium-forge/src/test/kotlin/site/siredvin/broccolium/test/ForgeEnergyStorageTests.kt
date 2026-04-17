@@ -15,7 +15,7 @@ class ForgeEnergyStorageTests : EnergyStorageTests() {
         if (energy.unit != defaultUnits) {
             return DummyEnergyStorage(capacity, energy)
         }
-        val baseStorage = net.minecraftforge.energy.EnergyStorage(capacity.toInt())
+        val baseStorage = net.neoforged.neoforge.energy.EnergyStorage(capacity.toInt())
         baseStorage.receiveEnergy(energy.amount.toInt(), false)
         return AgnosticEnergyHandlerWrapper(baseStorage)
     }
@@ -29,7 +29,7 @@ class ForgeDummyEnergyStorageTests : EnergyStorageTests() {
         if (energy.unit != defaultUnits || secondary) {
             return DummyEnergyStorage(capacity, energy)
         }
-        val baseStorage = net.minecraftforge.energy.EnergyStorage(capacity.toInt())
+        val baseStorage = net.neoforged.neoforge.energy.EnergyStorage(capacity.toInt())
         baseStorage.receiveEnergy(energy.amount.toInt(), false)
         return AgnosticEnergyHandlerWrapper(baseStorage)
     }
