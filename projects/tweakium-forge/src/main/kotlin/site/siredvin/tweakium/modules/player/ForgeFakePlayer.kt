@@ -2,23 +2,15 @@ package site.siredvin.tweakium.modules.player
 
 import com.mojang.authlib.GameProfile
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.MenuProvider
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.EntityDimensions
-import net.minecraft.world.entity.Pose
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.player.Player
-import net.minecraftforge.common.util.FakePlayer
-import java.util.*
+import net.neoforged.neoforge.common.util.FakePlayer
 
 open class ForgeFakePlayer(level: ServerLevel, profile: GameProfile) : FakePlayer(level, profile) {
 
     override fun canHarmPlayer(other: Player): Boolean = true
 
-    override fun openMenu(menu: MenuProvider?): OptionalInt = OptionalInt.empty()
-
-    override fun startRiding(vehicle: Entity, force: Boolean): Boolean = false
-
-    override fun getStandingEyeHeight(pose: Pose, dimensions: EntityDimensions): Float = 0f
+    override fun die(damageSource: DamageSource) {}
 
     override fun getEyeY(): Double = y + 0.2
 

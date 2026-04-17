@@ -1,33 +1,44 @@
 package site.siredvin.tweakium.modules.platform
 
 import com.mojang.authlib.GameProfile
-import dan200.computercraft.api.ForgeComputerCraftAPI
 import dan200.computercraft.api.peripheral.IPeripheral
 import dan200.computercraft.api.pocket.IPocketUpgrade
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.upgrades.UpgradeData
-import dan200.computercraft.impl.Peripherals
 import dan200.computercraft.impl.PocketUpgrades
 import dan200.computercraft.impl.TurtleUpgrades
 import dan200.computercraft.shared.ModRegistry
 import dan200.computercraft.shared.turtle.blocks.TurtleBlockEntity
+import dan200.computercraft.shared.util.DataComponentUtil
 import dan200.computercraft.shared.util.NBTUtil
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.nbt.CompoundTag
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.minecraftforge.common.util.LazyOptional
+import net.neoforged.neoforge.capabilities.BlockCapability
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralProvider
 import site.siredvin.tweakium.modules.platform.api.InnerComputerPlatformToolkit
 import site.siredvin.tweakium.modules.player.ForgeFakePlayer
+import thedarkcolour.kotlinforforge.neoforge.forge.MOD_CONTEXT
 
 @Suppress("UnstableApiUsage")
 object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
+
+    private val PERIPHERAL_CAPABILITY: BlockCapability<IPeripheral, Direction?> =
+        BlockCapability.createSided(
+            ResourceLocation.fromNamespaceAndPath("computercraft", "peripheral"),
+            IPeripheral::class.java,
+        )
 
     private var genericRegistered: Boolean = false
 
@@ -40,41 +51,48 @@ object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
         return null
     }
 
-    override fun getPeripheral(level: ServerLevel, pos: BlockPos, side: Direction): IPeripheral? = Peripherals.getPeripheral(level, pos, side) {}
+    override fun getPeripheral(level: ServerLevel, pos: BlockPos, side: Direction): IPeripheral? = level.getCapability(PERIPHERAL_CAPABILITY, pos, side)
 
-    override fun nbtHash(tag: CompoundTag?): String? = NBTUtil.getNBTHash(tag)
+    override fun nbtHash(tag: Tag?): String? = NBTUtil.getNBTHash(tag)
 
-    override fun getTurtleUpgrade(stack: ItemStack): UpgradeData<ITurtleUpgrade>? = TurtleUpgrades.instance().get(stack)
+    override fun nbtHash(component: DataComponentPatch?): String? {
+        if (component == null) return null
+        return NBTUtil.getNBTHash(
+            DataComponentPatch.CODEC.encodeStart(
+                NbtOps.INSTANCE,
+                component,
+            ).result().orElse(null),
+        )
+    }
 
-    override fun getPocketUpgrade(stack: ItemStack): UpgradeData<IPocketUpgrade>? = PocketUpgrades.instance().get(stack)
+    override fun getTurtleUpgrade(registries: HolderLookup.Provider, stack: ItemStack): UpgradeData<ITurtleUpgrade>? = TurtleUpgrades.instance().get(registries, stack)
 
-    override fun getTurtleUpgrade(key: String): ITurtleUpgrade? = TurtleUpgrades.instance().get(key)
-
-    override fun getPocketUpgrade(key: String): IPocketUpgrade? = PocketUpgrades.instance().get(key)
+    override fun getPocketUpgrade(registries: HolderLookup.Provider, stack: ItemStack): UpgradeData<IPocketUpgrade>? = PocketUpgrades.instance().get(registries, stack)
 
     override fun nbtToLua(tag: Tag): Any? = NBTUtil.toLua(tag)
 
     override fun createTurtlesWithUpgrade(upgrade: UpgradeData<ITurtleUpgrade>): List<ItemStack> = listOf(
-        ModRegistry.Items.TURTLE_NORMAL.get().create(-1, null, -1, null, upgrade, 0, null),
-        ModRegistry.Items.TURTLE_ADVANCED.get().create(-1, null, -1, null, upgrade, 0, null),
+        DataComponentUtil.createStack(ModRegistry.Items.TURTLE_NORMAL.get(), ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get(), upgrade),
+        DataComponentUtil.createStack(ModRegistry.Items.TURTLE_ADVANCED.get(), ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get(), upgrade),
     )
 
     override fun createPocketsWithUpgrade(upgrade: UpgradeData<IPocketUpgrade>): List<ItemStack> = listOf(
-        ModRegistry.Items.POCKET_COMPUTER_NORMAL.get().create(-1, null, -1, upgrade),
-        ModRegistry.Items.POCKET_COMPUTER_ADVANCED.get().create(-1, null, -1, upgrade),
+        DataComponentUtil.createStack(ModRegistry.Items.POCKET_COMPUTER_NORMAL.get(), ModRegistry.DataComponents.POCKET_UPGRADE.get(), upgrade),
+        DataComponentUtil.createStack(ModRegistry.Items.POCKET_COMPUTER_ADVANCED.get(), ModRegistry.DataComponents.POCKET_UPGRADE.get(), upgrade),
     )
 
     override fun registerGenericPeripheralLookup() {
         if (!genericRegistered) {
-            ForgeComputerCraftAPI.registerPeripheralProvider { world, pos, side ->
-                val entity = world.getBlockEntity(pos)
-                if (entity is IPeripheralProvider<*>) {
-                    val foundPeripheral = entity.getPeripheral(side)
-                    if (foundPeripheral != null) {
-                        return@registerPeripheralProvider LazyOptional.of { foundPeripheral }
+            MOD_CONTEXT.getKEventBus().addListener { event: RegisterCapabilitiesEvent ->
+                for (type in BuiltInRegistries.BLOCK_ENTITY_TYPE) {
+                    event.registerBlockEntity(PERIPHERAL_CAPABILITY, type) { be, side ->
+                        if (be is IPeripheralProvider<*> && side != null) {
+                            be.getPeripheral(side)
+                        } else {
+                            null
+                        }
                     }
                 }
-                return@registerPeripheralProvider LazyOptional.empty()
             }
             genericRegistered = true
         }
