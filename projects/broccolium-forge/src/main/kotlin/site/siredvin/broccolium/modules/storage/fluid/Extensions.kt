@@ -2,7 +2,6 @@ package site.siredvin.broccolium.modules.storage.fluid
 
 import net.neoforged.neoforge.fluids.FluidStack
 
-
 fun FluidStack.toVanilla(): AgnosticFluidStack {
     if (this.isEmpty) return AgnosticFluidStack.EMPTY
     return AgnosticFluidStack(this.fluid, this.amount.toDouble(), this.components.asPatch())

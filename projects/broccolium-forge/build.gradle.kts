@@ -113,7 +113,6 @@ idea {
     }
 }
 
-
 repositories {
     maven {
         name = "Kotlin for Forge"

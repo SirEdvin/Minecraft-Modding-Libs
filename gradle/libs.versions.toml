@@ -26,7 +26,7 @@ modmenu = "11.0.1"
 
 # Forge dependencies
 neoforge = "21.0.167"
-forge-kotlin = "5.4.0"
+forge-kotlin = "5.7.0"
 parchment = "2024.11.17"
 parchmentMc = "1.21.1"
 # Extra mod dependencies
@@ -75,7 +75,7 @@ modmenu = {module = "com.terraformersmc:modmenu", version.ref="modmenu"}
 
 # Forge mod dependencies
 cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.21.1-forge", version.ref="cc-tweaked"}
-forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-kotlin"}
+forge-kotlin = {module = "thedarkcolour:kotlinforforge-neoforge", version.ref = "forge-kotlin"}
 
 # Dev mod dependencies
 jei-forge = { module = "mezz.jei:jei-1.21.1-neoforge", version.ref = "jei" }

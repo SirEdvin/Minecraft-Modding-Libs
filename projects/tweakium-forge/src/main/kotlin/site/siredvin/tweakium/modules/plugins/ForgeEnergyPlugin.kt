@@ -1,7 +1,7 @@
 package site.siredvin.tweakium.modules.plugins
 
 import dan200.computercraft.api.lua.LuaFunction
-import net.minecraftforge.energy.IEnergyStorage
+import net.neoforged.neoforge.energy.IEnergyStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
 
 class ForgeEnergyPlugin(private val storage: IEnergyStorage) : IPeripheralPlugin {

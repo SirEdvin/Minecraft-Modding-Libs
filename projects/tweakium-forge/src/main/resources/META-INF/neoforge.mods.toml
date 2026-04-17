@@ -1,5 +1,5 @@
 modLoader="kotlinforforge"
-loaderVersion="[4,)"
+loaderVersion="[5,)"
 
 issueTrackerURL="https://github.com/SirEdvin/Minecraft-Modding-Libs/issues"
 logoFile="pack.png"
@@ -19,22 +19,22 @@ A library for all of my peripheral mods, actually
 '''
 
 [[dependencies.tweakium]]
-modId="forge"
-mandatory=true
-versionRange="[${forgeVersion},48)"
+modId="neoforge"
+type="required"
+versionRange="[${neoforge_version},)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.tweakium]]
 modId="computercraft"
-mandatory=true
+type="required"
 versionRange="[${computercraftVersion},)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.tweakium]]
 modId="broccolium"
-mandatory=true
+type="required"
 versionRange="[${version},)"
 ordering="NONE"
 side="BOTH"
