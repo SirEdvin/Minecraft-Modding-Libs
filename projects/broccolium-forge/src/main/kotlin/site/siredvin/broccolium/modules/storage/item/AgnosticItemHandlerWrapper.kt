@@ -1,7 +1,7 @@
 package site.siredvin.broccolium.modules.storage.item
 
 import net.minecraft.world.item.ItemStack
-import net.minecraftforge.items.IItemHandler
+import net.neoforged.neoforge.items.IItemHandler
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
 import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import java.util.function.Predicate

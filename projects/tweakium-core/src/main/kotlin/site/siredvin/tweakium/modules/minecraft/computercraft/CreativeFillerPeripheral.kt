@@ -44,9 +44,9 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
                 access.getAvailablePeripheral(target) ?: throw LuaException("Target '$target' does not exist")
             val storage = AgnosticItemStorageLookup.extractItemSinkFromUnknown(owner.level!!, location.target)
                 ?: throw LuaException("Source '$target' is not an inventory")
-            val item = PlatformRegistries.ITEMS.tryGet(ResourceLocation(id)) ?: throw LuaException("There is no item $id")
+            val item = PlatformRegistries.ITEMS.tryGet(ResourceLocation.parse(id)) ?: throw LuaException("There is no item $id")
             @Suppress("DEPRECATION")
-            storage.storeItem(item.defaultInstance.copyWithCount(limit.coerceAtMost(item.maxStackSize)))
+            storage.storeItem(item.defaultInstance.copyWithCount(limit.coerceAtMost(item.defaultMaxStackSize)))
         }
     }
 
@@ -62,7 +62,7 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
                 access.getAvailablePeripheral(target) ?: throw LuaException("Target '$target' does not exist")
             val storage = AgnosticFluidStorageLookup.extractFluidSinkFromUnknown(owner.level!!, location.target)
                 ?: throw LuaException("Source '$target' is not an inventory")
-            val fluid = PlatformRegistries.FLUIDS.tryGet(ResourceLocation(id)) ?: throw LuaException("There is no fluid $id")
+            val fluid = PlatformRegistries.FLUIDS.tryGet(ResourceLocation.parse(id)) ?: throw LuaException("There is no fluid $id")
             storage.storeFluid(AgnosticFluidStack(fluid, limit.toDouble()))
         }
     }

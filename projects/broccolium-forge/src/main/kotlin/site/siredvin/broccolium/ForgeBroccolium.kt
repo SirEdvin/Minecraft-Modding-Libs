@@ -1,7 +1,7 @@
 package site.siredvin.broccolium
 
-import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber
+import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.fml.common.Mod
 import site.siredvin.broccolium.modules.platform.ForgeInnerPlatformToolkit
 import site.siredvin.broccolium.modules.platform.ForgePlatformIngredients
 import site.siredvin.broccolium.modules.platform.ForgePlatformTags

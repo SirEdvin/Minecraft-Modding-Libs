@@ -147,7 +147,7 @@ object PeripheralPluginUtils {
     }
 
     private fun buildItemNameInPredicate(names: Set<String>): Predicate<ItemStack> {
-        val items = names.map { PlatformRegistries.ITEMS.get(ResourceLocation(it)) }.filter { it != Items.AIR }.toSet()
+        val items = names.map { PlatformRegistries.ITEMS.get(ResourceLocation.parse(it)) }.filter { it != Items.AIR }.toSet()
         if (items.isEmpty()) {
             throw LuaException("Zero valid items for filtering by name")
         }

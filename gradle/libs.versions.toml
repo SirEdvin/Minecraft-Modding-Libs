@@ -25,8 +25,8 @@ forgeconfigapirt = "8.0.0"
 modmenu = "11.0.1"
 
 # Forge dependencies
-forge = "47.1.0"
-forge-kotlin = "4.4.0"
+neoforge = "21.0.167"
+forge-kotlin = "5.4.0"
 parchment = "2024.11.17"
 parchmentMc = "1.21.1"
 # Extra mod dependencies

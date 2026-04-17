@@ -1,14 +1,14 @@
 package site.siredvin.broccolium
 
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraftforge.event.entity.EntityJoinLevelEvent
-import net.minecraftforge.event.entity.living.LivingDropsEvent
-import net.minecraftforge.eventbus.api.EventPriority
-import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.common.Mod
+import net.neoforged.bus.api.EventPriority
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent
 import site.siredvin.broccolium.modules.platform.LibCommonHooks
 
-@Mod.EventBusSubscriber(modid = BroccoliumCore.MOD_ID)
+@EventBusSubscriber(modid = BroccoliumCore.MOD_ID)
 object ForgeCommonHooks {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onEntitySpawn(event: EntityJoinLevelEvent) {

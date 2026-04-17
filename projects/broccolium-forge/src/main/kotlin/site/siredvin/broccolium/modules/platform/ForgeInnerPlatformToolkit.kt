@@ -25,16 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.phys.EntityHitResult
-import net.minecraftforge.common.ForgeHooks
-import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.common.world.ForgeChunkManager
-import net.minecraftforge.event.level.BlockEvent.BreakEvent
-import net.minecraftforge.eventbus.api.Event
-import net.minecraftforge.network.NetworkHooks
-import net.minecraftforge.registries.ForgeRegistry
-import net.minecraftforge.registries.RegistryManager
-import net.minecraftforge.server.ServerLifecycleHooks
+import net.minecraft.world.phys.EntityHitResults
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformToolkit
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import site.siredvin.broccolium.modules.platform.api.SavingFunction
@@ -48,9 +39,9 @@ import java.util.function.Predicate
 @Suppress("UnstableApiUsage")
 object ForgeInnerPlatformToolkit : InnerPlatformToolkit {
 
-    private class ForgeRegistryWrapper<T>(private val name: ResourceLocation, private val registry: ForgeRegistry<T>) : RegistryWrapper<T> {
+    private class ForgeRegistryWrapper<T>(private val name: ResourceLocation, private val registry: Registry<T>) : RegistryWrapper<T> {
         override fun getId(something: T): Int {
-            val id = registry.getID(something)
+            val id = registry.get(something)
             if (id == -1) throw IllegalArgumentException()
             return id
         }

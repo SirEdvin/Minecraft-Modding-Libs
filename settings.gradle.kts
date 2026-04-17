@@ -32,7 +32,7 @@ val minecraftVersion: String by settings
 rootProject.name = "Modding libs $minecraftVersion"
 
 include(":broccolium-core")
-//include(":broccolium-forge")
+include(":broccolium-forge")
 include(":broccolium-fabric")
 include(":tweakium-core")
 //include(":tweakium-forge")

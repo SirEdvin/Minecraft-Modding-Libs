@@ -1,9 +1,9 @@
 package site.siredvin.broccolium.modules.storage.fluid
 
-import net.minecraftforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import java.util.function.Predicate
-import net.minecraftforge.fluids.FluidStack as ForgeFluidStack
 
 class ForgeAgnosticFluidStorage(private val handler: IFluidHandler) : AgnosticFluidStorage {
     override fun getFluids(): Iterator<AgnosticFluidStack> = (0 until handler.tanks).map {
@@ -14,12 +14,12 @@ class ForgeAgnosticFluidStorage(private val handler: IFluidHandler) : AgnosticFl
 
     override fun takeFluid(predicate: Predicate<AgnosticFluidStack>, limit: Double): AgnosticFluidStack {
         var realLimit = limit
-        var forgeStack = ForgeFluidStack.EMPTY
+        var forgeStack = FluidStack.EMPTY
         for (i in 0 until handler.tanks) {
             val storedFluid = handler.getFluidInTank(i)
-            if (predicate.test(storedFluid.toVanilla()) && (forgeStack.isEmpty || storedFluid.isFluidEqual(forgeStack))) {
-                val extractedStack = handler.drain(storedFluid.copyWithCount(minOf(storedFluid.amount.toDouble(), realLimit).toInt()), IFluidHandler.FluidAction.EXECUTE)
-                if (!extractedStack.isEmpty) {
+            if (predicate.test(storedFluid.toVanilla()) && (forgeStack.isEmpty || FluidStack.isSameFluidSameComponents(storedFluid, forgeStack))) {
+                val extractedStack: FluidStack = handler.drain(storedFluid.copyWithCount(minOf(storedFluid.amount.toDouble(), realLimit).toInt()), IFluidHandler.FluidAction.EXECUTE)
+                if (!extractedStack.isEmpty()) {
                     if (!forgeStack.isEmpty) {
                         forgeStack.amount += extractedStack.amount
                     } else {

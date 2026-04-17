@@ -10,7 +10,7 @@ import java.util.function.Supplier
 
 object TweakiumBlockEntityTypes {
     val CREATIVE_FILLER: Supplier<BlockEntityType<CreativeFillerBlockEntity>> = TweakiumPlatform.registerBlockEntity(
-        ResourceLocation(TweakiumCore.MOD_ID, "creative_filler"),
+        ResourceLocation.fromNamespaceAndPath(TweakiumCore.MOD_ID, "creative_filler"),
     ) {
         PlatformToolkit.get().createBlockEntityType(
             ::CreativeFillerBlockEntity,

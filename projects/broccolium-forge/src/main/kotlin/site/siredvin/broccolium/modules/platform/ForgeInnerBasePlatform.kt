@@ -16,8 +16,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraftforge.common.extensions.IForgeMenuType
-import net.minecraftforge.registries.DeferredRegister
+import net.neoforged.neoforge.registries.DeferredRegister
 import site.siredvin.broccolium.modules.platform.api.InnerBasePlatform
 import site.siredvin.broccolium.modules.platform.api.MenuBuilder
 import java.util.function.Supplier
@@ -64,7 +63,7 @@ abstract class ForgeInnerBasePlatform : InnerBasePlatform {
         builder: MenuBuilder<M>,
     ): Supplier<MenuType<M>> {
         val result = menuTypes!!.register(key.path) {
-            IForgeMenuType.create(builder::build)
+            INeoForge.create(builder::build)
         }
         return result
     }
