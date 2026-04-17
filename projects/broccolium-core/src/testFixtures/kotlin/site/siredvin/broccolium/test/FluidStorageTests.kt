@@ -119,9 +119,9 @@ abstract class FluidStorageTests {
             it.fluid.isSame(Fluids.LAVA)
         }
         val movedAmount = from.moveTo(to, 1.0, takePredicate = predicate)
-        assertEquals("count", 1L, movedAmount)
+        assertEquals("count", 1.0, movedAmount)
         StorageTestHelpers.assertFluidStorage(from, listOf(1000.0, 500.0), "from")
-        StorageTestHelpers.assertFluidStorage(to, listOf(1000.0, 1.0), "to")
+        StorageTestHelpers.assertFluidStorage(to, listOf(100.0, 1.0), "to")
         StorageTestHelpers.assertNoOverlap(from, to)
     }
 
@@ -140,7 +140,7 @@ abstract class FluidStorageTests {
             it.fluid.isSame(Fluids.LAVA)
         }
         val movedAmount = from.moveTo(to, 1.0, takePredicate = predicate)
-        assertEquals("count", 0L, movedAmount)
+        assertEquals("count", 0.0, movedAmount)
         StorageTestHelpers.assertFluidStorage(from, listOf(500.0, 500.0, 500.0), "from")
         StorageTestHelpers.assertFluidStorage(to, listOf(1000.0), "to")
         StorageTestHelpers.assertNoOverlap(from, to)

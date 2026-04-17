@@ -111,10 +111,10 @@ abstract class EnergyStorageTests {
             it.unit == defaultUnits
         }
         val movedAmount = from.moveTo(to, 1000, takePredicate = predicate)
-        assertEquals("count", 0, movedAmount)
-        assertEquals("count", 1000, from.energy.amount)
+        assertEquals("count", 0L, movedAmount)
+        assertEquals("count", 1000L, from.energy.amount)
         assertEquals("count", DUMMY_ENERGY, from.energy.unit)
-        assertEquals("count", 0, to.energy.amount)
+        assertEquals("count", 0L, to.energy.amount)
         assertEquals("count", defaultUnits, to.energy.unit)
     }
 }
