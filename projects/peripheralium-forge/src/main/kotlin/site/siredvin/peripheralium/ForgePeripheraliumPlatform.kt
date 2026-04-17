@@ -3,7 +3,7 @@ package site.siredvin.peripheralium
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.minecraftforge.registries.DeferredRegister
+import net.neoforged.neoforge.registries.DeferredRegister
 import site.siredvin.broccolium.modules.platform.ForgeInnerBasePlatform
 
 object ForgePeripheraliumPlatform : ForgeInnerBasePlatform() {

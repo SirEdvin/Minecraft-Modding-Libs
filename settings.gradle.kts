@@ -38,7 +38,7 @@ include(":tweakium-core")
 include(":tweakium-forge")
 include(":tweakium-fabric")
 include(":peripheralium-core")
-//include(":peripheralium-forge")
+include(":peripheralium-forge")
 include(":peripheralium-fabric")
 
 

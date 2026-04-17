@@ -1,5 +1,5 @@
 modLoader="kotlinforforge"
-loaderVersion="[4,)"
+loaderVersion="[5,)"
 
 issueTrackerURL="https://github.com/SirEdvin/Minecraft-Modding-Libs/issues"
 logoFile="pack.png"
@@ -8,7 +8,7 @@ license="MIT"
 
 [[mods]]
 modId="peripheralium"
-version="${version}"
+version="${file.jarVersion}"
 displayName="Peripheralium"
 displayURL="https://github.com/SirEdvin/Minecraft-Modding-Libs/"
 
@@ -19,29 +19,29 @@ A basic mod for modding libs test
 '''
 
 [[dependencies.peripheralium]]
-modId="forge"
-mandatory=true
-versionRange="[${forgeVersion},48)"
+modId="neoforge"
+type="required"
+versionRange="[${neoforge_version},)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.peripheralium]]
 modId="computercraft"
-mandatory=true
+type="required"
 versionRange="[${computercraftVersion},)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.peripheralium]]
 modId="broccolium"
-mandatory=true
+type="required"
 versionRange="[${broccoliumVersion},)"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.peripheralium]]
 modId="tweakium"
-mandatory=true
+type="required"
 versionRange="[${tweakiumVersion},)"
 ordering="NONE"
 side="BOTH"
