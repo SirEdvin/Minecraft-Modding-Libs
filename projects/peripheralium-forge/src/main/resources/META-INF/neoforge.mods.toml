@@ -21,7 +21,7 @@ A basic mod for modding libs test
 [[dependencies.peripheralium]]
 modId="neoforge"
 type="required"
-versionRange="[${neoforge_version},)"
+versionRange="[${neoforgeVersion},)"
 ordering="NONE"
 side="BOTH"
 

@@ -2,9 +2,9 @@ import site.siredvin.peripheralium.gradle.mavenDependencies
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
+    id("site.siredvin.neoforge")
     id("site.siredvin.publishing")
     id("site.siredvin.mod-publishing")
-    id("net.neoforged.moddev") version "2.0.115"
     id("idea")
 }
 
@@ -20,46 +20,23 @@ baseShaking {
     shake()
 }
 
-val extractedLibs = project.extensions.getByType<VersionCatalogsExtension>().named("libs")
-val projectName = "peripheralium"
-val commonProjectName = "peripheralium-core"
-
-neoForge {
-    version = extractedLibs.findVersion("neoforge").get().toString()
-
-    parchment {
-        mappingsVersion = extractedLibs.findVersion("parchment").get().toString()
-        minecraftVersion = extractedLibs.findVersion("parchmentMc").get().toString()
-    }
-
-    runs {
-        all {
-            systemProperty("neoforge.logging.markers", "REGISTRIES")
-            systemProperty("neoforge.logging.console.level", "debug")
-        }
-
-        val client by registering {
-            client()
-            gameDirectory = project.file("run")
-        }
-
-        val server by registering {
-            server()
-            gameDirectory = project.file("run/server")
-            programArguments.addAll("--nogui")
-        }
-
-        val data by registering {
-            data()
-            gameDirectory = project.file("run")
-            programArguments.addAll(
-                "--mod", projectName, "--all",
-                "--output", project.file("src/generated/resources/").absolutePath,
-                "--existing", project.project(":peripheralium-core").file("src/main/resources/").absolutePath,
-                "--existing", project.file("src/main/resources/").absolutePath,
-            )
-        }
-    }
+neoforgeShaking {
+    projectName.set("peripheralium")
+    commonProjectName.set("peripheralium-core")
+    useAT.set(true)
+    useRawJar.set(true)
+    extraVersionMappings.set(
+        mapOf(
+            "computercraft" to "cc-tweaked",
+        ),
+    )
+    extraRawVersionMappings.set(
+        mapOf(
+            "broccolium" to broccoliumVersion,
+            "tweakium" to tweakiumVersion,
+        ),
+    )
+    shake()
 }
 
 repositories {
@@ -86,25 +63,6 @@ sourceSets {
     }
 }
 
-configurations.create("raw") {
-    isCanBeConsumed = true
-}
-
-tasks.register<Jar>("rawJar") {
-    dependsOn(tasks.named("jar"))
-    archiveBaseName.set(archiveBaseName.get() + "-raw")
-    archiveClassifier.set("raw")
-    from(sourceSets["main"].output)
-}
-
-tasks.named("jar") { finalizedBy("rawJar") }
-
-artifacts {
-    add("raw", tasks["rawJar"]) {
-        classifier = "raw"
-    }
-}
-
 idea {
     module {
         isDownloadSources = true
@@ -128,11 +86,6 @@ dependencies {
     libs.bundles.forge.base.get().map { implementation(it) }
     libs.bundles.forge.cc.get().map { implementation(it) }
 
-    compileOnly(project(":$commonProjectName")) {
-        exclude("cc.tweaked")
-        exclude("fuzs.forgeconfigapiport")
-        exclude("dan200.computercraft")
-    }
     compileOnly(project(":tweakium-core")) {
         exclude("cc.tweaked")
         exclude("fuzs.forgeconfigapiport")
