@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
 import site.siredvin.broccolium.modules.base.block.FacingBlockEntityBlock
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
 import site.siredvin.tweakium.modules.player.FakePlayerProviderBlockEntity
@@ -44,8 +44,8 @@ open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProper
         CompoundTagDataStorage(CompoundTag()) { }
     }
 
-    override val storage: SlottedAgnosticItemStorage? by lazy {
-        AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity) as? SlottedAgnosticItemStorage
+    override val storage: SlottedAgnosticStorage<ItemStack, Int>? by lazy {
+        AgnosticItemStorageLookup.extractFromBlock(blockEntity.level!!, blockEntity.blockPos, blockEntity, null) as? SlottedAgnosticStorage<ItemStack, Int>
     }
 
     override fun <T> withPlayer(function: (FakePlayerProxy) -> T, overwrittenDirection: Direction?, skipInventory: Boolean): T {
@@ -62,7 +62,7 @@ open class RawBlockEntityPeripheralOwner<T>(val blockEntity: T, val facingProper
         if (storage == null) {
             return stored
         }
-        return storage!!.storeItem(stored)
+        return storage!!.store(stored, false)
     }
 
     override fun destroyUpgrade() {

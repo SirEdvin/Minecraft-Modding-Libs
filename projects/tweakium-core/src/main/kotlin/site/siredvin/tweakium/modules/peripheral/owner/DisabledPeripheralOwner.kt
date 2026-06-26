@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.util.CompoundTagDataStorage
 import site.siredvin.tweakium.modules.player.FakePlayerProxy
@@ -23,7 +23,7 @@ class DisabledPeripheralOwner : BasePeripheralOwner() {
     override val dataStorage: IDataStorage
         get() = CompoundTagDataStorage(CompoundTag()) { }
 
-    override val storage: SlottedAgnosticItemStorage?
+    override val storage: SlottedAgnosticStorage<ItemStack, Int>?
         get() = null
 
     override fun <T> withPlayer(

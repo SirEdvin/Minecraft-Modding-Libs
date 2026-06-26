@@ -7,10 +7,12 @@ import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticStorage
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemSinkLookup
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
+import site.siredvin.tweakium.modules.peripheral.api.ISidedPeripheral
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
 import site.siredvin.tweakium.modules.peripheral.representation.RepresentationMode
 import java.util.*
@@ -18,7 +20,7 @@ import java.util.function.Predicate
 import kotlin.math.min
 
 abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
-    abstract val storage: AgnosticItemStorage
+    abstract val storage: AgnosticStorage<ItemStack, Int>
     abstract val level: Level
     abstract val itemStorageTransferLimit: Int
 
@@ -32,7 +34,7 @@ abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
         } else {
             ItemStorageUtils.ALWAYS
         }
-        storage.getItems().forEach {
+        storage.getContent().forEach {
             if (!it.isEmpty && predicate.test(it)) {
                 result.add(LuaRepresentation.forItemStack(it, mode))
             }
@@ -56,7 +58,9 @@ abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
         val location: IPeripheral = computer.getAvailablePeripheral(toName)
             ?: throw LuaException("Target '$toName' does not exist")
 
-        val toStorage = AgnosticItemStorageLookup.extractItemSinkFromUnknown(level, location.target)
+        val direction = if (location is ISidedPeripheral) location.side else null
+
+        val toStorage = AgnosticItemSinkLookup.extractFromUnknown(level, location.target, direction)
             ?: throw LuaException("Target '$toName' is not an targetable storage")
 
         val predicate: Predicate<ItemStack> = PeripheralPluginUtils.itemQueryToPredicate(itemQuery)
@@ -69,7 +73,9 @@ abstract class AbstractItemStoragePlugin : IPeripheralPlugin {
         val location: IPeripheral = computer.getAvailablePeripheral(fromName)
             ?: throw LuaException("Target '$fromName' does not exist")
 
-        val fromStorage = AgnosticItemStorageLookup.extractStorageFromUnknown(level, location.target)
+        val direction = if (location is ISidedPeripheral) location.side else null
+
+        val fromStorage = AgnosticItemStorageLookup.extractFromUnknown(level, location.target, direction)
             ?: throw LuaException("Target '$fromName' is not an storage")
 
         val predicate: Predicate<ItemStack> = PeripheralPluginUtils.itemQueryToPredicate(itemQuery)

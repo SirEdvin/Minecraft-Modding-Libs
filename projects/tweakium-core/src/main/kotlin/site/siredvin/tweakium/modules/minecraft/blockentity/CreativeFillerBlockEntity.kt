@@ -2,16 +2,17 @@ package site.siredvin.tweakium.modules.minecraft.blockentity
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticSink
 import site.siredvin.broccolium.modules.storage.energy.VoidEnergySink
 import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergySink
 import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergySinkProvider
+import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.VoidFluidSink
-import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidSink
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidSinkProvider
 import site.siredvin.broccolium.modules.storage.item.VoidItemSink
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSink
 import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSinkProvider
 import site.siredvin.tweakium.modules.minecraft.computercraft.CreativeFillerPeripheral
 import site.siredvin.tweakium.modules.minecraft.setup.TweakiumBlockEntityTypes
@@ -29,10 +30,10 @@ class CreativeFillerBlockEntity(blockPos: BlockPos, blockState: BlockState) :
     AgnosticEnergySinkProvider {
 
     override fun createPeripheral(side: Direction): CreativeFillerPeripheral = CreativeFillerPeripheral(BlockEntityPeripheralOwner(this))
-    override val itemSink: AgnosticItemSink by lazy {
+    override val itemSink: AgnosticSink<ItemStack, Int> by lazy {
         VoidItemSink()
     }
-    override val fluidSink: AgnosticFluidSink by lazy {
+    override val fluidSink: AgnosticSink<AgnosticFluidStack, Double> by lazy {
         VoidFluidSink()
     }
     override val energySink: AgnosticEnergySink by lazy {

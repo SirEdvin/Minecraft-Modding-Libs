@@ -1,65 +1,47 @@
 package site.siredvin.broccolium.modules.storage.energy
 
-import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergySink
-import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
+import site.siredvin.broccolium.modules.storage.base.api.SomethingOperator
 import java.util.function.Predicate
 
 @Suppress("MemberVisibilityCanBePrivate")
-object EnergyStorageUtils {
+object EnergyStorageUtils : SomethingOperator<AgnosticEnergyStack, Long> {
+    val ALWAYS = Predicate<AgnosticEnergyStack> { true }
+    override fun isEmpty(something: AgnosticEnergyStack): Boolean = something.isEmpty
 
-    val ALWAYS: Predicate<AgnosticEnergyStack> = Predicate { true }
+    override fun getSize(something: AgnosticEnergyStack): Long = something.amount
 
-    fun naiveMove(from: AgnosticEnergyStorage, to: AgnosticEnergySink, limit: Long, takePredicate: Predicate<AgnosticEnergyStack>): Long {
-        val conversionMode = from.unit != to.unit
-        if (conversionMode && !EnergyRegistry.isConvertible(from.unit, to.unit)) {
-            return 0
-        }
-        // Get stack to move
-        var stack = from.takeEnergy(takePredicate, limit)
-        if (stack.isEmpty) {
-            return 0
-        }
+    override fun canStack(first: AgnosticEnergyStack, second: AgnosticEnergyStack): Boolean = AgnosticEnergyStack.isSameEnergy(first, second)
 
-        val stackCount = stack.amount
-        if (conversionMode) {
-            stack = EnergyRegistry.convert(stack, to.unit)
-        }
-
-        // Move item to
-        var remainder = to.storeEnergy(stack)
-        if (conversionMode) {
-            remainder = EnergyRegistry.convert(remainder, from.unit, true)
-        }
-
-        // Calculate items moved
-        val count = stackCount - remainder.amount
-        if (!remainder.isEmpty) {
-            // Put reminder back
-            from.storeEnergy(remainder)
-        }
-        return count
-    }
-
-    fun canStack(first: AgnosticEnergyStack, second: AgnosticEnergyStack): Boolean = AgnosticEnergyStack.isSameEnergy(first, second)
-
-    fun canMerge(first: AgnosticEnergyStack, second: AgnosticEnergyStack, stackLimit: Long = -1): Boolean {
+    override fun canMerge(first: AgnosticEnergyStack, second: AgnosticEnergyStack, stackLimit: Long?): Boolean {
         if (!canStack(first, second)) {
             return false
         }
-        val realStackLimit = if (stackLimit == -1L) Long.MAX_VALUE else minOf(stackLimit, Long.MAX_VALUE)
+        val realStackLimit = if (stackLimit == null) Long.MAX_VALUE else minOf(stackLimit, Long.MAX_VALUE)
         return first.amount < realStackLimit
     }
 
     /**
      * Merge second item stack into first one and returns remains
      */
-    fun inplaceMerge(first: AgnosticEnergyStack, second: AgnosticEnergyStack, mergeLimit: Long = Long.MAX_VALUE): AgnosticEnergyStack {
+    override fun inplaceMerge(first: AgnosticEnergyStack, second: AgnosticEnergyStack, mergeLimit: Long?): AgnosticEnergyStack {
         if (!canMerge(first, second, mergeLimit)) {
             return second
         }
-        val mergeSize = minOf(second.amount, mergeLimit - first.amount)
+        val mergeSize = minOf(second.amount, (mergeLimit ?: Long.MAX_VALUE) - first.amount)
         first.grow(mergeSize)
         second.shrink(mergeSize)
         return second
     }
+
+    override fun getZero(): Long = 0L
+
+    override fun isZero(value: Long): Boolean = value == 0L
+
+    override fun biggerThanZero(value: Long): Boolean = value > 0
+
+    override fun min(first: Long, second: Long): Long = first.coerceAtMost(second)
+
+    override fun subtract(first: Long, second: Long): Long = first - second
+
+    override fun add(first: Long, second: Long): Long = first + second
 }

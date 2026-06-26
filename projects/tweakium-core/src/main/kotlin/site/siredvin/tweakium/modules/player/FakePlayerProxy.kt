@@ -69,14 +69,14 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
     }
 
     fun <T> withConsumer(entity: Entity, func: () -> (T)): T {
-        DropConsumer.configure(entity, { stack: ItemStack -> ContainerUtils.storeItem(inventory, stack) })
+        DropConsumer.configure(entity, { stack: ItemStack -> ContainerUtils.storeItem(inventory, stack, simulate = false) })
         val result = func()
         DropConsumer.resetAndDrop(level, fakePlayer.blockPosition().above())
         return result
     }
 
     fun <T> withConsumer(level: Level, pos: BlockPos, func: () -> (T)): T {
-        DropConsumer.configure(level, pos, { stack -> ContainerUtils.storeItem(inventory, stack) })
+        DropConsumer.configure(level, pos, { stack -> ContainerUtils.storeItem(inventory, stack, simulate = false) })
         val result = func()
         DropConsumer.resetAndDrop(level, fakePlayer.blockPosition().above())
         return result
