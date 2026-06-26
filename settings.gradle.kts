@@ -26,6 +26,9 @@ pluginManagement {
             if (requested.id.id == "org.spongepowered.mixin") {
                 useModule("org.spongepowered:mixingradle:${requested.version}")
             }
+            if (requested.id.id.startsWith("site.siredvin.")) {
+                useModule("site.siredvin:modding-buildenv:${requested.version}")
+            }
         }
     }
 }
