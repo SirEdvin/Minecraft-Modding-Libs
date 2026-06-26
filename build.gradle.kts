@@ -3,8 +3,8 @@ import java.util.*
 
 plugins {
     java
-    id("site.siredvin.root") version "0.8.22"
-    id("site.siredvin.release") version "0.8.22"
+    id("site.siredvin.root") version "0.9.0"
+    id("site.siredvin.release") version "0.9.0"
     id("com.github.ben-manes.versions") version "0.51.0"
 }
 

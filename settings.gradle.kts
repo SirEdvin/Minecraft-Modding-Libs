@@ -26,9 +26,6 @@ pluginManagement {
             if (requested.id.id == "org.spongepowered.mixin") {
                 useModule("org.spongepowered:mixingradle:${requested.version}")
             }
-            if (requested.id.id == "site.siredvin.neoforge") {
-                useModule("site.siredvin:modding-buildenv:0.8.22")
-            }
         }
     }
 }
