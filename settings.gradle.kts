@@ -7,6 +7,8 @@ pluginManagement {
             content {
                 includeGroup("net.minecraftforge")
                 includeGroup("net.minecraftforge.gradle")
+                includeGroup("net.neoforged")
+                includeGroup("net.neoforged.moddev")
                 includeGroup("org.parchmentmc")
                 includeGroup("org.parchmentmc.feather")
                 includeGroup("org.parchmentmc.data")

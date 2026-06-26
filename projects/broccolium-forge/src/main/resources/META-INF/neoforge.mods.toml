@@ -21,6 +21,6 @@ A library for all of my mods, actually
 [[dependencies.broccolium]]
 modId="neoforge"
 type="required"
-versionRange="[${neoforge_version},)"
+versionRange="[${neoforgeVersion},)"
 ordering="NONE"
 side="BOTH"

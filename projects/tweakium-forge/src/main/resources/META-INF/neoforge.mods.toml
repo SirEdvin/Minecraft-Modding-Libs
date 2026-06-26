@@ -8,7 +8,7 @@ license="MIT"
 
 [[mods]]
 modId="tweakium"
-version="${version}"
+version="${file.jarVersion}"
 displayName="Tweakium"
 displayURL="https://github.com/SirEdvin/Minecraft-Modding-Libs/"
 
@@ -21,7 +21,7 @@ A library for all of my peripheral mods, actually
 [[dependencies.tweakium]]
 modId="neoforge"
 type="required"
-versionRange="[${neoforge_version},)"
+versionRange="[${neoforgeVersion},)"
 ordering="NONE"
 side="BOTH"
 
@@ -35,6 +35,6 @@ side="BOTH"
 [[dependencies.tweakium]]
 modId="broccolium"
 type="required"
-versionRange="[${version},)"
+versionRange="[${broccoliumVersion},)"
 ordering="NONE"
 side="BOTH"
