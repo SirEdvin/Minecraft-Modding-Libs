@@ -2,21 +2,21 @@ package site.siredvin.broccolium.test
 
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import site.siredvin.broccolium.modules.storage.base.api.AccessibleAgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
-import site.siredvin.broccolium.modules.storage.item.api.AccessibleAgnosticItemStorage
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
-import kotlin.test.junit5.JUnit5Asserter.assertEquals
 
 abstract class SlottedStorageTests : StorageTests() {
 
-    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage = createSlottedStorage(items, secondary)
-    abstract fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticItemStorage
+    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticStorage<ItemStack, Int> = createSlottedStorage(items, secondary)
+    abstract fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int>
 
-    fun createSlottedStorage(sizes: List<Int>, stack: ItemStack, secondary: Boolean): SlottedAgnosticItemStorage = createSlottedStorage(
+    fun createSlottedStorage(sizes: List<Int>, stack: ItemStack, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int> = createSlottedStorage(
         sizes.map {
             if (it == 0) {
                 ItemStack.EMPTY
@@ -93,7 +93,7 @@ abstract class SlottedStorageTests : StorageTests() {
         val dirtBlock = ItemStack(Items.DIRT, 26)
         val storage = createSlottedStorage(listOf(26, 0, 0, 0, 0, 0, 0, 0, 0), dirtBlock, false)
         val movedAmount = storage.moveTo(storage, 64, fromSlot = 0, toSlot = 1, takePredicate = { true })
-        assertEquals("expectedMove", 26, movedAmount)
+        assertEquals(26, movedAmount, "expectedMove")
         StorageTestHelpers.assertSlottedStorage(storage, listOf(0, 26, 0, 0, 0, 0, 0, 0, 0), "storage")
     }
 
@@ -102,7 +102,7 @@ abstract class SlottedStorageTests : StorageTests() {
         val dirtBlock = ItemStack(Items.DIRT, 26)
         val storage = createSlottedStorage(listOf(0, 26, 0, 0, 0, 0, 0, 0, 0), dirtBlock, false)
         val movedAmount = storage.moveTo(storage, 64, fromSlot = 1, toSlot = 2, takePredicate = { true })
-        assertEquals("expectedMove", 26, movedAmount)
+        assertEquals(26, movedAmount, "expectedMove")
         StorageTestHelpers.assertSlottedStorage(storage, listOf(0, 0, 26, 0, 0, 0, 0, 0, 0), "storage")
     }
 
@@ -113,7 +113,7 @@ abstract class SlottedStorageTests : StorageTests() {
         val from = createSlottedStorage(argument.initialFrom, grassBlock, false)
         val to = createSlottedStorage(argument.initialTo, grassBlock, true)
         val movedAmount = from.moveTo(to, argument.moveLimit, argument.fromSlot, argument.toSlot, takePredicate = ItemStorageUtils.ALWAYS)
-        assertEquals("expectedMove", argument.expectedMoveAmount, movedAmount)
+        assertEquals(argument.expectedMoveAmount, movedAmount, "expectedMove")
         StorageTestHelpers.assertSlottedStorage(from, argument.expectedFrom, "from")
         StorageTestHelpers.assertSlottedStorage(to, argument.expectedTo, "to")
         StorageTestHelpers.assertNoOverlap(from, to)
@@ -126,7 +126,7 @@ abstract class SlottedStorageTests : StorageTests() {
         val from = createSlottedStorage(argument.initialFrom, grassBlock, false)
         val to = createSlottedStorage(argument.initialTo, grassBlock, true)
         val movedAmount = to.moveFrom(from, argument.moveLimit, argument.toSlot, argument.fromSlot, takePredicate = ItemStorageUtils.ALWAYS)
-        assertEquals("expectedMove", argument.expectedMoveAmount, movedAmount)
+        assertEquals(argument.expectedMoveAmount, movedAmount, "expectedMove")
         StorageTestHelpers.assertSlottedStorage(from, argument.expectedFrom, "from")
         StorageTestHelpers.assertSlottedStorage(to, argument.expectedTo, "to")
         StorageTestHelpers.assertNoOverlap(from, to)

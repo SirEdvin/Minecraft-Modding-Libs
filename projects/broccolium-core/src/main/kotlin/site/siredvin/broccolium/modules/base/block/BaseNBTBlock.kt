@@ -13,18 +13,21 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
+import site.siredvin.broccolium.modules.base.api.ISavableBlockEntity
 import site.siredvin.broccolium.modules.base.api.ISyncingBlockEntity
 import site.siredvin.broccolium.modules.base.util.BlockUtil
 
 abstract class BaseNBTBlock<T>(
     belongToTickingEntity: Boolean,
     properties: Properties = BlockUtil.defaultProperties(),
-) : BaseBlockEntityBlock<T>(belongToTickingEntity, properties) where T : BlockEntity, T : ISyncingBlockEntity {
+) : BaseBlockEntityBlock<T>(belongToTickingEntity, properties) where T : BlockEntity, T : ISavableBlockEntity {
     abstract fun createItemStack(): ItemStack
 
-    open fun prepareItemStack(blockEntity: ISyncingBlockEntity, state: BlockState): ItemStack {
+    open val savableProperties: List<Property<*>>
+        get() = emptyList()
+    open fun prepareItemStack(blockEntity: ISavableBlockEntity, state: BlockState): ItemStack {
         val stack: ItemStack = createItemStack()
-        val internalData = blockEntity.saveInternalData(CompoundTag())
+        val internalData = blockEntity.saveSavableData(CompoundTag())
         if (!internalData.isEmpty) {
             stack.set(DataComponents.CUSTOM_DATA, CustomData.of(internalData))
         }
@@ -42,12 +45,9 @@ abstract class BaseNBTBlock<T>(
         return stack
     }
 
-    open val savableProperties: List<Property<*>>
-        get() = emptyList()
-
     override fun playerWillDestroy(level: Level, pos: BlockPos, state: BlockState, player: Player): BlockState {
         val blockEntity = level.getBlockEntity(pos)
-        if (blockEntity is ISyncingBlockEntity) {
+        if (blockEntity is ISavableBlockEntity) {
             if (!level.isClientSide && !player.isCreative) {
                 val stack = prepareItemStack(blockEntity, state)
                 val itemDrop = ItemEntity(
@@ -69,7 +69,7 @@ abstract class BaseNBTBlock<T>(
         var state = initialState
         super.setPlacedBy(level, pos, state, entity, stack)
         val blockEntity = level.getBlockEntity(pos)
-        if (blockEntity is ISyncingBlockEntity) {
+        if (blockEntity is ISavableBlockEntity) {
             if (!level.isClientSide) {
                 if (stack.components.has(DataComponents.BLOCK_STATE)) {
                     val savedState: BlockState = stack.components.get(
@@ -82,8 +82,10 @@ abstract class BaseNBTBlock<T>(
                     }
                 }
                 if (stack.components.has(DataComponents.CUSTOM_DATA)) {
-                    state = blockEntity.loadInternalData(stack.components.get(DataComponents.CUSTOM_DATA)!!.copyTag(), state)
-                    blockEntity.pushInternalDataChangeToClient(state)
+                    state = blockEntity.loadSavableData(stack.components.get(DataComponents.CUSTOM_DATA)!!.copyTag(), state)
+                    if (blockEntity is ISyncingBlockEntity) {
+                        blockEntity.pushInternalDataChangeToClient(state)
+                    }
                 }
             }
         }

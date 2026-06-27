@@ -4,17 +4,17 @@ import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.item.ItemStack
 import org.junit.jupiter.api.extension.ExtendWith
+import site.siredvin.broccolium.modules.storage.base.api.AccessibleAgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
 import site.siredvin.broccolium.modules.storage.item.FabricSlottedStorageWrapper
 import site.siredvin.broccolium.modules.storage.item.FabricStorageWrapper
-import site.siredvin.broccolium.modules.storage.item.api.AccessibleAgnosticItemStorage
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.broccolium.test.storage.DummyStorage
 
 internal class TweakedFabricStorageWrapper(private val inventoryStorage: InventoryStorage) :
     FabricStorageWrapper(inventoryStorage),
-    AccessibleAgnosticItemStorage {
-    override fun getItem(slot: Int): ItemStack {
+    AccessibleAgnosticStorage<ItemStack, Int> {
+    override fun get(slot: Int): ItemStack {
         val variantInSlot = inventoryStorage.getSlot(slot)
         return variantInSlot.resource.toStack(variantInSlot.amount.toInt())
     }
@@ -24,7 +24,7 @@ internal class TweakedFabricStorageWrapper(private val inventoryStorage: Invento
 @ExtendWith(BroccoliumInitialization::class)
 internal class FabricSlottedStorageTests : SlottedStorageTests() {
 
-    override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticItemStorage {
+    override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int> {
         val container = SimpleContainer(items.size)
         items.forEachIndexed { index, itemStack ->
             if (!itemStack.isEmpty) {
@@ -39,7 +39,7 @@ internal class FabricSlottedStorageTests : SlottedStorageTests() {
 @ExtendWith(BroccoliumInitialization::class)
 internal class FabricStorageTests : StorageTests() {
 
-    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
+    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticStorage<ItemStack, Int> {
         val container = SimpleContainer(items.size)
         items.forEachIndexed { index, itemStack ->
             if (!itemStack.isEmpty) {
@@ -54,7 +54,7 @@ internal class FabricStorageTests : StorageTests() {
 @ExtendWith(BroccoliumInitialization::class)
 internal class CompactFabricSlottedStorageTests : SlottedStorageTests() {
 
-    override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticItemStorage {
+    override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int> {
         if (secondary) {
             val container = SimpleContainer(items.size)
             items.forEachIndexed { index, itemStack ->
@@ -78,7 +78,7 @@ internal class CompactFabricSlottedStorageTests : SlottedStorageTests() {
 @ExtendWith(BroccoliumInitialization::class)
 internal class CompactFabricStorageTests : StorageTests() {
 
-    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
+    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticStorage<ItemStack, Int> {
         if (secondary) {
             return DummyStorage(items.size, items)
         }
@@ -95,7 +95,7 @@ internal class CompactFabricStorageTests : StorageTests() {
 @WithMinecraft
 @ExtendWith(BroccoliumInitialization::class)
 internal class VerificationFabricStorageTests : StorageTests() {
-    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
+    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticStorage<ItemStack, Int> {
         if (secondary) {
             val container = SimpleContainer(items.size)
             items.forEachIndexed { index, itemStack ->
@@ -118,7 +118,7 @@ internal class VerificationFabricStorageTests : StorageTests() {
 @WithMinecraft
 @ExtendWith(BroccoliumInitialization::class)
 internal class ReverseVerificationFabricStorageTests : StorageTests() {
-    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticItemStorage {
+    override fun createStorage(items: List<ItemStack>, secondary: Boolean): AccessibleAgnosticStorage<ItemStack, Int> {
         if (!secondary) {
             val container = SimpleContainer(items.size)
             items.forEachIndexed { index, itemStack ->

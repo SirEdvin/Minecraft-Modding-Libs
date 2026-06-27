@@ -56,6 +56,10 @@ dependencies {
     modImplementation(libs.bundles.fabric.core)
     modImplementation(libs.bundles.fabric)
 
+    modApi(libs.teamreborn.energy) {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+
     modRuntimeOnly(libs.bundles.externalMods.fabric.runtime) {
         exclude("net.fabricmc.fabric-api")
         exclude("net.fabricmc", "fabric-loader")

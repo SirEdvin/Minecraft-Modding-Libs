@@ -34,7 +34,8 @@ run/
 
 .env
 Peripheralium-*
-
+Modding-Libs-*
+Libs-*
 **/logs/
 
 Libs-*/

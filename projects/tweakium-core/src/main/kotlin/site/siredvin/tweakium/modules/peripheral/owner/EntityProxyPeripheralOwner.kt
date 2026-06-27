@@ -13,8 +13,8 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
 import site.siredvin.broccolium.modules.base.ext.toVec3
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralBlockEntity
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
@@ -32,8 +32,8 @@ open class EntityProxyPeripheralOwner<T>(protected val blockEntity: T, protected
         get() = (blockEntity as? IOwnedBlockEntity)?.player
     override val dataStorage: IDataStorage
         get() = DataStorageUtil.getDataStorage(blockEntity)
-    override val storage: SlottedAgnosticItemStorage? by lazy {
-        AgnosticItemStorageLookup.extractStorage(entity.level(), entity) as? SlottedAgnosticItemStorage
+    override val storage: SlottedAgnosticStorage<ItemStack, Int>? by lazy {
+        AgnosticItemStorageLookup.extractFromEntity(entity.level(), entity, null) as? SlottedAgnosticStorage<ItemStack, Int>
     }
 
     override fun <T> withPlayer(
@@ -55,7 +55,7 @@ open class EntityProxyPeripheralOwner<T>(protected val blockEntity: T, protected
         if (storage == null) {
             return stored
         }
-        return storage!!.storeItem(stored)
+        return storage!!.store(stored, false)
     }
 
     override fun destroyUpgrade() {

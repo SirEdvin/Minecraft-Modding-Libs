@@ -8,12 +8,17 @@ open class EnergyPlugin(protected val storage: AgnosticEnergyStorage) : IPeriphe
     override val additionalType: String
         get() = PeripheralPluginUtils.Type.ENERGY_STORAGE
 
-    @LuaFunction(mainThread = true)
-    fun getEnergy(): Int = storage.energy.amount.toInt()
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        data["receiveRate"] = storage.receiveRateLimit
+        data["extractRate"] = storage.extractRateLimit
+    }
 
     @LuaFunction(mainThread = true)
-    fun getEnergyCapacity(): Int = storage.capacity.toInt()
+    fun getEnergy(): Int = storage.getContent().next().amount.toInt()
 
     @LuaFunction(mainThread = true)
-    fun getEnergyUnit(): String = storage.energy.unit.name
+    fun getEnergyCapacity(): Int = storage.maxStackSize.toInt()
+
+    @LuaFunction(mainThread = true)
+    fun getEnergyUnit(): String = storage.getContent().next().unit.name
 }

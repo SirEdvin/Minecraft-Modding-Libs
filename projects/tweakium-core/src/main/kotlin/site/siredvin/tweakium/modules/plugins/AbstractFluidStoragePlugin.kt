@@ -9,10 +9,12 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluids
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.broccolium.modules.platform.PlatformToolkit
+import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidSinkLookup
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStorageLookup
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
+import site.siredvin.tweakium.modules.peripheral.api.ISidedPeripheral
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
 import java.util.*
 import java.util.function.Predicate
@@ -38,7 +40,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
     @LuaFunction(mainThread = true)
     fun tanks(): List<Map<String, *>> {
         val data: MutableList<Map<String, *>> = mutableListOf()
-        storage.getFluids().forEach {
+        storage.getContent().forEach {
             data.add(fluidInformation(it))
         }
         return data
@@ -52,7 +54,9 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
         val location: IPeripheral = computer.getAvailablePeripheral(toName)
             ?: throw LuaException("Target '$toName' does not exist")
 
-        val toStorage = AgnosticFluidStorageLookup.extractFluidSinkFromUnknown(level, location.target)
+        val direction = if (location is ISidedPeripheral) location.side else null
+
+        val toStorage = AgnosticFluidSinkLookup.extractFromUnknown(level, location.target, direction)
             ?: throw LuaException("Target '$toName' is not an fluid storage")
 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
@@ -65,7 +69,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             Predicate { it.fluid.isSame(fluid) }
         }
         val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))
-        return storage.moveTo(toStorage, realLimit, predicate)
+        return storage.moveTo(toStorage, realLimit, -1, predicate)
     }
 
     @LuaFunction(mainThread = true)
@@ -73,7 +77,9 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
         val location: IPeripheral = computer.getAvailablePeripheral(fromName)
             ?: throw LuaException("Target '$fromName' does not exist")
 
-        val fromStorage = AgnosticFluidStorageLookup.extractFluidStorageFromUnknown(level, location.target)
+        val direction = if (location is ISidedPeripheral) location.side else null
+
+        val fromStorage = AgnosticFluidStorageLookup.extractFromUnknown(level, location.target, direction)
             ?: throw LuaException("Target '$fromName' is not an fluid storage")
 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
@@ -86,6 +92,6 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
             Predicate { it.fluid.isSame(fluid) }
         }
         val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))
-        return storage.moveFrom(fromStorage, realLimit, predicate)
+        return storage.moveFrom(fromStorage, realLimit, -1, predicate)
     }
 }

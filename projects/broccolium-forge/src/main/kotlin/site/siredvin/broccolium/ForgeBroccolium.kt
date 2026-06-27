@@ -17,14 +17,15 @@ object ForgeBroccolium {
     init {
         BroccoliumCore.configure(ForgeInnerPlatformToolkit, ForgePlatformTags, ForgePlatformIngredients)
         // Register extract storages
-        AgnosticItemStorageLookup.addItemStorageExtractor(ForgeStorageUtils::extractStorageFromBlock)
-        AgnosticFluidStorageLookup.addFluidStorageExtractor(ForgeStorageUtils::extractFluidStorageFromBlock)
-        AgnosticEnergyStorageLookup.addEnergyStorageExtractor(ForgeStorageUtils::extractEnergyStorageFromBlock)
-        AgnosticEnergyStorageLookup.addEnergyStorageExtractor(ForgeStorageUtils::extractEnergyStorageFromItem)
-        AgnosticItemStorageLookup.addItemStorageExtractor { level, entity ->
-            ForgeStorageUtils.extractStorageFromEntity(level, entity)
-        }
-        AgnosticFluidStorageLookup.addFluidStorageExtractor(ForgeStorageUtils::extractFluidStorageFromEntity)
+        AgnosticItemStorageLookup.addBlockLookup(ForgeStorageUtils::extractStorageFromBlock)
+        AgnosticItemStorageLookup.addEntityLookup(ForgeStorageUtils::extractStorageFromEntity)
+        AgnosticItemStorageLookup.addInventoryItemLookup(ForgeStorageUtils::extractItemStorageFromItem)
+        AgnosticFluidStorageLookup.addBlockLookup(ForgeStorageUtils::extractFluidStorageFromBlock)
+        AgnosticFluidStorageLookup.addEntityLookup(ForgeStorageUtils::extractFluidStorageFromEntity)
+        AgnosticFluidStorageLookup.addInventoryItemLookup(ForgeStorageUtils::extractFluidStorageFromItem)
+        AgnosticEnergyStorageLookup.addBlockLookup(ForgeStorageUtils::extractEnergyStorageFromBlock)
+        AgnosticEnergyStorageLookup.addEntityLookup(ForgeStorageUtils::extractEnergyStorageFromEntity)
+        AgnosticEnergyStorageLookup.addInventoryItemLookup(ForgeStorageUtils::extractEnergyStorageFromItem)
     }
 
     fun sayHi() {

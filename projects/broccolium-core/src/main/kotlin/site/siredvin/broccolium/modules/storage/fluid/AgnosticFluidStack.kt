@@ -40,7 +40,7 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Double, var componen
         }
     }
     val isEmpty: Boolean
-        get() = fluid.isSame(Fluids.EMPTY)
+        get() = fluid.isSame(Fluids.EMPTY) || amount == 0.0
 
     val platformAmount: Double
         get() = this.amount * PlatformToolkit.get().fluidCompactDivider
@@ -55,6 +55,13 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Double, var componen
 
     fun shrink(amount: Double) {
         this.amount -= amount
+    }
+
+    fun split(splitAmount: Double): AgnosticFluidStack {
+        val realAmount = splitAmount.coerceAtMost(amount)
+        val newStack = this.copyWithCount(realAmount)
+        this.shrink(realAmount)
+        return newStack
     }
 
     fun save(targetTag: CompoundTag): CompoundTag {

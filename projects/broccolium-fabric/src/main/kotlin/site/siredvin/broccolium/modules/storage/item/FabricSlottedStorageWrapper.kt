@@ -8,15 +8,22 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
 import net.minecraft.world.item.ItemStack
 import site.siredvin.broccolium.BroccoliumCore
 import site.siredvin.broccolium.modules.storage.FabricStorageUtils
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemSink
-import site.siredvin.broccolium.modules.storage.item.api.AgnosticItemStorage
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticSink
+import site.siredvin.broccolium.modules.storage.base.api.AgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
+import site.siredvin.broccolium.modules.storage.base.api.SomethingOperator
 import java.util.function.Predicate
 
-class FabricSlottedStorageWrapper(internal val storage: SlottedStorage<ItemVariant>) : SlottedAgnosticItemStorage {
+class FabricSlottedStorageWrapper(internal val storage: SlottedStorage<ItemVariant>) : SlottedAgnosticStorage<ItemStack, Int> {
+
+    override val maxStackSize: Int by lazy {
+        storage.slots.map { it.capacity }.min().toInt()
+    }
+    override val operator: SomethingOperator<ItemStack, Int>
+        get() = ItemStorageUtils
 
     override fun moveTo(
-        to: AgnosticItemSink,
+        to: AgnosticSink<ItemStack, Int>,
         limit: Int,
         fromSlot: Int,
         toSlot: Int,
@@ -39,7 +46,7 @@ class FabricSlottedStorageWrapper(internal val storage: SlottedStorage<ItemVaria
     }
 
     override fun moveFrom(
-        from: AgnosticItemStorage,
+        from: AgnosticStorage<ItemStack, Int>,
         limit: Int,
         toSlot: Int,
         fromSlot: Int,
@@ -85,7 +92,7 @@ class FabricSlottedStorageWrapper(internal val storage: SlottedStorage<ItemVaria
         return FabricStorageUtils.moveFromTargetable(from, operableStorage, limit, fromSlot, takePredicate)
     }
 
-    override fun takeItems(limit: Int, startSlot: Int, endSlot: Int, predicate: Predicate<ItemStack>): ItemStack {
+    override fun take(limit: Int, startSlot: Int, endSlot: Int, predicate: Predicate<ItemStack>, simulate: Boolean): ItemStack {
         var slidingStack = ItemStack.EMPTY
         var slidingLimit = limit
         Transaction.openOuter().use {
@@ -123,33 +130,45 @@ class FabricSlottedStorageWrapper(internal val storage: SlottedStorage<ItemVaria
                     break
                 }
             }
-            it.commit()
+            if (!simulate) {
+                it.commit()
+            } else {
+                it.abort()
+            }
             return slidingStack
         }
     }
 
-    override fun getItem(slot: Int): ItemStack {
+    override fun get(slot: Int): ItemStack {
         val slotStorage = storage.getSlot(slot)
         return slotStorage.resource.toStack(slotStorage.amount.toInt())
     }
 
     fun getSingleSlot(slot: Int): SingleSlotStorage<ItemVariant> = storage.getSlot(slot)
 
-    override fun canPlaceItem(slot: Int, item: ItemStack): Boolean = true
-    override fun getItemLimit(slot: Int): Long = storage.getSlot(slot).getCapacity()
+    override fun canPlace(slot: Int, item: ItemStack): Boolean = true
+    override fun getLimit(slot: Int): Long = storage.getSlot(slot).capacity
 
-    override fun storeItem(stack: ItemStack, startSlot: Int, endSlot: Int): ItemStack {
+    override fun store(stack: ItemStack, startSlot: Int, endSlot: Int, simulate: Boolean): ItemStack {
         Transaction.openOuter().use {
             for (currentSlot in startSlot..endSlot) {
                 val storageSlot = getSingleSlot(currentSlot)
                 val insertedAmount = storageSlot.insert(ItemVariant.of(stack), stack.count.toLong(), it).toInt()
                 stack.shrink(insertedAmount)
                 if (stack.isEmpty) {
-                    it.commit()
+                    if (!simulate) {
+                        it.commit()
+                    } else {
+                        it.abort()
+                    }
                     return ItemStack.EMPTY
                 }
             }
-            it.commit()
+            if (!simulate) {
+                it.commit()
+            } else {
+                it.abort()
+            }
             return stack
         }
     }

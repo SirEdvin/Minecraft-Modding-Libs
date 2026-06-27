@@ -14,9 +14,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemAttributeModifiers
 import net.minecraft.world.level.block.entity.BlockEntity
 import site.siredvin.broccolium.modules.base.api.IOwnedBlockEntity
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
-import site.siredvin.broccolium.modules.storage.item.api.SlottedAgnosticItemStorage
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -33,7 +33,7 @@ object FakePlayerProviderBlockEntity {
         return FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(blockEntity.level as ServerLevel, blockEntity.player!!.gameProfile))
     }
 
-    private fun load(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticItemStorage?, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
+    private fun load(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticStorage<ItemStack, Int>?, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
         val direction = overwrittenDirection ?: realPlayer.direction
         player.setServerLevel(realPlayer.level() as ServerLevel)
         val position = realPlayer.blockPosition()
@@ -46,14 +46,19 @@ object FakePlayerProviderBlockEntity {
             0f
         }
         val yaw: Float =
-            if (direction == Direction.SOUTH) {
-                0f
-            } else if (direction == Direction.WEST) {
-                90f
-            } else if (direction == Direction.NORTH) {
-                180f
-            } else {
-                -90f
+            when (direction) {
+                Direction.SOUTH -> {
+                    0f
+                }
+                Direction.WEST -> {
+                    90f
+                }
+                Direction.NORTH -> {
+                    180f
+                }
+                else -> {
+                    -90f
+                }
             }
         val sideVec = direction.normal
         val a = direction.axis
@@ -72,7 +77,7 @@ object FakePlayerProviderBlockEntity {
             val size = storage.size
             val fakeInventorySize = playerInventory.containerSize
             for (i in 0 until size) {
-                playerInventory.setItem(i, storage.getItem(i))
+                playerInventory.setItem(i, storage.get(i))
             }
             if (fakeInventorySize > size) {
                 for (i in size until fakeInventorySize) {
@@ -90,7 +95,7 @@ object FakePlayerProviderBlockEntity {
         }
     }
 
-    private fun unload(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticItemStorage?, skipInventory: Boolean = false) {
+    private fun unload(player: ServerPlayer, realPlayer: Player, storage: SlottedAgnosticStorage<ItemStack, Int>?, skipInventory: Boolean = false) {
         val playerInventory: Inventory = player.inventory
         playerInventory.selected = 0
 
@@ -108,7 +113,7 @@ object FakePlayerProviderBlockEntity {
             val fakeInventorySize = playerInventory.containerSize
             playerInventory.selected = realPlayer.score
             for (i in 0 until size) {
-                storage.storeItem(playerInventory.getItem(i), i, i)
+                storage.store(playerInventory.getItem(i), i, i, false)
                 playerInventory.setItem(i, ItemStack.EMPTY)
             }
             if (fakeInventorySize > size) {
@@ -136,7 +141,7 @@ object FakePlayerProviderBlockEntity {
         val realPlayer = blockEntity.player
             ?: throw LuaException("Cannot init player for this block entity computer for some reason")
         val player: FakePlayerProxy = registeredPlayers.get(blockEntity)
-        val storage = AgnosticItemStorageLookup.extractStorage(blockEntity.level!!, blockEntity.blockPos, blockEntity = null) as? SlottedAgnosticItemStorage
+        val storage = AgnosticItemStorageLookup.extractFromBlock(blockEntity.level!!, blockEntity.blockPos, blockEntity = blockEntity, null) as? SlottedAgnosticStorage<ItemStack, Int>
         if (!skipInventory && storage == null) {
             throw IllegalArgumentException("Cannot init fake player with storage and with block entity without storage")
         }
