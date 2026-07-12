@@ -77,7 +77,7 @@ dependencies {
         exclude("net.fabricmc", "fabric-loader")
     }
 
-    implementation(project(":broccolium-fabric").dependencyProject.sourceSets.main.get().output)
+    implementation(rootProject.project(":broccolium-fabric").sourceSets.main.get().output)
 
     modRuntimeOnly(libs.bundles.externalMods.fabric.runtime) {
         exclude("net.fabricmc.fabric-api")

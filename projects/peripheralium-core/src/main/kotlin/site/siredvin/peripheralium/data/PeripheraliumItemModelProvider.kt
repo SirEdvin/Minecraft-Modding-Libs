@@ -6,6 +6,7 @@ import site.siredvin.peripheralium.Items
 
 object PeripheraliumItemModelProvider {
     fun addModels(generators: ItemModelGenerators) {
+        generators.generateFlatItem(Items.PERIPHERALIUM_BLEND.get(), ModelTemplates.FLAT_ITEM)
         val peripheraliumDust = Items.PERIPHERALIUM_DUST.get()
 
         generators.generateFlatItem(peripheraliumDust, ModelTemplates.FLAT_ITEM)

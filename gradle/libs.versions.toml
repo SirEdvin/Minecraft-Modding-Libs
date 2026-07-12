@@ -26,7 +26,7 @@ modmenu = "11.0.1"
 teamreborn-energy = "3.0.0"
 
 # Forge dependencies
-neoforge = "21.0.167"
+neoforge = "21.1.9"
 forge-kotlin = "5.7.0"
 parchment = "2024.11.17"
 parchmentMc = "1.21.1"
