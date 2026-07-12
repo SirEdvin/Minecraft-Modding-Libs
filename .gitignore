@@ -1,6 +1,7 @@
 # gradle
 
 .gradle/
+.kotlin/
 build/
 out/
 classes/
@@ -22,6 +23,7 @@ classes/
 .vscode/
 bin/
 .classpath
+.factorypath
 .project
 
 # macos

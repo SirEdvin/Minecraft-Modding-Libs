@@ -4,14 +4,12 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.registries.DeferredRegister
 import site.siredvin.tweakium.ForgeTweakium
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_CONTEXT
 
 @Mod(PeripheraliumCore.MOD_ID)
-@EventBusSubscriber(modid = PeripheraliumCore.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 object ForgePeripheralium {
 
     val blocksRegistry: DeferredRegister<Block> =

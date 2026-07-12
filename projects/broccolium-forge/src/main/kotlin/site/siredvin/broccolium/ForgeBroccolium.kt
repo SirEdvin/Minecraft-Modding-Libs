@@ -1,6 +1,5 @@
 package site.siredvin.broccolium
 
-import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.common.Mod
 import site.siredvin.broccolium.modules.platform.ForgeInnerPlatformToolkit
 import site.siredvin.broccolium.modules.platform.ForgePlatformIngredients
@@ -11,7 +10,6 @@ import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStorageLookup
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 
 @Mod(BroccoliumCore.MOD_ID)
-@EventBusSubscriber(modid = BroccoliumCore.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 object ForgeBroccolium {
 
     init {

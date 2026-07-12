@@ -121,9 +121,7 @@ object ForgeInnerPlatformToolkit : InnerPlatformToolkit {
     override fun <T : BlockEntity> createBlockEntityType(
         factory: BiFunction<BlockPos, BlockState, T>,
         block: Block,
-    ): BlockEntityType<T> = BlockEntityType.Builder.of({ t: BlockPos, u: BlockState ->
-        factory.apply(t, u)
-    }, block).build(null as com.mojang.datafixers.types.Type<*>)
+    ): BlockEntityType<T> = BlockEntityTypeBuilder.build(factory, block)
 
     override fun <T : Entity> createEntityType(
         name: ResourceLocation,
