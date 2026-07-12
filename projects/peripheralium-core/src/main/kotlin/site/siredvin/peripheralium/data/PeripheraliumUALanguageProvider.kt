@@ -11,7 +11,6 @@ class PeripheraliumUALanguageProvider(
     output: PackOutput,
 ) : LanguageProvider(output, PeripheraliumCore.MOD_ID, "uk_ua", PeripheraliumPlatform.holder, *PeripheraliumText.entries.toTypedArray()) {
     override fun addTranslations() {
-        add(Items.PERIPHERALIUM_BLEND.get(), "Сирий перифераліум", "Сумний та засмучений, він тут тільки для зворотьної сумісності")
         add(Items.PERIPHERALIUM_DUST.get(), "Перифераліумний пил")
         add(Items.PERIPHERALIUM_UPGRADE_TEMPLATE.get(), "Ковальский щаблон з перифераліуму")
         add(Blocks.PERIPHERALIUM_BLOCK.get(), "Блок перифераліуму")

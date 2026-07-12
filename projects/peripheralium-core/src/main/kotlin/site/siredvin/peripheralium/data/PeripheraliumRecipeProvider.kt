@@ -6,7 +6,6 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Ingredient
-import site.siredvin.broccolium.modules.data.recipe.TweakedCookingRecipeBuilder
 import site.siredvin.broccolium.modules.data.recipe.TweakedShapedRecipeBuilder
 import site.siredvin.broccolium.modules.data.recipe.TweakedShapelessRecipeBuilder
 import site.siredvin.broccolium.modules.platform.PlatformIngredients
@@ -18,13 +17,6 @@ class PeripheraliumRecipeProvider(output: PackOutput, registries: CompletableFut
 
     override fun buildRecipes(consumer: RecipeOutput) {
         val ingredients = PlatformIngredients.get()
-
-        TweakedCookingRecipeBuilder.smelting(
-            Ingredient.of(Items.PERIPHERALIUM_BLEND.get()),
-            Items.PERIPHERALIUM_DUST.get().defaultInstance,
-            0.7f,
-            200,
-        ).save(consumer, ResourceLocation.parse("peripheralium:peripheralium_dust_smelting"))
 
         TweakedShapelessRecipeBuilder(Items.PERIPHERALIUM_DUST.get().defaultInstance)
             .requires(ingredients.redstone)
