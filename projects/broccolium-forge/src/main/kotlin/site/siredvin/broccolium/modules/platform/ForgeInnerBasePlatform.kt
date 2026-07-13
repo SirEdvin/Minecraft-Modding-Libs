@@ -1,5 +1,6 @@
 package site.siredvin.broccolium.modules.platform
 
+import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
@@ -35,6 +36,8 @@ abstract class ForgeInnerBasePlatform : InnerBasePlatform {
     open val menuTypes: DeferredRegister<MenuType<*>>?
         get() = null
     open val customStats: DeferredRegister<ResourceLocation>?
+        get() = null
+    open val criterionTriggers: DeferredRegister<CriterionTrigger<*>>?
         get() = null
 
     open val recipeSerializers: DeferredRegister<RecipeSerializer<*>>?
@@ -77,6 +80,8 @@ abstract class ForgeInnerBasePlatform : InnerBasePlatform {
         val registeredStat = customStats!!.register(id.path, Supplier { id })
         return Supplier { Stats.CUSTOM.get(registeredStat.get(), formatter) }
     }
+
+    override fun <T : CriterionTrigger<*>> registerCriterionTrigger(key: ResourceLocation, trigger: T): Supplier<T> = criterionTriggers!!.register(key.path, Supplier { trigger })
 
     override fun <C : RecipeInput, T : Recipe<C>> registerRecipeSerializer(
         key: ResourceLocation,

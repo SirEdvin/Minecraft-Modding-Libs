@@ -1,5 +1,6 @@
 package site.siredvin.broccolium.modules.platform
 
+import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
@@ -76,6 +77,8 @@ abstract class BasePlatform {
         modInformationTracker.internalCustomStats.add(registered)
         return registered
     }
+
+    fun <T : CriterionTrigger<*>> registerCriterionTrigger(key: ResourceLocation, trigger: T): RegistryEntry<T> = SimpleRegistryEntry(key, baseInnerPlatform.registerCriterionTrigger(key, trigger))
 
     fun <C : RecipeInput, T : Recipe<C>> registerRecipeSerializer(key: ResourceLocation, serializer: RecipeSerializer<T>): RegistryEntry<RecipeSerializer<T>> = SimpleRegistryEntry(key, baseInnerPlatform.registerRecipeSerializer(key, serializer))
 

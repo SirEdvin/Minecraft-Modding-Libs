@@ -1,5 +1,6 @@
 package site.siredvin.broccolium.modules.platform.api
 
+import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.stats.Stat
@@ -43,6 +44,8 @@ interface InnerBasePlatform {
     fun registerCreativeTab(key: ResourceLocation, tab: CreativeModeTab): Supplier<CreativeModeTab>
 
     fun registerCustomStat(id: ResourceLocation, formatter: StatFormatter = StatFormatter.DEFAULT): Supplier<Stat<ResourceLocation>>
+
+    fun <T : CriterionTrigger<*>> registerCriterionTrigger(key: ResourceLocation, trigger: T): Supplier<T>
 
     fun <C : RecipeInput, T : Recipe<C>> registerRecipeSerializer(key: ResourceLocation, serializer: RecipeSerializer<T>): Supplier<RecipeSerializer<T>>
 
