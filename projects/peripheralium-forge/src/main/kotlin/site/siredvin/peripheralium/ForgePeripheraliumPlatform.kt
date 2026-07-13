@@ -1,5 +1,6 @@
 package site.siredvin.peripheralium
 
+import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -18,4 +19,7 @@ object ForgePeripheraliumPlatform : ForgeInnerBasePlatform() {
 
     override val creativeTabRegistry: DeferredRegister<CreativeModeTab>
         get() = ForgePeripheralium.creativeTabRegistry
+
+    override val criterionTriggers: DeferredRegister<CriterionTrigger<*>>
+        get() = ForgePeripheralium.criterionTriggers
 }

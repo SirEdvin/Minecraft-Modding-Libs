@@ -1,12 +1,15 @@
 package site.siredvin.broccolium.modules.platform
 
+import io.netty.buffer.Unpooled
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory
 import net.minecraft.client.Minecraft
 import net.minecraft.core.*
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
@@ -18,6 +21,7 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
+import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
@@ -124,19 +128,12 @@ object FabricPlatformToolkit : InnerPlatformToolkit {
     }
 
     override fun openMenu(player: Player, owner: MenuProvider, savingFunction: SavingFunction) {
-        // TODO: well, figure out?
-        throw NotImplementedError()
-//        player.openMenu(WrappedMenuProvider(owner, savingFunction))
-    }
+        (player as ServerPlayer).openMenu(object : ExtendedScreenHandlerFactory<FriendlyByteBuf> {
+            override fun createMenu(id: Int, inventory: Inventory, player: Player) = owner.createMenu(id, inventory, player)
 
-//    @JvmRecord
-//    private data class WrappedMenuProvider(val owner: MenuProvider, val savingFunction: SavingFunction) : ExtendedScreenHandlerFactory {
-//        override fun createMenu(id: Int, inventory: Inventory, player: Player): AbstractContainerMenu? = owner.createMenu(id, inventory, player)
-//
-//        override fun getDisplayName(): Component = owner.displayName
-//
-//        override fun writeScreenOpeningData(player: ServerPlayer, buf: FriendlyByteBuf) {
-//            savingFunction.toBytes(buf)
-//        }
-//    }
+            override fun getDisplayName() = owner.displayName
+
+            override fun getScreenOpeningData(player: ServerPlayer): FriendlyByteBuf = FriendlyByteBuf(Unpooled.buffer()).also(savingFunction::toBytes)
+        })
+    }
 }

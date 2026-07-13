@@ -1,5 +1,6 @@
 package site.siredvin.peripheralium
 
+import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
@@ -18,6 +19,8 @@ object ForgePeripheralium {
         DeferredRegister.create(BuiltInRegistries.ITEM, PeripheraliumCore.MOD_ID)
     val creativeTabRegistry: DeferredRegister<CreativeModeTab> =
         DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), PeripheraliumCore.MOD_ID)
+    val criterionTriggers: DeferredRegister<CriterionTrigger<*>> =
+        DeferredRegister.create(BuiltInRegistries.TRIGGER_TYPES, PeripheraliumCore.MOD_ID)
 
     init {
         sayHi()
@@ -27,6 +30,7 @@ object ForgePeripheralium {
         blocksRegistry.register(eventBus)
         itemsRegistry.register(eventBus)
         creativeTabRegistry.register(eventBus)
+        criterionTriggers.register(eventBus)
     }
 
     fun sayHi() {

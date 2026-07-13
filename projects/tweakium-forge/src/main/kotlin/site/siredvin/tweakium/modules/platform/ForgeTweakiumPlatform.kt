@@ -1,5 +1,6 @@
 package site.siredvin.tweakium.modules.platform
 
+import net.minecraft.advancements.CriterionTrigger
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -19,4 +20,6 @@ object ForgeTweakiumPlatform : ForgeInnerComputerBasePlatform() {
         get() = ForgeTweakium.itemsRegistry
     override val dataComponentTypesRegistry: DeferredRegister<DataComponentType<*>>
         get() = ForgeTweakium.dataComponentTypesRegistry
+    override val criterionTriggers: DeferredRegister<CriterionTrigger<*>>
+        get() = ForgeTweakium.criterionTriggers
 }

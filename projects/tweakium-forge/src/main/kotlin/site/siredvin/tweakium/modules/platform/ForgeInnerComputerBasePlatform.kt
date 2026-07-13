@@ -3,10 +3,9 @@ package site.siredvin.tweakium.modules.platform
 import dan200.computercraft.api.pocket.IPocketUpgrade
 import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.upgrades.UpgradeType
-import net.minecraft.core.Registry
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import site.siredvin.broccolium.modules.platform.ForgeInnerBasePlatform
+import site.siredvin.tweakium.ForgeTweakium
 import site.siredvin.tweakium.modules.platform.api.InnerComputerBasePlatform
 import java.util.function.Supplier
 
@@ -17,30 +16,10 @@ abstract class ForgeInnerComputerBasePlatform :
     override fun <V : ITurtleUpgrade> registerTurtleUpgrade(
         key: ResourceLocation,
         upgrade: UpgradeType<V>,
-    ): Supplier<UpgradeType<V>> {
-        @Suppress("UNCHECKED_CAST")
-        val registry: Registry<UpgradeType<ITurtleUpgrade>> = (
-            BuiltInRegistries.REGISTRY.get(ITurtleUpgrade.typeRegistry().location())
-                ?: throw IllegalStateException("Something is not correct with turtle registry")
-            ) as Registry<UpgradeType<ITurtleUpgrade>>
-
-        @Suppress("UNCHECKED_CAST")
-        val registered = Registry.register(registry, key, upgrade as UpgradeType<ITurtleUpgrade>) as UpgradeType<V>
-        return Supplier { registered }
-    }
+    ): Supplier<UpgradeType<V>> = ForgeTweakium.turtleUpgrades.register(key.path, Supplier { upgrade })
 
     override fun <V : IPocketUpgrade> registerPocketUpgrade(
         key: ResourceLocation,
         upgrade: UpgradeType<V>,
-    ): Supplier<UpgradeType<V>> {
-        @Suppress("UNCHECKED_CAST")
-        val registry: Registry<UpgradeType<IPocketUpgrade>> = (
-            BuiltInRegistries.REGISTRY.get(IPocketUpgrade.typeRegistry().location())
-                ?: throw IllegalStateException("Something is not correct with pocket registry")
-            ) as Registry<UpgradeType<IPocketUpgrade>>
-
-        @Suppress("UNCHECKED_CAST")
-        val registered = Registry.register(registry, key, upgrade as UpgradeType<IPocketUpgrade>) as UpgradeType<V>
-        return Supplier { registered }
-    }
+    ): Supplier<UpgradeType<V>> = ForgeTweakium.pocketUpgrades.register(key.path, Supplier { upgrade })
 }
