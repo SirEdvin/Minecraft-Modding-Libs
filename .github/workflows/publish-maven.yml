@@ -1,0 +1,97 @@
+name: Publish Maven artifacts
+
+on:
+  push:
+    tags:
+      - "broccolium-*"
+      - "peripheralium-*"
+      - "tweakium-*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate release tag
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$GITHUB_REF_NAME" =~ ^(broccolium|peripheralium|tweakium)-([0-9]+\.[0-9]+)-(.+)$ ]]; then
+            echo "::error::Tag must match <project>-<minecraft-release>-<library-version>"
+            exit 1
+          fi
+
+          project="${BASH_REMATCH[1]}"
+          tag_minecraft="${BASH_REMATCH[2]}"
+          tag_version="${BASH_REMATCH[3]}"
+          minecraft_version=""
+          project_version=""
+
+          while IFS='=' read -r key value; do
+            key="${key//[[:space:]]/}"
+            value="${value#"${value%%[![:space:]]*}"}"
+            value="${value%"${value##*[![:space:]]}"}"
+            case "$key" in
+              minecraftVersion) minecraft_version="$value" ;;
+              "${project}Version") project_version="$value" ;;
+            esac
+          done < gradle.properties
+
+          if [[ ! "$minecraft_version" =~ ^([0-9]+\.[0-9]+)(\.|$) ]]; then
+            echo "::error::Invalid minecraftVersion in gradle.properties"
+            exit 1
+          fi
+
+          configured_minecraft="${BASH_REMATCH[1]}"
+          if [[ "$tag_minecraft" != "$configured_minecraft" ]]; then
+            echo "::error::Tag Minecraft release $tag_minecraft does not match configured release $configured_minecraft"
+            exit 1
+          fi
+          if [[ -z "$project_version" || "$tag_version" != "$project_version" ]]; then
+            echo "::error::Tag library version $tag_version does not match configured ${project}Version"
+            exit 1
+          fi
+
+          case "$configured_minecraft" in
+            1.20) java_version=17 ;;
+            1.21) java_version=21 ;;
+            *)
+              echo "::error::Unsupported Minecraft release $configured_minecraft"
+              exit 1
+              ;;
+          esac
+
+          echo "project=$project" >> "$GITHUB_OUTPUT"
+          echo "java_version=$java_version" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ steps.release.outputs.java_version }}
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish ${{ steps.release.outputs.project }}
+        env:
+          ORG_GRADLE_PROJECT_SirEdvinUsername: ${{ secrets.MAVEN_USERNAME }}
+          ORG_GRADLE_PROJECT_SirEdvinPassword: ${{ secrets.MAVEN_PASSWORD }}
+        run: |
+          if [[ -z "$ORG_GRADLE_PROJECT_SirEdvinUsername" || -z "$ORG_GRADLE_PROJECT_SirEdvinPassword" ]]; then
+            echo "::error::MAVEN_USERNAME and MAVEN_PASSWORD secrets are required"
+            exit 1
+          fi
+
+          project="${{ steps.release.outputs.project }}"
+          ./gradlew \
+            ":${project}-core:publish" \
+            ":${project}-forge:publish" \
+            ":${project}-fabric:publish"

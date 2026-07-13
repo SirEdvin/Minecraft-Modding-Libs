@@ -41,3 +41,6 @@ Libs-*
 **/logs/
 
 Libs-*/
+.opencode
+.kotlin
+.factorypath
