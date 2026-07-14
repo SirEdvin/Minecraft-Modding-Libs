@@ -25,6 +25,15 @@ vanillaShaking {
 }
 
 sourceSets {
+    create("testMod") {
+        compileClasspath += main.get().compileClasspath
+        compileClasspath += main.get().output
+        runtimeClasspath += main.get().output
+        compileClasspath += project(":testiarium-core").sourceSets["testMod"].output
+        runtimeClasspath += project(":testiarium-core").sourceSets["testMod"].output
+        compileClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+        runtimeClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+    }
     create("testFixtures") {
         compileClasspath += main.get().compileClasspath
         compileClasspath += main.get().output
@@ -47,6 +56,8 @@ dependencies {
 
     add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test"))
     add(sourceSets["testFixtures"].compileOnlyConfigurationName, libs.bundles.test)
+    add(sourceSets["testMod"].compileOnlyConfigurationName, project(":testiarium-core"))
+    add(sourceSets["testMod"].compileOnlyConfigurationName, libs.bundles.cccommon)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.bundles.test)

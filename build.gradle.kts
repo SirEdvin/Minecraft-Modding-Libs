@@ -18,6 +18,7 @@ subprojectShaking {
 
 val setupSubproject = subprojectShaking::setupSubproject
 val broccoliumVersion: String by project.extra
+val testiariumVersion: String by project.extra
 
 subprojects {
     setupSubproject(this)

@@ -1,0 +1,7 @@
+Testiarium includes adaptations of these CC:Tweaked `mc-1.20.x` sources at
+`6f16cd6b0e4b74afff5462d463bedba65764970e`, licensed under MPL-2.0:
+
+- projects/common/src/testMod/kotlin/dan200/computercraft/gametest/api/ClientGameTest.kt
+- projects/common/src/testMod/kotlin/dan200/computercraft/gametest/api/TestTags.kt
+- projects/common/src/testMod/kotlin/dan200/computercraft/gametest/core/TestHooks.kt
+- projects/common/src/testMod/kotlin/dan200/computercraft/gametest/core/TestReporters.kt

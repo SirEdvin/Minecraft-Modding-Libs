@@ -5,6 +5,8 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.peripheral.IComputerAccess
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergySinkLookup
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
@@ -46,9 +48,10 @@ class CreativeFillerPeripheral(owner: IPeripheralOwner) : OwnedPeripheral<IPerip
             val direction = if (location is ISidedPeripheral) location.side else null
             val storage = AgnosticItemSinkLookup.extractFromUnknown(owner.level!!, location.target, direction)
                 ?: throw LuaException("Source '$target' is not an inventory")
-            val item = PlatformRegistries.ITEMS.tryGet(ResourceLocation.parse(id)) ?: throw LuaException("There is no item $id")
-            @Suppress("DEPRECATION")
-            storage.store(item.defaultInstance.copyWithCount(limit.coerceAtMost(item.defaultMaxStackSize)), false)
+            val item = PlatformRegistries.ITEMS.tryGet(ResourceLocation.parse(id))
+                ?.takeUnless { it == Items.AIR && id != "minecraft:air" }
+                ?: throw LuaException("There is no item $id")
+            storage.store(ItemStack(item, limit.coerceAtMost(item.defaultMaxStackSize)), false)
         }
     }
 

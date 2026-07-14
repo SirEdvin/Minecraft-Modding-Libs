@@ -5,6 +5,7 @@ on:
     tags:
       - "broccolium-*"
       - "peripheralium-*"
+      - "testiarium-*"
       - "tweakium-*"
 
 permissions:
@@ -26,7 +27,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ ! "$GITHUB_REF_NAME" =~ ^(broccolium|peripheralium|tweakium)-([0-9]+\.[0-9]+)-(.+)$ ]]; then
+          if [[ ! "$GITHUB_REF_NAME" =~ ^(broccolium|peripheralium|testiarium|tweakium)-([0-9]+\.[0-9]+)-(.+)$ ]]; then
             echo "::error::Tag must match <project>-<minecraft-release>-<library-version>"
             exit 1
           fi

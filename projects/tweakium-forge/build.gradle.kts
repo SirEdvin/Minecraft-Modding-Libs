@@ -37,6 +37,28 @@ neoforgeShaking {
     shake()
 }
 
+val testMod = sourceSets.create("testMod") {
+    resources.srcDir(project(":tweakium-core").file("src/testMod/resources"))
+    compileClasspath += sourceSets.main.get().compileClasspath
+    compileClasspath += sourceSets.main.get().output
+    compileClasspath += project(":tweakium-core").sourceSets["testMod"].output
+    compileClasspath += project(":testiarium-core").sourceSets["testMod"].output
+    compileClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+    runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    runtimeClasspath += sourceSets.main.get().output
+    runtimeClasspath += project(":tweakium-core").sourceSets["testMod"].output
+    runtimeClasspath += project(":testiarium-core").sourceSets["testMod"].output
+    runtimeClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+}
+
+val cctTestMod = sourceSets.create("cctTestMod") {
+    resources.srcDir(project(":testiarium-core").file("src/cctTestMod/resources"))
+    compileClasspath += testMod.compileClasspath
+    compileClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+    runtimeClasspath += testMod.runtimeClasspath
+    runtimeClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+}
+
 repositories {
     // location of the maven that hosts JEI files since January 2023
     maven {
@@ -97,6 +119,46 @@ dependencies {
     testImplementation(libs.byteBuddy)
     testImplementation(libs.byteBuddyAgent)
     testImplementation(libs.bundles.test)
+    add(testMod.compileOnlyConfigurationName, project(":testiarium-forge"))
+}
+
+neoForge {
+    val tweakium = mods.named("tweakium")
+    val tweakiumTestMod by mods.registering {
+        sourceSet(testMod)
+        sourceSet(project(":tweakium-core").sourceSets["testMod"])
+    }
+    val testiarium by mods.registering {
+        sourceSet(project(":testiarium-forge").sourceSets.main.get())
+        sourceSet(project(":testiarium-core").sourceSets.main.get())
+    }
+    val testiariumTestMod by mods.registering {
+        sourceSet(project(":testiarium-forge").sourceSets["testMod"])
+        sourceSet(project(":testiarium-core").sourceSets["testMod"])
+    }
+    val testiariumCctTestMod by mods.registering {
+        sourceSet(cctTestMod)
+        sourceSet(project(":testiarium-forge").sourceSets["cctTestMod"])
+        sourceSet(project(":testiarium-core").sourceSets["cctTestMod"])
+    }
+    runs {
+        register("gameTestServer") {
+            type = "gameTestServer"
+            gameDirectory = file("run/peripheral-gametest")
+            systemProperty("testiarium.tags", "tweakium")
+            systemProperty("testiarium.structures", layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            systemProperty("testiarium.fixture-source", project.project(":tweakium-core").file("src/testMod/resources/gameteststructures").absolutePath)
+            systemProperty("testiarium.cct-fixtures", project.project(":tweakium-core").file("src/testMod/resources/computer").absolutePath)
+            systemProperty("testiarium.gametest-report", layout.buildDirectory.file("test-results/peripheral-gametest.xml").get().asFile.absolutePath)
+            jvmArgument("-ea")
+            programArgument("--nogui")
+            loadedMods.add(tweakium.get())
+            loadedMods.add(tweakiumTestMod.get())
+            loadedMods.add(testiarium.get())
+            loadedMods.add(testiariumTestMod.get())
+            loadedMods.add(testiariumCctTestMod.get())
+        }
+    }
 }
 
 tasks.test {

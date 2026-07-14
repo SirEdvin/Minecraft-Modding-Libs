@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "testiarium",
+  "version": "${version}",
+  "name": "Testiarium",
+  "description": "Cross-loader GameTest framework.",
+  "authors": ["SirEdvin"],
+  "contact": {
+    "homepage": "https://github.com/SirEdvin/Minecraft-Modding-Libs",
+    "sources": "https://github.com/SirEdvin/Minecraft-Modding-Libs"
+  },
+  "license": "MPL-2.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.testiarium.FabricTestiarium"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": "~1.21.1",
+    "java": ">=21"
+  }
+}

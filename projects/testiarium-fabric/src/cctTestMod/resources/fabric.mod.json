@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "testiarium_cct_testmod",
+  "version": "1.0",
+  "name": "Testiarium CC:Tweaked Testmod",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.testiarium.cct.FabricCctTestMod"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "testiarium": "*",
+    "computercraft": "*"
+  }
+}
