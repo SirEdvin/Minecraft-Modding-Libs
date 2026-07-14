@@ -35,6 +35,24 @@ fabricShaking {
     shake()
 }
 
+val testMod = sourceSets.create("testMod") {
+    resources.srcDir(project(":tweakium-core").file("src/testMod/resources"))
+    compileClasspath += sourceSets.main.get().compileClasspath
+    compileClasspath += sourceSets.main.get().output
+    compileClasspath += project(":tweakium-core").sourceSets["testMod"].output
+    compileClasspath += project(":testiarium-core").sourceSets["testMod"].output
+    compileClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+    compileClasspath += project(":testiarium-fabric").sourceSets.main.get().output
+    runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    runtimeClasspath += sourceSets.main.get().output
+    runtimeClasspath += project(":tweakium-core").sourceSets["testMod"].output
+    runtimeClasspath += project(":testiarium-core").sourceSets["testMod"].output
+    runtimeClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+    runtimeClasspath += project(":testiarium-fabric").sourceSets.main.get().output
+}
+
+net.fabricmc.loom.configuration.RemapConfigurations.setupForSourceSet(project, testMod)
+
 sourceSets {
     create("testFixtures") {
         compileClasspath += main.get().compileClasspath
@@ -59,10 +77,10 @@ repositories {
         }
     }
     maven {
-        name = "ModMenu maven"
-        url = uri("https://maven.terraformersmc.com/releases")
+        name = "Modrinth maven"
+        url = uri("https://api.modrinth.com/maven")
         content {
-            includeGroup("com.terraformersmc")
+            includeGroup("maven.modrinth")
         }
     }
 }
@@ -93,6 +111,42 @@ dependencies {
     testImplementation(libs.byteBuddy)
     testImplementation(libs.byteBuddyAgent)
     testImplementation(libs.bundles.test)
+    add("modTestModImplementation", libs.bundles.fabric.core)
+    add("modTestModImplementation", libs.bundles.fabric)
+    add("modTestModImplementation", libs.bundles.ccfabric)
+}
+
+loom {
+    mods {
+        register("testiarium") {
+            sourceSet(project(":testiarium-fabric").sourceSets.main.get())
+            sourceSet(project(":testiarium-core").sourceSets.main.get())
+        }
+        register("tweakium-testmod") {
+            sourceSet(testMod)
+            sourceSet(project(":tweakium-core").sourceSets["testMod"])
+        }
+        register("testiarium-testmod") {
+            sourceSet(project(":testiarium-fabric").sourceSets["testMod"])
+            sourceSet(project(":testiarium-core").sourceSets["testMod"])
+            sourceSet(project(":testiarium-core").sourceSets["cctTestMod"])
+        }
+    }
+    runs {
+        create("peripheralGameTest") {
+            server()
+            source(testMod)
+            property("fabric-api.gametest", "true")
+            property("fabric.debug.loadLate", "testiarium_testmod")
+            property("testiarium.tags", "tweakium")
+            property("testiarium.structures", layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.fixture-source", project(":tweakium-core").file("src/testMod/resources/gameteststructures").absolutePath)
+            property("testiarium.cct-fixtures", project(":tweakium-core").file("src/testMod/resources/computer").absolutePath)
+            property("testiarium.gametest-report", layout.buildDirectory.file("test-results/peripheral-gametest.xml").get().asFile.absolutePath)
+            vmArg("-ea")
+            runDir("run/peripheral-gametest")
+        }
+    }
 }
 
 tasks.test {

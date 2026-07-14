@@ -72,7 +72,7 @@ fabric-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", v
 fabric-junit = { module = "net.fabricmc:fabric-loader-junit", version.ref = "fabric-loader" }
 cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.21.1-fabric-api", version.ref = "cc-tweaked"}
 cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.21.1-fabric", version.ref = "cc-tweaked"}
-modmenu = {module = "com.terraformersmc:modmenu", version.ref="modmenu"}
+modmenu = {module = "maven.modrinth:modmenu", version.ref="modmenu"}
 teamreborn-energy = {module = "teamreborn:energy", version.ref = "teamreborn-energy"}
 
 # Forge mod dependencies

@@ -35,15 +35,25 @@ repositories {
         }
     }
     maven {
-        name = "ModMenu maven"
-        url = uri("https://maven.terraformersmc.com/releases")
+        name = "Modrinth maven"
+        url = uri("https://api.modrinth.com/maven")
         content {
-            includeGroup("com.terraformersmc")
+            includeGroup("maven.modrinth")
         }
     }
 }
 
 sourceSets {
+    create("testMod") {
+        compileClasspath += main.get().compileClasspath
+        compileClasspath += main.get().output
+        compileClasspath += project(":testiarium-core").sourceSets.main.get().output
+        compileClasspath += project(":testiarium-fabric").sourceSets.main.get().output
+        runtimeClasspath += main.get().runtimeClasspath
+        runtimeClasspath += main.get().output
+        runtimeClasspath += project(":testiarium-core").sourceSets.main.get().output
+        runtimeClasspath += project(":testiarium-fabric").sourceSets.main.get().output
+    }
     test {
         compileClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
         runtimeClasspath += project(":broccolium-core").sourceSets["testFixtures"].output

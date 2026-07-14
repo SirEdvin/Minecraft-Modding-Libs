@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "broccolium_testmod",
+  "version": "1.0",
+  "name": "Broccolium Testiarium Testmod",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.broccolium.testmod.BroccoliumTestiariumFabricTestMod"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "broccolium": "*",
+    "testiarium": "*"
+  }
+}

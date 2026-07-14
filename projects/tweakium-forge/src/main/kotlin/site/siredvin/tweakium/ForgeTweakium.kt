@@ -9,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.registries.DeferredRegister
 import site.siredvin.broccolium.ForgeBroccolium
 import site.siredvin.tweakium.modules.minecraft.xplat.TweakiumCommonHooks
@@ -16,6 +17,7 @@ import site.siredvin.tweakium.modules.platform.ForgeComputerPlatformToolkit
 import site.siredvin.tweakium.modules.platform.ForgeTweakiumPlatform
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_CONTEXT
 
+@Mod(TweakiumCore.MOD_ID)
 object ForgeTweakium {
 
     val blocksRegistry: DeferredRegister<Block> =

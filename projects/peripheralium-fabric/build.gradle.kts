@@ -48,10 +48,10 @@ repositories {
         }
     }
     maven {
-        name = "ModMenu maven"
-        url = uri("https://maven.terraformersmc.com/releases")
+        name = "Modrinth maven"
+        url = uri("https://api.modrinth.com/maven")
         content {
-            includeGroup("com.terraformersmc")
+            includeGroup("maven.modrinth")
         }
     }
 }
