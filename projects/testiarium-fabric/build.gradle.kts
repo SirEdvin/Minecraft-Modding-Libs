@@ -53,6 +53,14 @@ java.registerFeature("cctTestMod") {
     usingSourceSet(cctTestMod)
 }
 
+tasks.named<Jar>(testMod.jarTaskName) {
+    from(project(":testiarium-core").sourceSets["testMod"].output.classesDirs)
+}
+
+tasks.named<Jar>(cctTestMod.jarTaskName) {
+    from(project(":testiarium-core").sourceSets["cctTestMod"].output)
+}
+
 dependencies {
     implementation(libs.bundles.kotlin)
     modImplementation(libs.bundles.fabric.core)
