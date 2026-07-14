@@ -19,6 +19,7 @@ forgeShaking {
     commonProjectName.set("testiarium-core")
     projectName.set("testiarium")
     useAT.set(true)
+    useMixins.set(true)
     shake()
 }
 
@@ -37,6 +38,8 @@ val cctTestMod = sourceSets.create("cctTestMod") {
     compileClasspath += sourceSets["testMod"].output
     runtimeClasspath += sourceSets["testMod"].runtimeClasspath
     runtimeClasspath += sourceSets["testMod"].output
+    compileClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
+    runtimeClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
 }
 
 dependencies {
@@ -54,6 +57,8 @@ minecraft {
             property("forge.enabledGameTestNamespaces", if (cctTests) "testiarium_testmod,testiarium_cct_testmod" else "testiarium_testmod")
             property("testiarium.tags", "common")
             property("testiarium.structures", layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.fixture-source", project(":testiarium-core").file("src/testMod/resources/gameteststructures").absolutePath)
+            property("testiarium.cct-fixtures", project(":testiarium-core").file("src/cctTestMod/resources/computer").absolutePath)
             property("testiarium.gametest-report", layout.buildDirectory.file(if (cctTests) "test-results/cct-gametest.xml" else "test-results/gametest.xml").get().asFile.absolutePath)
             jvmArgs("-ea")
             args("--nogui")
@@ -66,7 +71,31 @@ minecraft {
                     source(project(":testiarium-core").sourceSets["testMod"])
                 }
                 if (cctTests) {
-                    create("testiarium_cct_testmod") { source(cctTestMod) }
+                    create("testiarium_cct_testmod") {
+                        source(cctTestMod)
+                        source(project(":testiarium-core").sourceSets["cctTestMod"])
+                    }
+                }
+            }
+        }
+        create("clientGameTest") {
+            parent(runs.getByName("client"))
+            workingDirectory(file("run/client-gametest"))
+            property("forge.enabledGameTestNamespaces", "testiarium_testmod")
+            property("testiarium.client", "true")
+            property("testiarium.tags", "client")
+            property("testiarium.structures", layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
+            property("testiarium.gametest-report", layout.buildDirectory.file("test-results/client-gametest.xml").get().asFile.absolutePath)
+            property("testiarium.screenshots", layout.buildDirectory.get().asFile.absolutePath)
+            jvmArgs("-ea")
+            arg("--mixin.config=testiarium-testmod.mixins.json")
+            mods {
+                create("testiarium") {
+                    source(sourceSets.main.get())
+                }
+                create("testiarium_testmod") {
+                    source(sourceSets["testMod"])
+                    source(project(":testiarium-core").sourceSets["testMod"])
                 }
             }
         }

@@ -60,7 +60,7 @@ The CCT package SHALL provide the fixture setup, assertions, and sequence operat
 - **THEN** the optional adapter interoperates with Testiarium's client runner to execute the case and capture its screenshot assertion
 
 ### Requirement: CC:Tweaked testmod operations
-The CCT package SHALL provide test-only commands to import consumer computer files, export GameTest structures, regenerate named structure fixtures, mark fixture positions, and create a test computer. These commands MUST be unavailable from Testiarium's published runtime artifacts.
+The CCT package SHALL provide `/testiarium cct import`, `/testiarium cct export`, and `/testiarium cct give-computer` test-only commands. The import and export operations SHALL synchronize consumer computer files, and `give-computer` SHALL create a labeled fixture computer. Generic structure import, export, regeneration, and marking commands belong to Testiarium core's testmod. These commands MUST be unavailable from Testiarium's published runtime artifacts.
 
 #### Scenario: Import consumer Lua fixtures
 - **WHEN** a developer runs the adapter's import operation for a consumer testmod

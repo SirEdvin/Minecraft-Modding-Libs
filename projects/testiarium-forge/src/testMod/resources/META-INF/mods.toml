@@ -7,3 +7,6 @@ modId="testiarium_testmod"
 version="1.0"
 displayName="Testiarium Testmod"
 description="Standalone Testiarium GameTest fixtures."
+
+[[mixins]]
+config="testiarium-testmod.mixins.json"

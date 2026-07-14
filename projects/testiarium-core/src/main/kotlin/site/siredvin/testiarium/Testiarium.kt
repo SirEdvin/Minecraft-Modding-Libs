@@ -6,8 +6,13 @@
 package site.siredvin.testiarium
 
 import net.minecraft.gametest.framework.GameTest
+import net.minecraft.gametest.framework.GameTestRunner
+import net.minecraft.gametest.framework.GameTestTicker
 import net.minecraft.gametest.framework.GameTestRegistry
 import net.minecraft.gametest.framework.TestFunction
+import net.minecraft.core.BlockPos
+import net.minecraft.server.MinecraftServer
+import net.minecraft.world.level.GameRules
 import site.siredvin.testiarium.api.ClientGameTest
 import site.siredvin.testiarium.api.TestGroup
 import site.siredvin.testiarium.api.TestTags
@@ -45,6 +50,18 @@ object Testiarium {
     }
 
     @JvmStatic
+    fun onServerStarted(server: MinecraftServer) {
+        server.gameRules.getRule(GameRules.RULE_DAYLIGHT).set(false, server)
+        server.overworld().dayTime = 6000
+        GameTestRunner.clearAllTests(server.overworld(), BlockPos(0, -60, 0), GameTestTicker.SINGLETON, 200)
+    }
+
+    @JvmStatic
+    fun onServerStopped() {
+        net.minecraft.gametest.framework.GlobalTestReporter.finish()
+    }
+
+    @JvmStatic
     fun loadTests(fallbackRegister: Consumer<Method>) {
         testClasses.forEach { testClass ->
             testClass.declaredMethods.forEach { method -> registerTest(testClass, method, fallbackRegister) }
@@ -54,7 +71,7 @@ object Testiarium {
     private fun registerTest(testClass: Class<*>, method: Method, fallbackRegister: Consumer<Method>) {
         val group = method.getAnnotation(TestGroup::class.java)?.value
             ?: testClass.getAnnotation(TestGroup::class.java)?.value
-            ?: TestTags.COMMON
+            ?: if (method.isAnnotationPresent(ClientGameTest::class.java)) TestTags.CLIENT else TestTags.COMMON
         if (!TestTags.isEnabled(group)) return
 
         val testName = "${testClass.simpleName.lowercase()}.${method.name.lowercase()}"

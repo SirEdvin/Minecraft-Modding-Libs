@@ -42,6 +42,8 @@ Copying CC:Tweaked's own product test cases, registries, or fixture data is reje
 
 Testiarium core will add fail-fast sequences and typed helpers for block entities, containers, entities, block state, items, and recipes. Its testmod tooling will load consumer SNBT fixtures, support import/export commands for test resources, and preserve compact fixtures by restoring omitted air blocks at load time. CC:Tweaked peripheral and computer-specific assertions live exclusively in `site.siredvin.testiarium.cct`.
 
+Testiarium's testmod owns the required version-sensitive mixins and registers `/testiarium import`, `/testiarium export`, `/testiarium regen-structures`, and `/testiarium marker`, adapted from CC:Tweaked's `cctest` workflow. The generic commands import/export configured fixture resources and regenerate every registered structure. CCT-specific computer-file import/export and fixture computer creation live below `/testiarium cct`, preserving the core package's CC-free boundary.
+
 Reimplementing each consumer's assertions and fixture handling is rejected because it would duplicate the same version-sensitive GameTest behavior across every testmod.
 
 ### Add an opt-in client GameTest runner

@@ -23,8 +23,19 @@ sourceSets.create("testMod") {
     runtimeClasspath += sourceSets.main.get().output
 }
 
+val cctTestMod = sourceSets.create("cctTestMod") {
+    compileClasspath += sourceSets["testMod"].compileClasspath
+    compileClasspath += sourceSets["testMod"].output
+    runtimeClasspath += sourceSets["testMod"].runtimeClasspath
+    runtimeClasspath += sourceSets["testMod"].output
+}
+
 dependencies {
     implementation(libs.bundles.kotlin)
+    add(sourceSets["testMod"].implementationConfigurationName, files(sourceSets.main.get().output))
+    add(sourceSets["testMod"].compileOnlyConfigurationName, libs.mixin)
+    add(cctTestMod.implementationConfigurationName, files(sourceSets.main.get().output))
+    add(cctTestMod.compileOnlyConfigurationName, libs.bundles.cccommon)
 }
 
 publishingShaking {

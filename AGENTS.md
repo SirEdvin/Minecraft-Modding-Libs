@@ -34,6 +34,13 @@ Use the checked-in Gradle wrapper:
 
 Run the smallest affected module test task while iterating, then `./gradlew test` for changes spanning modules or loaders. Tests use JUnit 5 and live under `src/test`; common test fixtures are provided by the Broccolium and Tweakium core modules.
 
+Minecraft client GameTests require a virtual display and an explicit timeout in headless environments:
+
+```sh
+timeout --foreground 180s xvfb-run --auto-servernum ./gradlew :testiarium-forge:runClientGameTest --no-daemon
+timeout --foreground 180s xvfb-run --auto-servernum ./gradlew :testiarium-fabric:runClientGameTest --no-daemon
+```
+
 ## Code conventions
 
 - Write Kotlin using the official Kotlin style configured in `gradle.properties`: four-space indentation and trailing commas in multiline declarations.

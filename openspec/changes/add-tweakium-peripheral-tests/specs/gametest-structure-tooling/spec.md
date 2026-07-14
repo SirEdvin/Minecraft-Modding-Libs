@@ -3,6 +3,8 @@
 ### Requirement: Consumer SNBT fixture workflow
 Testiarium SHALL load consumer-provided named SNBT GameTest fixtures and provide test-only tooling to import fixture resources, export a fixture, and regenerate configured structures. Compact fixtures with omitted air blocks MUST load with their intended air volume restored.
 
+The Testiarium testmod SHALL own the required version-sensitive mixins and register `/testiarium import`, `/testiarium export`, `/testiarium regen-structures`, and `/testiarium marker`. The import and export operations SHALL synchronize the configured consumer fixture source; `regen-structures` SHALL re-import and export every registered GameTest structure; and `marker` SHALL mark the nearest test fixture position.
+
 #### Scenario: Load a compact named fixture
 - **WHEN** a consumer GameTest names a compact SNBT fixture
 - **THEN** the GameTest loads the fixture with omitted positions treated as air

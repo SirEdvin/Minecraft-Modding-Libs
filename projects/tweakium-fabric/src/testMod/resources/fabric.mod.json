@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "tweakium_testmod",
+  "version": "1.0",
+  "name": "Tweakium Testmod",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.tweakium.testmod.FabricTweakiumTestMod"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": "*",
+    "tweakium": "*",
+    "testiarium": "*",
+    "computercraft": "*"
+  }
+}
