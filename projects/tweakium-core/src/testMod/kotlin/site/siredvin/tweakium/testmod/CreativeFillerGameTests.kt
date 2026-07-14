@@ -12,18 +12,24 @@ import site.siredvin.testiarium.cct.thenLua
 @TestGroup("tweakium")
 class CreativeFillerGameTests {
     @GameTest(template = "creativefillergametests.fillsinventory")
-    fun fillsInventory(helper: GameTestHelper) = helper.thenLua()
-        .thenExecute {
-            val center = helper.absolutePos(net.minecraft.core.BlockPos(2, 2, 2))
-            val target = (-2..2).asSequence().flatMap { x ->
-                (-2..2).asSequence().flatMap { y ->
-                    (-2..2).asSequence().map { z -> helper.level.getBlockEntity(center.offset(x, y, z)) }
-                }
-            }.filterIsInstance<Container>().singleOrNull()
-                ?: throw GameTestAssertException("Expected one container near $center")
+    fun fillsInventory(helper: GameTestHelper): Unit {
+        val center = helper.absolutePos(net.minecraft.core.BlockPos(2, 2, 2))
+        val target = (-2..2).asSequence().flatMap { x ->
+            (-2..2).asSequence().flatMap { y ->
+                (-2..2).asSequence().map { z -> helper.level.getBlockEntity(center.offset(x, y, z)) }
+            }
+        }.filterIsInstance<Container>().singleOrNull()
+            ?: throw GameTestAssertException("Expected one container near $center")
+        if (!target.isEmpty) {
+            throw GameTestAssertException("Expected the fixture target to be empty, got ${target.getItem(0)}")
+        }
+
+        helper.thenLua()
+            .thenExecute {
             if (!ItemStack.matches(target.getItem(0), ItemStack(Items.STONE))) {
                 throw GameTestAssertException("Expected the fixture target to contain stone, got ${target.getItem(0)}")
             }
-        }
-        .thenSucceed()
+            }
+            .thenSucceed()
+    }
 }
