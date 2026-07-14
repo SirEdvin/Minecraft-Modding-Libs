@@ -8,7 +8,6 @@ package site.siredvin.testiarium
 import net.minecraft.core.BlockPos
 import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestRegistry
-import net.minecraft.gametest.framework.GameTestRunner
 import net.minecraft.gametest.framework.TestFunction
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.GameRules

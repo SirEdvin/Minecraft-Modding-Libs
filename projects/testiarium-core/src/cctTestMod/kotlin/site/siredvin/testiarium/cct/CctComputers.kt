@@ -10,9 +10,9 @@ import dan200.computercraft.api.lua.IComputerSystem
 import dan200.computercraft.api.lua.ILuaAPI
 import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
-import dan200.computercraft.core.lua.CobaltLuaMachine
 import dan200.computercraft.core.ComputerContext
 import dan200.computercraft.core.computer.computerthread.ComputerThread
+import dan200.computercraft.core.lua.CobaltLuaMachine
 import dan200.computercraft.core.lua.ILuaMachine
 import dan200.computercraft.core.lua.MachineEnvironment
 import dan200.computercraft.shared.computer.core.ServerContext
@@ -24,9 +24,9 @@ import java.lang.invoke.MethodHandles
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.Optional
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedDeque
+import java.util.concurrent.atomic.AtomicInteger
 
 typealias CctComputerAction = IComputerSystem.() -> Unit
 

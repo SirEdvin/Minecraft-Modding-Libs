@@ -33,8 +33,8 @@ import net.minecraft.world.level.WorldDataConfiguration
 import net.minecraft.world.level.levelgen.WorldOptions
 import net.minecraft.world.level.levelgen.presets.WorldPresets
 import org.slf4j.LoggerFactory
-import site.siredvin.testiarium.api.Timeouts
 import site.siredvin.testiarium.Testiarium
+import site.siredvin.testiarium.api.Timeouts
 import kotlin.system.exitProcess
 
 object ClientTestHooks {
