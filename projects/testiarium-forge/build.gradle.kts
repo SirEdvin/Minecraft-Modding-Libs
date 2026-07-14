@@ -42,6 +42,14 @@ val cctTestMod = sourceSets.create("cctTestMod") {
     runtimeClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
 }
 
+java.registerFeature("testMod") {
+    usingSourceSet(sourceSets["testMod"])
+}
+
+java.registerFeature("cctTestMod") {
+    usingSourceSet(cctTestMod)
+}
+
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)

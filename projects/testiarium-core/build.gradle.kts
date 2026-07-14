@@ -30,6 +30,14 @@ val cctTestMod = sourceSets.create("cctTestMod") {
     runtimeClasspath += sourceSets["testMod"].output
 }
 
+java.registerFeature("testMod") {
+    usingSourceSet(sourceSets["testMod"])
+}
+
+java.registerFeature("cctTestMod") {
+    usingSourceSet(cctTestMod)
+}
+
 dependencies {
     implementation(libs.bundles.kotlin)
     add(sourceSets["testMod"].implementationConfigurationName, files(sourceSets.main.get().output))
