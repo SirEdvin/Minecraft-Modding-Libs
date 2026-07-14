@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "testiarium_testmod",
+  "version": "1.0",
+  "name": "Testiarium Testmod",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.testiarium.fixture.FabricTestiariumTestMod"
+      }
+    ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.testiarium.fixture.client.FabricClientTestHooks"
+      }
+    ]
+  },
+  "mixins": [
+    "testiarium-testmod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "testiarium": "*"
+  }
+}

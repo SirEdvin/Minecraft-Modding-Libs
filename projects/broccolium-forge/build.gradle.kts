@@ -36,6 +36,16 @@ repositories {
 }
 
 sourceSets {
+    create("testMod") {
+        compileClasspath += main.get().compileClasspath
+        compileClasspath += main.get().output
+        compileClasspath += project(":testiarium-core").sourceSets.main.get().output
+        compileClasspath += project(":testiarium-forge").sourceSets.main.get().output
+        runtimeClasspath += main.get().runtimeClasspath
+        runtimeClasspath += main.get().output
+        runtimeClasspath += project(":testiarium-core").sourceSets.main.get().output
+        runtimeClasspath += project(":testiarium-forge").sourceSets.main.get().output
+    }
     test {
         compileClasspath += project(":broccolium-core").sourceSets["testFixtures"].output
         runtimeClasspath += project(":broccolium-core").sourceSets["testFixtures"].output

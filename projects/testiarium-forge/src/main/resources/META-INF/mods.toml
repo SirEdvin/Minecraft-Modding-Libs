@@ -1,0 +1,18 @@
+modLoader="kotlinforforge"
+loaderVersion="[4,)"
+license="MPL-2.0"
+
+[[mods]]
+modId="testiarium"
+version="${file.jarVersion}"
+displayName="Testiarium"
+displayURL="https://github.com/SirEdvin/Minecraft-Modding-Libs"
+authors="SirEdvin"
+description='''Cross-loader GameTest framework.'''
+
+[[dependencies.testiarium]]
+modId="forge"
+mandatory=true
+versionRange="[47,48)"
+ordering="NONE"
+side="BOTH"
