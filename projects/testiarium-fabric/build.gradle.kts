@@ -45,6 +45,14 @@ val cctTestMod = sourceSets.create("cctTestMod") {
 
 net.fabricmc.loom.configuration.RemapConfigurations.setupForSourceSet(project, cctTestMod)
 
+java.registerFeature("testMod") {
+    usingSourceSet(testMod)
+}
+
+java.registerFeature("cctTestMod") {
+    usingSourceSet(cctTestMod)
+}
+
 dependencies {
     implementation(libs.bundles.kotlin)
     modImplementation(libs.bundles.fabric.core)
