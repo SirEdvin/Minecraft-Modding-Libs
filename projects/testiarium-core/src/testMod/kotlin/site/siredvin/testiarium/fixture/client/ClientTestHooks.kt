@@ -15,12 +15,12 @@ import net.minecraft.client.gui.screens.TitleScreen
 import net.minecraft.client.tutorial.TutorialSteps
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
-import net.minecraft.gametest.framework.GameTestRunner
-import net.minecraft.gametest.framework.GameTestTicker
-import net.minecraft.gametest.framework.GameTestRegistry
-import net.minecraft.gametest.framework.GlobalTestReporter
 import net.minecraft.gametest.framework.GameTestInfo
 import net.minecraft.gametest.framework.GameTestListener
+import net.minecraft.gametest.framework.GameTestRegistry
+import net.minecraft.gametest.framework.GameTestRunner
+import net.minecraft.gametest.framework.GameTestTicker
+import net.minecraft.gametest.framework.GlobalTestReporter
 import net.minecraft.gametest.framework.MultipleTestTracker
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer

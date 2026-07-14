@@ -5,7 +5,6 @@
 
 package site.siredvin.testiarium.api
 
-import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.gametest.framework.GameTestSequence
 

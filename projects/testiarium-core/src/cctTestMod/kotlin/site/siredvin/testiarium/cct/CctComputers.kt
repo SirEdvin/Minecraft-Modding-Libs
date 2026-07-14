@@ -17,10 +17,10 @@ import dan200.computercraft.shared.computer.core.ServerContext
 import net.minecraft.gametest.framework.GameTestAssertException
 import net.minecraft.server.MinecraftServer
 import org.slf4j.LoggerFactory
-import java.util.Optional
+import java.io.InputStream
 import java.nio.file.Files
 import java.nio.file.Path
-import java.io.InputStream
+import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedDeque
 
@@ -89,7 +89,6 @@ object CctLuaTests {
         val file = file(label) ?: return
         require(Files.isRegularFile(file)) { "No Lua test file for computer '$label': $file" }
     }
-
 }
 
 object CctComputerState {
@@ -103,6 +102,7 @@ object CctComputerState {
 
     class State internal constructor() {
         private val markers = ConcurrentHashMap.newKeySet<String>()
+
         @Volatile private var error: String? = null
 
         fun isDone(marker: String) = marker in markers

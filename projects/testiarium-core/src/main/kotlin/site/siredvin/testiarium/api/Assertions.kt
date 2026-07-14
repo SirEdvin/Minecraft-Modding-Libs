@@ -12,12 +12,12 @@ import net.minecraft.gametest.framework.GameTestSequence
 import net.minecraft.world.Container
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.inventory.TransientCraftingContainer
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -99,8 +99,7 @@ fun GameTestHelper.assertCraftable(items: List<ItemStack>, expected: ItemStack) 
     }
 }
 
-private fun GameTestHelper.failAt(pos: BlockPos, message: String): Nothing =
-    throw GameTestAssertException("$message at $pos")
+private fun GameTestHelper.failAt(pos: BlockPos, message: String): Nothing = throw GameTestAssertException("$message at $pos")
 
 private object DummyMenu : AbstractContainerMenu(MenuType.GENERIC_9x1, 0) {
     override fun quickMoveStack(player: net.minecraft.world.entity.player.Player, slot: Int) = ItemStack.EMPTY

@@ -18,14 +18,10 @@ class StandaloneGameTests {
     }
 
     @GameTest(template = "empty", required = false)
-    fun requiredFailure(helper: GameTestHelper) {
-        throw GameTestAssertException("required failure fixture")
-    }
+    fun requiredFailure(helper: GameTestHelper): Unit = throw GameTestAssertException("required failure fixture")
 
     @GameTest(template = "empty", required = false)
-    fun optionalFailure(helper: GameTestHelper) {
-        throw GameTestAssertException("optional failure fixture")
-    }
+    fun optionalFailure(helper: GameTestHelper): Unit = throw GameTestAssertException("optional failure fixture")
 
     @GameTest(template = "empty")
     fun failFastSequence(helper: GameTestHelper) = helper.sequence {

@@ -25,14 +25,28 @@ object CctFixtureCommands {
         dispatcher.register(
             literal("testiarium").then(
                 literal("cct")
-                    .then(literal("import").executes { importFiles(it.source.server); 1 })
-                    .then(literal("export").executes { exportFiles(it.source.server); 1 })
-                    .then(literal("give-computer").then(argument("item", ItemArgument.item(context)).executes {
-                        val stack = it.getArgument("item", ItemInput::class.java).createItemStack(1, false)
-                        stack.hoverName = Component.literal("testiarium.cct")
-                        it.source.playerOrException.addItem(stack)
-                        1
-                    })),
+                    .then(
+                        literal("import").executes {
+                            importFiles(it.source.server)
+                            1
+                        },
+                    )
+                    .then(
+                        literal("export").executes {
+                            exportFiles(it.source.server)
+                            1
+                        },
+                    )
+                    .then(
+                        literal("give-computer").then(
+                            argument("item", ItemArgument.item(context)).executes {
+                                val stack = it.getArgument("item", ItemInput::class.java).createItemStack(1, false)
+                                stack.hoverName = Component.literal("testiarium.cct")
+                                it.source.playerOrException.addItem(stack)
+                                1
+                            },
+                        ),
+                    ),
             ),
         )
     }
@@ -50,7 +64,9 @@ object CctFixtureCommands {
         Files.walk(from).use { paths ->
             paths.forEach { path ->
                 val target = to.resolve(path.relativeTo(from).toString())
-                if (Files.isDirectory(path)) Files.createDirectories(target) else {
+                if (Files.isDirectory(path)) {
+                    Files.createDirectories(target)
+                } else {
                     Files.createDirectories(target.parent)
                     Files.copy(path, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING)
                 }
