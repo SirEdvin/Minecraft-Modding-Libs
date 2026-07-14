@@ -10,7 +10,7 @@ import site.siredvin.testiarium.cct.CctFixtureCommands
 object FabricTweakiumTestMod : ModInitializer {
     override fun onInitialize() {
         CctComputers.initialize()
-        ServerLifecycleEvents.SERVER_STARTED.register {
+        ServerLifecycleEvents.SERVER_STARTING.register {
             CctComputers.reset()
             CctFixtureCommands.importFiles(it)
         }

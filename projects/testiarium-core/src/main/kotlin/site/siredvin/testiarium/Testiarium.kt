@@ -74,7 +74,7 @@ object Testiarium {
             ?: if (method.isAnnotationPresent(ClientGameTest::class.java)) TestTags.CLIENT else TestTags.COMMON
         if (!TestTags.isEnabled(group)) return
 
-        val testName = "${testClass.simpleName.lowercase()}.${method.name.lowercase()}"
+        val testName = "${testClass.simpleName}.${method.name}"
         method.getAnnotation(GameTest::class.java)?.let { test ->
             GameTestRegistry.getAllTestFunctions().add(
                 TestFunction(

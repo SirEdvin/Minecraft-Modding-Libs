@@ -35,9 +35,18 @@ fun GameTestSequence.thenComputerOk(name: String? = null, marker: String = CctCo
     return thenExecuteFailFast { CctComputerState.get(label)?.check(marker) ?: error("Computer '$label' disappeared") }
 }
 
-fun GameTestHelper.thenLua(label: String = testInfo().testName): GameTestSequence {
+fun GameTestHelper.thenLua(label: String = testInfo().structureName): GameTestSequence {
     CctLuaTests.require(label)
-    return startSequence().thenComputerOk()
+    return startSequence().thenComputerOkLabel(label)
+}
+
+private fun GameTestSequence.thenComputerOkLabel(label: String, marker: String = CctComputerState.DONE): GameTestSequence {
+    thenWaitUntil {
+        if (CctComputerState.get(label)?.isDone(marker) != true) {
+            throw GameTestAssertException("Computer '$label' has not reached $marker yet")
+        }
+    }
+    return thenExecuteFailFast { CctComputerState.get(label)?.check(marker) ?: error("Computer '$label' disappeared") }
 }
 
 private fun GameTestInfo.label(name: String?) = testName + (name?.let { ".$it" } ?: "")

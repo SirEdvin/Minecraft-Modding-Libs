@@ -11,7 +11,7 @@ object FabricCctTestMod : ModInitializer {
         if (!FabricLoader.getInstance().isModLoaded("computercraft")) return
         CctComputers.initialize()
         CommandRegistrationCallback.EVENT.register { dispatcher, context, _ -> CctFixtureCommands.register(dispatcher, context) }
-        ServerLifecycleEvents.SERVER_STARTED.register {
+        ServerLifecycleEvents.SERVER_STARTING.register {
             CctComputers.reset()
             CctFixtureCommands.importFiles(it)
         }
