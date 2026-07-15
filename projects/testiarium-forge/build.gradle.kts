@@ -52,6 +52,22 @@ val cctTestMod = sourceSets.create("cctTestMod") {
     runtimeClasspath += project(":testiarium-core").sourceSets["cctTestMod"].output
 }
 
+java.registerFeature("testMod") {
+    usingSourceSet(sourceSets["testMod"])
+}
+
+java.registerFeature("cctTestMod") {
+    usingSourceSet(cctTestMod)
+}
+
+tasks.named<Jar>(sourceSets["testMod"].jarTaskName) {
+    from(project(":testiarium-core").sourceSets["testMod"].output.classesDirs)
+}
+
+tasks.named<Jar>(cctTestMod.jarTaskName) {
+    from(project(":testiarium-core").sourceSets["cctTestMod"].output)
+}
+
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.forge.raw)
