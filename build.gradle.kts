@@ -5,6 +5,7 @@ import org.gradle.api.publish.maven.MavenPublication
 
 plugins {
     java
+    alias(libs.plugins.loom) apply false
     id("site.siredvin.root") version "0.9.0"
     id("site.siredvin.release") version "0.9.0"
     id("com.github.ben-manes.versions") version "0.51.0"
@@ -23,6 +24,10 @@ val testiariumVersion: String by project.extra
 subprojects {
     setupSubproject(this)
     val module = this
+
+    if (name.endsWith("-core")) {
+        pluginManager.apply("net.fabricmc.fabric-loom-companion")
+    }
 
     pluginManager.withPlugin("maven-publish") {
         extensions.configure<PublishingExtension> {
