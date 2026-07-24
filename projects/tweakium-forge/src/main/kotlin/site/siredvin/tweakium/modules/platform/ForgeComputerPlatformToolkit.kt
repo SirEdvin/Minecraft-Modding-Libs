@@ -2,10 +2,12 @@ package site.siredvin.tweakium.modules.platform
 
 import com.mojang.authlib.GameProfile
 import dan200.computercraft.api.peripheral.IPeripheral
+import dan200.computercraft.api.peripheral.PeripheralCapability
 import dan200.computercraft.api.pocket.IPocketUpgrade
 import dan200.computercraft.api.turtle.ITurtleAccess
 import dan200.computercraft.api.turtle.ITurtleUpgrade
 import dan200.computercraft.api.upgrades.UpgradeData
+import dan200.computercraft.impl.Peripherals
 import dan200.computercraft.impl.PocketUpgrades
 import dan200.computercraft.impl.TurtleUpgrades
 import dan200.computercraft.shared.ModRegistry
@@ -19,12 +21,10 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralProvider
 import site.siredvin.tweakium.modules.platform.api.InnerComputerPlatformToolkit
@@ -33,13 +33,6 @@ import thedarkcolour.kotlinforforge.neoforge.forge.MOD_CONTEXT
 
 @Suppress("UnstableApiUsage")
 object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
-
-    private val PERIPHERAL_CAPABILITY: BlockCapability<IPeripheral, Direction?> =
-        BlockCapability.createSided(
-            ResourceLocation.fromNamespaceAndPath("computercraft", "peripheral"),
-            IPeripheral::class.java,
-        )
-
     private var genericRegistered: Boolean = false
 
     override fun createFakePlayer(level: ServerLevel, profile: GameProfile): ServerPlayer = ForgeFakePlayer(level, profile)
@@ -51,7 +44,8 @@ object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
         return null
     }
 
-    override fun getPeripheral(level: ServerLevel, pos: BlockPos, side: Direction): IPeripheral? = level.getCapability(PERIPHERAL_CAPABILITY, pos, side)
+    override fun getPeripheral(level: ServerLevel, pos: BlockPos, side: Direction): IPeripheral? = level.getCapability(PeripheralCapability.get(), pos, side)
+        ?: Peripherals.getGenericPeripheral(level, pos, side, level.getBlockEntity(pos))
 
     override fun nbtHash(tag: Tag?): String? = NBTUtil.getNBTHash(tag)
 
@@ -85,7 +79,7 @@ object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
         if (!genericRegistered) {
             MOD_CONTEXT.getKEventBus().addListener { event: RegisterCapabilitiesEvent ->
                 for (type in BuiltInRegistries.BLOCK_ENTITY_TYPE) {
-                    event.registerBlockEntity(PERIPHERAL_CAPABILITY, type) { be, side ->
+                    event.registerBlockEntity(PeripheralCapability.get(), type) { be, side ->
                         if (be is IPeripheralProvider<*> && side != null) {
                             be.getPeripheral(side)
                         } else {

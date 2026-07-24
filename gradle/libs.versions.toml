@@ -6,12 +6,12 @@ kotlin-atomicfu = "0.20.2"
 
 # Gradle plugins
 sponge = "0.2.1-SNAPSHOT"
-loom = "1.5.+"
+loom = "1.17.11"
 forgegradle = "6.+"
 spotless = "6.19.0"
 
 # Core mod dependencies
-cc-tweaked = "1.113.0"
+cc-tweaked = "1.120.0"
 mixin = "0.8.5"
 
 # Only core mod dependenceis
