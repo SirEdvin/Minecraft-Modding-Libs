@@ -32,6 +32,6 @@ tasks.assemble {
 
 tasks.clean {
     delete(fileTree(projectDir) {
-        include("*.lua")
+        include("*.d.ts", "*.lua")
     })
 }

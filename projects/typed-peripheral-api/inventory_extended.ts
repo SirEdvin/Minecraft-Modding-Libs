@@ -5,6 +5,7 @@ import {
 } from "@siredvin/typed-peripheral-base";
 import { ConfigurationAPI } from "./configuration";
 import { InventoryAPI } from "./inventory";
+import { ItemQuery } from "./item_storage";
 
 export declare interface ExtendedInventoryConfiguration {
     inventoryTransferLimit: number;
@@ -17,34 +18,12 @@ export declare interface ExtendedInventoryAPI
     list(): LuaTable<number, ShortItemDetail>;
     list(
         detailed: true,
-        query?: LuaTable<string, any>
+        query?: ItemQuery
     ): LuaTable<number, ExtendedItemDetail>;
-    list(detailed: true, query?: object): LuaTable<number, ExtendedItemDetail>;
-    list(
-        detailed: false,
-        query?: LuaTable<string, any>
-    ): LuaTable<number, ShortItemDetail>;
+    list(detailed: false, query?: ItemQuery): LuaTable<number, ShortItemDetail>;
     pushItems(
         toName: string,
-        filter: LuaTable<string, any> | { [key: string]: any },
-        limit?: number,
-        toSlot?: number
-    ): number;
-    pushItems(
-        toName: string,
-        filter: string,
-        limit?: number,
-        toSlot?: number
-    ): number;
-    pullItems(
-        fromName: string,
-        filter: LuaTable<string, any>,
-        limit?: number,
-        toSlot?: number
-    ): number;
-    pullItems(
-        fromName: string,
-        filter: { [key: string]: any },
+        filter: ItemQuery,
         limit?: number,
         toSlot?: number
     ): number;
@@ -56,13 +35,13 @@ export declare interface ExtendedInventoryAPI
     ): number;
     pullItems(
         fromName: string,
-        fromSlot: number,
+        filter: ItemQuery,
         limit?: number,
         toSlot?: number
     ): number;
     pullItems(
         fromName: string,
-        filter: string,
+        fromSlot: number,
         limit?: number,
         toSlot?: number
     ): number;

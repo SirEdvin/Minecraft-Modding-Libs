@@ -8,7 +8,7 @@ import {
 export declare interface InventoryViewAPI extends IPeripheral {
     size(): number;
     list(): LuaTable<number, ShortItemDetail>;
-    getItemDetail(slot: number): ExtendedItemDetail;
+    getItemDetail(slot: number): ExtendedItemDetail | null;
     getItemLimit(slot: number): number;
 }
 
