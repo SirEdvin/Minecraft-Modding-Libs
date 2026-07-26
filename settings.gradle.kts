@@ -43,6 +43,7 @@ include(":tweakium-fabric")
 include(":peripheralium-core")
 include(":peripheralium-forge")
 include(":peripheralium-fabric")
+include(":typed-peripheral-api")
 
 
 for (project in rootProject.children) {
