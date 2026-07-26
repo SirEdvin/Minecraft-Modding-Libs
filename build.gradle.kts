@@ -15,7 +15,9 @@ val broccoliumVersion: String by project.extra
 val testiariumVersion: String by project.extra
 
 subprojects {
-    setupSubproject(this)
+    if (name != "typed-peripheral-api") {
+        setupSubproject(this)
+    }
 }
 //
 //githubShaking {
