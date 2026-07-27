@@ -22,38 +22,40 @@ val broccoliumVersion: String by project.extra
 val testiariumVersion: String by project.extra
 
 subprojects {
-    setupSubproject(this)
-    val module = this
+    if (name != "typed-peripheral-api") {
+        setupSubproject(this)
+        val module = this
 
-    if (name.endsWith("-core")) {
-        pluginManager.apply("net.fabricmc.fabric-loom-companion")
-    }
+        if (name.endsWith("-core")) {
+            pluginManager.apply("net.fabricmc.fabric-loom-companion")
+        }
 
-    pluginManager.withPlugin("maven-publish") {
-        extensions.configure<PublishingExtension> {
-            publications.withType<MavenPublication>().configureEach {
-                pom {
-                    name.set(module.name)
-                    description.set("Minecraft 1.21.1 library module ${module.name}")
-                    url.set("https://github.com/SirEdvin/Minecraft-Modding-Libs")
-                    licenses {
-                        license {
-                            name.set("MIT License")
-                            url.set("https://opensource.org/licenses/MIT")
-                        }
-                    }
-                    developers {
-                        developer {
-                            name.set("SirEdvin")
-                            email.set("me@siredvin.site")
-                            organization.set("SirEdvin")
-                            organizationUrl.set("https://siredvin.site")
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:https://github.com/SirEdvin/Minecraft-Modding-Libs.git")
-                        developerConnection.set("scm:git:ssh://git@github.com/SirEdvin/Minecraft-Modding-Libs.git")
+        pluginManager.withPlugin("maven-publish") {
+            extensions.configure<PublishingExtension> {
+                publications.withType<MavenPublication>().configureEach {
+                    pom {
+                        name.set(module.name)
+                        description.set("Minecraft 1.21.1 library module ${module.name}")
                         url.set("https://github.com/SirEdvin/Minecraft-Modding-Libs")
+                        licenses {
+                            license {
+                                name.set("MIT License")
+                                url.set("https://opensource.org/licenses/MIT")
+                            }
+                        }
+                        developers {
+                            developer {
+                                name.set("SirEdvin")
+                                email.set("me@siredvin.site")
+                                organization.set("SirEdvin")
+                                organizationUrl.set("https://siredvin.site")
+                            }
+                        }
+                        scm {
+                            connection.set("scm:git:https://github.com/SirEdvin/Minecraft-Modding-Libs.git")
+                            developerConnection.set("scm:git:ssh://git@github.com/SirEdvin/Minecraft-Modding-Libs.git")
+                            url.set("https://github.com/SirEdvin/Minecraft-Modding-Libs")
+                        }
                     }
                 }
             }

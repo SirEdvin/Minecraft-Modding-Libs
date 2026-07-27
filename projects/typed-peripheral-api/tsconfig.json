@@ -1,0 +1,22 @@
+{
+    "$schema": "https://raw.githubusercontent.com/MCJack123/TypeScriptToLua/master/tsconfig-schema.json",
+    "compilerOptions": {
+        "target": "ESNext",
+        "lib": ["ESNext"],
+        "moduleResolution": "node",
+        "declaration": true,
+        "strict": false,
+        "types": [
+            "@jackmacwindows/lua-types/cc",
+            "@siredvin/craftos-types",
+            "@siredvin/cc-types",
+            "@siredvin/api-types"
+        ]
+    },
+    "tstl": {
+        "luaTarget": "5.1",
+        "luaLibImport": "require-minimal",
+        "buildMode": "library"
+    },
+    "include": ["./src/**/*.ts", "capture.ts", "configuration.ts", "creative_filler.ts", "energy_storage_extended.ts", "energy_storage.ts", "experience.ts", "fluid_storage_extended.ts", "fluid_storage.ts", "fuel.ts", "interaction.ts", "inventory_extended.ts", "inventory_view.ts", "inventory.ts", "item_storage.ts", "look.ts", "operations.ts", "scan.ts", "suck.ts", "warp.ts"]
+}

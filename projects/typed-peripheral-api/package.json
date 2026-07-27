@@ -1,0 +1,54 @@
+{
+    "name": "@siredvin/typed-peripheral-api",
+    "version": "0.2.2",
+    "description": "Typed peripheral library for my CC:T related projects",
+    "files": [
+        "./*.d.ts",
+        "./*.lua"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "author": "SirEdvin",
+    "license": "MIT",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tstl",
+        "clean": "rm -f *.d.ts *.lua",
+        "lint": "eslint . --ext .ts,.js",
+        "depcheck": "depcheck"
+    },
+    "dependencies": {
+        "@siredvin/cc-types": "^1.1.0",
+        "@siredvin/craftos-types": "^1.2.0",
+        "@siredvin/api-types": "^1.1.0",
+        "@jackmacwindows/lua-types": "^2.13.1",
+        "@siredvin/typed-peripheral-base": "*"
+    },
+    "devDependencies": {
+        "typescript-to-lua": "*",
+        "typescript": "*"
+    },
+    "nx": {
+        "targets": {
+            "lint": {
+                "executor": "@nx/linter:eslint",
+                "outputs": [
+                    "{options.outputFile}"
+                ],
+                "options": {
+                    "lintFilePatterns": [
+                        "packages/typed-peripheral/**/*.{ts,tsx,js,jsx}"
+                    ]
+                }
+            },
+            "depcheck": {
+                "executor": "nx:run-commands",
+                "options": {
+                    "command": "depcheck",
+                    "cwd": "packages/typed-peripheral"
+                }
+            }
+        }
+    }
+}
