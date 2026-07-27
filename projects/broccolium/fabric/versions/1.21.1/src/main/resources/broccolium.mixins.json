@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "site.siredvin.broccolium.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "EntityMixin",
+    "ServerLevelMixin"
+  ],
+  "client": [
+  ]
+}

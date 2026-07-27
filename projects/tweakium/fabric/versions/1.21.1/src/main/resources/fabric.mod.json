@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "tweakium",
+  "version": "${version}",
+  "name": "Tweakium",
+  "description": "A library for all of my peripherals mods, actually",
+  "authors": [
+    "SirEdvin"
+  ],
+  "accessWidener": "tweakium.accesswidener",
+  "contact": {
+    "homepage": "https://github.com/SirEdvin/Minecraft-Modding-Libs",
+    "issues": "https://github.com/SirEdvin/Minecraft-Modding-Libs/issues",
+    "sources": "https://github.com/SirEdvin/Minecraft-Modding-Libs"
+  },
+  "license": "MIT",
+  "icon": "pack.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.tweakium.modules.FabricTweakium"
+      }
+    ]
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": ">=1.21 <1.22",
+    "java": ">=17",
+    "computercraft": ">=${computercraftVersion}",
+    "broccolium": ">=${broccoliumVersion}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/dYHKMQYRPp"
+      },
+      "badges": ["library"]
+    }
+  }
+}

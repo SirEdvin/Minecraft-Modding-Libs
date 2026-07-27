@@ -1,0 +1,126 @@
+package site.siredvin.tweakium.modules.player
+
+import com.google.common.cache.CacheBuilder
+import com.google.common.cache.CacheLoader
+import dan200.computercraft.api.lua.LuaException
+import dan200.computercraft.api.pocket.IPocketAccess
+import net.minecraft.core.Direction
+import net.minecraft.core.component.DataComponents
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.ItemAttributeModifiers
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
+import java.util.*
+import java.util.concurrent.TimeUnit
+import java.util.function.Function
+import java.util.function.Supplier
+
+object FakePlayerProviderPocket {
+    private val registeredPlayers = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).weakKeys()
+        .maximumSize(3_000).build(CacheLoader.from(::buildPlayer))
+
+    private fun buildPlayer(pocket: IPocketAccess): FakePlayerProxy = FakePlayerProxy(ComputerPlatformToolkit.get().createFakePlayer(pocket.level as ServerLevel, (pocket.entity as? ServerPlayer)?.gameProfile ?: FakePlayerProxy.DUMMY_PROFILE))
+
+    private fun load(player: ServerPlayer, realPlayer: Player, overwrittenDirection: Direction? = null, skipInventory: Boolean = false) {
+        val direction = overwrittenDirection ?: realPlayer.direction
+        player.setServerLevel(realPlayer.level() as ServerLevel)
+        val position = realPlayer.blockPosition()
+        // Player position
+        val pitch: Float = if (direction == Direction.UP) {
+            -90f
+        } else if (direction == Direction.DOWN) {
+            90f
+        } else {
+            realPlayer.xRot
+        }
+        val yaw: Float =
+            if (direction == Direction.SOUTH) {
+                0f
+            } else if (direction == Direction.WEST) {
+                90f
+            } else if (direction == Direction.NORTH) {
+                180f
+            } else if (direction == Direction.EAST) {
+                -90f
+            } else {
+                realPlayer.yRot
+            }
+        val sideVec = direction.normal
+        val a = direction.axis
+        val ad = direction.axisDirection
+        val x = if (a === Direction.Axis.X && ad == Direction.AxisDirection.NEGATIVE) -.5 else .5 + sideVec.x / 1.9
+        val y = 0.5 + sideVec.y / 1.9
+        val z = if (a === Direction.Axis.Z && ad == Direction.AxisDirection.NEGATIVE) -.5 else .5 + sideVec.z / 1.9
+        player.moveTo(position.x + x, position.y + y, position.z + z, yaw, pitch)
+
+        if (!skipInventory) {
+            // Player inventory
+            val playerInventory: Inventory = player.inventory
+            playerInventory.selected = 0
+
+            // Copy primary items into player inventory and empty the rest
+            val realPlayerInventory = realPlayer.inventory
+            val size = realPlayerInventory.containerSize
+            playerInventory.selected = realPlayer.inventory.selected
+            for (i in 0 until size) {
+                playerInventory.setItem(i, realPlayerInventory.getItem(i))
+            }
+
+            // Add properties
+            val activeStack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
+            if (!activeStack.isEmpty) {
+                activeStack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY).modifiers.forEach {
+                    player.attributes.getInstance(it.attribute)?.addTransientModifier(it.modifier)
+                }
+            }
+        }
+    }
+
+    private fun unload(player: ServerPlayer, realPlayer: Player, skipInventory: Boolean = false) {
+        val playerInventory: Inventory = player.inventory
+        playerInventory.selected = 0
+
+        // Remove properties
+        val activeStack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
+        if (!activeStack.isEmpty) {
+            activeStack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY).modifiers.forEach {
+                player.attributes.getInstance(it.attribute)?.removeModifier(it.modifier)
+            }
+        }
+
+        // Copy primary items into turtle inventory and then insert/drop the rest
+        if (!skipInventory) {
+            val realPlayerInventory = realPlayer.inventory
+            val size: Int = realPlayerInventory.containerSize
+            playerInventory.selected = realPlayer.score
+            for (i in 0 until size) {
+                realPlayerInventory.setItem(i, playerInventory.getItem(i))
+                playerInventory.setItem(i, ItemStack.EMPTY)
+            }
+        }
+    }
+
+    fun <T> withPlayer(pocket: IPocketAccess, function: Function<FakePlayerProxy, T>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
+        val realPlayer = pocket.entity as? Player
+            ?: throw LuaException("Cannot init player for this pocket computer for some reason")
+        val player: FakePlayerProxy = registeredPlayers.get(pocket)
+        load(player.fakePlayer, realPlayer, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
+        val result = function.apply(player)
+        unload(player.fakePlayer, realPlayer, skipInventory = skipInventory)
+        return result
+    }
+
+    fun <T> withPlayerTweaked(pocket: IPocketAccess, function: Function<FakePlayerProxy, T>, playerProvider: Supplier<FakePlayerProxy>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
+        val realPlayer = pocket.entity as? Player
+            ?: throw LuaException("Cannot init player for this pocket computer for some reason")
+        val player: FakePlayerProxy = playerProvider.get()
+        load(player.fakePlayer, realPlayer, overwrittenDirection = overwrittenDirection, skipInventory = skipInventory)
+        val result = function.apply(player)
+        unload(player.fakePlayer, realPlayer, skipInventory = skipInventory)
+        return result
+    }
+}

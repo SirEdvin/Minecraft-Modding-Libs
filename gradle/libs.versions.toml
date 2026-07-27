@@ -6,35 +6,45 @@ kotlin-atomicfu = "0.20.2"
 
 # Gradle plugins
 sponge = "0.2.1-SNAPSHOT"
-loom = "1.5.+"
+loom = "1.17.11"
 forgegradle = "6.+"
 spotless = "6.19.0"
 
 # Core mod dependencies
-cc-tweaked = "1.113.1"
+ccTweaked120 = "1.113.1"
+ccTweaked121 = "1.120.0"
 mixin = "0.8.5"
 
 # Only core mod dependenceis
 asm = "9.3"
 
 # Fabric dependencies
-fabric-api = "0.92.3+1.20.1"
+fabricApi120 = "0.92.3+1.20.1"
+fabricApi121 = "0.116.14+1.21.1"
 fabric-loader = "0.16.10"
 fabric-kotlin = "1.11.0+kotlin.2.0.0"
-forgeconfigapirt = "8.0.0"
-modmenu = "7.2.1"
+forgeconfigapirt120 = "8.0.0"
+forgeconfigapirt121 = "21.1.6"
+modmenu120 = "7.2.1"
+modmenu121 = "11.0.1"
 teamreborn-energy = "3.0.0"
 
 # Forge dependencies
 forge = "47.1.0"
+neoforge = "21.1.9"
 forge-kotlin = "4.4.0"
-parchment = "2023.07.16"
-parchmentMc = "1.20.1"
+forge-kotlin-neoforge = "5.7.0"
+parchment = "2024.11.17"
+parchmentMc = "1.21.1"
+parchment-forge = "2023.07.16"
+parchmentMc-forge = "1.20.1"
 # Extra mod dependencies
 
 # Dev mod dependenceis
 jei = "15.1.0.19"
-rei = "12.1.785"
+jei-neoforge = "19.27.0.340"
+rei120 = "12.1.785"
+rei121 = "16.0.799"
 
 # Testing
 autoService = "1.1.1"
@@ -55,10 +65,14 @@ kotlin-plugin = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.r
 spotless-plugin = {module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref="spotless"}
 
 # Core mod dependencies
-cc-tweaked-common = {module = "cc.tweaked:cc-tweaked-1.20.1-common", version.ref = "cc-tweaked"}
-cc-tweaked-common-api = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "cc-tweaked"}
-cc-tweaked-core = {module = "cc.tweaked:cc-tweaked-1.20.1-core", version.ref = "cc-tweaked"}
-common-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt"}
+ccTweakedCommon120 = {module = "cc.tweaked:cc-tweaked-1.20.1-common", version.ref = "ccTweaked120"}
+ccTweakedCommonApi120 = {module = "cc.tweaked:cc-tweaked-1.20.1-common-api", version.ref = "ccTweaked120"}
+ccTweakedCore120 = {module = "cc.tweaked:cc-tweaked-1.20.1-core", version.ref = "ccTweaked120"}
+ccTweakedCommon121 = {module = "cc.tweaked:cc-tweaked-1.21.1-common", version.ref = "ccTweaked121"}
+ccTweakedCommonApi121 = {module = "cc.tweaked:cc-tweaked-1.21.1-common-api", version.ref = "ccTweaked121"}
+ccTweakedCore121 = {module = "cc.tweaked:cc-tweaked-1.21.1-core", version.ref = "ccTweaked121"}
+commonConfig120 = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt120"}
+commonConfig121 = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-common", version.ref = "forgeconfigapirt121"}
 mixin = { module = "org.spongepowered:mixin", version.ref = "mixin" }
 
 # Only core dependencies
@@ -66,22 +80,33 @@ asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
 
 # Fabric mod dependencies
 fabric-loader = {module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader"}
-fabric-api = {module = "net.fabricmc.fabric-api:fabric-api", version.ref="fabric-api"}
+fabricApi120 = {module = "net.fabricmc.fabric-api:fabric-api", version.ref="fabricApi120"}
+fabricApi121 = {module = "net.fabricmc.fabric-api:fabric-api", version.ref="fabricApi121"}
 fabric-kotlin = {module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric-kotlin"}
-fabric-config = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "forgeconfigapirt"}
-cc-tweaked-fabric-api = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric-api", version.ref = "cc-tweaked"}
-cc-tweaked-fabric = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric", version.ref = "cc-tweaked"}
-modmenu = {module = "com.terraformersmc:modmenu", version.ref="modmenu"}
+fabricConfig120 = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "forgeconfigapirt120"}
+fabricConfig121 = {module = "fuzs.forgeconfigapiport:forgeconfigapiport-fabric", version.ref = "forgeconfigapirt121"}
+fabricJunit120 = { module = "net.fabricmc:fabric-loader-junit", version.ref = "fabric-loader" }
+fabricJunit121 = { module = "net.fabricmc:fabric-loader-junit", version.ref = "fabric-loader" }
+ccTweakedFabricApi120 = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric-api", version.ref = "ccTweaked120"}
+ccTweakedFabric120 = {module = "cc.tweaked:cc-tweaked-1.20.1-fabric", version.ref = "ccTweaked120"}
+ccTweakedFabricApi121 = {module = "cc.tweaked:cc-tweaked-1.21.1-fabric-api", version.ref = "ccTweaked121"}
+ccTweakedFabric121 = {module = "cc.tweaked:cc-tweaked-1.21.1-fabric", version.ref = "ccTweaked121"}
+modmenu120 = {module = "com.terraformersmc:modmenu", version.ref="modmenu120"}
+modmenu121 = {module = "maven.modrinth:modmenu", version.ref="modmenu121"}
 teamreborn-energy = {module = "teamreborn:energy", version.ref = "teamreborn-energy"}
 
 # Forge mod dependencies
-cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref="cc-tweaked"}
+cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref="ccTweaked120"}
+cc-tweaked-neoforge = {module = "cc.tweaked:cc-tweaked-1.21.1-forge", version.ref="ccTweaked121"}
 forge-kotlin = {module = "thedarkcolour:kotlinforforge", version.ref = "forge-kotlin"}
+forge-kotlin-neoforge = {module = "thedarkcolour:kotlinforforge-neoforge", version.ref = "forge-kotlin-neoforge"}
 
 # Dev mod dependencies
 jei-forge = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei" }
-rei-fabric = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei"}
-rei-forge = {module = "me.shedaniel:RoughlyEnoughItems-forge", version.ref = "rei"}
+jei-neoforge = { module = "mezz.jei:jei-1.21.1-neoforge", version.ref = "jei-neoforge" }
+reiFabric120 = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei120"}
+reiFabric121 = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei121"}
+rei-forge = {module = "me.shedaniel:RoughlyEnoughItems-forge", version.ref = "rei120"}
 
 # Testing
 autoService = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
@@ -101,14 +126,21 @@ spotless = {id = "com.diffplug.spotless", version.ref="spotless"}
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlin-coroutines", "kotlin-atomicfu"]
-cccommon = ["cc-tweaked-common", "cc-tweaked-core", "cc-tweaked-common-api"]
+cccommon120 = ["ccTweakedCommon120", "ccTweakedCore120", "ccTweakedCommonApi120"]
+cccommon121 = ["ccTweakedCommon121", "ccTweakedCore121", "ccTweakedCommonApi121"]
 onlycore = ["asm"]
 apicommon = []
-ccfabric-api = ["cc-tweaked-fabric-api", "cc-tweaked-core"]
-ccfabric = ["cc-tweaked-fabric", "cc-tweaked-core"]
+ccfabricApi120 = ["ccTweakedFabricApi120", "ccTweakedCore120"]
+ccfabricApi121 = ["ccTweakedFabricApi121", "ccTweakedCore121"]
+ccfabric120 = ["ccTweakedFabric120", "ccTweakedCore120"]
+ccfabric121 = ["ccTweakedFabric121", "ccTweakedCore121"]
 fabric-core = ["fabric-loader"]
-fabric-api = ["teamreborn-energy"]
-fabric = ["fabric-api", "fabric-kotlin", "fabric-config"]
+fabricApiBundle120 = ["teamreborn-energy"]
+fabricApiBundle121 = ["teamreborn-energy"]
+fabric120 = ["fabricApi120", "fabric-kotlin", "fabricConfig120"]
+fabric121 = ["fabricApi121", "fabric-kotlin", "teamreborn-energy"]
+fabricTest120 = ["fabricJunit120"]
+fabricTest121 = ["fabricJunit121"]
 forge-raw = ["forge-kotlin"]
 forge-base = []
 forge-cc = ["cc-tweaked-forge"]
@@ -119,7 +151,8 @@ forge-cc = ["cc-tweaked-forge"]
 externalMods-forge-runtime = ["jei-forge"]
 #externalMods-fabric = ["nightConfig-core", "nightConfig-toml"]
 #externalMods-fabric-compile = ["iris", "jei-api", "rei-api", "rei-builtin"]
-externalMods-fabric-runtime = ["rei-fabric", "modmenu"]
+externalModsFabricRuntime120 = ["reiFabric120", "modmenu120"]
+externalModsFabricRuntime121 = ["reiFabric121", "modmenu121"]
 #
 ## Testing
 test = ["junit-jupiter-api", "junit-jupiter-params", "hamcrest", "jqwik-api"]

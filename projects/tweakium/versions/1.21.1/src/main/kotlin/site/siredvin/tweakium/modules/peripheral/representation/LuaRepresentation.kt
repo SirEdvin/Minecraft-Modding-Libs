@@ -1,0 +1,228 @@
+package site.siredvin.tweakium.modules.peripheral.representation
+
+import dan200.computercraft.api.detail.BlockReference
+import dan200.computercraft.api.detail.VanillaDetailRegistries
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.tags.TagKey
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.ExperienceOrb
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.npc.Villager
+import net.minecraft.world.entity.npc.VillagerProfession
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.trading.Merchant
+import net.minecraft.world.item.trading.MerchantOffer
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Fluid
+import site.siredvin.broccolium.modules.base.ext.toRelative
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
+import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
+import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
+import java.util.stream.Collectors
+import java.util.stream.Stream
+
+@Suppress("MemberVisibilityCanBePrivate")
+object LuaRepresentation {
+
+    fun forBlockState(state: BlockState): MutableMap<String, Any> {
+        val data: MutableMap<String, Any> = HashMap()
+        data["name"] = PlatformRegistries.BLOCKS.getKey(state.block).toString()
+        data["displayName"] = state.block.name.string
+        val properties = mutableMapOf<String, String>()
+        state.values.entries.forEach {
+            properties[it.key.name] = it.value.toString()
+        }
+        data["state"] = properties
+        data["tags"] = tagsToMap(state.tags)
+        return data
+    }
+
+    fun forBlockV2(level: Level, pos: BlockPos): MutableMap<String, Any> {
+        val reference = BlockReference(level, pos)
+        val data = VanillaDetailRegistries.BLOCK_IN_WORLD.getDetails(reference)
+        data["displayName"] = reference.state.block.name.string
+        return data
+    }
+
+    fun forEntity(entity: Entity): MutableMap<String, Any> {
+        val data: MutableMap<String, Any> = HashMap()
+        val entityId = PlatformRegistries.ENTITY_TYPES.getKey(entity.type).toString()
+        data["name"] = entityId
+        data["uuid"] = entity.stringUUID
+        data["category"] = entity.type.category.name
+        data["type"] = entity.type.descriptionId
+        data["displayName"] = entity.name.string
+        data["tags"] = entity.tags
+        return data
+    }
+
+    fun forLivingEntity(entity: LivingEntity): MutableMap<String, Any> {
+        val base = forEntity(entity)
+        base["health"] = entity.health
+        return base
+    }
+
+    fun <T : Entity> withPos(entity: T, facing: Direction, center: BlockPos, converter: (T) -> (MutableMap<String, Any>)): MutableMap<String, Any> {
+        val base = converter(entity)
+        base.putAll(forBlockPos(entity.blockPosition(), facing, center))
+        return base
+    }
+
+    fun <T> withPos(value: T, pos: BlockPos, facing: Direction, center: BlockPos, converter: (T) -> (MutableMap<String, Any>)): MutableMap<String, Any> {
+        val base = converter(value)
+        base.putAll(forBlockPos(pos, facing, center))
+        return base
+    }
+
+    fun forBlockPos(pos: BlockPos, facing: Direction, center: BlockPos): MutableMap<String, Any> {
+        val transformedPos = pos.subtract(center).toRelative(facing)
+        val map: MutableMap<String, Any> = HashMap()
+        map["x"] = transformedPos.x
+        map["y"] = transformedPos.y
+        map["z"] = transformedPos.z
+        return map
+    }
+
+    fun forEnchantment(enchantment: Enchantment, level: Int = 1): MutableMap<String, Any> = mutableMapOf(
+        "displayName" to enchantment.description.string,
+        "name" to enchantment.description.string,
+        "level" to level,
+    )
+
+    fun forEnchantments(enchantments: MutableMap<Enchantment, Int>): List<Map<String, Any>> {
+        val list = mutableListOf<Map<String, Any>>()
+        for (enchantment: MutableMap.MutableEntry<Enchantment, Int> in enchantments.entries) {
+            list.add(forEnchantment(enchantment.key, enchantment.value))
+        }
+        return list
+    }
+
+    fun forItemStack(stack: ItemStack, mode: RepresentationMode = RepresentationMode.DETAILED): MutableMap<String, Any> = when (mode) {
+        RepresentationMode.BASE -> VanillaDetailRegistries.ITEM_STACK.getBasicDetails(stack)
+        RepresentationMode.DETAILED -> VanillaDetailRegistries.ITEM_STACK.getDetails(stack)
+        RepresentationMode.FULL -> {
+            val base = VanillaDetailRegistries.ITEM_STACK.getDetails(stack)
+            if (!stack.componentsPatch.isEmpty) {
+                val tagData = stack.componentsPatch.let { ComputerPlatformToolkit.get().componentToLua(it) }
+                base["rawNBT"] = tagData
+            }
+            base
+        }
+    }
+
+    fun forItem(item: Item): MutableMap<String, Any> {
+        val base = forItemStack(item.defaultInstance)
+        base.remove("count")
+        return base
+    }
+
+    fun forFluidStack(fluid: AgnosticFluidStack): MutableMap<String, Any?> {
+        val baseInformation = forFluid(fluid.fluid)
+        baseInformation["amount"] = fluid.amount.toLong()
+        baseInformation["precise_amount"] = fluid.amount
+        if (!fluid.components.isEmpty) {
+            baseInformation["nbt"] = ComputerPlatformToolkit.get().nbtHash(fluid.components)
+        }
+        return baseInformation
+    }
+
+    fun forEnergyStack(energy: AgnosticEnergyStack): MutableMap<String, Any?> = mutableMapOf(
+        "amount" to energy.amount,
+        "unit" to energy.unit.name,
+    )
+
+    fun forFluid(fluid: Fluid): MutableMap<String, Any?> = mutableMapOf(
+        "name" to PlatformRegistries.FLUIDS.getKey(fluid).toString(),
+    )
+
+    fun forMobEffect(effect: MobEffect): MutableMap<String, Any> = hashMapOf(
+        "displayName" to effect.displayName.string,
+        "name" to fromLegacyToNewID(effect.descriptionId),
+    )
+
+    fun forMobEffectInstance(effectInstance: MobEffectInstance): MutableMap<String, Any> {
+        val base = forMobEffect(effectInstance.effect.value())
+        base.putAll(
+            mapOf(
+                "duration" to effectInstance.duration,
+                "amplifier" to effectInstance.amplifier,
+                "isAmbient" to effectInstance.isAmbient,
+            ),
+        )
+        return base
+    }
+
+    fun <T> tagsToList(tags: Stream<TagKey<T>>): List<String> = tags.map { key -> key.location.toString() }.collect(Collectors.toList())
+
+    fun <T> tagsToMap(tags: Stream<TagKey<T>>): Map<String, Boolean> = tags.map { key -> key.location.toString() }.collect(
+        Collectors.toMap(
+            { it },
+            { true },
+        ),
+    )
+
+    fun forMerchantOffers(merchant: Merchant): Map<Int, Map<String, Any>> {
+        val offers = mutableMapOf<Int, Map<String, Any>>()
+        var currentIndex = 1
+        for (merchantOffer: MerchantOffer in merchant.offers) {
+            if (merchantOffer.isOutOfStock) {
+                currentIndex++
+                continue
+            }
+            val offerMap: MutableMap<String, Any> = HashMap()
+            val inputs: MutableList<Map<String, Any>> = mutableListOf()
+            inputs.add(forItemStack(merchantOffer.costA))
+            if (!merchantOffer.costB.isEmpty) {
+                inputs.add(forItemStack(merchantOffer.costB))
+            }
+            offerMap["inputs"] = inputs
+            offerMap["outputs"] = listOf(forItemStack(merchantOffer.result))
+            offers[currentIndex] = offerMap
+            currentIndex++
+        }
+        return offers
+    }
+
+    fun forVillager(villager: Villager): Map<String, Any> {
+        val data = mutableMapOf<String, Any>()
+        val vilData = villager.villagerData
+        if (vilData.profession != VillagerProfession.NONE) {
+            data["profession"] = vilData.profession.name
+            data["xp"] = villager.villagerXp
+            data["level"] = vilData.level
+            data["type"] = vilData.type.toString()
+        }
+        return data
+    }
+
+    fun forExpirenceOrb(orb: ExperienceOrb): MutableMap<String, Any> {
+        val base = forEntity(orb)
+        base["xpValue"] = orb.value
+        return base
+    }
+
+    fun forPlayer(player: Player): MutableMap<String, Any> {
+        val base = forLivingEntity(player)
+        base["experienceLevel"] = player.experienceLevel
+        base["foodLevel"] = player.foodData.foodLevel
+        base["saturationLevel"] = player.foodData.saturationLevel
+        base["isCreative"] = player.isCreative
+        base["yRot"] = player.yRot
+        base["xRot"] = player.xRot
+        return base
+    }
+
+    /**
+     * So, this function exists mostly for converting ids like minecraft.looting to more
+     * simple for anyone minecraft:looting. Mostly applicable for enchantments and effects
+     */
+    fun fromLegacyToNewID(legacyID: String): String = legacyID.substring(legacyID.indexOf(".") + 1).replace(".", ":")
+}

@@ -1,0 +1,19 @@
+package site.siredvin.tweakium.modules.plugins
+
+import dan200.computercraft.api.lua.LuaFunction
+import net.neoforged.neoforge.energy.IEnergyStorage
+import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
+
+class ForgeEnergyPlugin(private val storage: IEnergyStorage) : IPeripheralPlugin {
+    override val additionalType: String
+        get() = PeripheralPluginUtils.Type.ENERGY_STORAGE
+
+    @LuaFunction(mainThread = true)
+    fun getEnergy(): Int = storage.energyStored
+
+    @LuaFunction(mainThread = true)
+    fun getEnergyCapacity(): Int = storage.maxEnergyStored
+
+    @LuaFunction(mainThread = true)
+    fun getEnergyUnit(): String = "FE"
+}

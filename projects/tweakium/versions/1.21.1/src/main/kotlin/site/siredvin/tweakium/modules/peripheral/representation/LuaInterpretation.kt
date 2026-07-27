@@ -1,0 +1,171 @@
+package site.siredvin.tweakium.modules.peripheral.representation
+
+import dan200.computercraft.api.lua.LuaException
+import net.minecraft.ResourceLocationException
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Rotation
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BooleanProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.block.state.properties.Property
+import net.minecraft.world.phys.Vec3
+import site.siredvin.broccolium.modules.base.ext.fromRelative
+import site.siredvin.broccolium.modules.platform.PlatformRegistries
+
+object LuaInterpretation {
+    // BlockPos tricks
+    @Throws(LuaException::class)
+    fun asBlockPos(table: Map<*, *>): BlockPos {
+        if (!table.containsKey("x") || !table.containsKey("y") || !table.containsKey("z")) throw LuaException("Table should be block position table")
+        val x = table["x"]
+        val y = table["y"]
+        val z = table["z"]
+        if (x !is Number || y !is Number || z !is Number) throw LuaException("Table should be block position table")
+        return BlockPos(x.toInt(), y.toInt(), z.toInt())
+    }
+
+    @Throws(LuaException::class)
+    fun asBlockPos(center: BlockPos, table: Map<*, *>): BlockPos {
+        val relative = asBlockPos(table)
+        return BlockPos(center.x + relative.x, center.y + relative.y, center.z + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asBlockPos(center: BlockPos, table: Map<*, *>, facing: Direction): BlockPos {
+        val relative = asBlockPos(table).fromRelative(facing)
+        return BlockPos(center.x + relative.x, center.y + relative.y, center.z + relative.z)
+    }
+
+    // Vec3 tricks
+    @Throws(LuaException::class)
+    fun asVec3(table: Map<*, *>): Vec3 {
+        if (!table.containsKey("x") || !table.containsKey("y") || !table.containsKey("z")) throw LuaException("Table should be block position table")
+        val x = table["x"]
+        val y = table["y"]
+        val z = table["z"]
+        if (x !is Number || y !is Number || z !is Number) throw LuaException("Table should be block position table")
+        return Vec3(x.toDouble(), y.toDouble(), z.toDouble())
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: Vec3, table: Map<*, *>): Vec3 {
+        val relative = asVec3(table)
+        return Vec3(center.x + relative.x, center.y + relative.y, center.z + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: BlockPos, table: Map<*, *>): Vec3 {
+        val relative = asVec3(table)
+        return Vec3(center.x.toDouble() + relative.x, center.y.toDouble() + relative.y, center.z.toDouble() + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: BlockPos, table: Map<*, *>, facing: Direction): Vec3 {
+        val relative = asVec3(table).fromRelative(facing)
+        return Vec3(center.x.toDouble() + relative.x, center.y.toDouble() + relative.y, center.z.toDouble() + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asVec3(center: Vec3, table: Map<*, *>, facing: Direction): Vec3 {
+        val relative = asVec3(table).fromRelative(facing)
+        return Vec3(center.x + relative.x, center.y + relative.y, center.z + relative.z)
+    }
+
+    @Throws(LuaException::class)
+    fun asRotation(rotation: String): Rotation {
+        try {
+            return Rotation.valueOf(rotation.uppercase())
+        } catch (exc: IllegalArgumentException) {
+            val allValues = Rotation.values().joinToString(", ") { it.name.lowercase() }
+            throw LuaException("Rotation should be one of: $allValues")
+        }
+    }
+
+    @Throws(LuaException::class)
+    fun asID(id: String): ResourceLocation = try {
+        ResourceLocation.parse(id)
+    } catch (e: ResourceLocationException) {
+        throw LuaException(e.message)
+    }
+
+    @Throws(LuaException::class)
+    fun asItemStack(obj: Any?): ItemStack {
+        if (obj is String) {
+            val candidate = PlatformRegistries.ITEMS.get(asID(obj)).defaultInstance
+            if (candidate.isEmpty) throw LuaException("Cannot find item with id $obj")
+            return candidate
+        }
+        if (obj is Map<*, *>) {
+            val id = obj["item"] as? String ?: throw LuaException("Item stack table should contains item field with item id")
+            val count = obj.getOrDefault("count", 1) as? Number ?: throw LuaException("Count field should be a number")
+            val candidate = PlatformRegistries.ITEMS.get(asID(id)).defaultInstance
+            if (candidate.isEmpty) throw LuaException("Cannot find item with id $obj")
+            return candidate.copyWithCount(count.toInt())
+        }
+        throw LuaException("Item stack should be item id or table with item id and count")
+    }
+
+    @Throws(LuaException::class)
+    fun asBlockStateAttrs(state: BlockState, blockAttrs: Map<*, *>): BlockState {
+        var changeableState: BlockState = state
+        blockAttrs.forEach { attr ->
+            val property = state.properties.find { it.name.equals(attr.key) }
+                ?: throw LuaException(String.format("Unknown property name %s", attr.key))
+            when (property) {
+                is EnumProperty -> {
+                    val value = attr.value.toString().lowercase()
+                    val targetValue = property.getPossibleValues().find { it.toString().lowercase() == value }
+                        ?: throw LuaException(
+                            java.lang.String.format(
+                                "Incorrect value %s, only %s is allowed",
+                                attr.key,
+                                property.getPossibleValues().joinToString(", "),
+                            ),
+                        )
+
+                    @Suppress("UNCHECKED_CAST")
+                    val trickedProperty = property as Property<Comparable<Any>>
+                    @Suppress("UNCHECKED_CAST")
+                    changeableState = changeableState.setValue(trickedProperty, targetValue as Comparable<Any>)
+                }
+
+                is BooleanProperty -> {
+                    if (attr.value !is Boolean) {
+                        throw LuaException(String.format("Incorrect value %s, should be boolean", attr.key))
+                    }
+                    changeableState = changeableState.setValue(property, attr.value as Boolean)
+                }
+
+                is IntegerProperty -> {
+                    if (attr.value !is Number) {
+                        throw LuaException(String.format("Incorrect value %s, should be boolean", attr.key))
+                    }
+                    changeableState = changeableState.setValue(property, (attr.value as Number).toInt())
+                }
+            }
+        }
+        return changeableState
+    }
+
+    @Throws(LuaException::class)
+    fun asBlockState(table: Map<*, *>): BlockState {
+        if (table.containsKey("block")) {
+            val blockID = table["block"].toString()
+            val block = PlatformRegistries.BLOCKS.get(ResourceLocation.parse(blockID))
+            if (block == net.minecraft.world.level.block.Blocks.AIR) {
+                throw LuaException(String.format("Cannot find block %s", table["block"]))
+            }
+            var targetState = block.defaultBlockState()
+            if (table.containsKey("attrs")) {
+                val blockAttrs = table["attrs"] as? Map<*, *> ?: throw LuaException("attrs should be a table")
+                targetState = asBlockStateAttrs(targetState, blockAttrs)
+            }
+            return targetState
+        }
+        throw LuaException("Table should contains at least block field")
+    }
+}

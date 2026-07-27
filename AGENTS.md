@@ -27,9 +27,9 @@ Use the checked-in Gradle wrapper:
 ```sh
 ./gradlew test
 ./gradlew build
-./gradlew :broccolium-core:test
-./gradlew :broccolium-forge:test
-./gradlew :broccolium-fabric:test
+./gradlew :broccolium:1.20.1:test
+./gradlew :broccolium:forge:1.20.1:test
+./gradlew :broccolium:fabric:1.20.1:test
 ```
 
 Run the smallest affected module test task while iterating, then `./gradlew test` for changes spanning modules or loaders. Tests use JUnit 5 and live under `src/test`; common test fixtures are provided by the Broccolium and Tweakium core modules.
@@ -37,8 +37,8 @@ Run the smallest affected module test task while iterating, then `./gradlew test
 Minecraft client GameTests require a virtual display and an explicit timeout in headless environments:
 
 ```sh
-timeout --foreground 180s xvfb-run --auto-servernum ./gradlew :testiarium-forge:runClientGameTest --no-daemon
-timeout --foreground 180s xvfb-run --auto-servernum ./gradlew :testiarium-fabric:runClientGameTest --no-daemon
+timeout --foreground 180s xvfb-run --auto-servernum ./gradlew :testiarium:forge:1.20.1:runClientGameTest --no-daemon
+timeout --foreground 180s xvfb-run --auto-servernum ./gradlew :testiarium:fabric:1.20.1:runClientGameTest --no-daemon
 ```
 
 ## Code conventions

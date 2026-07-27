@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "tweakium_testmod",
+  "version": "1.0",
+  "name": "Tweakium Testmod",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "site.siredvin.tweakium.testmod.FabricTweakiumTestMod"
+      }
+    ]
+  },
+  "mixins": [
+    "tweakium-testiarium.mixins.json",
+    "tweakium-cct-gametest.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "tweakium": "*",
+    "testiarium": "*",
+    "computercraft": "*"
+  }
+}

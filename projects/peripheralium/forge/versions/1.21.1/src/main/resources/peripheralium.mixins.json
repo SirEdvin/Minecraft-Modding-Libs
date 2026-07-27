@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "site.siredvin.tweakium.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+  ],
+  "client": [
+  ]
+}

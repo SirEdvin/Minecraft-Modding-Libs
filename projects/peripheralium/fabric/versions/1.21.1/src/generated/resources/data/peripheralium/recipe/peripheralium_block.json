@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    },
+    {
+      "item": "peripheralium:peripheralium_dust"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "peripheralium:peripheralium_block"
+  }
+}
