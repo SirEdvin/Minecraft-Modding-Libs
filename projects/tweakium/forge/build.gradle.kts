@@ -53,7 +53,10 @@ if (modernForge) {
     tasks.named("createMinecraftArtifacts") { dependsOn("stonecutterGenerate") }
 } else {
     extensions.configure<LegacyForgeExtension>("legacyForge") {
-        version = "1.20.1-47.1.0"
+        enable {
+            forgeVersion = "1.20.1-47.1.0"
+            setDisableRecompilation(false)
+        }
         parchment {
             minecraftVersion = "1.20.1"
             mappingsVersion = "2023.07.16"
