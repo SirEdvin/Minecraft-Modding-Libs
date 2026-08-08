@@ -32,4 +32,4 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build all Stonecutter nodes
-        run: ./gradlew build --no-daemon
+        run: ./gradlew build --no-daemon --info --stacktrace
