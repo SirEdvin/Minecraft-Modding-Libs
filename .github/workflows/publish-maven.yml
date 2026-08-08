@@ -117,5 +117,5 @@ jobs:
           elif [[ "$target" == "common" ]]; then
             ./gradlew --no-daemon ":${project}:${node}:publish"
           else
-            ./gradlew --no-daemon ":${project}:${target}:${node}:publish"
+            ./gradlew --no-daemon ":${project}:${target}:${node}:publish" -x ":${project}:${target}:${node}:test"
           fi
