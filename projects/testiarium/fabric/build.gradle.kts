@@ -108,9 +108,10 @@ loom {
         }
         create("cctGameTest") {
             server()
+            source(testMod)
             source(cctTestMod)
             property("fabric-api.gametest", "true")
-            if (is121) property("fabric.debug.loadLate", "testiarium_testmod")
+            if (is121) property("fabric.debug.loadLate", "testiarium_cct_testmod")
             property("testiarium.tags", "common")
             property("testiarium.structures", layout.buildDirectory.dir("resources/testMod/gameteststructures").get().asFile.absolutePath)
             property("testiarium.fixture-source", rootProject.file("projects/testiarium/src/testMod/resources/gameteststructures").absolutePath)

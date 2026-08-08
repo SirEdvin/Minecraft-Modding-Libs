@@ -18,21 +18,11 @@ subprojectShaking {
 
 val setupSubproject = subprojectShaking::setupSubproject
 val subprojectConfig = subprojectShaking
-val broccoliumVersion121: String by project
-val testiariumVersion121: String by project
-val tweakiumVersion121: String by project
-val peripheraliumVersion121: String by project
 val projectGroup: String by project
 
 subprojects {
     if (projectDir.parentFile.name == "versions") {
         extra["minecraftVersion"] = name
-        if (name == "1.21.1") {
-            extra["broccoliumVersion"] = broccoliumVersion121
-            extra["testiariumVersion"] = testiariumVersion121
-            extra["tweakiumVersion"] = tweakiumVersion121
-            extra["peripheraliumVersion"] = peripheraliumVersion121
-        }
         if (!path.contains(":forge:")) {
             subprojectConfig.javaVersion.set(
                 if (name == "1.20.1") JavaVersion.VERSION_17 else JavaVersion.VERSION_21,

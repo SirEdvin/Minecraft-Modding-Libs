@@ -3,15 +3,14 @@ package site.siredvin.tweakium.modules.player
 import com.google.common.cache.CacheBuilder
 import com.google.common.cache.CacheLoader
 import net.minecraft.core.Direction
-import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.component.ItemAttributeModifiers
 import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
@@ -81,8 +80,8 @@ object FakePlayerProviderEntity {
             // Add properties
             val activeStack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
             if (!activeStack.isEmpty) {
-                activeStack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY).modifiers.forEach {
-                    player.attributes.getInstance(it.attribute)?.addTransientModifier(it.modifier)
+                activeStack.forEachModifier(EquipmentSlot.MAINHAND) { attribute, modifier ->
+                    player.attributes.getInstance(attribute)?.addTransientModifier(modifier)
                 }
             }
         }
@@ -95,8 +94,8 @@ object FakePlayerProviderEntity {
         // Remove properties
         val activeStack: ItemStack = player.getItemInHand(InteractionHand.MAIN_HAND)
         if (!activeStack.isEmpty) {
-            activeStack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.EMPTY).modifiers.forEach {
-                player.attributes.getInstance(it.attribute)?.removeModifier(it.modifier)
+            activeStack.forEachModifier(EquipmentSlot.MAINHAND) { attribute, modifier ->
+                player.attributes.getInstance(attribute)?.removeModifier(modifier)
             }
         }
 

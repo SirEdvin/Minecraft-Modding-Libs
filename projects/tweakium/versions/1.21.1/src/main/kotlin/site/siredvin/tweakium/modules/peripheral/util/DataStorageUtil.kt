@@ -28,9 +28,8 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
         get() = DataComponentUtil.nbtToPatch(tag.get(PATCH_STORAGE)) ?: DataComponentPatch.EMPTY
         set(value) {
             val nbt = DataComponentUtil.patchToNBT(value)
-            if (nbt != null) {
-                tag.put(PATCH_STORAGE, nbt)
-            }
+            if (nbt == null) tag.remove(PATCH_STORAGE) else tag.put(PATCH_STORAGE, nbt)
+            trigger()
         }
 
     override fun has(key: String): Boolean = tag.contains(key)

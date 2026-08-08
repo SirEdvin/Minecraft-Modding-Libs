@@ -7,3 +7,6 @@ modId="testiarium_cct_testmod"
 version="1.0"
 displayName="Testiarium CC:Tweaked Testmod"
 description="Optional CC:Tweaked GameTest fixtures."
+
+[[mixins]]
+config="testiarium-cct.mixins.json"

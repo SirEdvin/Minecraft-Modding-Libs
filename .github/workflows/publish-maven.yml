@@ -39,13 +39,12 @@ jobs:
           case "$tag_minecraft" in
             1.20)
               node=1.20.1
-              version_property="${project}Version"
               ;;
             1.21)
               node=1.21.1
-              version_property="${project}Version121"
               ;;
           esac
+          version_property="${project}Version"
 
           project_version=""
           while IFS='=' read -r key value; do

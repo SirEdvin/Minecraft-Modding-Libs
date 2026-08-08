@@ -169,6 +169,9 @@ dependencies {
         cctRuntimeOnly,
         if (modernForge) libs.cc.tweaked.neoforge else libs.cc.tweaked.forge,
     )
+    if (modernForge && cctTests) {
+        implementation(libs.cc.tweaked.neoforge)
+    }
 }
 
 extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyForge") {

@@ -4,6 +4,7 @@ import dan200.computercraft.api.detail.BlockReference
 import dan200.computercraft.api.detail.VanillaDetailRegistries
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectInstance
@@ -91,15 +92,15 @@ object LuaRepresentation {
         return map
     }
 
-    fun forEnchantment(enchantment: Enchantment, level: Int = 1): MutableMap<String, Any> = mutableMapOf(
-        "displayName" to enchantment.description.string,
-        "name" to enchantment.description.string,
+    fun forEnchantment(enchantment: Holder<Enchantment>, level: Int = 1): MutableMap<String, Any> = mutableMapOf(
+        "displayName" to Enchantment.getFullname(enchantment, level).string,
+        "name" to enchantment.registeredName,
         "level" to level,
     )
 
-    fun forEnchantments(enchantments: MutableMap<Enchantment, Int>): List<Map<String, Any>> {
+    fun forEnchantments(enchantments: MutableMap<Holder<Enchantment>, Int>): List<Map<String, Any>> {
         val list = mutableListOf<Map<String, Any>>()
-        for (enchantment: MutableMap.MutableEntry<Enchantment, Int> in enchantments.entries) {
+        for (enchantment: MutableMap.MutableEntry<Holder<Enchantment>, Int> in enchantments.entries) {
             list.add(forEnchantment(enchantment.key, enchantment.value))
         }
         return list

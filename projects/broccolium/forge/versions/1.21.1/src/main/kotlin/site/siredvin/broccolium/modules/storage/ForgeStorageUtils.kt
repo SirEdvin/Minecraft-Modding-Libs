@@ -23,7 +23,7 @@ object ForgeStorageUtils {
             return null
         }
         if (blockEntity.isRemoved) return null
-        val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, direction ?: Direction.UP) ?: return null
+        val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, direction) ?: return null
         return AgnosticItemHandlerWrapper(itemHandler)
     }
 
@@ -43,13 +43,13 @@ object ForgeStorageUtils {
     fun extractFluidStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?, direction: Direction?): AgnosticFluidStorage? {
         if (blockEntity == null) return null
         if (blockEntity.isRemoved) return null
-        val fluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction ?: Direction.UP) ?: return null
+        val fluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction) ?: return null
         return ForgeAgnosticFluidStorage(fluidHandler)
     }
 
     @Suppress("UNUSED_PARAMETER")
     fun extractFluidStorageFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticFluidStorage? {
-        val fluidHandler = entity.getCapability(Capabilities.FluidHandler.ENTITY, direction ?: Direction.UP) ?: return null
+        val fluidHandler = entity.getCapability(Capabilities.FluidHandler.ENTITY, direction) ?: return null
         return ForgeAgnosticFluidStorage(fluidHandler)
     }
 
@@ -63,7 +63,7 @@ object ForgeStorageUtils {
     fun extractEnergyStorageFromBlock(level: Level, pos: BlockPos, blockEntity: BlockEntity?, direction: Direction?): AgnosticEnergyStorage? {
         if (blockEntity == null) return null
         if (blockEntity.isRemoved) return null
-        val energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, direction ?: Direction.UP) ?: return null
+        val energyStorage = level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, direction) ?: return null
         return AgnosticEnergyHandlerWrapper(energyStorage)
     }
 
@@ -75,7 +75,7 @@ object ForgeStorageUtils {
 
     @Suppress("UNUSED_PARAMETER")
     fun extractEnergyStorageFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticEnergyStorage? {
-        val energyStorage = entity.getCapability(Capabilities.EnergyStorage.ENTITY, direction ?: Direction.UP) ?: return null
+        val energyStorage = entity.getCapability(Capabilities.EnergyStorage.ENTITY, direction) ?: return null
         return AgnosticEnergyHandlerWrapper(energyStorage)
     }
 }
