@@ -50,10 +50,12 @@ val cctTestMod = sourceSets.create("cctTestMod") {
 net.fabricmc.loom.configuration.RemapConfigurations.setupForSourceSet(project, cctTestMod)
 
 java.registerFeature("testMod") {
+    capability(rootProject.property("projectGroup").toString(), "testiarium-fabric-test-mod", project.version.toString())
     usingSourceSet(testMod)
 }
 
 java.registerFeature("cctTestMod") {
+    capability(rootProject.property("projectGroup").toString(), "testiarium-fabric-cct-test-mod", project.version.toString())
     usingSourceSet(cctTestMod)
 }
 
@@ -136,14 +138,18 @@ loom {
 
 if (!is121) {
     tasks.named<JavaExec>("runServer") {
-        executable(javaToolchains.launcherFor {
-            languageVersion.set(JavaLanguageVersion.of(17))
-        }.get().executablePath.asFile.absolutePath)
+        executable(
+            javaToolchains.launcherFor {
+                languageVersion.set(JavaLanguageVersion.of(17))
+            }.get().executablePath.asFile.absolutePath,
+        )
     }
     tasks.named<JavaExec>("runCctGameTest") {
-        executable(javaToolchains.launcherFor {
-            languageVersion.set(JavaLanguageVersion.of(17))
-        }.get().executablePath.asFile.absolutePath)
+        executable(
+            javaToolchains.launcherFor {
+                languageVersion.set(JavaLanguageVersion.of(17))
+            }.get().executablePath.asFile.absolutePath,
+        )
     }
 }
 

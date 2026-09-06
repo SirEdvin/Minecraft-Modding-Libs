@@ -18,9 +18,12 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Java 21
         uses: actions/setup-java@v4
@@ -32,4 +35,36 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Build all Stonecutter nodes
-        run: ./gradlew build --no-daemon
+        run: ./gradlew cleanTest build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon
+
+      - name: Verify publication contracts
+        run: python3 scripts/check-publications.py
+
+      - name: Run server GameTests on all loaders and versions
+        run: >-
+          timeout --foreground 600s ./gradlew
+          :testiarium:forge:1.20.1:runGameTestServer
+          :testiarium:forge:1.21.1:runGameTestServer
+          :testiarium:fabric:1.20.1:runServer
+          :testiarium:fabric:1.21.1:runServer
+          --no-daemon
+
+      - name: Build with 1.21.1 active
+        run: |
+          ./gradlew 'Set active project to 1.21.1' --no-daemon
+          ./gradlew build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon
+          python3 scripts/check-publications.py
+
+      - name: Verify switching back preserves tracked sources
+        run: |
+          ./gradlew 'Set active project to 1.20.1' --no-daemon
+          git diff --exit-code
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            projects/**/build/test-results/**
+            projects/**/build/reports/tests/**

@@ -1,6 +1,6 @@
-import site.siredvin.peripheralium.gradle.mavenDependencies
 import net.neoforged.moddevgradle.dsl.ModDevExtension
 import net.neoforged.moddevgradle.legacyforge.dsl.LegacyForgeExtension
+import site.siredvin.peripheralium.gradle.mavenDependencies
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -50,7 +50,6 @@ if (modernForge) {
         mapOf("computercraft" to libs.versions.ccTweaked121.get(), "broccolium" to broccoliumVersion),
     )
     shaking.javaClass.getMethod("shake").invoke(shaking)
-    tasks.named("createMinecraftArtifacts") { dependsOn("stonecutterGenerate") }
 } else {
     extensions.configure<LegacyForgeExtension>("legacyForge") {
         enable {
@@ -63,8 +62,15 @@ if (modernForge) {
         }
         validateAccessTransformers.set(true)
         runs {
-            create("client") { client(); gameDirectory = file("run") }
-            create("server") { server(); gameDirectory = file("run/server"); programArgument("--nogui") }
+            create("client") {
+                client()
+                gameDirectory = file("run")
+            }
+            create("server") {
+                server()
+                gameDirectory = file("run/server")
+                programArgument("--nogui")
+            }
             create("data") {
                 data()
                 gameDirectory = file("run")
@@ -86,12 +92,14 @@ if (modernForge) {
     }
     tasks.processResources {
         from(project(":tweakium:${sc.current.project}").sourceSets.main.get().resources)
-        inputs.properties("version" to project.version, "forgeVersion" to "47.1.0", "computercraftVersion" to "1.113.1")
+        inputs.properties("version" to project.version, "forgeVersion" to "47.1.0", "computercraftVersion" to "1.113.1", "broccoliumVersion" to broccoliumVersion)
         filesMatching("META-INF/mods.toml") {
             expand(
-                "forgeVersion" to "47.1.0", "computercraftVersion" to "1.113.1",
+                "forgeVersion" to "47.1.0",
+                "computercraftVersion" to "1.113.1",
                 "broccoliumVersion" to broccoliumVersion,
-                "file" to mapOf("jarVersion" to project.version), "version" to project.version,
+                "file" to mapOf("jarVersion" to project.version),
+                "version" to project.version,
             )
         }
         exclude(".cache")

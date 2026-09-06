@@ -35,6 +35,6 @@ side="BOTH"
 [[dependencies.tweakium]]
 modId="broccolium"
 mandatory=true
-versionRange="[${version},)"
+versionRange="[${broccoliumVersion},)"
 ordering="NONE"
 side="BOTH"
