@@ -19,11 +19,7 @@ vanillaShaking {
     accessWideners.set(
         listOf(
             project(":tweakium").file("src/main/resources/tweakium-common.accesswidener").absolutePath,
-            if (sc.current.isActive) {
-                project(":tweakium").file("src/main/resources/tweakium.accesswidener").absolutePath
-            } else {
-                project(":tweakium").file("versions/${sc.current.project}/src/main/resources/tweakium.accesswidener").absolutePath
-            },
+            project(":tweakium").file("versions/${sc.current.project}/src/main/resources/tweakium.accesswidener").absolutePath,
         ),
     )
     shake()
@@ -57,7 +53,7 @@ dependencies {
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
 
-    implementation(project.project(":broccolium:${sc.current.project}").sourceSets.main.get().output)
+    implementation(project(":broccolium:${sc.current.project}"))
 
     add(sourceSets["testFixtures"].compileOnlyConfigurationName, kotlin("test"))
     add(sourceSets["testFixtures"].compileOnlyConfigurationName, libs.bundles.test)

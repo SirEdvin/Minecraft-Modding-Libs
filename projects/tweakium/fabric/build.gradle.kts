@@ -28,12 +28,7 @@ baseShaking {
 fabricShaking {
     commonProjectName.set("tweakium:${sc.current.project}")
     projectName.set("tweakium")
-    accessWidener.set(
-        project(":tweakium").file(
-            if (sc.current.isActive) "src/main/resources/tweakium.accesswidener"
-            else "versions/${sc.current.project}/src/main/resources/tweakium.accesswidener",
-        ),
-    )
+    accessWidener.set(project(":tweakium").file("versions/${sc.current.project}/src/main/resources/tweakium.accesswidener"))
     extraRawVersionMappings.set(
         mapOf(
             "computercraft" to ccTweakedVersion,

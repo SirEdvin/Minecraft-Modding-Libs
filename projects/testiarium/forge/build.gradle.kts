@@ -44,7 +44,6 @@ if (modernForge) {
     @Suppress("UNCHECKED_CAST")
     (shaking.javaClass.getMethod("getUseRawJar").invoke(shaking) as Property<Boolean>).set(true)
     shaking.javaClass.getMethod("shake").invoke(shaking)
-    tasks.named("createMinecraftArtifacts") { dependsOn("stonecutterGenerate") }
 } else {
     extensions.configure<LegacyForgeExtension>("legacyForge") {
         enable {
@@ -133,10 +132,12 @@ sourceSets.test.configure {
 }
 
 java.registerFeature("testMod") {
+    capability(rootProject.property("projectGroup").toString(), "testiarium-forge-test-mod", project.version.toString())
     usingSourceSet(sourceSets["testMod"])
 }
 
 java.registerFeature("cctTestMod") {
+    capability(rootProject.property("projectGroup").toString(), "testiarium-forge-cct-test-mod", project.version.toString())
     usingSourceSet(cctTestMod)
 }
 

@@ -32,8 +32,8 @@ dependencies {
     api(libs.bundles.apicommon)
     compileOnly(libs.mixin)
 
-    implementation(project.project(":broccolium:${sc.current.project}").sourceSets.main.get().output)
-    implementation(project.project(":tweakium:${sc.current.project}").sourceSets.main.get().output)
+    implementation(project(":broccolium:${sc.current.project}"))
+    implementation(project(":tweakium:${sc.current.project}"))
 
     testImplementation(kotlin("test"))
     testImplementation(libs.bundles.test)

@@ -1,5 +1,5 @@
-import site.siredvin.peripheralium.gradle.mavenDependencies
 import net.neoforged.moddevgradle.legacyforge.dsl.LegacyForgeExtension
+import site.siredvin.peripheralium.gradle.mavenDependencies
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -38,7 +38,6 @@ if (modernForge) {
     @Suppress("UNCHECKED_CAST")
     (shaking.javaClass.getMethod("getUseMixins").invoke(shaking) as Property<Boolean>).set(true)
     shaking.javaClass.getMethod("shake").invoke(shaking)
-    tasks.named("createMinecraftArtifacts") { dependsOn("stonecutterGenerate") }
 } else {
     extensions.configure<LegacyForgeExtension>("legacyForge") {
         enable {

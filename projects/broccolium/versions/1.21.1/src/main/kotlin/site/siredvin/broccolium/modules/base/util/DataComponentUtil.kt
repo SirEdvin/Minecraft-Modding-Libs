@@ -10,7 +10,7 @@ object DataComponentUtil {
         return DataComponentPatch.CODEC.encodeStart(
             NbtOps.INSTANCE,
             component,
-        ).result().orElse(null)
+        ).getOrThrow()
     }
 
     fun nbtToPatch(tag: Tag?): DataComponentPatch? {

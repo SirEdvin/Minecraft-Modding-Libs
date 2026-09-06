@@ -32,10 +32,12 @@ val cctTestMod = sourceSets.create("cctTestMod") {
 }
 
 java.registerFeature("testMod") {
+    capability(rootProject.property("projectGroup").toString(), "testiarium-core-test-mod", project.version.toString())
     usingSourceSet(sourceSets["testMod"])
 }
 
 java.registerFeature("cctTestMod") {
+    capability(rootProject.property("projectGroup").toString(), "testiarium-core-cct-test-mod", project.version.toString())
     usingSourceSet(cctTestMod)
 }
 

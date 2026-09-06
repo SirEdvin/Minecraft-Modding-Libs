@@ -28,7 +28,7 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
         get() = DataComponentUtil.nbtToPatch(tag.get(PATCH_STORAGE)) ?: DataComponentPatch.EMPTY
         set(value) {
             val nbt = DataComponentUtil.patchToNBT(value)
-            if (nbt == null) tag.remove(PATCH_STORAGE) else tag.put(PATCH_STORAGE, nbt)
+            tag.put(PATCH_STORAGE, checkNotNull(nbt))
             trigger()
         }
 
