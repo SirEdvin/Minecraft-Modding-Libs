@@ -47,6 +47,10 @@ jobs:
           :testiarium:forge:1.21.1:runGameTestServer
           :testiarium:fabric:1.20.1:runServer
           :testiarium:fabric:1.21.1:runServer
+          :tweakium:forge:1.20.1:runGameTestServer
+          :tweakium:forge:1.21.1:runGameTestServer
+          :tweakium:fabric:1.20.1:runPeripheralGameTest
+          :tweakium:fabric:1.21.1:runPeripheralGameTest
           --no-daemon
 
       - name: Build with 1.21.1 active

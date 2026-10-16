@@ -29,7 +29,7 @@ object ForgeStorageUtils {
 
     @Suppress("UNUSED_PARAMETER")
     fun extractStorageFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticStorage<ItemStack, Int>? {
-        val itemHandler = entity.getCapability(Capabilities.ItemHandler.ENTITY, null as Void) ?: return null
+        val itemHandler = entity.getCapability(Capabilities.ItemHandler.ENTITY, null) ?: return null
         return AgnosticItemHandlerWrapper(itemHandler)
     }
 

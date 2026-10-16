@@ -115,11 +115,13 @@ val testMod = sourceSets.create("testMod") {
     resources.srcDir(rootProject.file("projects/tweakium/src/testMod/resources"))
     compileClasspath += sourceSets.main.get().compileClasspath
     compileClasspath += sourceSets.main.get().output
+    compileClasspath += project(":testiarium:${sc.current.project}").sourceSets.main.get().output
     compileClasspath += project(":tweakium:${sc.current.project}").sourceSets["testMod"].output
     compileClasspath += project(":testiarium:${sc.current.project}").sourceSets["testMod"].output
     compileClasspath += project(":testiarium:${sc.current.project}").sourceSets["cctTestMod"].output
     runtimeClasspath += sourceSets.main.get().runtimeClasspath
     runtimeClasspath += sourceSets.main.get().output
+    runtimeClasspath += project(":testiarium:${sc.current.project}").sourceSets.main.get().output
     runtimeClasspath += project(":tweakium:${sc.current.project}").sourceSets["testMod"].output
     runtimeClasspath += project(":testiarium:${sc.current.project}").sourceSets["testMod"].output
     runtimeClasspath += project(":testiarium:${sc.current.project}").sourceSets["cctTestMod"].output
@@ -191,6 +193,10 @@ dependencies {
 }
 
 extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyForge") {
+    val broccolium = mods.register("broccolium") {
+        sourceSet(project(":broccolium:forge:${sc.current.project}").sourceSets.main.get())
+        sourceSet(project(":broccolium:${sc.current.project}").sourceSets.main.get())
+    }
     val tweakium = mods.named("tweakium")
     val tweakiumTestMod = mods.register("tweakium_testmod") {
         sourceSet(testMod)
@@ -220,6 +226,7 @@ extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyFo
             systemProperty("testiarium.gametest-report", layout.buildDirectory.file("test-results/peripheral-gametest.xml").get().asFile.absolutePath)
             jvmArgument("-ea")
             programArgument("--nogui")
+            loadedMods.add(broccolium)
             loadedMods.add(tweakium)
             loadedMods.add(tweakiumTestMod)
             loadedMods.add(testiarium)

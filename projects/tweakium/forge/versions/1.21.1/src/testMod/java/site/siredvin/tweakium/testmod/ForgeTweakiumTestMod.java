@@ -16,5 +16,6 @@ public final class ForgeTweakiumTestMod {
             CctFixtureCommands.INSTANCE.importFiles(event.getServer());
         });
         Testiarium.register(CreativeFillerGameTests.class);
+        Testiarium.register(EntityStorageGameTests.class);
     }
 }

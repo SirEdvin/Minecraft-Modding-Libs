@@ -231,8 +231,12 @@ class PocketComputerDataStorage(private val pocket: IPocketAccess) : CustomDataC
     override fun setCustomData(data: CustomData) {
         val builder = DataComponentPatch.builder()
         pocket.upgradeData.entrySet().forEach {
-            if (it.key != DataComponents.CUSTOM_DATA && it.value.isPresent) {
-                builder.set(TypedDataComponent(it.key as DataComponentType<Any>, it.value.get()))
+            if (it.key != DataComponents.CUSTOM_DATA) {
+                if (it.value.isPresent) {
+                    builder.set(TypedDataComponent(it.key as DataComponentType<Any>, it.value.get()))
+                } else {
+                    builder.remove(it.key)
+                }
             }
         }
         builder.set(DataComponents.CUSTOM_DATA, data)
@@ -258,8 +262,12 @@ class TurtleComputerDataStorage(private val turtle: ITurtleAccess, private val s
     override fun setCustomData(data: CustomData) {
         val builder = DataComponentPatch.builder()
         turtle.getUpgradeData(side).entrySet().forEach {
-            if (it.key != DataComponents.CUSTOM_DATA && it.value.isPresent) {
-                builder.set(TypedDataComponent(it.key as DataComponentType<Any>, it.value.get()))
+            if (it.key != DataComponents.CUSTOM_DATA) {
+                if (it.value.isPresent) {
+                    builder.set(TypedDataComponent(it.key as DataComponentType<Any>, it.value.get()))
+                } else {
+                    builder.remove(it.key)
+                }
             }
         }
         builder.set(DataComponents.CUSTOM_DATA, data)

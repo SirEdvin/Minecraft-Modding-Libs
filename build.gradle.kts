@@ -22,6 +22,8 @@ val setupSubproject = subprojectShaking::setupSubproject
 val subprojectConfig = subprojectShaking
 val projectGroup: String by project
 
+apply(from = "gradle/gametest-reports.gradle.kts")
+
 subprojects {
     if (projectDir.parentFile.name == "versions") {
         extra["minecraftVersion"] = name

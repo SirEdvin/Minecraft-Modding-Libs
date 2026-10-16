@@ -30,3 +30,13 @@ feature capabilities, source JARs, loader metadata and Java bytecode targets.
 CI also runs server GameTests on all four version/loader combinations and checks
 that switching back leaves tracked files unchanged. Formatting is checked once
 from the repository root, ratcheted against `origin/multiversion`.
+
+Use scratch log files for verbose local Gradle output (`> "$TMPDIR/build.log" 2>&1`).
+The server matrix includes Testiarium and Tweakium's peripheral tests. The report
+guard removes old XML before launch and requires a fresh, nonempty report with no
+failures/errors; Minecraft startup can fail while the process still exits zero.
+
+Stonecutter is pinned to stable 0.9.8. The newer 0.10-beta.1 is not adopted: it
+requires a Java 25 Gradle launcher, Gradle 9.7+, and a separate preprocessing/API
+migration. See [the migration audit](docs/stonecutter-migration-audit.md) for
+gameplay/API differences, inherited bugs, fixes, and verification scope.
