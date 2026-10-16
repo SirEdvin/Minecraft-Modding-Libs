@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5eff6b4f622ff3c4f96e0d8df388828dad5edd9a876daf01583f088924537077",
+  "claims": [
+    {
+      "id": "claim_28008783261a4cd894ebaea573408d75",
+      "statement": "Peripheralium configures its platform before common registration; Fabric inherits immediate registration while Forge supplies and attaches block/item/tab deferred registries after forcing Tweakium initialization.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/fabric/src/main/kotlin/site/siredvin/peripheralium/FabricInnerBasePeripheraliumPlatform.kt#L5-L8",
+          "version": "repo-lines-v1:sha256:71b8af95d4112bb541d73e48a8525ad0c13310bee761de81ad0ef10c77adf28e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGY1NzYzN2Q4NWM4NzRkNjFjMjZmNTA0YjU4NmJhMjgzYWQxZGNhNmJmMjY0OWJiOGJiZmFiNDYxZTEzZjI4ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTNmMTlhYzhhNmY2MTg4NzgzNTk3OTc5M2ZkY2QyNGI0MTk5MzE5MTBkNDY5ODk2MDY0ZjQxOWY5ZmM3YTY3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://projects/peripheralium/fabric/src/main/kotlin/site/siredvin/peripheralium/FabricPeripheralium.kt#L6-L19",
+          "version": "repo-lines-v1:sha256:f658444e365b3f286c42f1ebb3c7bec47e73a7f30cfaa1ae86e6f522c0a33193:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMjgyODFmOGE1ODY3MjcwN2U4NmY2NjBlNzhlY2MwYjIzZWI4MzYyYzMyZDQzZmI5ODIxN2I5YWUyY2JiYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxMTAzNzY5MTgyYjRmODY2ZDQxMjI3ZTAyMTFlMjIyMzYzNTFhMDlhMWJiYTU2ZjE1MTY4NzIyMWU3MjU2Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheralium.kt#L18-L38",
+          "version": "repo-lines-v1:sha256:6785f9b057aadb83af31e978c75f7397488d79369752fc2747a4d5311459501c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4ZmE2ZTI5ZjZkYTZjZjliMTFiZjRhMzAwNGQ1MzJhMjliODEyODQzOWM0YWRiYjNlNjJiMWNhYjQzZmQxZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyNjYzOTE4ZDQ0ZjRkN2EzY2I4MmI3OGQ2YzlkNzA3NDk5MTdmMmVhMDYwZmQ4ZGEzYzVlNjY0NWRiM2U5MTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheraliumPlatform.kt#L9-L21",
+          "version": "repo-lines-v1:sha256:3a8cf2047180f283527acea74911caeb0ac791b2f72ec8c975cc91b2257adfc0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0MGRjYjhhYWQ0ZGJjYjdlNDU3ZDkxZTI2NTQ1ZTAyZGRkMWI1OGY1YWQ0MTA1MzUwMDk1MDdlOGQyNTU5YTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhNjk0MDRiOWRiMzE3ZmMzOGI0NmU3Y2MzOTJlMjQxMDI2MzUwZDg5YTYzYmQ4MDA5Y2M2MjE0ZjE5NmVlMjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9893a5e1302447249b599bd0a5647968",
+      "statement": "Peripheralium's historical forge branch uses NeoForge on 1.21.1 and adds a criterion-trigger deferred registry wired through its platform.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheralium.kt#L8-L38",
+          "version": "repo-lines-v1:sha256:7154a71f6f4f77ccd9d8dc41faa81a44821c31322101e071f4ba62c185b596e8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyODY3N2U0OTg3MjQ3NmEyMjBmMjcyNjNhZDRlMzI0YjMzNzEyMmU1OWUzZmQzZTBjNTc1MGExOGU5NzVlYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmMTNjZjU1M2Y4ZWNjOWYwZWRlMmQzODI5MTAwZTE5YmQ4NDRlNjZiM2NmMTU0NWM4MWUxZTUwNTQ0M2NiZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheraliumPlatform.kt#L10-L24",
+          "version": "repo-lines-v1:sha256:15d8508615eeebfed5f511f99d73c2664a9173e606311a346c170a3096fb36ec:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0MGRjYjhhYWQ0ZGJjYjdlNDU3ZDkxZTI2NTQ1ZTAyZGRkMWI1OGY1YWQ0MTA1MzUwMDk1MDdlOGQyNTU5YTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlMGNhY2I4YjViNTIzNmVlOGRmMGJiNmQyYzAzMzNjNjgwYjk5YzkwZWNjZjUyNzgyMjVmNTIzZTAwOTFlOWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwZjhiODg1ZDBmYTcwNjVhZGJiYjdhMTYxYTdiNTQzYjExNDhiZjhlYWQxMTA3OWM2MjE5MTkzYjNjYmQzOTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_15487c475a3d43b8977ccea53fe4c348",
+      "statement": "Peripheralium Fabric version metadata changes Minecraft bounds but both snapshots retain Java >=17, despite the 1.21.1 build's Java 21 target.",
+      "evidence": [
+        {
+          "resource": "repo://build.gradle.kts#L27-L34",
+          "version": "repo-lines-v1:sha256:e1a148788826ee024635d3df6f9196497c09805a9aeb2ba05837f6401bb6c2fc:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQ3ZmIxNTQ3ODQ2ZGY2MzhkOWVlOTk5OTFhYWQ0Njc4YTgyZmFkNzQyMmQ3ODRmYzkzNWY5ODdhMGRjZTJhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjVhNGE5YTRkODk5MDA0N2I3MjMwOGFkMGE0NWNhMThkN2VkNDgyMTAzZjBkYWIyNzg5N2U2NjY5NjhkOTg1MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzY2NzgyMmU1NDFjNTFkZGI4Y2NiOWZkZjYyYzAxOWJmMzc1NzEwM2M3OTMxOGEyNTUyNWQzMThhNGFkN2VmOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjE3YjAzMzViODUzMWZhNmFmMDgxYjFkNDg3ZDk5NjU2YzVhNTQ4YmM1ZGM4MWEwY2ZlNzdjMDJiYWM0ZGRlYiJ9"
+        },
+        {
+          "resource": "repo://projects/peripheralium/fabric/src/main/resources/fabric.mod.json#L19-L44",
+          "version": "repo-lines-v1:sha256:27759688c34ee0ec9ce67bf0bd520eadf14ba774ea943962a31a8404d511e543:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNjFiMjZhMzcwOTJhOTkwODNiZTU0ZWQzM2VlOTI4MTE4MzdlZGQ1OTRkYjRhZmRhMTdlMTM4OWQwMTI5YzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkNWNkMmZiNGYzZGY4ODQ1MTUyNTViMzk1MjNmMmY4YjU0NzJiZWVhOWY1NjZmZmNhMjA0ZGI4MDI1NjEwNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5ZDAzMDVlMjk3YWNlZGYwODVmOGE5YWYzZTg3YzdhM2M1MzE5NzZjNGQzNGNmOWI0ZmNjMDFhZTYzMjA5YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiMzJhMzI0NjcwNGI1ZWI0MmZlNGY5NGExZTJlZTIyYTg3ZDYwZjM5OWY5ZWE1MjI3OTNlMGFjZjU3ODNlMTcifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/fabric/versions/1.21.1/src/main/resources/fabric.mod.json#L19-L44",
+          "version": "repo-lines-v1:sha256:4e9ad77b9127d28ba42a2313a774988034518035498804c4dd73a239056ee803:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzNjFiMjZhMzcwOTJhOTkwODNiZTU0ZWQzM2VlOTI4MTE4MzdlZGQ1OTRkYjRhZmRhMTdlMTM4OWQwMTI5YzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkNWNkMmZiNGYzZGY4ODQ1MTUyNTViMzk1MjNmMmY4YjU0NzJiZWVhOWY1NjZmZmNhMjA0ZGI4MDI1NjEwNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5ZDAzMDVlMjk3YWNlZGYwODVmOGE5YWYzZTg3YzdhM2M1MzE5NzZjNGQzNGNmOWI0ZmNjMDFhZTYzMjA5YmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiMzJhMzI0NjcwNGI1ZWI0MmZlNGY5NGExZTJlZTIyYTg3ZDYwZjM5OWY5ZWE1MjI3OTNlMGFjZjU3ODNlMTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b8ceb7b9946b47fcb0459476e29fcc6a",
+      "statement": "Peripheralium switches from Forge mods.toml mandatory dependencies and KotlinForForge [4,) to NeoForge metadata with required dependency types and KotlinForForge [5,).",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/forge/versions/1.20.1/src/main/resources/META-INF/mods.toml#L1-L47",
+          "version": "repo-lines-v1:sha256:6ca75f128ea35d4cab975ff72b3dfc37922d86353999b94c84b08f4c38f11d10:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlNDY4ZDY4ODZkYjMzY2JmZGNkNDdjMjg3OGY2NzUyMzJhYzEyMmQ1NmEwZTMzZGU0M2Q5ZDU2MmYyYTAwMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzMjE1OTVkZmMzNWE0MGU5NDMxMWFiZTI5NTE2YTZmN2RiODAzNmNkNGM2MDRjY2QxZTBjMjdkN2Q5MTk2NGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/versions/1.21.1/src/main/resources/META-INF/neoforge.mods.toml#L1-L47",
+          "version": "repo-lines-v1:sha256:57ca296b172ef08bf428671e77604a90af56d0cd64d2d6ef5933d8a8c8022ebc:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlNDY4ZDY4ODZkYjMzY2JmZGNkNDdjMjg3OGY2NzUyMzJhYzEyMmQ1NmEwZTMzZGU0M2Q5ZDU2MmYyYTAwMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzMjE1OTVkZmMzNWE0MGU5NDMxMWFiZTI5NTE2YTZmN2RiODAzNmNkNGM2MDRjY2QxZTBjMjdkN2Q5MTk2NGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_67f130dff833414abe1e221179d84fe3",
+      "statement": "The 1.21.1 Peripheralium Items override removes blend registration, and its recipe override has no blend smelting.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/Items.kt#L6-L11",
+          "version": "repo-lines-v1:sha256:7881350b21e73d9e77f7f19a4489f9d60986126b0a94d8ec377bc23167208e45:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMDk0MzBkODA3ODgxY2I2MTI2MTExYmZjNzM5MDU3ODAwMzM0NDc3MzJkMzdlZWM1MDYzOGIwNGJmY2M4ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTc3NzNiODg0ZWVjYWI2ODNmZjg3MTg5YzgzNWJlMzQ3MDkwZWZhZTA1YjhiZTcxYmQzZDIwZGNmY2EwZDY5OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDdlYWYzMjY1NzYxZTcwM2FhMjZlMmViYTQxMTllNDQ0ODE1MGY3NjAxM2IwZjIxYWM0MGFjMGQ3M2I1Mjg4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjM5ZTA0ODNhMjQwODg0ODJlZjBmNjk4MDY1NDIyYTcxMWZiNWYwNjQwMDAzMDAzOGIxYTc3NjkwOWRmNTEyMiJ9"
+        },
+        {
+          "resource": "repo://projects/peripheralium/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/Items.kt#L6-L10",
+          "version": "repo-lines-v1:sha256:fc3c056fd864131e0ff23d52de6d7072f5537e039565647dd6c7d406e2f6cce4:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMDk0MzBkODA3ODgxY2I2MTI2MTExYmZjNzM5MDU3ODAwMzM0NDc3MzJkMzdlZWM1MDYzOGIwNGJmY2M4ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTc3NzNiODg0ZWVjYWI2ODNmZjg3MTg5YzgzNWJlMzQ3MDkwZWZhZTA1YjhiZTcxYmQzZDIwZGNmY2EwZDY5OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDdlYWYzMjY1NzYxZTcwM2FhMjZlMmViYTQxMTllNDQ0ODE1MGY3NjAxM2IwZjIxYWM0MGFjMGQ3M2I1Mjg4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjM5ZTA0ODNhMjQwODg0ODJlZjBmNjk4MDY1NDIyYTcxMWZiNWYwNjQwMDAzMDAzOGIxYTc3NjkwOWRmNTEyMiJ9"
+        },
+        {
+          "resource": "repo://projects/peripheralium/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumRecipeProvider.kt#L16-L41",
+          "version": "repo-lines-v1:sha256:f032c186fd6545874a6309720adf5aeeb49b9bddc49f558625507b8f6c0ca4e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0ZWZiMzE1MjFiZWNiNGUxYjc3ZGE1MGExYzFmZjg5NWQ5MjMzNDI2NTQyMGQ4Y2JjOGEyYjk4ZDAxYjcyYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjNzUwYTgwMGYyMDYwNTNhMzA1MTlhMmJhYjgwN2Q1YjMzMTlmOTY0MTMwYzc0NmQyYWMwZTE1ODRlOTdlMzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T16:31:45.808Z"
+  }
+}

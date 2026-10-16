@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:92dead3a828dcc1cb2181cbd68f523ec244d05dabd5d6501b665f168b768e72a",
+  "claims": [
+    {
+      "id": "claim_65facb0dc2d9441aa4cd6151794379d7",
+      "statement": "Four library trees have common/Fabric/forge Stonecutter nodes for 1.20.1 and 1.21.1, while typed-peripheral-api is separate; forge denotes legacy Forge before 1.21 and NeoForge thereafter, with 1.20.1 canonical.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/stonecutter.gradle.kts#L5-L11",
+          "version": "repo-lines-v1:sha256:187817402dccb54cd007e6e5c576840b32cd974b15ed5948a9bea8d764b47ac3:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGVhM2RlOGQ4YmFmMzU5MGYxOTliMDk2Y2E1YTRjNDU5OWYyMDQzN2FkNmJhZGM5YzE4YTAxOWM2ZTA0ZDQ3MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDA3YmZlYmM4NzJmMTkxZWQ2MmM3NWNhZDQzYmYyMDA4MGU5MjBiNjE1ZTA0MGVlZGY2ZGQyNGM1ZTg2MjI3ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTRiMDMyMmJlYWFiNTA4NmYxZjA3ZDUwNDY1MmRiZDQ1Y2Y2NTk4ZDVmZTZmZjNmY2VhZDFmNGMxZDA2ZWM3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://settings.gradle.kts#L37-L65",
+          "version": "repo-lines-v1:sha256:29a549361d6426a54ca0ad47592e971afa7488ee3c4a6e3c902203c0c6869d88:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0MDQwMTAzMTViZGJiMGZlYTBmZDZmZjAyMTRkOGJjOTIxY2UyODM2ZDFjYzZiY2I4ODQ5ZjM1NzZjZjVhNjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9c85b1023b63473381bb9c6001be0791",
+      "statement": "Version-local source overrides suppress shared matches even on the active node; builds target Java 17/21 by Minecraft version and wire Forge artifact generation after Stonecutter generation.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L7-L15",
+          "version": "repo-lines-v1:sha256:3ca05416aedf9caecb4cc5b574b2711aeb9f62f7acccc81088211db6ab56b535:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWYwODU5NDY1ZTdjODNmODVkY2IzYzAwOTQ1ZmJlZGYyZjIwZmY0NzI0MzdmMjZhOGY0MTVkYzFlN2RmZWY1MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzNmOTdlYzQ3ZGUzZTU1NjAyNjZmZmUyYmMwYWE0NjkzY2ZmMjBkOGE2YjA5NzI3ZDhlOWY5ZmM5ZTRjZjgyNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWQxODY4NzhmYWVmYTI3NzAyODkzZmJkYjE2MzMzNTYyNzEzODcyZTY4YjNmMmUzMjQyNTY1MWMwMmQzYmVmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjAxODA3Y2Y5NmQ3MmFjNzJjMmM1YzUwZGM4YmIxOTU4ZDAyZWVmMWUwNjFiNDM4MjJlNWUxMjIxNWI4Njc4YiJ9"
+        },
+        {
+          "resource": "repo://build.gradle.kts#L27-L88",
+          "version": "repo-lines-v1:sha256:1b968f43cf211e0c0375b275d92e138c7006eafa594adc90d6e22ab68f3e1c96:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0N2ZiMTU0Nzg0NmRmNjM4ZDllZTk5OTkxYWFkNDY3OGE4MmZhZDc0MjJkNzg0ZmM5MzVmOTg3YTBkY2UyYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNjQ3OWNjMjMwNDQwZmQ0MWU4MjI0MjE4Njc5Njk4NTU5ZDI4OTNiZDY3YjQzODBhZmFiODExYjM4YTU1YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2Njc4MjJlNTQxYzUxZGRiOGNjYjlmZGY2MmMwMTliZjM3NTcxMDNjNzkzMThhMjU1MjVkMzE4YTRhZDdlZjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkMDU0NzMwYTdlYzgzNmE5ZWRjMWViMTg4M2MwY2I0MDBjNTJlZjAwMGI5YWQxMTFkYTk0NTIyZDQ4YjRlMzkifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/build.gradle.kts#L13-L20",
+          "version": "repo-lines-v1:sha256:d69bc5e576728fd8dc6f37b3611ba293e5d9968f1d1fa015305ff41fe0801c14:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2M1MjM3NmY1MGVlNGI5YjY4MGJjMWNlZjZmNDdjNTE1NTNmZTkwNDhjMDY1NjQ4YWQyNjIyMTc2NTMyMWM0NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTE1NTdjNTc0ZjI1MDk0MzBiZjM1NmY5YzJiNjYzZWYyMGE3YTk3Njk3ZWVjOTllODUzNGZjMTA3MmIwNjJkNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjRjZWM0OGE2Y2Y2ZjdlMmMxZmIzZTI0NTQzODQ4MmViNzM4ODMzNjE3M2E0YTdmYTMxODRjMWFhN2Y1MDhmZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_368e942532e84b55b5b4b2bf8ccfd2f9",
+      "statement": "Common production dependency flow is Broccolium to Tweakium to Peripheralium, while Testiarium exposes distinct testMod and optional ComputerCraft test features.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/build.gradle.kts#L28-L39",
+          "version": "repo-lines-v1:sha256:b7c0c32d2cbaa5ed6e3c9ad4382d757e8b334b5e629f9903d49c8d3413be42e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiYTMxNDVhZWUwZGEwNTkyNGQzYWQwYjFlZWI0YWRlNzc2MWI2NjdkOGE5NjE0NmRlZWYzOWFiZDFjZTQ4Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMDg0ZjAzZTc4OGRiNjI5MmQyYjk5Y2M2ZGI2MjhjMjA5ZjZmM2VkMDFkY2M2ZWE2Njg2ZTViM2I4MjVjMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YzkzNzZmNDcxYzE4Njc5NTliZWFhOGEwZjA4YzQyYTJhOTFiOTI4YWNhYTBjMDA2NjBhNDQ1MTBkYTkzMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNThiNTRhNWM5Yjc1NDlkYTVhMTM3NDEwZWU4MDE5ZDkzMDNiOTIwYWE5YTExODM1OWM1Mzk1OTgzMDA1ZTcifQ"
+        },
+        {
+          "resource": "repo://projects/testiarium/build.gradle.kts#L21-L49",
+          "version": "repo-lines-v1:sha256:7b8534a145fac16b31e25d79b6404283d09484da06916f9acd6de31ee2d68a12:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNDY3OGFjYTE4NDdjZjU1ZTM1NTBmY2E2Y2FjNGI4NDQzZWM4MDc3ZWI0OTNjYTA4MDNmZTYyMjMyOWFiYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNGQ0OWFhOWE4YjRhOGJjMzI2Y2RlZGEwOGJlOGIyNzM1MzhkYjU5NGY2MTNlNDc2MGM0MGMzN2FlNjA1NjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YzkzNzZmNDcxYzE4Njc5NTliZWFhOGEwZjA4YzQyYTJhOTFiOTI4YWNhYTBjMDA2NjBhNDQ1MTBkYTkzMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM3ZDg0MjY5ZDRlYTQxYTcwNzJlZGM5Y2NjNjI5NmQyMjZjMTIwNGYyMzJjZDBhZjBkYzIzMmY5OWQ0Yjg5NTMifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/build.gradle.kts#L49-L61",
+          "version": "repo-lines-v1:sha256:7c91660423dd32c87d978ba73c44630230da276ad05ff7198e9bf82cc37ed371:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiYTMxNDVhZWUwZGEwNTkyNGQzYWQwYjFlZWI0YWRlNzc2MWI2NjdkOGE5NjE0NmRlZWYzOWFiZDFjZTQ4Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyMTQyZThlMmExMGJjODE4MzQ5MWU2YjFlOTZkOTQxMjUxZDZmOGE1Yjg1MzFhZWZiNmM1M2M1MDliNTRhM2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzYzg3MWNjZjBlMzg4MDk4MjI0ZWFmN2JmNjAwMGQ1ZDIxYTQyMGI1ZjViYzZiZDA0ZGM5YjMwMTRmNGVlM2UifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_881230fb87ed408a8b96d88b5d89aa3a",
+      "statement": "Unique internal Gradle identities are separated from site.siredvin Maven identities, and the publication checker validates every configured library/version/loader artifact including dependencies, sources, loader/JVM identity and Testiarium feature capabilities.",
+      "evidence": [
+        {
+          "resource": "repo://build.gradle.kts#L46-L49",
+          "version": "repo-lines-v1:sha256:8df72c94a5f6ec447be2ec601b9df2a23329dd67a6976a613c6941b5b2cfa216:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzliZjI2MmI5ZjlhY2NiNzUwZTIwOTE2MDY5ODU1Mjc3NzMzYmE4YWJhZDI0Y2JhZmQyZTBhMzQwZmVmOTEwOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmRiNzU3MzkxYmE2ZjBiMjQwNTk5OTYwMDg5NDJhYzc3ZTVkNmZiNzE3ZmQzMzg1ZDg5NWY3YmQzMzk3Mzg0MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGE5Zjg2ZDI4ZTc4NGY5ZmQzMWZiNzJkMTVmNjBjYmNlYWFmZGQ2NjljYmQ1YjZkYTc4ODhhMDIzMzIxZWJiOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTg5ODhmMzYyNGNjMDk5NmZlN2FiN2Y5ZGJmODJmZGI1ZmM5NzQ1NDY4NjI3YjEwZGZjZmFjMmQzY2Q3YWFkYSJ9"
+        },
+        {
+          "resource": "repo://build.gradle.kts#L70-L98",
+          "version": "repo-lines-v1:sha256:a8927a688a827547489d5c167da9594bfcb52462b170765a6da5c943ee8eaa9f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhODViYTc5N2QwMDA4MGQxZjdjMjk3MDcyN2YyYTg3NDNiMzZmNjYyODQ1YmUyMzUwYmNiNDA3YmNjNzdlOWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMWRhMzU4MTM4MTJlMjg5YjhhNGQ3ZjM5NTJjN2I5NThkOGQ1ZDI3ZGRjNDVlODY3MWEyODc5YmE4OGNmN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZhYTI3MDhkYWVjYWEyM2M2NjNhYmMzNTE1OWU0YmYzMmI5YjI2OTI5NDY3ODI4Y2E2ZmRjNzcwZDU0Y2NlNmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiNTZhMGU5MWI0YmY3YzM5ZGQ4YjkzMGMzNDc5ZTUxOWM3OTU0MmZkOWZmOThlZmRhOGZiMTg4NWIxM2Q0YWEifQ"
+        },
+        {
+          "resource": "repo://scripts/check-publications.py#L19-L96",
+          "version": "repo-lines-v1:sha256:98d3c78439b577aa4922a6849de943eeaa1868b238cbb92de797dbe2cb0096d9:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5YjQ5NTE0YWZkMWMyMjIzYmE2ZjY3M2U0MWE4ZGJlZTQ3ODUxN2ZkZjU4YTNhNzViMmRlMzBiZmQxZTA0Y2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxOTI1M2E3YjlkNzkyNWY5NzFjYzczMjNhMDVhNTZhYmMwYzM2YzJkMGY0NjE3N2I3M2YxMDhiNGMwNzZmMzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjMDdlMjE0MjRlNzhhNDc2ZDQ5M2RjNGFlMjdmZWVmMWE0YzdiYTdjYTY2YjU0NTg5NjcyOTc2ZDA2YzEzM2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNDEzNDBjYzIzOWExNTljZTliNjAyMmU5ZjYzMjI4MzJlMmVhZDc2Y2FlOWU0NzU0ZDIxMGViOGZiNmQ1ZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e1daa7a6343a4f4098f072cbff2c6ca0",
+      "statement": "Broad build verification reaches loader/common assembly and TypeScript output generation; switching changes active source state and formatting is root-ratcheted, so wiki-only work should not use these as a harmless linter.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L19-L32",
+          "version": "repo-lines-v1:sha256:6ec0ab8c52f3b87afb8f3c62622afea49adf000c4d1175b0fa32e4213e43297c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjNDNmYjg5ZGQ3MTM5MTcwNmJiNjU1MzM3MTM5YWU2NmFjMTBmYWNjNDI2MmJjZDI0OGMyMjljZjBlMjVkMDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYTUzODc2NGE2M2IxY2U2YmZmZWY1OGI0NzQ5Y2JkMWZjZGJjZjZlNTc5YzQ3OTVkOGNmOTE4N2JiYzlhZDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwMTgwN2NmOTZkNzJhYzcyYzJjNWM1MGRjOGJiMTk1OGQwMmVlZjFlMDYxYjQzODIyZTVlMTIyMTViODY3OGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJiYjdhOTVjODI3ZTA2ZTdmZTRlODA4OGY5OTU4NDMzNDFjODVmODg2MmY3YjdmZGU5NGEzNzQxYWVlODM1MjQifQ"
+        },
+        {
+          "resource": "repo://build.gradle.kts#L130-L151",
+          "version": "repo-lines-v1:sha256:d464c337bfc430c6e2c92da747a66d9c4847631470ab6151cb456d19b0d1769a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1NDUxNDYwNzRiZGM2ZThhMDhhZjJkNTZiMDZkMjQ1MGQ4M2U3NTc2M2VjOWZkYTA2MTVlYzk1ZTgxZmMxODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4MzJmZTBjNWFjMTJkOGZmYmQ0ODliNzRjYTE4MjdkYWYyZjNhOWNmYWQ0M2JiN2ZmMTVlMzViNTYwMmQ2NTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/build.gradle.kts#L41-L99",
+          "version": "repo-lines-v1:sha256:f5aba0b8b46d900f8e3ca6d7ce701a79744fb3914f145e79abed769d1ed95b21:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlMDYzZDk2YzM0YWI3ODRhYTQzMmI3NzgyYTk4YzU5N2MwOTg3YzY2NzNmNmUyZWEwYmFkMWRlNjNiYmIwNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhODRjNGM3NTM0YWY0M2Q0NDViODRkZTQ3ZjMwMjE0N2RmZTQ1YTdjOTY2NjQzOTY1ODMwMGMyNjEzY2JmNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3ODZkOTg4ZmI2NzhiZjE3YzQ3MTFiZjVmNTQzNzRjMjEwZTFmNGRjYzM2MDY5NDRlZTQ0Y2E1ZTQzMmNlOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxOGQ1MzIzNWM4MWZjZWRhYzVhZmZlZTVjMDE2YWRiYTA3NzNmNWJhODEwMTUwZjlhZjI1MTM0YmFiNDAzZDMifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L17-L36",
+          "version": "repo-lines-v1:sha256:81919b97e72345ae2408374df38131b5f722e64592a632c9bf968704c591c0ba:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhNjE5N2EwMTg1ZTQwZDQ5ZGVlMzhkNjk5NjJhYjM4MzY0ZjA2MzNkMmJmNWIyNTM3NDRkYjZiZjU4M2Y3MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjNGM4ZDIzZjRhNGJlNWRiMTQ2MDY5NzYxNDEwMTliMTFkOTE4Mzc4MjU3Nzg3NjFmZDQyNWE3YzMwNzUxMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d7997cb23148462ea6c0e792e4341417",
+      "statement": "Existing Maven release automation is tag/manual driven, validates configured library versions, maps release series to exact nodes and requires credentials before selected publication tasks.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/publish-maven.yml#L3-L23",
+          "version": "repo-lines-v1:sha256:b1a6c0364e5fb5625b1902e31bf5443db1bbe96d3d7405e508425f52d10fb800:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5NmRjNDgxNDlmNWE4M2QxZWQ2ZGJiMzliYmM3ZTJiOTAyYWEzZDM0ZDZiZDVhZTRiMjkxYjY4ZGYwY2E3OWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2M2JiNjM1Njc2ZDQ3NTNkZjFhYmIzNDZmNDMyMWVlZDE2MWRiNWFmZTJkZTBkOTJmOTI4MThiMDYxYTI2OGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiN2ViN2ZiZDg5NTFlYmMzMzdiYzJlYjk1NjE3ZDFjZTlhNmU5NzgyYTgxYTZmNDIzN2U2YTU1YmFhMTExYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlMjc0MjI0ZTk4Mjg4MWQ5ODFiOGFkZGZkZGM5ODgwYjJmMWQwNzgwMzE1ZDcwZDVkNTE5MWM3NWY5NWE1YjIifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/publish-maven.yml#L38-L88",
+          "version": "repo-lines-v1:sha256:030ccc758084a0953b469a666709b721d99c9a8e506b879755850fc8c4854c99:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3MWRjYzU5NzQ3NWE5NDQzYmM4OGUyMzc3NWM3YTViZDBmNDliMmNjMjExNGZiNDNkY2I2YWNhMmNmMzI3YzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2ZDE3NGI0MmJmYzMzMWM4N2RiZjM2YjZhZjE1ZTI3Nzc4YmE2ZTQ4NjUzMTAyMjU3NGEwZmQ3ZGJmMjVmMWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmNzdlODg2MmVjMWQ0MzY5NDI2ZmNhZmFkOTEwYThjOTA0NDEwMTA0M2ZhNTJmYTY0NjFmNzViZmNkZjA5ZGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlYjYyMGI0MDQ0ODJhOWY1YTQzYTNjZGM3YzMxYjIyNzYyZTkyYTAyM2IyZGNhZTc2MmFlNGEwZWFhMmIwOTcifQ"
+        },
+        {
+          "resource": "repo://.github/workflows/publish-maven.yml#L99-L120",
+          "version": "repo-lines-v1:sha256:19237ead52504f10755a6edaa914f7ecddddde2c3dfa5d67407d04c0be533f09:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1YzQ5NWQ0MTkwOTdiMWMyN2U1ZjA4ODIwOWVlZTFiNjE3NzUyNzZkMWE4M2VmMTAwY2NmMzUzM2QxOTVlNDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZjAyOGY2Yzc1NjAxNzQyMmEzMjI3NzAwNDVjY2M3MjMwYzExYmM5ZTBkZDY3NDA5ZDI2NDUzYjhjNTA4ZDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3YTJhZGNjYmE3YTgxNTMwNDVmYzkwNzk5ZWI4ZjVhZGIyNzFhMmRmYTcwZTRlNDk4MjczNzhjM2NiOTA3NDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJmNTU5NzljZTczMDIwMzNlNmIyZmQ3ZDg4ZjUzN2EzYjhlMDkxZWEzMDVjODExZmZhMTI3NGJmNTc2NGVhNWUifQ"
+        },
+        {
+          "resource": "repo://gradle.properties#L8-L12",
+          "version": "repo-lines-v1:sha256:7e3f2defe5c9324f90102e337a997e1776caedb8e67c5c087df0506a88937c1c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGUxY2ZiMTllYzY4ZjBiYjExZmVlNzAwODQ0NWE4YTA0OTQwZDI4Njc0NWYzMTAzMzc4YTdkZWE5ZjM2N2U4YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjZjZjBjN2U3NWY4MjA2NWEzMjgzZDk0NjY1OTk2YjdlNDY2NTQzYzJkZmUxNDgzYjRkZGNhMjFiZmMzZjMyOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjJjYWY5Y2JhYzk2ODcwZTBkYTYxOGQxYmZmZjE0MjM5NWZhMjhlNzRmZTk0OThhNzBmYjc2NGJhNWJmZGVjMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T16:31:45.808Z"
+  }
+}

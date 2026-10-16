@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bc07bf34e9cdfe6ed51b8f4f41a67cd83a1db32ca6dcfe0aea8bafe3cafb8315",
+  "claims": [
+    {
+      "id": "claim_425e085bcd5e43d0b5f3ad9e22770ef0",
+      "statement": "typed-peripheral-api is an independent included subproject outside the four Stonecutter trees, with package identity @siredvin/typed-peripheral-api and version 0.2.2.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/package.json#L2-L19",
+          "version": "repo-lines-v1:sha256:591b15a76a15736f9fa7cf388895516f95fc44e66a7f2629a2aea238ac09715c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyZGNhZWNiYzE1M2E5ZmM4NjRmMzY4NzQxODQ5MzBhYjM1NTI2ODM2Yzc4MDUwMTM1NmY3NDNiM2JhYTFiMmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyMWM1NDg1YWQ5NDEwNjIyMGExMGJkODk3ODg1MDc5MjhiZTg1OGUyNjcyMjNhMWMxMTAyODIzZWE2NWEwNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoxLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhYmExMTZiZjM1YjIxYWZiMmQyMmJkZTU3YTI3NDA3MDQzOTczYjJmMjE4YzcwNDgwNjFkMzFjMTc1MzdlOTYifQ"
+        },
+        {
+          "resource": "repo://settings.gradle.kts#L44-L65",
+          "version": "repo-lines-v1:sha256:4683b6c2519847de3cadcdc1d66a48f221adf10ea9eaa5aecfaea88b01a17b9c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmYzFlNTY1NTczZmE4MWYwYmQ4YjM3Mzk4MDgwZGJmZGEwYzVhMmFhYTA2NDBmMDA0ZGM0NDQyNDg2ZmUyN2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwMmMwZmFhMWY2MDExNDIyMmE0NmU4NmJjY2I2MmJmMzM3MzBlYTMxMjBhNzdlNDVjNzY3NjUwNjc4YmE1ZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e54e89265e94ee6accd673a859ba5c3",
+      "statement": "Its Gradle assemble runs npm ci then TypeScript-to-Lua, producing root declarations/Lua with Lua 5.1 library settings and strict TypeScript checking disabled; clean removes those outputs.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L8-L37",
+          "version": "repo-lines-v1:sha256:a2d5ffa3dd2893c6440fc2aa57b407e95c44a5aff93e3d6bf25b22bd7d788ca4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZjYzZDE4ZTYwNjQ0MzM1Y2Y5ZDcyMGE5YTNiYzM4OTMyMzY5MDNiNTZjOWUxYTFiOTM4YzA4MzI5OTk4ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3OThkNTBjOGZmYjNkNDU2NDQyMzg5MzgxMzYzOGQ0OGQ3MzI2MjkwNzdjN2M1NTBlM2RlNDRhYWUxMGU4NGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/tsconfig.json#L3-L21",
+          "version": "repo-lines-v1:sha256:f8dd0bdc8f244e164b910aabbdd141286fc9fb7f11742e8e544217bfb5ac5c05:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0YjYyYmM3ODk4NjUwYjkyZjIxMGYyNjlkMDM1Y2E1NzgzNDkzYWVjOTllMzA1OTIzZDk5YmNjM2JmOTdiZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxYjViZDU1NWI3ZTgxMzAzODdkZjg2NGY4OTg3YjIyMDA3OWNhNmVkOGZhY2NiMWQ4ZjViMjBiZDM1NjBlYjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUxYjdjMzVkNTVjZTk2OWQxNTc0Mjg5NWY2ODUyNWJmYTQxZWRkMWRjN2Y1MmE4Mjk3MTZmZWJlYTdmMTMxOWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_69ed3a82d4534a9a9cc7fb10fe7194fa",
+      "statement": "ExtendedInventoryAPI composes inventory/configuration contracts with query or slot transfers, while ItemStorageAPI exposes unslotted query methods; providers bind literal peripheral type names with null fallbacks.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/inventory_extended.ts#L10-L54",
+          "version": "repo-lines-v1:sha256:134d443fd87e27a099fd90aeae448affc236d35e2d1b2095f4391639254fde4f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3MDRiMjlmYWQxMzVmZjYxOTE0YTVkNWNhMjc5NjU5MjM0ZDcxYTMxZDBjZmIzMTVkMGUwZTA0MTcxODFmOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ZTQyMDhjZDZmZmI4YzRhMzU0N2IyZjU0YWRhMTk5NzhjM2YzNjVlNzhmOTUwMmVmNTE0NWNkZDJhYTg1NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmMzdhYjM2MzhhNjI2NTg5N2M1Y2ZmY2M3ZjMzMjY4YTAwNzY4ZmJmNWJjMjNkMDQ5NzJhNDhhYmM1ZjllZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/item_storage.ts#L41-L59",
+          "version": "repo-lines-v1:sha256:5dc8647290b1e0b0f60880078a49b2f372475d9e4e00c9ffdba12312e5d70fd3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzNzdiNGI3NzM2N2Y3MjIwMjQwZGZmN2IyMWYyZmUzNGUxMjgyMDJiMjQxMDFkMjI3ZTdjYTVlZTk1MGM5MWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjMjlhODUxZDdkYzVmNTU4YTIwYzJhMTNjMGRkYTU3NmFlMmY3NmExYTM0NjQzN2JmMDhmZTNjNGFmOWNkOGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNiMmFjNjY4ZWYzMzQ4NzVmYmY2NjhiYTY0YTUzODBjZGZmZjhhZDMwNzNhMjY0OTMyNjEzYmIzNGRjMjc5NGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f04744b4883e4027ae9f39fee0868884",
+      "statement": "DummyFuelApi shares a module-global rate, returns fixed levels and unconditionally succeeds on setting a rate, unlike the production FuelBoon's bounds checks.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/FuelBoon.kt#L53-L66",
+          "version": "repo-lines-v1:sha256:90725c5637a1696035c2fc6c21655dc44a68ecea5ec89dd319de1d817db7a02a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzODc3NjA0YjViZDc4MTI0NjViYWI3MTQwYjYxYzk4NTIzM2Y5ODlhNDBlMGQyM2VhMTQyNzFmNjA1MGQzODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4ZWFlZTJlMmE4Mjk1YjUwNmE4Zjc3ZTUzZjc3YjE5MjNiZWIzMGVhMTYwZjlmMGZhNjcxNTMyYWM1YzU0MTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMxOWEyMWVkNTUxYzMzZmM5OTM1MDExNWQxMjA2Y2RjYzQwOTYwMDBhNjdjOWQwODQ3YTFmOWQyM2QwNDY4YWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkNTc0N2I2OGQ3ZjZkZGQzNGIwNTQ3MWRjOGZlMTJhNDkwYmQ2MzQxOWQyM2NiOTg0NGI4NWE2ZjRlNzM5Y2UifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/fuel.ts#L1-L31",
+          "version": "repo-lines-v1:sha256:c573d292f3a78ca6b521f4f7edfd2d4ad17d41f09fcfd97ae0abe169361fdb67:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyMWM2MTEyZTc2NzhkZTBhZDkyZjQ0MGRmNmY3NjEyNzgxYTYzYmU0NDNmNmJkOGZiNjkxYjZhNWQzODM4N2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a2c5e7248ace4af98863fce6f7e3e34f",
+      "statement": "Client query types encode recursive aliases and scan overloads but supply no runtime validation implementation.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/item_storage.ts#L7-L41",
+          "version": "repo-lines-v1:sha256:05daa5dce6bc2cbbc90d423a7ec04b76b16de385fbbf2af91e3116a22e5d76ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwNGI0YzE5OWMxM2U4MTMzMTRjMTVkYjAzNjZlM2E4YjJhNWNhZGQzNzU0ZTM2MGQzZDQ5N2RjZTFhOWI1NzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzNzdiNGI3NzM2N2Y3MjIwMjQwZGZmN2IyMWYyZmUzNGUxMjgyMDJiMjQxMDFkMjI3ZTdjYTVlZTk1MGM5MWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiNDlkOWE0NTZlY2E2YTEwOWVhYWM2ZDU5MTE1ZTYwZGY2MDhmNDBmZWRjZmQwODkwOGZhODI1NjI2ZmJhY2EiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkODdhMTg0MzIwMGM2NWQwOGI3NjBiYWQ5ZWYxYWQxNDRjZmE2ODk0ZDJkYTg0NDg1NzA0YWY3YzZjMmIzN2YifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/scan.ts#L57-L96",
+          "version": "repo-lines-v1:sha256:ca26b1980fb7887058748ab0f3fb5c74d6c0bc75da4c52e443d1178e71b35a05:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkMDU0YjlmMWU1YmRiYzA2Y2U0MmNiZjI4ZWU5MGMyMWI5MWNlMTA4Zjg5YjNlYjY4M2NkZGU5YzU5ODQ4NzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlYjFjYjQ5NjdmNGU2ZTc5YWVjNjA4ZWJiYjI0OGVjOGQ0MDljODMyOWNhNzQxZDNjMGVhZWQzZTZjMWYxNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5798a1d6843a445b9a1516e198b9ed17",
+      "statement": "ScannedBlock allows string/number/boolean state values, whereas the shared forBlockState implementation stringifies them.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/representation/LuaRepresentation.kt#L35-L45",
+          "version": "repo-lines-v1:sha256:893252697c92644c7be79676508d82730c6a854955181b14136714fb80942b8f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MDdlYWM5YWZkZjZjNDRmYzkwYjc3OWUwZjk2YmRlZmI3MmVlNjllY2FmMTBkM2RkYWMwZmM1NGI5ZjJhZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjMjVlM2FlYzFiMTNmOTBhMzhjYjJjY2NiZjlkZjgzYmM1ZmU2NjAyODE3OTJlYzczMDc0MjcwMjMwYzcyYjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjMWI1ODEzNjRjZGI2MWE3ZTIwZmQ2MzMyYmE3NzU3M2QwZWRkYmEwZDhmMDIyNDFhMjA1MDhmYTBhYzc5ZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjMzIwNGFmZmM5YjZiMjIzZDhhMjA0NjhlMWU4YWUyYjAwYjY4ZmE2OGIzY2M0ZmE2ODZhYjBkNDNkZGM4OWIifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/scan.ts#L25-L29",
+          "version": "repo-lines-v1:sha256:eb737804f15c89c678f601352bdee164553494d6ffceb4e6c89bab66a5d22afd:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTYwMTk0MjUxZmVjNzYwNzljNzZkNjNlYWFmZTE1ZDZjMWZhNGMyN2E0OWNlNzA3ZTRlM2JiZjc4YWZjZjhmOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWExZDFhNjMzOTAyMjljNzk4MzQ3ZTgzYTA0MDU0NDFjOTQwMDAzNTI4NGFkMTY4YzFiZjZjZGYxZDcwYTM3MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTQwYjY3MmFkYjJhMTZhNWFkNDgwMWVlZWI1YzY4ODBiMzhjNThlODViYzBhODYxMjEwZjEwNTQ5MjVlMDk4MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWJkZWUyN2M5MmE0ZjA2MmZlYTE3MTVjNjFiODMyODVhOTYwOTQxOTg1NDJjNjcxNjUwZDYzYTg5YmUyNWY5ZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_74ae5bfb181646828bc7af32e11925bf",
+      "statement": "The package test script is an unsuccessful placeholder; the manifest uses wildcard ranges for typed-peripheral-base, TypeScript and TypeScript-to-Lua.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/package.json#L14-L31",
+          "version": "repo-lines-v1:sha256:f76fe49a3c334b050f3e61c5fa5b6cb6c3f091a58f2d75bb738428d8d9cec51c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwOGYxYjMxODg3Y2U0ZWE2NmU0ODI3MjdiMTY5MWUxMDRmMjVmZTEzYWZiYjVjZDczYjI0NjExMjRkMzkzZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGNkYjk3MmE3YmZiN2VkMjQ2ZjlmZjY3MjM4NWU1NWY0OTY4ZmMxMTA0M2RjNWI2ODRkNTFkZmEzMWRiY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0N2ZlMjdjMGY2ZWNmMDIxZTVmMjkyMDRiODY2NmNkN2NmNTY3MDc4NWMxMzgxY2FiZjMwNGFmYTFkOWJkMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExNzE0MzZhOGMwYjIzMjkzOTkwZWQwZjU4NDBmYmJkMDQyMzUxZGIxZTcwNDZlMGZlYmY2NzViNmQ2NGJhM2YifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T16:31:45.808Z"
+  }
+}

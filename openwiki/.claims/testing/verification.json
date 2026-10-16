@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:63f16387518a3dc7153bafe27248201e6d8d763e8c754d92a4b6630fad223444",
+  "claims": [
+    {
+      "id": "claim_6d12d643ceea42349e18dfd43de27050",
+      "statement": "Tweakium component tests cover patch notifications/encoding failure preservation and pocket/turtle adapter removal preservation through API proxies, not live computer save/reload.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/test/kotlin/site/siredvin/tweakium/DataStorageTests.kt#L25-L48",
+          "version": "repo-lines-v1:sha256:dee6df9e2033543f57bac2c6886d7e11a1a74d859c4ed777095eaae6e3a0d2de:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiMGRhMzdmZjU5ODcwNmMzMDYxZTM5NDQyYjJmNDM2MWRiOTUyNGEwYTQ3MzZjZDc2ODIwNzRkMTZjMTlmYmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/test/kotlin/site/siredvin/tweakium/UpgradeDataStorageTests.kt#L31-L67",
+          "version": "repo-lines-v1:sha256:9b327fd736a047bf42a43e4df7f6959e92a25f80b5f58bb05d81ceb38e4a332c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZWUzYzZkYzYyMmM2MjAzYjc4ZDQzMWY0YmU2MDc4ZmJjNWI1ODI3OGZmOTlmNmJjNDk0Y2QzNWE5NGIxZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMDBmOGZmZGU5MzU5OTA1M2M2NTEzNDM0ZTNiODkyZjMxOWZkY2UxNGE3MmUxMzdkMzAyOTUzYTIyY2EwMjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_458b584226bb449d8d84158fe38ae810",
+      "statement": "Runtime fixture coverage includes native NeoForge chest-minecart capability contents and a creative-filler test that waits on a labeled Lua fixture.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/forge/versions/1.21.1/src/testMod/java/site/siredvin/tweakium/testmod/EntityStorageGameTests.java#L11-L22",
+          "version": "repo-lines-v1:sha256:02ccbcc25ea6f2c7bdc0388865766bba6a7630e40e4f2b51e16299f6316359c5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiMTU3YmIzZmNlZDljYzE0ZDM0NzZiY2UxMTdmZDhkYzYxOWYwNDQ1OWZiNDA2YzQ0ZDU3YmVjNDAwMWEzZGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyNTQ4MWE3MDk2YWQ5NDg4YjhmOGYwN2VkMDEyMzIwMDgyNDE0OTdiZDExNzk1NGI0ODU5M2Q0YmE0OGFlYWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/testMod/kotlin/site/siredvin/tweakium/testmod/CreativeFillerGameTests.kt#L8-L11",
+          "version": "repo-lines-v1:sha256:3fc1f686ff0979ff7aab2f27972e5006b55680b554c1f9829dce0cf1c6436930:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmIxNTdiYjNmY2VkOWNjMTRkMzQ3NmJjZTExN2ZkOGRjNjE5ZjA0NDU5ZmI0MDZjNDRkNTdiZWM0MDAxYTNkZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGRhNWM5ZDc2N2JjZTE3NWQyNTJmMGUwZTU0NWIwZTNkYTA3MWRiYzMwODBkYTVjNDUxZjE1NjQ5ZTdkYWYwMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjVkMzc3NjM1ZjA1ZDYzY2QyMWI5ZDRkNDAwZGIyYjA0MDYyNjM3N2Q3NTIyY2VlYzZhMWVmOTkzZDIxOGQ5YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cd098ba3afea4f49a96bb0316b00ce63",
+      "statement": "Checked-in CI runs Testiarium and Tweakium server tasks across Fabric/Forge 1.20.1 and Fabric/NeoForge 1.21.1, validates publications, builds with the alternate version active and verifies switching back leaves no tracked changes.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/ci.yml#L37-L65",
+          "version": "repo-lines-v1:sha256:540bb7f141cca58048394d64a998727117a58aab8f501982864194e677c9c2bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3MTQyYzE1YzZiYmY2NTljYTQ5OTk5ZmQ0NWIwOTgyMzU0Y2QyODU1NDdlMmYyOGIxOTdlMWU1MTU1NTYxZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2ODc1ZWI0ZjRhNTAyYzkxNDFjY2FmYjZkOWMzYWUxYTM2YWI3ZDg1YTViMTdmMTQyZjk4N2M1NzI2MTE1ODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM3YTJhZGNjYmE3YTgxNTMwNDVmYzkwNzk5ZWI4ZjVhZGIyNzFhMmRmYTcwZTRlNDk4MjczNzhjM2NiOTA3NDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4M2IxY2EyOTI0YWFmYjU5MjRiNjYxYTQ2N2Q3MTE1YTQzMjQwZThlMDZhMDVlODQ0NGExMzY1MTcyNmFlNDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_acae9fd9819b4a898664275c2ff3dbcd",
+      "statement": "Fresh-report guards reject stale, empty, all-skipped or failing mapped GameTest reports while optional failures are explicitly reported as skipped rather than passing.",
+      "evidence": [
+        {
+          "resource": "repo://gradle/gametest-reports.gradle.kts#L4-L42",
+          "version": "repo-lines-v1:sha256:5c84828889acf70f93c82f53100a0e3e84cdf467727ebea5a8c660785237b0e0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0N2ZiMTU0Nzg0NmRmNjM4ZDllZTk5OTkxYWFkNDY3OGE4MmZhZDc0MjJkNzg0ZmM5MzVmOTg3YTBkY2UyYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiZGM5NDcxMWNmMTFmNTVjNDQ5NmQyNDdmYTBkNzM2NmFjNmFjYzEyYWZhMjZkNjMzNmM2ZjJiY2U1MmI2YTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg1OGNiMjBlNmRkZjE1NmFlOTI5YmIxMmZlZjY2NDYxOTU3ZTA3ZTA1NTljNTk3MGY3NDgwOTQzNjMzNzFkZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0YTM2NWE5MGVjMTFlOTA0MzI3NTJjZjkzNzZlYzVlZDM2YjgwYmE1ZThlNjg1NGZjZjk4OTcwZDMwNDQ0NjkifQ"
+        },
+        {
+          "resource": "repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/report/TestReporters.kt#L38-L77",
+          "version": "repo-lines-v1:sha256:a0c20b55b9d92e3b19ced0d9e350c57adcf2777ab80662e9015c80ac1cd2d302:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxMmVjMDA2Nzk1ZWU0MTdmNmY2NmZjMWNjMzRkZWFiMTVkZDgxZTU2ZjIzMWQzN2FlYjI0OGE0ZTVlMTMwOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2ZmMwM2ViMWNmZDhmMzcwNTI3MjdlOGY3YjkyNTRhOTBlOGVmOWFhNDE1N2M4Y2M5OTUxNmFmMmUzNmFjNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkNzhhYmU3NDczMDI3MjJkNTBmOWRkMzYyZGU1MTdkZWI5NGE2Y2U1MGUzODM4NTIzYTNkMGZkNWJiM2FhMmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8ee0a68e041d42389ac1e754e685efd3",
+      "statement": "The prior migration audit documents historical verification and excludes live save/reload, exhaustive fake-player combat, upgrade reinstall, full client/CCT runtime and downstream binary compatibility.",
+      "evidence": [
+        {
+          "resource": "repo://docs/stonecutter-migration-audit.md#L58-L67",
+          "version": "repo-lines-v1:sha256:0222774aafdccc7e8ebd9acc2c38d09e98e22903fafc6e8f5ba785ad1ba38b27:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjY2JmNDk4OWI1Nzk1ZTllZDA1ZmI0MWUzOGMzZjZkNTZmZWIxZTQ4ZjMwODVhYzkwY2ZjODI5MWU1OTEzOGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3MTBjMjUwMjBjMGZjYjdmMmFmNjExZTBiZDg5Mjk1NzkzYzE2OTk1NmRiMDJkNTM4MTZhZWU3MGY3YTEyMzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjNzg4YTQ1ODE1NmNhNzc5ZDEwZTkwODE4ODcyNDA4YmYxMTMwNGI3NDhkZTFlYWQ3ZTY1YTdhZDQ2MTM4ZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3c9bb543e15d4442a89bb0e977102fa4",
+      "statement": "The typed API Gradle assemble compiles TypeScript-to-Lua, but npm test is a failing placeholder and is not a runtime conformance suite.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L17-L30",
+          "version": "repo-lines-v1:sha256:72274268e6ddcf8d1998f57bac71c0304191482d72fb56b8f2f050c83e69dd02:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhNjE5N2EwMTg1ZTQwZDQ5ZGVlMzhkNjk5NjJhYjM4MzY0ZjA2MzNkMmJmNWIyNTM3NDRkYjZiZjU4M2Y3MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiZTU4ZjI5YWExYTQ3ZDQyNmE0ZTFmNDllM2JiOGU2NGE0OTUwYWY1NzE5OTBkYzFiMTQ3NDYwNWVhYTIwYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjNGM4ZDIzZjRhNGJlNWRiMTQ2MDY5NzYxNDEwMTliMTFkOTE4Mzc4MjU3Nzg3NjFmZDQyNWE3YzMwNzUxMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM2M2I5YmY1YjFmMzI0NzliMTIyMzA2MzU5NTliNWExNmVmYzYxZDY1YzNkM2UyN2EzMjgxODA1ZjA4NmM1ZmQifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/package.json#L14-L19",
+          "version": "repo-lines-v1:sha256:e2771f2ecb7e1f0dddea270cfa363c8d74525dad9a3deba263154bf750d8a118:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTA4ZjFiMzE4ODdjZTRlYTY2ZTQ4MjcyN2IxNjkxZTEwNGYyNWZlMTNhZmJiNWNkNzNiMjQ2MTEyNGQzOTNlNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzIxYzU0ODVhZDk0MTA2MjIwYTEwYmQ4OTc4ODUwNzkyOGJlODU4ZTI2NzIyM2ExYzExMDI4MjNlYTY1YTA2NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDQ3ZmUyN2MwZjZlY2YwMjFlNWYyOTIwNGI4NjY2Y2Q3Y2Y1NjcwNzg1YzEzODFjYWJmMzA0YWZhMWQ5YmQzMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWFiYTExNmJmMzViMjFhZmIyZDIyYmRlNTdhMjc0MDcwNDM5NzNiMmYyMThjNzA0ODA2MWQzMWMxNzUzN2U5NiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T16:31:45.808Z"
+  }
+}

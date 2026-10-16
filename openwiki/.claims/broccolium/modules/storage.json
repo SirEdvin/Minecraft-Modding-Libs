@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cf7d1e91106b3ae08e05d08b2fa613fd0903b407d4963cd36ccfc28708b7fb0d",
+  "claims": [
+    {
+      "id": "claim_1881b5709c4242e6be9939ee8ca61820",
+      "statement": "Storage extends a remainder-returning sink with extraction, and specialized movableType adapters must override transfer methods while ordinary peers delegate to the specialized side.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/base/api/AgnosticSink.kt#L7-L30",
+          "version": "repo-lines-v1:sha256:085a4d488a773c1822775be715431277fb0de24b3f8dc537f986f51656b55808:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjZDg1MmEyZTQ1Mjk5ZjEwYzRmY2M0MzA4MWQyNzhiYWY3NjVlYjg3NzdhMTg1MDNhMjU3YmQ5YTRjOTVmNWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5NjkxODkyN2M5OWE3YmQxYmI4NjNjZWI5NWMwMDVjZDg5NzkyYjVhMjc0MTMzZDNjMjZmMTRjNjM5NjhlODQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2ZTBiMzlhMDQxMWFlOTllMjdjZDFlYjJjYmY1MTUxYTc1MzZlOTgxYWRjM2ZhMGNlMzE2MWRiNjU3MzViYjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/base/api/AgnosticStorage.kt#L7-L25",
+          "version": "repo-lines-v1:sha256:dfb970c9bad41da9ce6287d03c32120969c4605969e0981451cb23316c20f620:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyZTg5NDk0MjMzODRiZjM4YzI0MzM0N2JkZWY3MmE2ZjdiYjQ5MDJkYWNmNjAwNjAxNjU3OGI3NGUxMWNmMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1NTRjZDg5OWEwZDY1YTgyMzMyMjQxNTZjMTM0OWFmNmRkNDcwM2QyODNkNzJlNWU3NTM3ZGU5YThmOTBhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2ZTBiMzlhMDQxMWFlOTllMjdjZDFlYjJjYmY1MTUxYTc1MzZlOTgxYWRjM2ZhMGNlMzE2MWRiNjU3MzViYjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/base/api/SlottedAgnosticStorage.kt#L8-L39",
+          "version": "repo-lines-v1:sha256:f4b4068c74e0157349442649898437b6b5654d5e46e760dd298e5f875b8e28ee:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzNmY5NGEwNzU4ZjI5N2I2MWFmNGEzZDBkMTVlNTJkMGMyOTRiZDc3N2FhZTA1ZDYyYWQ1ZjMxNmU3OTYzMWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzZDJkNGM0MTMwMjY3ODlkNWJjN2U0ZDg3MWUwOTM0ZDM5NTRjYWQ1NjgwZDBlZDVjM2YwNGFiNDFmNmUyYjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2ZTBiMzlhMDQxMWFlOTllMjdjZDFlYjJjYmY1MTUxYTc1MzZlOTgxYWRjM2ZhMGNlMzE2MWRiNjU3MzViYjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5bcbf9d7dad44bfbb9a2032a55dc66c5",
+      "statement": "Generic transfers simulate before moving, stop on no progress and attempt remainder recovery, logging voided content rather than rolling back if recovery fails.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/base/StorageUtils.kt#L13-L71",
+          "version": "repo-lines-v1:sha256:41f6efd3fc82e3f428fafda50c64ea4fc3b9de4e9377e79ba22a84063953f175:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5ZjYzMDI0NDc5ZTkxNjQwYWU5YTVmODBlMTFkNjY0MmE2YTc0NjhmYTA4Y2U1ZDBkMmVjZjNkMWM4ZDdhN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NzBjMDIxMGIzOGQ4ZjdhNWQ2NWM1ZDllMDJmYzNhMWVhNWI1ZGQxN2RjMzkxNDYyMzYyZTVjZmQ2ZDZhMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ZjY2MmY0YWZiZDE3YWFhZGY5YTUyZjg0MDU3NmEwMTRhYTk2YWQ3MTlmYzA4OWNhMjkyN2NlODg3ZTRiZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_44f62fa45680474d87ad714c6cf536c6",
+      "statement": "FabricStorageWrapper mutates store input even in simulation; its slotted-source branch uses fromSlot > 0 and its nonslotted-target guard uses toSlot < -1, limiting slot guarantees.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/FabricStorageWrapper.kt#L24-L67",
+          "version": "repo-lines-v1:sha256:3b06c9762c3c4c3ccce0b2e872d6932b224f748a0ac441e0f96461f61c7dc668:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMGFiMWE4MzNlMTA1NDFlMTFlMmNhNzUyZGFmZmY5MWQ3OTNiNDBlYmViZjE2NTk5MjkzYWZjNTNlMGRlMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwZGYyYTE3YmY1YzI3NTlmNjJlNjc3M2VmMWQxNDcxYzUyNDRiN2U4ZjVmZmIwNzZmMDU2ZDRiZjFiNjM1ZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2NWE5N2NhODRmMDVmNjZmOTUxMDc4YTFiNmIwZTM1ZDU3MjNiMjMxYjdlMzE0OWQ5MjUxN2E0NTY2MWQ3MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjNDg2OGNiYWUwODc5MjU0ZTI1M2EzMTY5MjFjMjI3N2VkNzkzYmZkNWNiY2EyNTJhZWM5M2NmODNiNzkzYzUifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/FabricStorageWrapper.kt#L96-L109",
+          "version": "repo-lines-v1:sha256:1696454e6ffccec0b738d22183a944459dbeae3bcc92fd85fec3be0c70473bf9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NWMzOTA4YjNmMTY2ZWVlMjc0OTBjYTUxN2U4ZWY4NDlmMTM5ODI5ZWViNzU0NDc0MzhmNzUzNDUzM2VkYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyNGFmZjQ3OTkzYWU2MDJiMzdjNmQwMDI3NWZkMTM4NGQ5NWYyODcxOTIwNGEzMjRmMjFmZGY5ZDE3Y2MyN2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_43305aebd50b4923a5e78c25ada62dc3",
+      "statement": "Fluid stacks use compact Double amounts scaled by the toolkit divider; 1.20.1 persists optional NBT while 1.21.1 carries and serializes a component patch.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/fluid/AgnosticFluidStack.kt#L10-L71",
+          "version": "repo-lines-v1:sha256:fbe1579b4333938edf96a104ae5560d8d30d547a29196f4f49911ba34ac7f7de:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwMmI4YTliOGY2YmY2ZWQ0OWJlMjNlYmE0ZThhZTZiZGM5MDJiZjgwYmFkYzlkMzYyMThjYzQyYjdmOTI4MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmMDU0OGJlM2I1N2Q2ZTRlYmFkN2Y3Y2M5NjkxODk5YmNiMGM4YTU5YjM1ZTUxMjc5MWIwMDFkOTIxYTkwMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmZGE0NmE4YTYwYmIyODQ0YjczMTk0OWQ2M2VlZTFhYjE4ZGEwNDNlZTEzOTE2Y2M4ZTVjMzE3NzliYjZkOGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/storage/fluid/AgnosticFluidStack.kt#L12-L76",
+          "version": "repo-lines-v1:sha256:76690c9af461133b2f5c9cec03cae9cb638be62971a453ca00619d858e936e68:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkMWY3Y2FhMTk2NDliNDIzYjIyZjYwZjA4MGUzYjNiOGIzYjg0NDliYjlkODZiMjY0ZjkzNzcyZTA4OWI0MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmMDU0OGJlM2I1N2Q2ZTRlYmFkN2Y3Y2M5NjkxODk5YmNiMGM4YTU5YjM1ZTUxMjc5MWIwMDFkOTIxYTkwMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFmZGE0NmE4YTYwYmIyODQ0YjczMTk0OWQ2M2VlZTFhYjE4ZGEwNDNlZTEzOTE2Y2M4ZTVjMzE3NzliYjZkOGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5c066dee087f4083af64d7a2faf6e0de",
+      "statement": "Energy conversion uses explicit fractional direct edges, separates banned inverse edges, optionally permits them during conversion, throws for missing conversions and rounds to Long.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/energy/EnergyRegistry.kt#L7-L50",
+          "version": "repo-lines-v1:sha256:81491df8740d68df60d53ea35debf3af4369ebafa41f87cad5c901b9bed6e7a7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZjZkMTE5NTRmYTIyMTc1NDJhYTMwZTJlYzdmZmRmMDFhYWJiNGEwMTQyNjA0NDZmZjY1M2Q2NzJhMGZiN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkMjZjMGIzYmRjYzY3NjI2ZjY4MzJkODg1OWVmNGVjMGM2YTkzZmJiYTQ3YjhjMzZiMWE2NjJkNDcxZTM0YjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkNjIxOTdkNGFiNDYzZTBmNTgyMjY4Y2I0OTBiYzczYjNjMjBhMTU3MWE0ZGI4ZjFkZjI5N2I4MTU4MmZiZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f3f9d169d224fbdacc300469ea72df2",
+      "statement": "Common storage fixtures check simulation invariance and real transfer outcomes in both directions, with concrete dummy/no-takeback/ContainerWrapper combinations.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/test/kotlin/site/siredvin/broccolium/test/StorageTests.kt#L11-L68",
+          "version": "repo-lines-v1:sha256:f829a08e91ae3ca7e3d9e8db56380d18c44bd72e7b4ecf0254808e9bb0234afe:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1Y2ViMmFmOTgzYzg2YTUyMmFmNzAxODEzZTYxOGYxYWMyNjRmZDU5NTJmNTFlZDhjYWIxMzdiYjU1ODFiMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3YWQ3NWYxYWFiYmNkMTM1MTQ0YTU1MWUzYjA0ZmYxOTAxNDQzYWM1ZDc2MmExOTQ3OTA3Yzk0ZDExNmU2YTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/testFixtures/kotlin/site/siredvin/broccolium/test/StorageTests.kt#L130-L203",
+          "version": "repo-lines-v1:sha256:fed33ff866fe9fdd7a37a3bb1e5a8c9bb799e127ea7933237c1f91bfe0343088:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZWUzYzZkYzYyMmM2MjAzYjc4ZDQzMWY0YmU2MDc4ZmJjNWI1ODI3OGZmOTlmNmJjNDk0Y2QzNWE5NGIxZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1ZDRlYzBmYThkNzVmMTcwMzlmNTBmOGIxMTlkY2ZlYjY4ZWQyOGQ1MTFjMDYwNWYyODE2YTIxNDliZWY4YjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU4ZWFmM2UxZGIyODRmNmE2ZmQ0ZTA2NmFlMmZiNjU0YWU2OGZkZmNmM2U3ZTRkY2E0YzJkZDIxNGE0OWI5ZDAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T16:31:45.808Z"
+  }
+}

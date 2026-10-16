@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9e28d6c0419566b84757ffecd437f60906d4e30c31a6e5401946495e60fbc2ae",
+  "claims": [
+    {
+      "id": "claim_86e353a136d94207af10bdf810516047",
+      "statement": "BaseLookup resolves callbacks in append order until non-null, propagates exceptions, and limits unknown-object dispatch to null, block positions, block entities and entities.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/lookup/BaseLookup.kt#L11-L71",
+          "version": "repo-lines-v1:sha256:e2ab6bf65e112c34c50384acc071002816992658f85f6ef6a8582e75313bbfe1:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4MzY5Y2E1NzBkOWI1YTQxODgwNDAzODlmZjJhYTY4ZGQ0NjA1YjVhZjdmNGFjZDgwMWNiYWZjMWJiNDJkMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyZGMwMDYyZTk4YmE4YTk1OTE0M2EzZGI1MzZhNzMxZjc2Yzc0NTQ0NTc0MDMxOTY2NGQ0ZGQxYTY1YTE4ZjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5YTAyNTg5OGU2YWVlMDE1NDA3ZWQ1N2E4MWExMDA5YzE2NjYzNWFjYmEwMDgwY2Y5YTg3ODAxYjBiM2NkZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_838be5a5bafd4506aacdb8a900c0456e",
+      "statement": "Item block discovery prefers explicit agnostic providers then registered callbacks then vanilla containers; entity fallback supports player inventories, chested horses excluding two slots and container minecarts.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/AgnosticItemStorageLookup.kt#L19-L70",
+          "version": "repo-lines-v1:sha256:263d646663e5b7dcdbd6d0dba75eb8556d8736afd287894c97b4af8fc53b7680:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmMGJmYjk3MDIyNGM4MDZmZTRmYTNhZjFkODVmNDUyM2I0NjJjNTI1ZDdhMDJkNjkzZjUyNmU0NmYzYzQ5NjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0Y2M2NGU5YjE4YTE5ZDRhOTIxNzk1NDIxM2I5MDU2Zjg4NTYyMDgwOWE2OTUxZmU0YzUwMDA3Nzc5NTAxNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxZGJiZjUzNDkzYThhY2UwNzc3ZjYwOGIxMzIzZDA4Yzg0ZmNkNjMyOGVlM2M5MDZjNjJiZDc2YWFmMGI0MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_57de7ee7f5bd4566aeb7f8e2be39287b",
+      "statement": "Chained lookup prefers upstream results over local callbacks, but explicit block sink providers take precedence in AgnosticItemSinkLookup.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/lookup/ChainedBaseLookup.kt#L11-L41",
+          "version": "repo-lines-v1:sha256:a65e004d5b9e18f5ffa062aa5c1fa7de9ca84f494810fc2bb963381b2011110d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMTI4OGUyN2IxYzQzYjY0MWU5YmJkNDVmY2YzNTk5NjliMDg1ZmEyYjZiYTVlMmJiOWY2YzljMTYzN2E4MTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmZDI1M2E0ZDgwNDVhZDIyOWFiYzU1NzU5YzhkOTk3MjZmZmIxMjZjMGQwNzYzNzlmYjk5ZDQwMzJkYTgxYzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5YTAyNTg5OGU2YWVlMDE1NDA3ZWQ1N2E4MWExMDA5YzE2NjYzNWFjYmEwMDgwY2Y5YTg3ODAxYjBiM2NkZjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/AgnosticItemSinkLookup.kt#L13-L24",
+          "version": "repo-lines-v1:sha256:ba909e886b78e019fedb8bcbae2189a8e3fe62c1abc293513ae069265d9fb704:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmZGQxMjg4MWRkNWYyY2JjNTE0NzQyZTU4YTYzYmQyZTg3ZWJjOGNmNTk5OGY2ZjliODQ1OWU1NDAwNjI0YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0NDYzMzcxNjhmMzI2YWQ4ZjhiZTRmNTJlOTQzZjk4ZGRmYWUzMTk3MzgzN2M2MTBhNjYxMTAwOTdlNGM2MWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_988bef46c9124530a42c3e1024f8aed2",
+      "statement": "Drop capture uses replaceable singleton level/bounds/consumer state; both configure overloads clear targetEntity, reset clears state and rejects double reset, and resetAndDrop resets before emitting remainder.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/tricks/DropConsumer.kt#L11-L74",
+          "version": "repo-lines-v1:sha256:cbe3c1e60cf57822f1c66fb25d8573d9313ea31ef85ef42dbe44ddd06634dbd5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1NzE1N2ZhZWZiMDQ1NjdkZjc2MTA4M2JiOTI0OTE1ZmM3ZDc4OTU1ZmRjYTIxZTIyNjg0YWQyNjY4MjJjYWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzMmM2NzE1MzlmNzI1YTZiYjBlOWY1MDQ0N2NjMzkyMjk5ZWViZDYwODAyNGYwYTcwYTJiM2RkNjYyYWNlZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_beacaf74daa44d77b618b29a3d2b1b68",
+      "statement": "Fabric drop interception uses entity/server-level mixins while Forge and NeoForge forward spawn and living-drop events, canceling or removing consumed drops.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/java/site/siredvin/broccolium/mixins/EntityMixin.java#L12-L22",
+          "version": "repo-lines-v1:sha256:eae8da4e922fd1d480c4e9ba56f8467086ca34dac3951d7334d23e4417eaca2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiMTk2NzNjZTlmODk2YmY5MWNiNTI4Zjg0ZmExOGQyNWE2ZjAxZjAzNGFlYWQzZGZkZmZjYTVjM2VmMjY4ZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5ZTc0OWNiZTBiYjU2NjAxMDA5OWYzYjRiYjczM2E5ZTY2YTFhMTkxNzAzYTYwNDBjMGNhYjI4NzFjMDRiMzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/java/site/siredvin/broccolium/mixins/ServerLevelMixin.java#L12-L17",
+          "version": "repo-lines-v1:sha256:719b6e38ff3e655ab482bf2b00509413d6b267f8470662c8e37e862c6f6cb1d0:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWNkYjI3OWEwZWI0N2MxZTM5YWU4ZjhlNWVmNjU1NzUyYjM4YjJiYTFkODdhODZmNjA2M2ExMDYwMGM2MzE5MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDI2NDczY2I3YzJmMGIxMTNjOTRlMzdmMGQ3NTUzMzgwZTI1MDE5MzI5MTMyYzJkNmI3MzliZmFlNmRlZjFiYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/src/main/kotlin/site/siredvin/broccolium/ForgeCommonHooks.kt#L11-L26",
+          "version": "repo-lines-v1:sha256:be78e1b9f33963e9f7f7c2786e69b87e07461101c40d84089f8f2b1b64d0e207:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4YzY4MGU1YzE5YmE2ZmMwOTI3Zjg0M2ZhMWIzOWRlYmFmOGI5OGI1YzE2MzUwOTAxYzRjOWNlMTVmNzVmYWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzNjVlOWM3NGFmNGJlNzkzOTM5NDNmOTg0ZTFjNjdmYjVkM2Y1YzhjNzRmMmExNzM2ZWVlMTI3ZWYzMDNkZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/ForgeCommonHooks.kt#L11-L26",
+          "version": "repo-lines-v1:sha256:f20cd9c4e639b8e02ae64609a9f1687f6469e18fcb66316d7ed9b0d64b50b9f8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkOWIxNDNjYjNhZGRkNjI1MjNlY2U4Y2Y2YmJiZDgxMGE1NGY3ZDk0MjM5ODIxZGM1ZDgyNjc3ZGE0OGQ2MjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwYTgyZWJmZWIzNWEyZjEwODFiY2NhMGJhNzBiZjc3MTVjYjdiYWI4MTdkYmY0NWVhNzU0ZWJkZTAzZjA3MmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac920d8d25d344f19046c0145d5714a4",
+      "statement": "FakePlayerProxy capture helpers execute the action before reset without finally, so an action exception can leave global drop capture active.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt#L71-L82",
+          "version": "repo-lines-v1:sha256:b111d34946e8d19cd24f1efe45747e77291eec082c6542d893c49045d228200e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmMTkzNDc0ZWUyNDI0ZjI1MjdhNmViZmQ5YmMxOGM5M2QzMGJiZjEyZWM3ZTY0YjQxNWExMjhjNWZlZTUxNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZGU3NzZmMTQwNGI2NjQwODgzMmJkZWZjZTU2ZTA4NWU0NTZiYTA5M2E0ZjM5ZmZlOWIyYThmZmNjMmEyOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhYjQzZTE0YTkyNjg2ODI0ZWQ2ZDcxZGUzZTg3ZGFkOTBiZDUwNWY0NWQ3ZjM4NmFiZTFjN2U0OThkNWMwNzUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T16:31:45.808Z"
+  }
+}
