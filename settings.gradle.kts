@@ -58,9 +58,18 @@ stonecutter {
         "tweakium",
         "peripheralium",
     ) {
-        versions("1.20.1", "1.21.1")
+        versions("1.20.1", "1.21.1", "26.1.2")
         branch("fabric")
         branch("forge")
         vcsVersion = "1.20.1"
+    }
+}
+
+// Unobfuscated leaves must not apply the legacy remapping conventions.
+for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
+    for (branch in listOf("", ":fabric", ":forge")) {
+        val target = project(":$library$branch:26.1.2")
+        target.buildFileName = rootDir.resolve("gradle/minecraft-26-1.gradle.kts")
+            .relativeTo(target.projectDir).path
     }
 }

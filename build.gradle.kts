@@ -5,6 +5,8 @@ import org.gradle.api.publish.maven.MavenPublication
 plugins {
     java
     alias(libs.plugins.loom) apply false
+    id("net.fabricmc.fabric-loom") version "1.17.11" apply false
+    id("org.jetbrains.kotlin.jvm") version "2.4.0" apply false
     id("net.neoforged.moddev.legacyforge") version "2.0.142" apply false
     id("site.siredvin.root") version "0.9.0"
     id("site.siredvin.release") version "0.9.0"
@@ -27,7 +29,7 @@ apply(from = "gradle/gametest-reports.gradle.kts")
 subprojects {
     if (projectDir.parentFile.name == "versions") {
         extra["minecraftVersion"] = name
-        if (!path.contains(":forge:")) {
+        if (name != "26.1.2" && !path.contains(":forge:")) {
             subprojectConfig.javaVersion.set(
                 if (name == "1.20.1") JavaVersion.VERSION_17 else JavaVersion.VERSION_21,
             )
@@ -63,6 +65,15 @@ subprojects {
             }
         }
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
+            if (minecraftVersion != "26.1.2") {
+                tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                    compilerOptions.languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+                    compilerOptions.apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+                    // Old consumers deliberately retain 2.0 metadata. Keep source
+                    // warnings fatal; only acknowledge this chosen version floor.
+                    compilerOptions.freeCompilerArgs.add("-Xsuppress-version-warnings")
+                }
+            }
             extensions.getByType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension>().sourceSets.configureEach {
                 kotlin.exclude(overridden)
             }
