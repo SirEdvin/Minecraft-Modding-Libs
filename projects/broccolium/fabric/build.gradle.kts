@@ -66,6 +66,9 @@ sourceSets {
     }
 }
 
+val testMod = sourceSets["testMod"]
+net.fabricmc.loom.configuration.RemapConfigurations.setupForSourceSet(project, testMod)
+
 dependencies {
     configurations.implementation.get().dependencies.removeIf {
         it is org.gradle.api.artifacts.ProjectDependency && it.path == commonProject.path
@@ -90,6 +93,27 @@ dependencies {
     testImplementation(libs.byteBuddyAgent)
     testImplementation(libs.bundles.test)
     testImplementation(fabricTest)
+    add("modTestModImplementation", libs.bundles.fabric.core)
+    add("modTestModImplementation", fabric)
+}
+
+loom {
+    mods {
+        register("broccolium-testmod") {
+            sourceSet(testMod)
+        }
+    }
+    runs {
+        create("storageGameTest") {
+            server()
+            source(testMod)
+            property("fabric-api.gametest", "true")
+            property("testiarium.tags", providers.gradleProperty("broccolium.storage-test-tags").getOrElse("broccolium_reverse,broccolium_slots,broccolium_integrations"))
+            property("testiarium.gametest-report", layout.buildDirectory.file("test-results/storage-gametest.xml").get().asFile.absolutePath)
+            vmArg("-ea")
+            runDir("run/storage-gametest")
+        }
+    }
 }
 
 tasks.test {

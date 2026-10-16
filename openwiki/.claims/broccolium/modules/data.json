@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:46101e0c8772883601631ac57e32687a72f8bad656737018fefbb872b82470d1",
+  "claims": [
+    {
+      "id": "claim_c0d71fb43de5452a80a63f92cbcab179",
+      "statement": "GeneratorSink abstracts provider, loot, tag and model composition across loaders; Broccolium's own provider list adds only English and Ukrainian language providers.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/LibDataProviders.kt#L5-L9",
+          "version": "repo-lines-v1:sha256:b1dc633c4441cb0481f03b70c3b4cdd6bd74c0ef2b20db7039a9b4ca2a02ae05:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQyOTNiMzI0OWNlMjNmMDFjNjUyYjM3ZjI2NzliYjE3NjlmNTZkMTA0MTA5MTc4MWYxMDk4OGY4ZGFjYjcyNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWMzY2U4YWVkM2RiZDFkZWZlZjVkNjcwODc0NDFkZDZmNDU5ODc4MzRhYTcxOTA3YzhhMmU4YWFiZjIyY2ZjNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/api/GeneratorSink.kt#L13-L21",
+          "version": "repo-lines-v1:sha256:02093709c09d52d02bf3ebe468e8bba4ea56b3b69cdd8bae90877152f82e0077:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWZkNzMwZWUzZmQ2ZmRmMzA0NGZiMmQxMTg4ZDQ3MTk4YjRhOTMzNmI3MjgyMTNjM2RjMjc4Y2Y4ODcxZTAwYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI0ODExYzUyYzFkODA4MzI5MTg3ZTdkMDE3NGUyMzA2OWRkN2FhMGY5NTFjYzY3Y2UzM2E3ZTdiOTY3MDExMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6bca555d885246319c5cc07d163b8d6b",
+      "statement": "Language generation rejects duplicate translations and fails for expected keys missing from tracked blocks, items, stats or supplied text records before saving locale JSON.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/lang/LanguageProvider.kt#L21-L50",
+          "version": "repo-lines-v1:sha256:3e2fc2d5ab1775712c706b3361cac9c7b122602392f256aec1cca5ce1a41cba5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZGVhN2I3NTA4ZDU5ZjViYWFkZWVlMmM5ZjNiZmRhYmJiNGEwNTU0YjZlZDBiNzc1MzVmNmIwN2IxMmQ3M2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2Nzc2OTg1ZDY0MjlhMDVmNGExNDIzMTBiZjFmNGZmNDkyYzEzY2VhNTJjMjcwOTIxODQ0MTQyNzBiZDRjNzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYzN2JiZmRmMzJhMGZlYTkxOGMyZDg1Njk0OWY5ZjJkOWE4MzZmZmFjMTZjYzVjYTRiNDA0NjllZGJlMDUxMTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViMjExZDNjMWFiNDI4MzlmNGE5MTQ2NmZiYjkxZDAzODEzYmZmZDhmYzg0NGUxYjJjZjM2MTk3NzZjYzg5NTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ef2bab3d94b9466f9fd9e950572d594c",
+      "statement": "Model generation rejects duplicate definitions and adds delegated block-item models only for generated blocks without explicit item models.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/model/ModelProvider.kt#L44-L75",
+          "version": "repo-lines-v1:sha256:26869eaa60c2dd4f0fa0ad33dd40e9ae526e0504e5826f45d31ec911840e3e31:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhZDUzY2FiMzU1MTE2NDQzODM2MzMzMDczMDAxYTVhYzg5ZGRhY2UxYWI3NTE1Y2ZiYTg4M2JlNGQ5ZmI3OWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjMDQ3Njc4ODk0Mzk5Nzg2OWZhMmQ2OWNlZGRjYTk0OTMwNGFlOTY2Mjg5ZTM1NGM2MmVkNWM5YmI1ZjRmNDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzOTVhOWI1MGMwNDBjNzc3ODAxYThiNTAwNGZjNTZmYzNmYTlkNzRjMDc4MzBkODJlYWMwMzc4NThjMjdjOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5YmU2NzM4NWUzZmQ1M2M0ZWIxM2NhNmM1ZWU0MTA2OTY5NmE0Yzg4ZGU4ODg2ZTUyOTE3MGZjNGY0YmFmNGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_09397aa849b14b0a9491129bd3b475c5",
+      "statement": "The 1.21.1 generator contract adds registry-aware factories and registry patches; NeoForge uses server-inclusion filtering and DatapackBuiltinEntriesProvider for patches.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/fabric/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/data/AutomaticDynamicRegistryProvider.kt#L10-L15",
+          "version": "repo-lines-v1:sha256:4e4fbd10d247a4f06ffa891aa1929240cba2efb4094b58852ff92746b1d6a01e:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmU2MDdiZDNmZTYwMGI4ZTc3NjUwN2M2MGU4M2Q5NmEzZWM5M2ZkZjcwMjVhZjYwYTY1YjM2MjljYjQxZTU4NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmZhMThiN2RiN2NlM2U1OTg0ZWQ4MDcxYTYzM2EyZGQ4NWU1NTc1ZmI0OWEwYmMyMzlmOTE3YjQ1ZWM0ZDIyOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjljNjNmNDQyYjQ3ZmExNjIyOGY4ZjgxNjkyNDc5YmE1NjA4MWM5MWViZjhmYzU0YmU1N2I3OGEyY2VlYmZkNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/data/ForgeGeneratorSink.kt#L33-L56",
+          "version": "repo-lines-v1:sha256:2269f807eafc3a97afd81835621807f811a805904b6ba70792fed8428d8b8c19:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MmJmNDllZDNmOTY4NzljZWE2YmEyMWZmZGQ1YjYxZjgwZTc0NTRjMTI2ZTUxM2MzZTk5Zjg2YTRlOWNjMTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlNDRjMTE2ODU5NTZlZGFmMTkxNDQ3YjY2ZDM5NjY3MjliZmMxYzlmNjg4OGRmNzk2ODgxNWIwNzk3MmNlY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4ZDQ1MGNhYmI2OGQ1YzJkNTZlZmZmMmUwMWEwZTExMTAyN2MzODZkNDlmMmUwMzNhYmIwYjhiZGU5YTc0MDgifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/data/api/GeneratorSink.kt#L17-L26",
+          "version": "repo-lines-v1:sha256:882faaf4bb8f98ec46a3570b74faeab5209c83d8203aa0aa2b1c71ab1f2f11e9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmZDczMGVlM2ZkNmZkZjMwNDRmYjJkMTE4OGQ0NzE5OGI0YTkzMzZiNzI4MjEzYzNkYzI3OGNmODg3MWUwMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlYjNkOTBkMjQ5MmJmMDBiNWRkMTBiNWFhYzAxZTU5MzQ3OWMxMmViZGYyMTljOWFjNDQ1MTc2MTA3ZjhmZGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlNDRjMTE2ODU5NTZlZGFmMTkxNDQ3YjY2ZDM5NjY3MjliZmMxYzlmNjg4OGRmNzk2ODgxNWIwNzk3MmNlY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_34567045029d48dcb5db88f6b68ad85e",
+      "statement": "Fabric item-tag composition depends on a native Fabric block-tag provider from the same sink family rather than an arbitrary cross-loader provider.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/data/FabricGeneratorSink.kt#L43-L75",
+          "version": "repo-lines-v1:sha256:67b637cb8b33cb47c527aaee4426fd8ba39b903acbdb2d92233e23a7bf5ed75e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2ZTRiNjFlODFmOGYzZWI3ZTdhNDFiZGNhNGZjZDdmMjE0MDE4MzZlNmI4OWU2YWVhN2U2Mjc3ZGFkN2E1MjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE0ZWE4MGEwNGE3NDA1YzcxNTc2MTY1ZGFmNmY2MjM0NGIzZjNkZjU1NDhiOWQ1MzI1ZTA3MWZiMGYxZjlmNGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_471d3809f785434c82f3d42f42e1cdd0",
+      "statement": "The shared 1.20.1 shaped-recipe builder validates symbols and pattern consistency and emits recipes without advancements.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/recipe/TweakedShapedRecipeBuilder.kt#L130-L136",
+          "version": "repo-lines-v1:sha256:59b0eba13f2e42c9f24e0994080c8ee2f85e2c58013b5e3d52b7594c6e191d36:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTMxOGY2YzhiMGRiMDVmYzFiYjQyNjJmYmUxODcxMDc2ZDczMTRkODJkYjc1NzIxZmU3NWNkZGE3ZTk0ZWFkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDlmZDcxMjcwYmE2YTIwNDYyZmZmYWFjYjU0OGVhOTEwOGQ2MzQwOTBkMzZhNWM5NTJhYWJjNjE2YjNlZjVhYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWEwY2QzNDYyZTI1ZDg4MjVlYzY5ZjVkNzhhNmE3NWVjZDMyOTQyZTgwMDQ3MjEwZWI2ZTdmMWRmMjM0NjA0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzc5NGQwMmE4MTIxOTQ0ZDE3NmQyNjVlOWJiOWNjNTlmNmFiODkwYmNhZGY4YWVmZGViZGJiYjRmMmVhODQ0NCJ9"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/recipe/TweakedShapedRecipeBuilder.kt#L29-L47",
+          "version": "repo-lines-v1:sha256:8d00b0a94beecbd018d276dfe538e003b134ce51d37c3b56109d2051e8f3be97:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyODQ5ZDEyNzM4ZTgyNzQ3ZDc5Y2M4ZGE2YWM2MWM4YTA1MDUyMjFjOGUwMjlmZGUyOTk0MDVjNzNmZTY1MGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1MjhjNmZhODJiNjVhZTk4NGYzZTZhMTE2NzIwNWFmYTU3MzlhNmZlODg3M2RhYWFlMTRjZDkwNTU2YWNlNTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjNWJiOTE5NzY4MmUxNzJiZGViZWQ0MzI2MTJhNWFhZWIyNTQ0NmNlOTkwYWY4NjNjODRiYzQ2YjdhZjYwNDkifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/recipe/TweakedShapedRecipeBuilder.kt#L80-L94",
+          "version": "repo-lines-v1:sha256:af1dca2f5bc4ef792394ef430fff19f12fd983494f64a564e9534eab9d573fea:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3MzRjYzg5MWQyMWFiNzRiYTY1OGM0OWUzNzA4Y2NlN2I0YzZhYTQxMzYwYmRiOWNkNjU2YTI2YzQwYjhiMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmMGQ3NTk1MGRmMGZmOWEzZWU5NjYzOWRjYzhmZjVlYWVkYjQwZDY4MmJlYTkyNjIyYjUyMGRkODg3ZDkzZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJlNzljMWU1OTNmMzBjNTBmMzdiZTVjYWFlNzM3ZjY4OTAxMzM3NGRmNmVhYmUzMWQ3YWU2MjZhMTQ2NWM1YWQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T16:31:45.808Z"
+  }
+}

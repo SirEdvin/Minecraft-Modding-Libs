@@ -23,15 +23,21 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
 
-/** Run a sequence action which converts all failures into GameTest failures. */
-fun GameTestSequence.thenExecuteFailFast(action: () -> Unit): GameTestSequence = thenExecute {
-    try {
-        action()
-    } catch (error: GameTestAssertException) {
-        throw error
-    } catch (error: Throwable) {
-        throw GameTestAssertException(error.message ?: error.javaClass.name)
+/** Run an action once and prevent later sequence steps from overwriting its failure. */
+fun GameTestSequence.thenExecuteFailFast(action: () -> Unit): GameTestSequence {
+    var failure: GameTestAssertException? = null
+    thenExecute {
+        try {
+            action()
+        } catch (error: GameTestAssertException) {
+            failure = error
+        } catch (error: Throwable) {
+            failure = GameTestAssertException(error.message ?: error.javaClass.name)
+        }
+        // Let native thenExecute mark the parent failed before the wait barrier stops this sequence.
+        failure?.let { throw it }
     }
+    return thenWaitUntil { failure?.let { throw it } }
 }
 
 fun GameTestHelper.assertBlock(pos: BlockPos, predicate: (BlockState) -> Boolean, message: String = "") {
@@ -61,8 +67,8 @@ fun GameTestHelper.getContainer(pos: BlockPos): Container = when (val blockEntit
 fun GameTestHelper.assertContainer(pos: BlockPos, expected: List<ItemStack>) {
     val container = getContainer(pos)
     val actual = List(container.containerSize, container::getItem)
-    val mismatch = actual.indices.firstOrNull { index ->
-        !ItemStack.matches(actual[index], expected.getOrElse(index) { ItemStack.EMPTY })
+    val mismatch = (0 until maxOf(actual.size, expected.size)).firstOrNull { index ->
+        !ItemStack.matches(actual.getOrElse(index) { ItemStack.EMPTY }, expected.getOrElse(index) { ItemStack.EMPTY })
     }
     if (mismatch != null) failAt(pos, "Container differs at slot $mismatch. Expected $expected, got $actual")
 }

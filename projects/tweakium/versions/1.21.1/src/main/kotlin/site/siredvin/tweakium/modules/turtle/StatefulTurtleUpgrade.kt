@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import site.siredvin.broccolium.modules.base.util.turtleAdjectiveComponent
 import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
-import java.util.*
 
 abstract class StatefulTurtleUpgrade<T : IOwnedPeripheral<*>>(
     id: ResourceLocation,
@@ -34,6 +33,8 @@ abstract class StatefulTurtleUpgrade<T : IOwnedPeripheral<*>>(
             if (data != null) {
                 @Suppress("UNCHECKED_CAST")
                 builder.set(component as DataComponentType<Any>, data)
+            } else if (craftingItem.has(component) || stack.componentsPatch.get(component)?.isEmpty == true) {
+                builder.remove(component)
             }
         }
         return builder.build()
@@ -43,10 +44,12 @@ abstract class StatefulTurtleUpgrade<T : IOwnedPeripheral<*>>(
         if (upgradeData.isEmpty) return craftingItem
         val base = craftingItem.copy()
         for (component in importantComponents) {
-            val data = upgradeData.get(component) ?: Optional.empty()
+            val data = upgradeData.get(component) ?: continue
             if (data.isPresent) {
                 @Suppress("UNCHECKED_CAST")
                 base.set(component as DataComponentType<Any>, data.get())
+            } else {
+                base.remove(component)
             }
         }
         return base

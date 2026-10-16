@@ -8,7 +8,13 @@ import site.siredvin.testiarium.Testiarium
 
 object BroccoliumTestiariumFabricTestMod : ModInitializer {
     override fun onInitialize() {
-        Testiarium.register(GameTests::class.java)
+        Testiarium.register(
+            GameTests::class.java,
+            ReverseItemBridgeGameTests::class.java,
+            ItemBridgeSlotGameTests::class.java,
+            ItemBridgeContractGameTests::class.java,
+            EnergyIntegrationGameTests::class.java,
+        )
         FabricTestiarium.registerTests()
     }
 }

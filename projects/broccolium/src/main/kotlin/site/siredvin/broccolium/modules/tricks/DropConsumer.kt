@@ -27,7 +27,7 @@ object DropConsumer {
         remainingDrop = mutableListOf()
         targetLevel = entity.level()
         DropConsumer.consumer = consumer
-        targetEntity = null
+        targetEntity = entity
         dropBounds = AABB(entity.blockPosition()).inflate(range)
     }
 

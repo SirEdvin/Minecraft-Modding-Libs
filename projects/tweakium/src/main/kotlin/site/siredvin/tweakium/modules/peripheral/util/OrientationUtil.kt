@@ -8,12 +8,13 @@ object OrientationUtil {
     @Throws(LuaException::class)
     fun getDirection(facing: Direction, computerSide: String): Direction {
         if (Direction.byName(computerSide) != null) return Direction.byName(computerSide)!!
-        if (computerSide == ComputerSide.FRONT.toString()) return facing
-        if (computerSide == ComputerSide.BACK.toString()) return facing.opposite
-        if (computerSide == ComputerSide.TOP.toString()) return Direction.UP
-        if (computerSide == ComputerSide.BOTTOM.toString()) return Direction.DOWN
-        if (computerSide == ComputerSide.RIGHT.toString()) return facing.counterClockWise
-        if (computerSide == ComputerSide.LEFT.toString()) return facing.clockWise
+        val side = ComputerSide.valueOfInsensitive(computerSide)
+        if (side == ComputerSide.FRONT) return facing
+        if (side == ComputerSide.BACK) return facing.opposite
+        if (side == ComputerSide.TOP) return Direction.UP
+        if (side == ComputerSide.BOTTOM) return Direction.DOWN
+        if (side == ComputerSide.RIGHT) return facing.counterClockWise
+        if (side == ComputerSide.LEFT) return facing.clockWise
         throw LuaException("$computerSide is not a valid side")
     }
 }

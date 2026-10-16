@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e6d92734c911a882fa3fb3b7b94d4755c6ea5bb6f934088b3d15393b37b1d2b4",
+  "claims": [
+    {
+      "id": "claim_4ef6f694a6cd440f8cd850cea90427c9",
+      "statement": "Host providers cache fake-player proxies with bounded weak-key expire-after-write caches; turtle uses host position while block/entity preparation uses real-player position and level.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderBlockEntity.kt#L24-L38",
+          "version": "repo-lines-v1:sha256:018627399a0125dd58a49f41d4a1d387f60375357e74422db73411d1f8ee4090:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjYjdlMDkzOWQ0NTU4MGI3MzIxMDViNGJlNmIyNDNlYjFlY2RiM2M1YTNiNmJlMzA4N2FjMmI4Mjc1MTFiYTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwYjg1ODY0OTQ4YmVjYWY0ZWFkZjYwZWZkY2E4MjRjNzA5NGUzYTVlMWMxYTczN2E1YjljNDAyN2MwZjljMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhM2I4ZDFmMjJiYzE4MmM4MmJjMDRjN2M2YjVlYjc2ZTgyYTNlZDdhY2UwZGUwYTY2Y2JjZGVlNTQyZTgzNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlYWI0ZTdiNTAzZWU3Mjc1MzNhNzkyNDY1MjhjMzc4NTljODAyZTYwMjIzZDhmMjMyZjg1NTMwZWZlNDhmYzQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderEntity.kt#L22-L31",
+          "version": "repo-lines-v1:sha256:3e405ddff47ade573905712444a122c31e0054ec91d8dfbc17f4cc926fc0ca16:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4YjhhN2NlY2VkNDAwNzQ4NTc3MmFlNmI0Y2VhY2IxNTEwYjdmOTZkM2QxZDFiZjBhYWIzOTJhYWZhNTE4YTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwYjg1ODY0OTQ4YmVjYWY0ZWFkZjYwZWZkY2E4MjRjNzA5NGUzYTVlMWMxYTczN2E1YjljNDAyN2MwZjljMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhM2I4ZDFmMjJiYzE4MmM4MmJjMDRjN2M2YjVlYjc2ZTgyYTNlZDdhY2UwZGUwYTY2Y2JjZGVlNTQyZTgzNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlYWI0ZTdiNTAzZWU3Mjc1MzNhNzkyNDY1MjhjMzc4NTljODAyZTYwMjIzZDhmMjMyZjg1NTMwZWZlNDhmYzQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderPocket.kt#L21-L25",
+          "version": "repo-lines-v1:sha256:68f5dcee8463b27f4cf7cc4648ebd321d460802b1e27faabf00694b3eb7eb9f5:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzI5YjhmYjNjYWI0ODExMzNhZjUzYWEzNWNkZDBkNzljMzIyNDhkNTEwZjg2ZmU5ZTc1NDIyN2MyOTQwOTg0OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGMxOWFmMjA1YzdmZTU3ZTc2NDMzMGU4YWM0OWYxOWNiODc0MjdmY2U2NjFhYzRjNzgyMzRmZDE4OWJhYzk4YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjBkZjQ0MzQ1NjcxNGI5YTM2NjYxZWMwYmVlMDBjY2M3OThmNTU2MGIzZjJiZmZkNzc5MjY0OGVkMmMxZjRmYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTQ0YjZmMDM2MjE5YmI5YmEwNTdlNzFjZmVkZTY0ZDIyY2I3M2ZjZTE4MWRkODZlOGI0OWUxOWE0MDVmNWFjZCJ9"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt#L23-L30",
+          "version": "repo-lines-v1:sha256:42aea65ec663dd9688ce65fc9ecf61723c63e5541da64ca667f4ae9f5c9c2f66:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2QzMGZjN2IzMTk3MGRlMDY1Mjk0MjhlNjBmNWEyYmJjYTg1NzI0YzQ1ZmM3MDQwMWVlM2EyMmMyODM0ZDg3YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjUyM2Y5OTMzYjllNGExYWQ1YmEzOWQ4YTUyNTQ3NDBmMjRjNmExYzUyOTZmOWEzYzIwNjQ5MmU2Mzg3ZTExYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWY1MWQ5N2MzMGM1NWUzNzQzZTA5YWRkNWNmNzFiMjYxYmVkYTFiNjRlNzgyN2Q0Njk4ZGQ1NDkzMzQ3MzdiMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmVjM2E2N2RiMGZhYzNiYWE5ODY1ZTQ0N2Q4ZmEzNjQzMGY2ZjU2MDgzMjVkMjg1YWU3NjliMWJlMjcyNmIyYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dd7d4b3b96224048ba1e2d54d17c34fe",
+      "statement": "Provider action wrappers load then invoke then unload without finally; block/entity hosts require slotted inventory unless skipped and restore using insertion rather than explicit replacement.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderBlockEntity.kt#L95-L146",
+          "version": "repo-lines-v1:sha256:93b583e09b2bb049fa013f4b6ebf9471326bbe9b15257321b45b4894ada35d32:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MjdjMTI5YmM0MGYzNzU0OTc0ZGRmNjNmZDI3NjhjMjc0YzJhNTlmYTU1MDhjOGQ2ZDVlYzM3ZTUyYjE0MGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderEntity.kt#L88-L134",
+          "version": "repo-lines-v1:sha256:6e3c46829c7c4a4ba3e537a73a624faf96e7ec85f1883515cab1926752cf5b24:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3MjdjMTI5YmM0MGYzNzU0OTc0ZGRmNjNmZDI3NjhjMjc0YzJhNTlmYTU1MDhjOGQ2ZDVlYzM3ZTUyYjE0MGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderPocket.kt#L80-L119",
+          "version": "repo-lines-v1:sha256:5bb1f71f4f1e2ad2ca7336e372b889fc015a71811f57042a46b0d29c19e7be17:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMjgxOGU0MjJiOWE4OTZjMjc3N2U3Y2JjZWQ3Y2FlMjUxYzg0NmFkMmM0M2NmMDA0NjhhYjZiMjA3YjMwZGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt#L82-L117",
+          "version": "repo-lines-v1:sha256:f39c6703b0c1c9a0378f0b773a838493e28a7a9150e4049a564ea21030d26967:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg5NjAxMmQ3YWExMThlMWQ1ZmFjYTBiYzZkZTViZDI5NzY2NzlhNzk4MjMyNDA3YjZjMjAwZjNjNTNlYTRkNzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_340c8b5c0eef4248bc5d64cbf37963cf",
+      "statement": "All 1.21.1 host providers use main-hand-scoped forEachModifier rather than applying every component modifier indiscriminately.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderBlockEntity.kt#L90-L91",
+          "version": "repo-lines-v1:sha256:9d8bb99b7606183268b674110c312849ece2dd8aa4b3e231d71f0fa925afd250:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDMxZTY4ZGY1MzljNmYyNjQzNmUzODNjNzU5MTA1MTgyMzczNWUwODcxZWZhYjdjZTg5MjI1YmY1YTlhY2RkZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGUyY2I4OGZjNjc2MzI4MjdiNzVlZTQ4Y2NkNDhmZGVlMDA5ZWJmNGEwNzVhNGM5ZmQzM2I4YjRiNDYxZmM0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2MzNWNiNzNmNmJjOTVmMzQxYzdlY2I1N2NiNDRhOGQ2NzUxMGRhMjFkYjIyYTRhZDdhMDFlMWJlMzAzNDMxYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmNlOGQxMzdmYTQ0YWM2NjQ4YjNhNGE2ZjU2ZjUwYmFiYTY3NzM0MTQ1ZDA0NzRhNGU1NTU2OTdmZDI2YmVjOCJ9"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderEntity.kt#L83-L84",
+          "version": "repo-lines-v1:sha256:9d8bb99b7606183268b674110c312849ece2dd8aa4b3e231d71f0fa925afd250:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDMxZTY4ZGY1MzljNmYyNjQzNmUzODNjNzU5MTA1MTgyMzczNWUwODcxZWZhYjdjZTg5MjI1YmY1YTlhY2RkZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGUyY2I4OGZjNjc2MzI4MjdiNzVlZTQ4Y2NkNDhmZGVlMDA5ZWJmNGEwNzVhNGM5ZmQzM2I4YjRiNDYxZmM0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2MzNWNiNzNmNmJjOTVmMzQxYzdlY2I1N2NiNDRhOGQ2NzUxMGRhMjFkYjIyYTRhZDdhMDFlMWJlMzAzNDMxYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmNlOGQxMzdmYTQ0YWM2NjQ4YjNhNGE2ZjU2ZjUwYmFiYTY3NzM0MTQ1ZDA0NzRhNGU1NTU2OTdmZDI2YmVjOCJ9"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderPocket.kt#L72-L103",
+          "version": "repo-lines-v1:sha256:0b171ff1d6d8a96ff59323c83b7bc7832bd61fe297c650156228adeccaffee52:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwYWRiZTcxYTU2MjdhYzg4MjE5Y2ZlM2ViYWM2NjRkY2Y3Yzk3NGEyZjQzZjZkZDI3NTU4OTYxMzMyZWRjMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyYTJiMjFjNGUzYmVmMDFjNzc0NmZlMGZjMTQ1ZmFiMDZjYWU2MzBmY2IzYTEyZTk5OWY1OTg3MGQ1YWY0MDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhODRiYTkxM2NhMzNhNGQ3YTI1MDI0NDk1NzhlMmFmYTM5ZDUyMTViN2ZkMmM4ZTA1NTRmMDg1YTgwOTAzMzUifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt#L77-L78",
+          "version": "repo-lines-v1:sha256:9d8bb99b7606183268b674110c312849ece2dd8aa4b3e231d71f0fa925afd250:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDMxZTY4ZGY1MzljNmYyNjQzNmUzODNjNzU5MTA1MTgyMzczNWUwODcxZWZhYjdjZTg5MjI1YmY1YTlhY2RkZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGUyY2I4OGZjNjc2MzI4MjdiNzVlZTQ4Y2NkNDhmZGVlMDA5ZWJmNGEwNzVhNGM5ZmQzM2I4YjRiNDYxZmM0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2MzNWNiNzNmNmJjOTVmMzQxYzdlY2I1N2NiNDRhOGQ2NzUxMGRhMjFkYjIyYTRhZDdhMDFlMWJlMzAzNDMxYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmNlOGQxMzdmYTQ0YWM2NjQ4YjNhNGE2ZjU2ZjUwYmFiYTY3NzM0MTQ1ZDA0NzRhNGU1NTU2OTdmZDI2YmVjOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_01cb3e9acd3447bdabedb97dae2b2aac",
+      "statement": "The proxy maintains incremental dig state, custom hit selection and native interaction/protected digging/attack routes; both drop-capture wrappers release capture in finally without making provider load/unload or nested capture transactional.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt#L43-L87",
+          "version": "repo-lines-v1:sha256:51c4caacdbdb1fd0938c8046e1d5baef053f6e70b00a4f80804e7931387a2bbc:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0ZWY2YTllOTIzNDNmMjcwY2M0NThlNzUyZmIyZmUxNmYyNmRjOWJiMGFlZGY3MmM1NzIzYzYyYTU5MzAwZWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE1NGRkYzBkMzEyNGRlOWYyYzdmMGI5ODJlZTU0NWMzYjllYmE0NmVlMmZiY2VjY2M3ZmUwODE5OWNlMGE5ZDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkMTRkNDMwOTZjMjhlYzRjYThkNDQxNzhkMzViYTA4NjdiZmQyMjJhOWJhOWUzMWI3MGQzNDMyODhlODI5YjcifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt#L89-L272",
+          "version": "repo-lines-v1:sha256:3cd322fcf9a43cbee9cb74ae6de9c1fcb1ca4bb11c6645567708ff9223974d39:eyJzZWxlY3RlZExpbmVDb3VudCI6MTg0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhMTczOTdkNWIzOTFjZDA0MjM5NmIwNDQ5OGIxZDY4YTA0MzFiMzkxNjgwOTkwNDZiM2MyNGFiNzBiOGI4NzNjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5OTliZGVmZWVhY2E2MzQwZTAyOTBkYzg2ZTg4OWM4OWQ1ZTE4OWFhNWJhNDRiNTg1YjNiNzA3MzRmNGE2MmQ4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-16T19:56:35.545Z"
+  }
+}

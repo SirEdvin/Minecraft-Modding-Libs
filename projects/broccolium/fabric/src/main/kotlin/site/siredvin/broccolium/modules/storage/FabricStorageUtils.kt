@@ -157,9 +157,13 @@ object FabricStorageUtils {
         }
     }
 
+    /**
+     * Retain native slot transactions, or require the explicit ReplaceableItemStorage contract.
+     * Unsupported reverse adapters throw UnsupportedOperationException before touching inventory.
+     */
     fun getSlot(storage: SlottedAgnosticStorage<ItemStack, Int>, slot: Int): SingleSlotStorage<ItemVariant> {
         if (storage is FabricSlottedStorageWrapper) {
-            return storage.storage.getSlot(slot)
+            return storage.getSingleSlot(slot)
         }
         return SlottedAgnosticItemStorageWrapper.of(storage).getSlot(slot)
     }

@@ -1,3 +1,4 @@
+import net.neoforged.moddevgradle.dsl.ModDevExtension
 import net.neoforged.moddevgradle.legacyforge.dsl.LegacyForgeExtension
 import site.siredvin.peripheralium.gradle.mavenDependencies
 
@@ -153,6 +154,23 @@ dependencies {
     testImplementation(libs.byteBuddy)
     testImplementation(libs.byteBuddyAgent)
     testImplementation(libs.bundles.test)
+}
+
+// Only the integration runner loads this dependency in the reverse direction.
+val integrationProject = project(":tweakium:forge:${sc.current.project}")
+val commonProject = project(":peripheralium:${sc.current.project}")
+val peripheraliumMain = sourceSets.main.get()
+integrationProject.sourceSets.named("testMod") {
+    integrationProject.dependencies.add(compileOnlyConfigurationName, commonProject.sourceSets["testMod"].output)
+    runtimeClasspath += commonProject.sourceSets["testMod"].output
+}
+integrationProject.extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyForge") {
+    val peripheralium = mods.register("peripheralium") {
+        sourceSet(peripheraliumMain)
+        sourceSet(commonProject.sourceSets.main.get())
+    }
+    mods.named("tweakium_testmod") { sourceSet(commonProject.sourceSets["testMod"]) }
+    runs.named("gameTestServer") { loadedMods.add(peripheralium) }
 }
 
 tasks.test {
