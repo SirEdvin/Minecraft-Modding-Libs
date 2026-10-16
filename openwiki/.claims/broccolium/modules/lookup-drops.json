@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:9e28d6c0419566b84757ffecd437f60906d4e30c31a6e5401946495e60fbc2ae",
+  "pageVersion": "sha256:b754379cc76b7724aac84ac30901a2622d65b363546a356d1789c640c48aa9fb",
   "claims": [
     {
       "id": "claim_86e353a136d94207af10bdf810516047",
@@ -38,11 +38,11 @@
     },
     {
       "id": "claim_988bef46c9124530a42c3e1024f8aed2",
-      "statement": "Drop capture uses replaceable singleton level/bounds/consumer state; both configure overloads clear targetEntity, reset clears state and rejects double reset, and resetAndDrop resets before emitting remainder.",
+      "statement": "Drop capture uses replaceable singleton level/bounds/consumer state; entity configure retains its target, positional configure clears it, reset rejects double reset, and resetAndDrop clears capture before emitting remainder.",
       "evidence": [
         {
           "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/tricks/DropConsumer.kt#L11-L74",
-          "version": "repo-lines-v1:sha256:cbe3c1e60cf57822f1c66fb25d8573d9313ea31ef85ef42dbe44ddd06634dbd5:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1NzE1N2ZhZWZiMDQ1NjdkZjc2MTA4M2JiOTI0OTE1ZmM3ZDc4OTU1ZmRjYTIxZTIyNjg0YWQyNjY4MjJjYWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzMmM2NzE1MzlmNzI1YTZiYjBlOWY1MDQ0N2NjMzkyMjk5ZWViZDYwODAyNGYwYTcwYTJiM2RkNjYyYWNlZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "version": "repo-lines-v1:sha256:d7d623d66d0ebb1df8d3e5f54c5627f8e2eb5d42eb998ab4ebf9dfbf5a8bfe6b:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1NzE1N2ZhZWZiMDQ1NjdkZjc2MTA4M2JiOTI0OTE1ZmM3ZDc4OTU1ZmRjYTIxZTIyNjg0YWQyNjY4MjJjYWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzMmM2NzE1MzlmNzI1YTZiYjBlOWY1MDQ0N2NjMzkyMjk5ZWViZDYwODAyNGYwYTcwYTJiM2RkNjYyYWNlZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
         }
       ]
     },
@@ -70,17 +70,21 @@
     },
     {
       "id": "claim_ac920d8d25d344f19046c0145d5714a4",
-      "statement": "FakePlayerProxy capture helpers execute the action before reset without finally, so an action exception can leave global drop capture active.",
+      "statement": "Both FakePlayerProxy capture helpers reset and drop in finally on action success or failure; singleton capture still does not provide nested or concurrent isolation.",
       "evidence": [
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt#L71-L82",
-          "version": "repo-lines-v1:sha256:b111d34946e8d19cd24f1efe45747e77291eec082c6542d893c49045d228200e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmMTkzNDc0ZWUyNDI0ZjI1MjdhNmViZmQ5YmMxOGM5M2QzMGJiZjEyZWM3ZTY0YjQxNWExMjhjNWZlZTUxNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZGU3NzZmMTQwNGI2NjQwODgzMmJkZWZjZTU2ZTA4NWU0NTZiYTA5M2E0ZjM5ZmZlOWIyYThmZmNjMmEyOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhYjQzZTE0YTkyNjg2ODI0ZWQ2ZDcxZGUzZTg3ZGFkOTBiZDUwNWY0NWQ3ZjM4NmFiZTFjN2U0OThkNWMwNzUifQ"
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/tricks/DropConsumer.kt#L11-L50",
+          "version": "repo-lines-v1:sha256:5d107c44f1a43f81beae493663587a8112eacfd6de2c7a3d4edb51339926fc39:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1NzE1N2ZhZWZiMDQ1NjdkZjc2MTA4M2JiOTI0OTE1ZmM3ZDc4OTU1ZmRjYTIxZTIyNjg0YWQyNjY4MjJjYWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzMmM2NzE1MzlmNzI1YTZiYjBlOWY1MDQ0N2NjMzkyMjk5ZWViZDYwODAyNGYwYTcwYTJiM2RkNjYyYWNlZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhMGE5MGYxYWIxNzYxNDA3YzVjOWI3YjZiYTYwNDc3N2YxMmFmMjNjOTNhNTQ2OGY0ZGNmOGFkNTgxNTkyZWEifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt#L71-L87",
+          "version": "repo-lines-v1:sha256:0141dfaf468e4e6ce464232ac23b96df6a6158105218e30e989d5327558e3e1b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmMTkzNDc0ZWUyNDI0ZjI1MjdhNmViZmQ5YmMxOGM5M2QzMGJiZjEyZWM3ZTY0YjQxNWExMjhjNWZlZTUxNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZGU3NzZmMTQwNGI2NjQwODgzMmJkZWZjZTU2ZTA4NWU0NTZiYTA5M2E0ZjM5ZmZlOWIyYThmZmNjMmEyOTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkMTRkNDMwOTZjMjhlYzRjYThkNDQxNzhkMzViYTA4NjdiZmQyMjJhOWJhOWUzMWI3MGQzNDMyODhlODI5YjcifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

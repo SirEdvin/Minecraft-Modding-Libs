@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:cf7d1e91106b3ae08e05d08b2fa613fd0903b407d4963cd36ccfc28708b7fb0d",
+  "pageVersion": "sha256:673f3f28554d5c94c6db14c38033279176bedd2c31317270bdfef5e5a5fe6647",
   "claims": [
     {
       "id": "claim_1881b5709c4242e6be9939ee8ca61820",
@@ -32,15 +32,15 @@
     },
     {
       "id": "claim_44f62fa45680474d87ad714c6cf536c6",
-      "statement": "FabricStorageWrapper mutates store input even in simulation; its slotted-source branch uses fromSlot > 0 and its nonslotted-target guard uses toSlot < -1, limiting slot guarantees.",
+      "statement": "FabricStorageWrapper mutates store input even in simulation; moveFrom honors native source slot zero and requested nonslotted destination slots explicitly fall back to whole-storage insertion.",
       "evidence": [
         {
           "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/FabricStorageWrapper.kt#L24-L67",
-          "version": "repo-lines-v1:sha256:3b06c9762c3c4c3ccce0b2e872d6932b224f748a0ac441e0f96461f61c7dc668:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMGFiMWE4MzNlMTA1NDFlMTFlMmNhNzUyZGFmZmY5MWQ3OTNiNDBlYmViZjE2NTk5MjkzYWZjNTNlMGRlMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwZGYyYTE3YmY1YzI3NTlmNjJlNjc3M2VmMWQxNDcxYzUyNDRiN2U4ZjVmZmIwNzZmMDU2ZDRiZjFiNjM1ZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2NWE5N2NhODRmMDVmNjZmOTUxMDc4YTFiNmIwZTM1ZDU3MjNiMjMxYjdlMzE0OWQ5MjUxN2E0NTY2MWQ3MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjNDg2OGNiYWUwODc5MjU0ZTI1M2EzMTY5MjFjMjI3N2VkNzkzYmZkNWNiY2EyNTJhZWM5M2NmODNiNzkzYzUifQ"
+          "version": "repo-lines-v1:sha256:6745d22328df4b091e921e467c71d03377dc7dd12093590b4ad26e8f2c102fe2:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMGFiMWE4MzNlMTA1NDFlMTFlMmNhNzUyZGFmZmY5MWQ3OTNiNDBlYmViZjE2NTk5MjkzYWZjNTNlMGRlMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2NWE5N2NhODRmMDVmNjZmOTUxMDc4YTFiNmIwZTM1ZDU3MjNiMjMxYjdlMzE0OWQ5MjUxN2E0NTY2MWQ3MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgwNTU0MjU5OWM4OTcwMmJiYmJmNGI2NmE5Mjc0MWMyZWMzNzVhNTQzYzc4MGI3MTE4YjRjOWMyYTFkYjYwM2MifQ"
         },
         {
-          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/FabricStorageWrapper.kt#L96-L109",
-          "version": "repo-lines-v1:sha256:1696454e6ffccec0b738d22183a944459dbeae3bcc92fd85fec3be0c70473bf9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NWMzOTA4YjNmMTY2ZWVlMjc0OTBjYTUxN2U4ZWY4NDlmMTM5ODI5ZWViNzU0NDc0MzhmNzUzNDUzM2VkYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyNGFmZjQ3OTkzYWU2MDJiMzdjNmQwMDI3NWZkMTM4NGQ5NWYyODcxOTIwNGEzMjRmMjFmZGY5ZDE3Y2MyN2IifQ"
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/FabricStorageWrapper.kt#L95-L109",
+          "version": "repo-lines-v1:sha256:43983b7c2969dd2adfaa2abcfdb46b7ea89e262051f0d2d0ec24d7fdb5c017c1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NWMzOTA4YjNmMTY2ZWVlMjc0OTBjYTUxN2U4ZWY4NDlmMTM5ODI5ZWViNzU0NDc0MzhmNzUzNDUzM2VkYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM3MDYyN2IyMmNiN2FlOWM4NmZkMWRlYzhlZmYzMzg0YTA3ZGIwODVkMDlkMjc2YTQ2NzBkMjc3OTQzNWI5YWYifQ"
         }
       ]
     },
@@ -81,10 +81,52 @@
           "version": "repo-lines-v1:sha256:fed33ff866fe9fdd7a37a3bb1e5a8c9bb799e127ea7933237c1f91bfe0343088:eyJzZWxlY3RlZExpbmVDb3VudCI6NzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZWUzYzZkYzYyMmM2MjAzYjc4ZDQzMWY0YmU2MDc4ZmJjNWI1ODI3OGZmOTlmNmJjNDk0Y2QzNWE5NGIxZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1ZDRlYzBmYThkNzVmMTcwMzlmNTBmOGIxMTlkY2ZlYjY4ZWQyOGQ1MTFjMDYwNWYyODE2YTIxNDliZWY4YjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU4ZWFmM2UxZGIyODRmNmE2ZmQ0ZTA2NmFlMmZiNjU0YWU2OGZkZmNmM2U3ZTRkY2E0YzJkZDIxNGE0OWI5ZDAifQ"
         }
       ]
+    },
+    {
+      "id": "claim_a6645184cfa640c48ba4f2bf935485c6",
+      "statement": "ReplaceableItemStorage opts into exact copied slot replacement, including rollback restoration independent of insertion policy; backing layout/contents/maximum must remain stable and notifications or non-restorable effects are not transactional guarantees.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/ContainerWrapper.kt#L8-L23",
+          "version": "repo-lines-v1:sha256:0c4175ecd654130d0c888433a2a6d10f53e3a2ef5dcd56afb3f15f4e17fd7f95:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1YWI5ZjkxOTE5OWY1NTQzYzg1ZmQ2MzM4MjA1MzMyNDUzOTljMThmMWY1MGVhYzQ0ODA2NDU5OWQzZWM0NzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyMTViZTc3ZGU3ZjRiNjc3MjJkNjJhYzUyMmUzMTlmMzQ0ZmFhOTg2ZTVlOTE1Zjk4MTFkNTE5M2IzNDQzOTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/ReplaceableItemStorage.kt#L6-L32",
+          "version": "repo-lines-v1:sha256:241488aa876f9983926a71bd40af85b06868216813ba3d69b0dce5f4a2ce346a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkODQ1NjRiZTY2OGU3YjU4MDg2MzM3Y2YwNjQwOTRmNzFkNjE2MDk5NGQ3MWUzZDE4NmM0NTA3NzNlYjM3YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7441df52e312407b8c50d0d97d4554a4",
+      "statement": "Reverse Fabric slots require an exact-replacement backing, detach snapshot values, refuse unrepresentable old stacks before mutation, apply insertion capacity bounds and notify on final commit.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/SlottedAgnosticItemStorageSlotWrapper.kt#L8-L34",
+          "version": "repo-lines-v1:sha256:6a52b2b11bac224fbdec93d76973e9f7850b98431c823e7411157176d4c04295:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0MDg3M2JiNWYwMDc2ZDE2NjE3NWZlMWViMjY4ZDMyYzZmYTEyMGNiZDBhN2NlNDBiN2Q3MTU1NTRkMTEwOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4MmM4ZDE1NTk5NjFkMWI3YzQ0MGQ2NjJkODVmMjUxODdkMGI4NzIyMDZhMDAyZDBjNmM3NmNkOGU0MzAzNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/SlottedAgnosticItemStorageWrapper.kt#L13-L22",
+          "version": "repo-lines-v1:sha256:1a013e859092343923bddbaa6dae9a47070cedb99ac3e49c3ee8fa9153fd2614:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhZjIyY2YwNzMyNTkyYzI0NzE0MWNiZTYxZWZhMTEwMTI2MTJmNWEzMTIyYjlhZjliYmFmNTJmNTcyNGQxOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmNmI4ODEyYzE3ODliZTBiNzMzMDZjZGRlYjg1NzRlZmNkNTZkZDAwN2M5OWJkNDlmYWJhNmRiODYzZjE3NTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkMjQ4M2ZkNjBjYWViYmJmMmY1NGVlY2RiN2I4NjNmNjJkNGM2ZjExMzU0NGRlZDc1MzdkMzU2MmYxMTI4ODEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVlMDk5N2RlZjMwNDFhNDQwYWYzZDE5OWMxZTM0OWYxYWNjYjY0NzhjMmE5ODY0YWQxNmJlYjIxOWQyN2FlYWQifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/SlottedAgnosticItemStorageWrapper.kt#L59-L69",
+          "version": "repo-lines-v1:sha256:2462a30bbe758bc17b829d7b541e667b482f1d85c08fadb22183f05322a2bbb4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2ZDk0MzVlZTgyYWI2YzViNWJkMDkxMmFmZDM5YzY0NjdlZmFmYmU4M2Y5YWI2MTE1OWRhOGVjOWUwOTE0NzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_753212df52b44521861786898eb2e0d3",
+      "statement": "FabricStorageUtils.getSlot preserves native Fabric slot transaction participants instead of passing native origins through the reverse agnostic adapter.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/FabricStorageUtils.kt#L160-L169",
+          "version": "repo-lines-v1:sha256:cf1d5b67282d83ba9a13c19c59c7b2b3df80be826a1364c99c144b033f6dea7d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5Y2JiYzY1NDY5ZGIxY2EyODQyZWZkOTdkZjdlZTJjZTZjYzE1NzE0ODJkMDFhMThiNzkwYTEwYzdjNTEwZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJlNzRjMjMzZDI5YzhiZmRiZDQxNDI5ZmNjYTRkZDY1NWY0NjI3MzAxNGRhM2YyY2Y2YmEzYTEwZjBmOTRjMjAifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

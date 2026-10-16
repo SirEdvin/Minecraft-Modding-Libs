@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:5eff6b4f622ff3c4f96e0d8df388828dad5edd9a876daf01583f088924537077",
+  "pageVersion": "sha256:deecfae82c89bc8ab0d743ec1a3cd8325f678c5a9ffaa9aba2d962d5802dbfc6",
   "claims": [
     {
       "id": "claim_28008783261a4cd894ebaea573408d75",
@@ -87,10 +87,28 @@
           "version": "repo-lines-v1:sha256:f032c186fd6545874a6309720adf5aeeb49b9bddc49f558625507b8f6c0ca4e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0ZWZiMzE1MjFiZWNiNGUxYjc3ZGE1MGExYzFmZjg5NWQ5MjMzNDI2NTQyMGQ4Y2JjOGEyYjk4ZDAxYjcyYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjNzUwYTgwMGYyMDYwNTNhMzA1MTlhMmJhYjgwN2Q1YjMzMTlmOTY0MTMwYzc0NmQyYWMwZTE1ODRlOTdlMzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
         }
       ]
+    },
+    {
+      "id": "claim_d3b81067a75a4845a6f162cca7bb690b",
+      "statement": "Peripheralium keeps owned testMod behavior sources while loader scripts attach them and real production mod outputs to Tweakium's native test runners; this reverse integration is test-only, not a reverse production dependency.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/build.gradle.kts#L28-L45",
+          "version": "repo-lines-v1:sha256:c0f034733ddea9b1225b218fbce04e7017631f6d6feb62a4cc7dab851e8770f3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0ZDE5ODY2Yjc0NmRlODJhOGJjZjhmYjI5NzY1NGRlNjg3YWM1OGI0YzdmOWE2NmE1ZTFjZGI0MDFjOWNmNDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3MGY3ODgzMmJhNjAyYmExZjhiMTE1YmMzOTYyOWI2ODU2YWIyZGU5NzA4ODEyMjIyZjVhNWQ3Y2M2ODIzMjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YzkzNzZmNDcxYzE4Njc5NTliZWFhOGEwZjA4YzQyYTJhOTFiOTI4YWNhYTBjMDA2NjBhNDQ1MTBkYTkzMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzYzg3MWNjZjBlMzg4MDk4MjI0ZWFmN2JmNjAwMGQ1ZDIxYTQyMGI1ZjViYzZiZDA0ZGM5YjMwMTRmNGVlM2UifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/fabric/build.gradle.kts#L92-L99",
+          "version": "repo-lines-v1:sha256:511b34322496d4e81c2618ff1ac577a83db3cebcccf245cfaae03cf4b0ce62e9:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWMwYTg5NjRiNzVhODU2NDI0ZmNlNDI2ZTFhMDQ5NjM3OTIwNmU2ZDI3MTc2Y2ZiNjY2OWFhYzg0YjVmYTZmZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWRiOWUwZmQ2ZTM4ODZmYTg2ZTA5Mjc2ZDM4NDY5YjY5ODQwMTZhNzc1NjE0MTc0ZjA0MjYwNDFiMmI3ZTJhMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTFiMjFlZTYzMzM3MzlmOTEzZmQzM2I3NTVhMDExNjIxOGM1NDc5OGEwOTYyZTMyZTdmYjA5ZWQwNDkxOTYyZCJ9"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/build.gradle.kts#L159-L174",
+          "version": "repo-lines-v1:sha256:f000dc5cf5564f51b1a167b99e955511c3eb1be4a1a98f7f39caf9e695a8d8b0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ODEwMzk3NGEzN2RkYTgxMjIzMGVjYTJjYjYxMWZmMGE1OTJhN2Q2MzgzNTg1ZDk3ZjQzYTdkMzdiNTljNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVkYjllMGZkNmUzODg2ZmE4NmUwOTI3NmQzODQ2OWI2OTg0MDE2YTc3NTYxNDE3NGYwNDI2MDQxYjJiN2UyYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExYjIxZWU2MzMzNzM5ZjkxM2ZkMzNiNzU1YTAxMTYyMThjNTQ3OThhMDk2MmUzMmU3ZmIwOWVkMDQ5MTk2MmQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

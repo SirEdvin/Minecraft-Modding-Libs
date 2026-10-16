@@ -47,6 +47,12 @@ dependencies {
     add(sourceSets["testMod"].compileOnlyConfigurationName, libs.mixin)
     add(cctTestMod.implementationConfigurationName, files(sourceSets.main.get().output))
     add(cctTestMod.compileOnlyConfigurationName, ccCommon)
+    testImplementation(kotlin("test"))
+    testImplementation(libs.bundles.test)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishingShaking {

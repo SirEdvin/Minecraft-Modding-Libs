@@ -76,6 +76,9 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
         if (actualLimit <= 0) {
             return 0
         }
+        if (toSlot.isPresent) {
+            assertBetween(toSlot.get(), 1, storage.size, "toSlot")
+        }
         if (fromSlot is Number) {
             if (fromStorage !is SlottedAgnosticStorage<ItemStack, Int>) {
                 throw LuaException("Source '$fromName' is not slotted storage")
@@ -83,9 +86,6 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
             assertBetween(fromSlot.toInt(), 1, fromStorage.size, "fromSlot")
             return storage.moveFrom(fromStorage, actualLimit, toSlot.orElse(0) - 1, fromSlot.toInt() - 1, ItemStorageUtils.ALWAYS)
         }
-        if (toSlot.isPresent) {
-            assertBetween(toSlot.get(), 1, storage.size, "toSlot")
-        }
-        return storage.moveFrom(fromStorage, actualLimit, takePredicate = PeripheralPluginUtils.itemQueryToPredicate(fromSlot))
+        return storage.moveFrom(fromStorage, actualLimit, toSlot = toSlot.orElse(0) - 1, takePredicate = PeripheralPluginUtils.itemQueryToPredicate(fromSlot))
     }
 }

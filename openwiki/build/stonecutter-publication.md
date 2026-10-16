@@ -3,9 +3,6 @@ type: architecture
 title: Stonecutter source ownership and publications
 description: Actual Gradle subproject graph, effective version overrides, loader identity, Java targets, publication validation and source-mutation hazards.
 tags: [build, stonecutter, versions, publication, gradle]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
   - id: openwiki-source-5ffc733a0005c17b6fb5b9ea
     resource: repo://.github/workflows/publish-maven.yml
@@ -31,7 +28,10 @@ sources:
     resource: repo://scripts/check-publications.py
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Stonecutter source ownership and publications
@@ -62,12 +62,16 @@ The checked-in verification workflow is:
 
     ./gradlew cleanTest build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon
     python3 scripts/check-publications.py
-    ./gradlew 'Set active project to 1.21.1' --no-daemon
-    ./gradlew build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon
+    ./gradlew stonecutterSwitchTo1.21.1 --no-daemon
+    ./gradlew cleanTest build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon
     python3 scripts/check-publications.py
-    ./gradlew 'Set active project to 1.20.1' --no-daemon
+    ./gradlew stonecutterSwitchTo1.20.1 --no-daemon
 
 These are implementation verification commands, not wiki-only checks. Switching may transform shared source/controller state. Datagen writes generated resources. Root assemble also reaches TypeScript compilation, whose outputs are generated beside source. Inspect task wiring before using a broad build as a documentation linter. Root formatting is ratcheted against origin/multiversion and excludes generated source; leaf formatting targets are cleared so shared source is checked once.
+
+typed-peripheral-api now connects testContracts to check. The contract task depends on npmInstall and mustRunAfter compileTypeScript, because a combined build writes declaration files beside the contract inputs. Ordering avoids overlapping task reads/writes without forcing emission for a standalone contract check.
+
+The coverage acceptance ran both active-state builds and all 24 publication checks, then restored 1.20.1. A standalone exact-source clone with the same ratchet ref was necessary for Spotless/JGit linked-worktree discovery; it did not bypass formatting. Fresh JUnit counting excludes obsolete unversioned output trees. [The coverage matrix](../../docs/module-test-coverage.md) records source-hash checks, artifact isolation and exact runtime/JUnit totals.
 
 Existing Maven CI publishes on library-prefixed release tags or explicit workflow dispatch. It validates tag library version against gradle.properties, maps 1.20/1.21 to exact nodes, requires repository credentials, and chooses common/fabric/forge or all. Do not push matching tags or invoke publish for local validation. No publishing workflow, scheduled automation or release was run or enabled by this documentation task.
 

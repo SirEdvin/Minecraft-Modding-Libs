@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import site.siredvin.testiarium.ForgeTestiarium;
+import site.siredvin.peripheralium.testmod.PeripheraliumBehaviorGameTests;
 import site.siredvin.testiarium.Testiarium;
 import site.siredvin.testiarium.cct.CctComputers;
 import site.siredvin.testiarium.cct.CctFixtureCommands;
@@ -16,7 +17,9 @@ public final class ForgeTweakiumTestMod {
             CctComputers.INSTANCE.reset();
             CctFixtureCommands.INSTANCE.importFiles(event.getServer());
         });
-        Testiarium.register(CreativeFillerGameTests.class);
+        Testiarium.register(CreativeFillerGameTests.class, ModuleBehaviorGameTests.class, UpgradeBehaviorGameTests.class, WorldBehaviorGameTests.class);
+        Testiarium.register(PeripheraliumBehaviorGameTests.class);
+        Testiarium.register(RuntimeBehaviorGameTests.class);
         ForgeTestiarium.registerTests();
     }
 }

@@ -89,6 +89,15 @@ dependencies {
     testImplementation(libs.bundles.test)
 }
 
+// Exercise Peripheralium in the existing native integration runner, never in production configurations.
+val integrationProject = project(":tweakium:fabric:${sc.current.project}")
+evaluationDependsOn(integrationProject.path)
+val peripheraliumOutput = sourceSets.main.get().output + commonProject.sourceSets.main.get().output
+integrationProject.sourceSets.named("testMod") {
+    compileClasspath += commonProject.sourceSets["testMod"].output
+    runtimeClasspath += commonProject.sourceSets["testMod"].output + peripheraliumOutput
+}
+
 tasks.test {
     useJUnitPlatform()
 }

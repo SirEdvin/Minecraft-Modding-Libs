@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:ac553aa438a482c77a4e1951ec2f364c13a5a62b0d003c73a60ac81a6f6f12f2",
+  "pageVersion": "sha256:65cea7fe7a6d61add07690ee77e5a53a6d30a0c251e340b8f545912847916a0b",
   "claims": [
     {
       "id": "claim_15c06ef3e9cf4d428607a300f7936d29",
-      "statement": "Inventory transfers resolve named targets and upper-cap limits, but push/pull slot validation is asymmetric: numeric pull lacks destination range validation and query pull validates but does not forward destination slot.",
+      "statement": "Inventory transfers resolve named targets and cap limits; pull validates explicit destination bounds before numeric or query movement and both branches forward the converted slot, while numeric pull also validates a slotted source.",
       "evidence": [
         {
           "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractInventoryPlugin.kt#L26-L89",
-          "version": "repo-lines-v1:sha256:5713940a42617b64d91203e2ac6f6a13a68093a7d7e6f551950d29c64f567e77:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0M2Y1MDM1ZmM3N2VhY2RjYWQ3MWZiNGU3ZmE5NTg5MmNhOWVhMDcyNjdiZmEwNTlhNTlhYTdhNTk5ZTNiZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3YTE2ZjQyZjdiZjdmODA0ZWQ1ZGJmMDQ2MjY0ODcwZDg5M2I1NDg0YzRiZThmMzk2ZDk3NTU5ZTYwMzY3YWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkNTMzMGRjMDAyOTc2M2U0MDcyNmIwMDI0NThkZGZiNTExNTU2NDUxYWFhZDMyZTFlZTZjNDA0OGVlOGM3MjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+          "version": "repo-lines-v1:sha256:4734230d1b945722f9e8e1ee6af7c77e6dfa73254ea69a624ec1f258d9bfdba1:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0M2Y1MDM1ZmM3N2VhY2RjYWQ3MWZiNGU3ZmE5NTg5MmNhOWVhMDcyNjdiZmEwNTlhNTlhYTdhNTk5ZTNiZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkM2E2NTZkMmQzMjZhOTNjNjQxNWM5M2M2MTNkNTk1MTFhYmI1ZjNiOGY1ZjIxMDdmN2MwMzZjZWFhYmQyOGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkNTMzMGRjMDAyOTc2M2U0MDcyNmIwMDI0NThkZGZiNTExNTU2NDUxYWFhZDMyZTFlZTZjNDA0OGVlOGM3MjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
         }
       ]
     },
@@ -83,6 +83,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

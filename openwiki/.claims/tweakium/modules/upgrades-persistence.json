@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:c1f4a88e2c5df604aa2a5eacb10858c2994f80e069e7f6ed09b99f7f09927112",
+  "pageVersion": "sha256:3c51b949406d107eb157ae9812472562be16bceb943afc1791d26712d5629046",
   "claims": [
     {
       "id": "claim_5b14e2b6be7d4788a60f7396234bb5f5",
@@ -32,15 +32,15 @@
     },
     {
       "id": "claim_4effe856222a4ca59fafcd7e2d41e77e",
-      "statement": "The 1.21.1 stateful item transport defaults to whitelisting CUSTOM_DATA and copies only present whitelisted values, without replaying explicit removals during item reconstruction.",
+      "statement": "Modern stateful item transport whitelists important components, preserves defaults for absent entries and applies explicit removals to a copy; extraction reconstructs removals relative to the crafting template after native item serialization.",
       "evidence": [
         {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt#L19-L59",
-          "version": "repo-lines-v1:sha256:6157e117a4f37392f3c2b96405538507eea65509ea908a69363bd9c9b3e5f8eb:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5OWJmOGIwMDNkNGE5ODRjNTgxYjM1MzQxODU1NDJhODkzMmFmOTdlZDJkNmRkOTYyZjY4NjI5NGFiMzI3YTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNmVkZTUyZjAwZGQ5ZDg5ZDRjNDVkNzI3M2YxZWIyMjgxMGM1ZGUxNTNmYjY2OTA0MGY4NjA5YjEzMTgyYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt#L18-L61",
+          "version": "repo-lines-v1:sha256:0cd0955bed37558297581bea01a1083b81d8f447cfa3b4c722bc229acfaa2635:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5OWJmOGIwMDNkNGE5ODRjNTgxYjM1MzQxODU1NDJhODkzMmFmOTdlZDJkNmRkOTYyZjY4NjI5NGFiMzI3YTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZTUyODkwNTkzM2EzY2I3MDNmMTNiN2U5MDhiYWIwZmE2NmNhZWM3ODE1MzNlOTU3ZTQ5ZWY0OTZkMTk0NjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNmVkZTUyZjAwZGQ5ZDg5ZDRjNDVkNzI3M2YxZWIyMjgxMGM1ZGUxNTNmYjY2OTA0MGY4NjA5YjEzMTgyYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
         },
         {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/turtle/StatefulTurtleUpgrade.kt#L20-L61",
-          "version": "repo-lines-v1:sha256:84f4cd6cbb7c7b80bcb839ceacee6ffd7e73b2db4d61c42aa1f7412656ae2b7c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5OWJmOGIwMDNkNGE5ODRjNTgxYjM1MzQxODU1NDJhODkzMmFmOTdlZDJkNmRkOTYyZjY4NjI5NGFiMzI3YTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlNzFmZjY3N2NjNjg3ZGNmNzdjNjI1MmRkNGJiN2M4NTMyNmI0MzliODAzMjA5YjAwZmViZmUyMGYzZDI4MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/turtle/StatefulTurtleUpgrade.kt#L19-L63",
+          "version": "repo-lines-v1:sha256:55772e98b9dd84a0c14025a27d782f47b6edb5dfa6eca53c4343041defa806f0:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5OWJmOGIwMDNkNGE5ODRjNTgxYjM1MzQxODU1NDJhODkzMmFmOTdlZDJkNmRkOTYyZjY4NjI5NGFiMzI3YTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZTUyODkwNTkzM2EzY2I3MDNmMTNiN2U5MDhiYWIwZmE2NmNhZWM3ODE1MzNlOTU3ZTQ5ZWY0OTZkMTk0NjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlNzFmZjY3N2NjNjg3ZGNmNzdjNjI1MmRkNGJiN2M4NTMyNmI0MzliODAzMjA5YjAwZmViZmUyMGYzZDI4MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
         }
       ]
     },
@@ -95,6 +95,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

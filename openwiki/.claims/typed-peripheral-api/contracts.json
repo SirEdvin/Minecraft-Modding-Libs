@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:bc07bf34e9cdfe6ed51b8f4f41a67cd83a1db32ca6dcfe0aea8bafe3cafb8315",
+  "pageVersion": "sha256:6c578d88d28152cb0650c949973bd9dc4c51a9e8fec9cd56c91659676dba67c6",
   "claims": [
     {
       "id": "claim_425e085bcd5e43d0b5f3ad9e22770ef0",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://projects/typed-peripheral-api/package.json#L2-L19",
-          "version": "repo-lines-v1:sha256:591b15a76a15736f9fa7cf388895516f95fc44e66a7f2629a2aea238ac09715c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyZGNhZWNiYzE1M2E5ZmM4NjRmMzY4NzQxODQ5MzBhYjM1NTI2ODM2Yzc4MDUwMTM1NmY3NDNiM2JhYTFiMmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyMWM1NDg1YWQ5NDEwNjIyMGExMGJkODk3ODg1MDc5MjhiZTg1OGUyNjcyMjNhMWMxMTAyODIzZWE2NWEwNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoxLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhYmExMTZiZjM1YjIxYWZiMmQyMmJkZTU3YTI3NDA3MDQzOTczYjJmMjE4YzcwNDgwNjFkMzFjMTc1MzdlOTYifQ"
+          "version": "repo-lines-v1:sha256:d4c2ba7d4e8328bb14bba7a3b1dae5d460a5edbaabfb5c67363f15376c978159:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyZGNhZWNiYzE1M2E5ZmM4NjRmMzY4NzQxODQ5MzBhYjM1NTI2ODM2Yzc4MDUwMTM1NmY3NDNiM2JhYTFiMmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyMWM1NDg1YWQ5NDEwNjIyMGExMGJkODk3ODg1MDc5MjhiZTg1OGUyNjcyMjNhMWMxMTAyODIzZWE2NWEwNjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoxLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhYmExMTZiZjM1YjIxYWZiMmQyMmJkZTU3YTI3NDA3MDQzOTczYjJmMjE4YzcwNDgwNjFkMzFjMTc1MzdlOTYifQ"
         },
         {
           "resource": "repo://settings.gradle.kts#L44-L65",
@@ -21,8 +21,12 @@
       "statement": "Its Gradle assemble runs npm ci then TypeScript-to-Lua, producing root declarations/Lua with Lua 5.1 library settings and strict TypeScript checking disabled; clean removes those outputs.",
       "evidence": [
         {
-          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L8-L37",
-          "version": "repo-lines-v1:sha256:a2d5ffa3dd2893c6440fc2aa57b407e95c44a5aff93e3d6bf25b22bd7d788ca4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZjYzZDE4ZTYwNjQ0MzM1Y2Y5ZDcyMGE5YTNiYzM4OTMyMzY5MDNiNTZjOWUxYTFiOTM4YzA4MzI5OTk4ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3OThkNTBjOGZmYjNkNDU2NDQyMzg5MzgxMzYzOGQ0OGQ3MzI2MjkwNzdjN2M1NTBlM2RlNDRhYWUxMGU4NGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L53-L59",
+          "version": "repo-lines-v1:sha256:951a361d2f0399c085e2c323f593140596b4b1efffe184310704908a24e7328c:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjc4MGQxZDI3YmNlNWEzM2E5YjE4NWMxM2EwOTU4YTY0NWRjMTA2NThjZTEyNThhNzE2MGEzZTBhMGUxMjE3MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzU4YzFjYTQyZDk0NTk1MGFmNTk1MjRjZGM1MzcxMzg1NjE2NDE1MWM3OTU2ZDcwZDNkMTE4YjFiMGQwYjMwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L8-L35",
+          "version": "repo-lines-v1:sha256:a9600171bc30c74824d6b23be8c45b3e4823a247e35ae2a5330caccdd73da986:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZjYzZDE4ZTYwNjQ0MzM1Y2Y5ZDcyMGE5YTNiYzM4OTMyMzY5MDNiNTZjOWUxYTFiOTM4YzA4MzI5OTk4ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3OThkNTBjOGZmYjNkNDU2NDQyMzg5MzgxMzYzOGQ0OGQ3MzI2MjkwNzdjN2M1NTBlM2RlNDRhYWUxMGU4NGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzNDk1OGU2Yzk3ZDEwY2E0OTRkNDM0NDA0ZDhmNTIyZmNlNDdkODk1YWZmNTYzMDhlYmE2YWFlNDUwOTI5NjUifQ"
         },
         {
           "resource": "repo://projects/typed-peripheral-api/tsconfig.json#L3-L21",
@@ -88,17 +92,43 @@
     },
     {
       "id": "claim_74ae5bfb181646828bc7af32e11925bf",
-      "statement": "The package test script is an unsuccessful placeholder; the manifest uses wildcard ranges for typed-peripheral-base, TypeScript and TypeScript-to-Lua.",
+      "statement": "npm test now runs no-emission compiler contracts through Gradle check with compilation ordering, while typed-peripheral-base, TypeScript and TypeScript-to-Lua retain wildcard manifest ranges.",
       "evidence": [
         {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L37-L51",
+          "version": "repo-lines-v1:sha256:1a4f2bc91a2cdfea9addfd470a2106fa047ac636c12910f6dcb8e89cbb40b544:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MTc4OWM4OTZjNjU3ZTZiM2VmZWM3ZjRlZTc4NzkzNjA4MjAwN2QxODM1ZTVlNzhjMDM2MWYzNDQwNmU1YjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5MzM2OTIxNGI2YWMwNGQwMjgwM2Y2MDNiYzhjOTRjODA2YTRlYWJiM2Q5MzIxYjMxNDRlYWVkOTI1MDFhN2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2YzFkMDliYzQxYjVjYjJlYzc2NWYxNjQwOGM0MjlhZmU2NDNhYzIyZDczNTVkNzYwOTgzODI0ODgwZGQwYzAifQ"
+        },
+        {
           "resource": "repo://projects/typed-peripheral-api/package.json#L14-L31",
-          "version": "repo-lines-v1:sha256:f76fe49a3c334b050f3e61c5fa5b6cb6c3f091a58f2d75bb738428d8d9cec51c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwOGYxYjMxODg3Y2U0ZWE2NmU0ODI3MjdiMTY5MWUxMDRmMjVmZTEzYWZiYjVjZDczYjI0NjExMjRkMzkzZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGNkYjk3MmE3YmZiN2VkMjQ2ZjlmZjY3MjM4NWU1NWY0OTY4ZmMxMTA0M2RjNWI2ODRkNTFkZmEzMWRiY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0N2ZlMjdjMGY2ZWNmMDIxZTVmMjkyMDRiODY2NmNkN2NmNTY3MDc4NWMxMzgxY2FiZjMwNGFmYTFkOWJkMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExNzE0MzZhOGMwYjIzMjkzOTkwZWQwZjU4NDBmYmJkMDQyMzUxZGIxZTcwNDZlMGZlYmY2NzViNmQ2NGJhM2YifQ"
+          "version": "repo-lines-v1:sha256:f9e9916ae30a19c094f0b205c7c92a54ce429830b66cb92606933ef52a2d7cfa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwOGYxYjMxODg3Y2U0ZWE2NmU0ODI3MjdiMTY5MWUxMDRmMjVmZTEzYWZiYjVjZDczYjI0NjExMjRkMzkzZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmMGNkYjk3MmE3YmZiN2VkMjQ2ZjlmZjY3MjM4NWU1NWY0OTY4ZmMxMTA0M2RjNWI2ODRkNTFkZmEzMWRiY2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0N2ZlMjdjMGY2ZWNmMDIxZTVmMjkyMDRiODY2NmNkN2NmNTY3MDc4NWMxMzgxY2FiZjMwNGFmYTFkOWJkMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExNzE0MzZhOGMwYjIzMjkzOTkwZWQwZjU4NDBmYmJkMDQyMzUxZGIxZTcwNDZlMGZlYmY2NzViNmQ2NGJhM2YifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/tests/tsconfig.json#L1-L7",
+          "version": "repo-lines-v1:sha256:eb7bf47f4e573b113290f75ee32ce136b07b5ea2d4e897d8a6a3eab7e9a8ef6b:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a2d48f301b21485ca60247f284ebf68f",
+      "statement": "Compiler assertions reject any erasure, compare inferred overload results, cover five scan modes and both wrappers for nine providers, and require diagnostic-producing invalid calls; inherited non-strict nullability cannot detect removal of null.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/tests/contracts.ts#L139-L213",
+          "version": "repo-lines-v1:sha256:6abacac8833c12a431566e8f30aeb704e9d48f5524a405751b085e07be6c9508:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwM2U5ODRlNTM1ZTRhMDQwNTNmZDNmYjAyNWJmZDUyZjczZTVkNDQ1MjRjY2Y1YjY3MTRkOGNkYzcyYjNmMWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5OGE2YmY4MDA0YzI3NWQyMjcyYThjMmQ5Y2ViMjRiMjcxOGJjNDY5YWYzNTUxMWJiMzVmNjRhMjcwZGRiMDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4OTYyOWEyZTA4OGM1MmFlNzJlNjg1Mzg2MjE2YTZiOThkM2U5OTJkMzc0NmZkMDU1Yjk2YWFhYWQ5NDMyMjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/tests/contracts.ts#L22-L41",
+          "version": "repo-lines-v1:sha256:3be085badb1e36d00f8c2e5765f8e17205a0111cfe2279f1009b70a9a1f84f49:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzMjVhOGU1OGQ0ZDRlZGY1NGQ3ZTk5ZWQ3MjI5ZjRlNzhkMmI4NmIwNzlhZDUyNDU3OTg4MzEyNWJkNDNhN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwMmQyYzBkNmRjNWU3NGQ5MmZhMTRiOTFkYmVhMjY0MDkwYmViMzVmZGI5MTg4ZDliMzQxMTgxZGNlOWY0Y2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM3Mzk3NDk3OWI5NzFhZjZhNTJlMzQ5Y2I4ZDU5MzI5NmI2YzE1ZmM1NDY5MGQwMGNlMGFhZGM2YTc5MWEyNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmNDFiNTMwYjljNjdkYmU0MTZiN2I1ZjVhNmMxNmJhMmJjZWFlODcwNzYyYTZkMzg1ZTNiOWFhMzUxNjE5NmMifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/tests/contracts.ts#L60-L137",
+          "version": "repo-lines-v1:sha256:a72fd4b0ae8b5ae05970f4ec03bb29131f2dea21bcbbb6973303595adb14176b:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0M2IzOTU3NGVjM2EyYzE3YmFlZjU0ZGQ0MTA0MGYwNjE2OTg3MjkzNjc2OWUzMjUyNjRkYzliODNkMDZmMjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwMmQyYzBkNmRjNWU3NGQ5MmZhMTRiOTFkYmVhMjY0MDkwYmViMzVmZGI5MTg4ZDliMzQxMTgxZGNlOWY0Y2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2M2M0YTk4MTUwZjY1OWJlZDhhZDM5ZTE5YTVjMGI5ZWVkNGI0M2Y1Zjg1ZGUyZjAwZjNlMDZmMzVhMzA5NGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkZGY4YWRmZjYwMDkzZDAyZDZlNjEwZGY5MDA2MGNmOGI2YTA1NWVmOGUyMTUwZTE4N2QwYjg0MTc0MjEwYWIifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:92dead3a828dcc1cb2181cbd68f523ec244d05dabd5d6501b665f168b768e72a",
+  "pageVersion": "sha256:dec27e4d626f40f3b0017b387a3cbff9dafcd348afd7b2693e43fd5ac362a781",
   "claims": [
     {
       "id": "claim_65facb0dc2d9441aa4cd6151794379d7",
@@ -39,7 +39,7 @@
       "statement": "Common production dependency flow is Broccolium to Tweakium to Peripheralium, while Testiarium exposes distinct testMod and optional ComputerCraft test features.",
       "evidence": [
         {
-          "resource": "repo://projects/peripheralium/build.gradle.kts#L28-L39",
+          "resource": "repo://projects/peripheralium/build.gradle.kts#L37-L48",
           "version": "repo-lines-v1:sha256:b7c0c32d2cbaa5ed6e3c9ad4382d757e8b334b5e629f9903d49c8d3413be42e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiYTMxNDVhZWUwZGEwNTkyNGQzYWQwYjFlZWI0YWRlNzc2MWI2NjdkOGE5NjE0NmRlZWYzOWFiZDFjZTQ4Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMDg0ZjAzZTc4OGRiNjI5MmQyYjk5Y2M2ZGI2MjhjMjA5ZjZmM2VkMDFkY2M2ZWE2Njg2ZTViM2I4MjVjMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YzkzNzZmNDcxYzE4Njc5NTliZWFhOGEwZjA4YzQyYTJhOTFiOTI4YWNhYTBjMDA2NjBhNDQ1MTBkYTkzMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNThiNTRhNWM5Yjc1NDlkYTVhMTM3NDEwZWU4MDE5ZDkzMDNiOTIwYWE5YTExODM1OWM1Mzk1OTgzMDA1ZTcifQ"
         },
         {
@@ -87,8 +87,8 @@
           "version": "repo-lines-v1:sha256:f5aba0b8b46d900f8e3ca6d7ce701a79744fb3914f145e79abed769d1ed95b21:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlMDYzZDk2YzM0YWI3ODRhYTQzMmI3NzgyYTk4YzU5N2MwOTg3YzY2NzNmNmUyZWEwYmFkMWRlNjNiYmIwNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhODRjNGM3NTM0YWY0M2Q0NDViODRkZTQ3ZjMwMjE0N2RmZTQ1YTdjOTY2NjQzOTY1ODMwMGMyNjEzY2JmNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3ODZkOTg4ZmI2NzhiZjE3YzQ3MTFiZjVmNTQzNzRjMjEwZTFmNGRjYzM2MDY5NDRlZTQ0Y2E1ZTQzMmNlOGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxOGQ1MzIzNWM4MWZjZWRhYzVhZmZlZTVjMDE2YWRiYTA3NzNmNWJhODEwMTUwZjlhZjI1MTM0YmFiNDAzZDMifQ"
         },
         {
-          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L17-L36",
-          "version": "repo-lines-v1:sha256:81919b97e72345ae2408374df38131b5f722e64592a632c9bf968704c591c0ba:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhNjE5N2EwMTg1ZTQwZDQ5ZGVlMzhkNjk5NjJhYjM4MzY0ZjA2MzNkMmJmNWIyNTM3NDRkYjZiZjU4M2Y3MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY0NzVlOTRhOTA0YWM0OWIzMTU0ZDQ2NzJhNjZlODYyOWI4NmRhYzc0ZTNlMjkzN2JlNjkyN2FlM2RhMTFjNTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjNGM4ZDIzZjRhNGJlNWRiMTQ2MDY5NzYxNDEwMTliMTFkOTE4Mzc4MjU3Nzg3NjFmZDQyNWE3YzMwNzUxMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L17-L35",
+          "version": "repo-lines-v1:sha256:00c55efaaf17975427a8d6d032667951b9a977ea4da5e928010cd58ab93a7559:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhNjE5N2EwMTg1ZTQwZDQ5ZGVlMzhkNjk5NjJhYjM4MzY0ZjA2MzNkMmJmNWIyNTM3NDRkYjZiZjU4M2Y3MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjNGM4ZDIzZjRhNGJlNWRiMTQ2MDY5NzYxNDEwMTliMTFkOTE4Mzc4MjU3Nzg3NjFmZDQyNWE3YzMwNzUxMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQzNDk1OGU2Yzk3ZDEwY2E0OTRkNDM0NDA0ZDhmNTIyZmNlNDdkODk1YWZmNTYzMDhlYmE2YWFlNDUwOTI5NjUifQ"
         }
       ]
     },
@@ -113,10 +113,20 @@
           "version": "repo-lines-v1:sha256:7e3f2defe5c9324f90102e337a997e1776caedb8e67c5c087df0506a88937c1c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGUxY2ZiMTllYzY4ZjBiYjExZmVlNzAwODQ0NWE4YTA0OTQwZDI4Njc0NWYzMTAzMzc4YTdkZWE5ZjM2N2U4YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjZjZjBjN2U3NWY4MjA2NWEzMjgzZDk0NjY1OTk2YjdlNDY2NTQzYzJkZmUxNDgzYjRkZGNhMjFiZmMzZjMyOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjJjYWY5Y2JhYzk2ODcwZTBkYTYxOGQxYmZmZjE0MjM5NWZhMjhlNzRmZTk0OThhNzBmYjc2NGJhNWJmZGVjMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
         }
       ]
+    },
+    {
+      "id": "claim_1e929f97c9fd45e792a2661351c546e1",
+      "statement": "TypeScript check runs the no-emission contract suite after compilation when both tasks are selected, using mustRunAfter rather than forcing compilation for a standalone check.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L37-L51",
+          "version": "repo-lines-v1:sha256:1a4f2bc91a2cdfea9addfd470a2106fa047ac636c12910f6dcb8e89cbb40b544:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MTc4OWM4OTZjNjU3ZTZiM2VmZWM3ZjRlZTc4NzkzNjA4MjAwN2QxODM1ZTVlNzhjMDM2MWYzNDQwNmU1YjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5MzM2OTIxNGI2YWMwNGQwMjgwM2Y2MDNiYzhjOTRjODA2YTRlYWJiM2Q5MzIxYjMxNDRlYWVkOTI1MDFhN2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2YzFkMDliYzQxYjVjYjJlYzc2NWYxNjQwOGM0MjlhZmU2NDNhYzIyZDczNTVkNzYwOTgzODI0ODgwZGQwYzAifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

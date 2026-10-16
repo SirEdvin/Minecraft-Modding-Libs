@@ -3,10 +3,9 @@ type: quickstart
 title: Minecraft Modding Libs ownership and task map
 description: Start here to route changes across five subprojects, meaningful modules, loader/version boundaries and evidence-backed verification workflows.
 tags: [quickstart, ownership, minecraft, modules, versions]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
+  - id: openwiki-source-164e2da859b5277df81c7d94
+    resource: repo://.github/workflows/ci.yml
   - id: openwiki-source-2a9daaac1604f238ef4c63fb
     resource: repo://build.gradle.kts
   - id: openwiki-source-8e467af86822c4e36a35b699
@@ -15,7 +14,10 @@ sources:
     resource: repo://README.md
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Minecraft Modding Libs ownership and task map
@@ -29,7 +31,7 @@ Shared source lives under projects/<library>/src and loader branches, with full-
 ## Broccolium: platform and world/storage primitives
 
 - [Platform and base](broccolium/modules/platform-base.md): platform installation, registry access, registration/tracking, config and reusable world utilities.
-- [Storage](broccolium/modules/storage.md): item/fluid/energy contracts, simulation versus mutation, transfers, units, sided native adapters and storage fixtures.
+- [Storage](broccolium/modules/storage.md): item/fluid/energy contracts, simulation versus mutation, exact-replacement opt-in and detached rollback, native slot preservation, transfers and units.
 - [Lookup and drops](broccolium/modules/lookup-drops.md): lookup specificity/fallback, target adaptation and global drop-capture lifecycle.
 - [Data generation](broccolium/modules/data.md): GeneratorSink ownership, model/loot/language/recipe composition, validation and version overrides.
 - [Loader integration](broccolium/integrations/loaders.md): Fabric transactions/lookups versus Forge capabilities and NeoForge nullable contexts.
@@ -54,6 +56,8 @@ Shared source lives under projects/<library>/src and loader branches, with full-
 
 ## Verification and known limits
 
-Use [verification workflows](testing/verification.md) to select exact module/loader tasks and fresh-report guards. Application checks use the checked-in wrapper and --no-daemon. A GameTest process exiting zero is insufficient: its fresh report must contain a non-skipped case and no failure/error. Broad builds can switch/transform source, generate assets or emit TypeScript files, so they are not a harmless wiki linter.
+Use [verification workflows](testing/verification.md) to select exact module/loader tasks and fresh-report guards. Application checks use the checked-in wrapper and --no-daemon. A GameTest process exiting zero is insufficient: its fresh report must contain a non-skipped case and no failure/error. Storage runners permit no skips; standalone negative fixtures require exact failure identities/sentinels. CI includes both Fabric storage targets alongside four Testiarium and four Tweakium runs. Broad builds can switch/transform source, generate assets or emit TypeScript files, so they are not a harmless wiki linter.
 
-This wiki describes inspected source and existing tests at the baseline; historical successful application runs belong to [the migration audit](../docs/stonecutter-migration-audit.md), not to wiki-generation execution. No new gameplay changes, test expansion, Minecraft 26.1 support, application test run, publishing or scheduled automation is part of this task. Remaining investigation includes live save/reload and upgrade reinstall, fake-player exceptions/combat, full client/CCT coverage and typed-client/runtime parity. Claims and generated provenance are managed by OpenWiki; source remains authoritative.
+The [coverage matrix](../docs/module-test-coverage.md) records representative behavioral tests across all five subprojects, regression fixes and actual local acceptance: 1,116 JUnit invocations per active-state build, 24 publications checked and 189 native cases including 12 intentional skips. It also corrects the [migration audit](../docs/stonecutter-migration-audit.md)'s stale-report aggregation. This wiki refresh documents those executed checks rather than treating documentation generation as a new test run.
+
+Remaining investigation includes true disk reload, installed upgrade transitions, provider reconciliation/combat, full client/CCT behavior and typed-client/runtime parity. The compiler nullability and inherited dependency-audit limits are explicit. No Minecraft 26.1 support, remote publication or scheduled automation is implied. Claims and generated provenance are managed by OpenWiki; source remains authoritative.

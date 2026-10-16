@@ -5,8 +5,12 @@ description: Bootstrap and discovery boundaries for Fabric Transfer API, Forge c
 tags: [broccolium, loaders, fabric, forge, neoforge, storage]
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
+    at: 2026-10-16T19:56:35.545Z
 sources:
+  - id: openwiki-source-cc02d3f8883805a8e9de0ccf
+    resource: repo://docs/module-test-coverage.md
+  - id: openwiki-source-81d5f1627e19148569f46f81
+    resource: repo://gradle/libs.versions.toml
   - id: openwiki-source-5a932ff48527d11e7d8ba2b6
     resource: repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/FabricBroccolium.kt
   - id: openwiki-source-7f00c000fe16d021a295417f
@@ -19,6 +23,8 @@ sources:
     resource: repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/FabricStorageUtils.kt
   - id: openwiki-source-cf5c641493e267f8c915e510
     resource: repo://projects/broccolium/fabric/src/main/resources/fabric.mod.json
+  - id: openwiki-source-622eee4d037ac81b5d241203
+    resource: repo://projects/broccolium/fabric/src/testMod/kotlin/site/siredvin/broccolium/testmod/EnergyIntegrationGameTests.kt
   - id: openwiki-source-beb741f3cea2ac482ee415cd
     resource: repo://projects/broccolium/forge/src/main/kotlin/site/siredvin/broccolium/ForgeBroccolium.kt
   - id: openwiki-source-6e04833b48db0ec4b34ae9cd
@@ -29,7 +35,7 @@ sources:
     resource: repo://projects/broccolium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/storage/ForgeStorageUtils.kt
   - id: openwiki-source-cb14f0824f9fc19f59ad8f02
     resource: repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/base/BaseIntegrationLoader.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
 ---
 
 # Broccolium loader and energy integrations
@@ -54,10 +60,12 @@ These differences matter to providers with sided access policies. Do not promise
 
 FabricIntegrationLoader checks FabricLoader's loaded mod IDs. BaseIntegrationLoader constructs the conventional integrations.<modID>.Integration class reflectively only when the mod exists; reflective construction exceptions are logged and yield Optional.empty. This is not a blanket catch of every linkage Error, and the subsequent Runnable.run is outside that construction catch.
 
-For team_reborn_energy, run installs block and inventory-item energy callbacks, not an entity callback. Block discovery tries unsided then requested direction. Item energy uses a ContainerItemContext over a slotted origin wrapper. Missing providers return null so lookup fallback remains possible.
+For team_reborn_energy, run installs block and inventory-item energy callbacks, not an entity callback. Block discovery tries unsided then requested direction. Item energy uses a ContainerItemContext with FabricStorageUtils.getSlot: native Fabric origins retain their native slot/transaction; other origins use the agnostic bridge's explicit replacement contract. Missing providers return null so lookup fallback remains possible.
+
+The dependency catalog pins energy API 3.0.0 for 1.20.1 and 4.1.0 for 1.21.1. A native lookup with 3.0.0 on modern Minecraft reproduced a ResourceLocation constructor linkage error; the modern-only pin fixes that path without changing the legacy dependency. Required EnergyIntegrationGameTests check absent block/item providers and unchanged native/agnostic item contents on both versions. This proves lookup compatibility, not every energy-provider transfer implementation.
 
 ## Transactions and extension cautions
 
 FabricStorageUtils identifies transactional storage with movableType = fabricTransaction. Cross-adapter helpers explicitly extract, insert, return remainder and commit a Fabric transaction, but the other storage is mutated outside that transaction. This is not a distributed atomic transfer guarantee. Item/fluid side and unit conversions should be reviewed alongside the [storage contracts](../modules/storage.md), especially when adding a non-Fabric sink.
 
-Add loader-native APIs in this branch, register the resulting agnostic callback at bootstrap, and keep callers in common code on the [platform boundary](../modules/platform-base.md). Follow [source precedence](../../build/stonecutter-publication.md) before editing a 1.21.1 override. No runtime integration tests were executed for this documentation run.
+Add loader-native APIs in this branch, register the resulting agnostic callback at bootstrap, and keep callers in common code on the [platform boundary](../modules/platform-base.md). Follow [source precedence](../../build/stonecutter-publication.md) before editing a 1.21.1 override. The coverage task executed the native lookup regression; the [verification guide](../../testing/verification.md) distinguishes that evidence from broader integration claims.

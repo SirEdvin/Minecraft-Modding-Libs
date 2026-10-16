@@ -3,9 +3,6 @@ type: module
 title: Tweakium fake players and world interactions
 description: Host-specific fake-player caches and inventory preparation, main-hand attributes, proxy hit/dig flow, and exception-sensitive cleanup boundaries.
 tags: [tweakium, player, interactions, inventory, drops]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
   - id: openwiki-source-a63c6161858a70520940fad4
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderBlockEntity.kt
@@ -25,7 +22,10 @@ sources:
     resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderPocket.kt
   - id: openwiki-source-d859105f4ce84b0fb0d4bfc6
     resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Tweakium fake players and world interactions
@@ -50,10 +50,10 @@ FakePlayerProxy keeps digPosition, digBlock and currentDamage. Changing target s
 
 use attempts toolkit useOn for a noncrouching block action, then native useItemOn and useItem; entity hits delegate toolkit interaction. swing returns failure text for miss/invalid targets, routes block digging through protection checks and unbreakable detection, accumulates damage and eventually calls native block destruction, or attacks a LivingEntity with a nonempty tool and applies a short cooldown.
 
-withConsumer installs Broccolium drop capture targeting the action area, stores drops into the fake inventory and resets/drops leftovers afterwards. It too lacks finally. Global capture and provider cleanup can both remain active/incomplete on an exception. Nested/concurrent capture is not isolated; see [lookup and drop lifecycle](../../broccolium/modules/lookup-drops.md).
+Both withConsumer overloads install Broccolium capture, store drops into the fake inventory and reset/drop leftovers in finally, including when the action throws. Entity capture retains the specific target; positional capture keeps its spatial scope. This repairs global capture release, not the distinct provider load/action/unload sequence above. Nested/concurrent capture remains unisolated; see [lookup and drop lifecycle](../../broccolium/modules/lookup-drops.md).
 
 ## Extension and verification
 
 Peripheral owners bridge host actions to these providers. Keep host identity, source inventory, operation/fuel checks and world permissions separate; a fake player existing is not sufficient authorization for an action. Loader subclasses affect harm/menu/riding/eye behavior as described in [loader boundaries](../integrations/loaders.md).
 
-The migration audit explicitly excludes exhaustive combat and live world/upgrade persistence coverage. No fake-player runtime tests were run for this wiki. Focus future coverage on exceptions, held-item changes, skipInventory, block/entity origin semantics and actual protection-event behavior, alongside [upgrade storage](upgrades-persistence.md).
+ModuleBehaviorGameTests exercises native miss/unbreakable refusal and both exceptional capture wrappers. RuntimeBehaviorGameTests checks a successful native block break with exactly one captured drop plus target-specific entity/remainder behavior. These checks passed in all four Tweakium loader/version runners. They do not prove provider reconciliation, held-item attribute cleanup, skipInventory, combat or third-party protection behavior; those remain focused follow-ups alongside [upgrade storage](upgrades-persistence.md). See the [coverage matrix](../../../docs/module-test-coverage.md) for exact evidence boundaries.

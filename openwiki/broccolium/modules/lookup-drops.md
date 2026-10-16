@@ -3,9 +3,6 @@ type: module
 title: Broccolium lookups and drop capture
 description: Ordered storage-provider resolution and the global drop interception lifecycle shared with Tweakium fake-player interactions.
 tags: [broccolium, lookup, storage, drops, lifecycle]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
   - id: openwiki-source-0d8149374ff7aef373a16c01
     resource: repo://projects/broccolium/fabric/src/main/java/site/siredvin/broccolium/mixins/EntityMixin.java
@@ -27,7 +24,10 @@ sources:
     resource: repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/tricks/DropConsumer.kt
   - id: openwiki-source-0d11a825da3bbc1368988a47
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Broccolium lookups and drop capture
@@ -48,16 +48,16 @@ Install callbacks in loader initialization, return null for genuinely unsupporte
 
 ## Drop interception state
 
-DropConsumer is a singleton, not a per-player or thread-local capture. configure replaces its consumer, pending remainders, level and bounds. The entity overload currently sets targetEntity to null, just like the position overload; despite its name it captures spawned ItemEntities near the entity rather than selecting that entity for onLivingDrop.
+DropConsumer is a singleton, not a per-player or thread-local capture. configure replaces its consumer, pending remainders, level and bounds. The entity overload retains targetEntity for onLivingDrop; the position overload clears it. Both also establish the spatial spawned-item capture region.
 
 onEntitySpawn intercepts an ItemEntity only in the configured level and bounds, passes its stack to the consumer, and records unaccepted remainder. reset clears all capture state and returns remainders; a second reset throws IllegalCallerException. resetAndDrop resets first, then drops remainder at the supplied position, avoiding interception of its own leftovers.
 
-onLivingDrop only consumes when the dropping entity equals targetEntity. With the current public configure methods leaving that field null, ordinary living-entity calls do not match that path. This is an observed implementation limitation, not a promise of entity-specific collection.
+onLivingDrop only consumes when the dropping entity equals targetEntity. Unrelated entities are rejected. Required native regressions exercise target identity, exact unaccepted remainder and cleanup; entity retention corrects the earlier null-target defect.
 
 ## Loader hooks and failure boundaries
 
 LibCommonHooks forwards spawn/drop hooks to DropConsumer. Fabric mixins intercept ServerLevel.addEntity and Entity.spawnAtLocation; Forge and the NeoForge override cancel EntityJoinLevelEvent for captured items and remove consumed living drops from the event list. The spawn route is therefore important independently of the living-drop route.
 
-Tweakium's FakePlayerProxy.withConsumer configures capture, executes the action, and resets/drops afterwards without try/finally. An exception can leave global capture installed. Nested capture also overwrites global state. Callers should not assume exception safety, isolation or concurrent capture support; this documentation task records these limits without repairing them.
+Both FakePlayerProxy.withConsumer overloads configure capture, execute the action in try, and reset/drop in finally, preserving successful return values while releasing global capture on action failure. This is not a nested or concurrent capture API: nested configuration still replaces singleton state. It also does not guarantee reconciliation of every fake-player provider's load/unload state.
 
-See [fake-player world interactions](../../tweakium/modules/player.md) for the caller and [storage transfers](storage.md) for the consumer's remainder contract. Dedicated exception/nesting drop-capture tests were not identified in the inspected test paths, and none were executed here.
+See [fake-player world interactions](../../tweakium/modules/player.md) for the caller and [storage transfers](storage.md) for the consumer's remainder contract. ModuleBehaviorGameTests and RuntimeBehaviorGameTests cover both exceptional wrappers, successful block breaking and entity/remainder behavior in all four native Tweakium runners. Nested capture remains outside the verified contract; [verification](../../testing/verification.md) records the executed scope.

@@ -3,12 +3,13 @@ type: integration
 title: Peripheralium loader bootstrap
 description: Fabric immediate registration versus Forge/NeoForge deferred registries, bootstrap ordering, loader metadata and version-local content boundaries.
 tags: [peripheralium, loaders, fabric, forge, neoforge]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
   - id: openwiki-source-2a9daaac1604f238ef4c63fb
     resource: repo://build.gradle.kts
+  - id: openwiki-source-0e18fe1e8a3fb313dbba48ae
+    resource: repo://projects/peripheralium/build.gradle.kts
+  - id: openwiki-source-e353c9fb3e0d64fda950d8a4
+    resource: repo://projects/peripheralium/fabric/build.gradle.kts
   - id: openwiki-source-398c88e7fbcc98a060729f03
     resource: repo://projects/peripheralium/fabric/src/main/kotlin/site/siredvin/peripheralium/FabricInnerBasePeripheraliumPlatform.kt
   - id: openwiki-source-2c8a91b99fe2b1a1f912349e
@@ -17,6 +18,8 @@ sources:
     resource: repo://projects/peripheralium/fabric/src/main/resources/fabric.mod.json
   - id: openwiki-source-3517b365146b73928d5347bf
     resource: repo://projects/peripheralium/fabric/versions/1.21.1/src/main/resources/fabric.mod.json
+  - id: openwiki-source-3e894cc6715c9011217a07a3
+    resource: repo://projects/peripheralium/forge/build.gradle.kts
   - id: openwiki-source-920ea6b16d6a154fe6fe9a2e
     resource: repo://projects/peripheralium/forge/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheralium.kt
   - id: openwiki-source-2291a53fce44f1b3d50b2d16
@@ -35,7 +38,10 @@ sources:
     resource: repo://projects/peripheralium/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumRecipeProvider.kt
   - id: openwiki-source-5372e85818afbf529f1d42be
     resource: repo://projects/peripheralium/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/Items.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Peripheralium loader bootstrap
@@ -60,4 +66,8 @@ The version-local Items override removes peripheralium_blend on 1.21.1; only dus
 
 To add a registry kind on Forge/NeoForge, provide the DeferredRegister field, forward it through the platform adapter and attach it to the correct event bus. Fabric often needs only the inherited immediate implementation. Keep content and recipes in common/version-specific ownership described in [material content](../content.md), and loader APIs here.
 
-No loader startup, client rendering or publication task ran during documentation. [Build and publication contracts](../../build/stonecutter-publication.md) describe artifact-level checks; those cannot substitute for content behavior tests.
+## Test-only integration ownership
+
+Peripheralium owns a common testMod source set compiled against Testiarium's main API. Its loader builds attach those test outputs to the existing Tweakium integration runner rather than introduce a second server launcher. Fabric adds the owning common test output and both production outputs to testMod classpaths. Forge/NeoForge attach the actual Peripheralium common/loader source sets as a loaded mod and add common tests to tweakium_testmod. The reverse dependency is confined to test configuration; ordinary publication dependencies still point from Peripheralium to Tweakium and Broccolium.
+
+The four native Tweakium runs execute Peripheralium's registration, language, recipe and loot behavior tests with the real loader entrypoints. Both active-state builds and artifact-isolation checks also passed; none of that is client creative-tab rendering evidence. [Verification](../../testing/verification.md) records exact counts and [build contracts](../../build/stonecutter-publication.md) explain publication identity.

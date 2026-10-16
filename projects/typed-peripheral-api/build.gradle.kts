@@ -17,21 +17,43 @@ node {
 val compileTypeScript by tasks.registering(NpmTask::class) {
     dependsOn(tasks.npmInstall)
     npmCommand.set(listOf("run", "build"))
-    inputs.files(fileTree(projectDir) {
-        include("package.json", "package-lock.json", "tsconfig.json", "*.ts")
-        exclude("node_modules/**")
-    })
-    outputs.files(fileTree(projectDir) {
-        include("*.d.ts", "*.lua")
-    })
+    inputs.files(
+        fileTree(projectDir) {
+            include("package.json", "package-lock.json", "tsconfig.json", "*.ts")
+            exclude("node_modules/**")
+        },
+    )
+    outputs.files(
+        fileTree(projectDir) {
+            include("*.d.ts", "*.lua")
+        },
+    )
 }
 
 tasks.assemble {
     dependsOn(compileTypeScript)
 }
 
+val testContracts by tasks.registering(NpmTask::class) {
+    dependsOn(tasks.npmInstall)
+    // Compilation writes declarations beside source inputs when both tasks run in build.
+    mustRunAfter(compileTypeScript)
+    npmCommand.set(listOf("test"))
+    inputs.files(
+        fileTree(projectDir) {
+            include("*.ts", "tests/**", "tsconfig.json", "package.json", "package-lock.json")
+        },
+    )
+}
+
+tasks.check {
+    dependsOn(testContracts)
+}
+
 tasks.clean {
-    delete(fileTree(projectDir) {
-        include("*.d.ts", "*.lua")
-    })
+    delete(
+        fileTree(projectDir) {
+            include("*.d.ts", "*.lua")
+        },
+    )
 }

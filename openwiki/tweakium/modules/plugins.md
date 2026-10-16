@@ -3,9 +3,6 @@ type: module
 title: Tweakium storage plugins and operations
 description: Lua transfer dispatch, target adaptation, slot/query validation differences, observable units and operation fuel/cooldown partial-update semantics.
 tags: [tweakium, plugins, storage, lua, fuel, operations]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
   - id: openwiki-source-4233540ba9ca00ff82292190
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/FuelBoon.kt
@@ -23,7 +20,10 @@ sources:
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/FullEnergyPlugin.kt
   - id: openwiki-source-2e03eec861dfd4943498974e
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/PeripheralPluginUtils.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Tweakium storage plugins and operations
@@ -38,7 +38,7 @@ AbstractItemStoragePlugin handles unslotted item queries and compact/detailed li
 
 Inventory pushItems resolves target before checking a nonpositive limit, returns zero for such limits, validates explicit destination slots against a slotted sink, and converts Lua one-based numeric source/destination slots to zero-based indices. A nonnumeric source argument becomes an item predicate.
 
-pullItems is asymmetric: its numeric branch checks source slot/range and passes an optional destination slot without the destination range check used in the query branch. Its query branch validates an explicit toSlot but calls moveFrom without passing that slot. Do not document universal slot honoring or equivalent push/pull validation.
+pullItems validates an explicit destination against the receiving storage before either numeric or query movement. The numeric branch additionally requires slotted source storage and validates its source range. Both paths forward the converted zero-based destination; the query branch names toSlot explicitly. Native tests demonstrate query-pull limit/destination/conservation and numeric invalid-destination refusal without mutation. Generic backend guarantees still belong to Broccolium rather than this Lua validation layer.
 
 Unslotted item, fluid and full energy transfers upper-cap limits but do not share the inventory method's explicit nonpositive short-circuit. There is no single global nonnegative/finite limit validator at this layer. Downstream storage behavior is part of the result, especially for negative, nonfinite or conversion-edge values.
 
@@ -56,4 +56,4 @@ Owner boons are plugin-like capabilities collected during [peripheral initializa
 
 Cooldowns are absolute local wall-clock timestamps stored in owner dataStorage under cooldowns and operation settingsName. They are milliseconds, not Minecraft tick counters. Registry names can overwrite earlier allowedOperations entries. FuelBoon persists the configured consumption rate, initializes zero to default one, multiplies cost exponentially by rate and divides cooldown by rate. Lua setter rejects out-of-range rates; internal setting clamps. Concrete pocket/turtle fuel boons determine actual consumption and whether fuel is disabled.
 
-No plugin/operation tests were executed during documentation. Existing storage fixtures and predicate tests cover portions of this stack, not every API branch above. Prioritize asymmetric slot handling, limit/unit boundaries and exception-after-fuel behavior in downstream coverage rather than inferring correctness from shared base classes.
+OperationBoonTests exercises payment, rejection and callback/cooldown ordering with the real policy and a substituted fuel backend. ModuleBehaviorGameTests exercises item query transfers and invalid numeric destinations; RuntimeBehaviorGameTests exercises real CC method binding and scanning operation/filter/radius behavior. These pass in the [coverage acceptance](../../../docs/module-test-coverage.md). They do not prove fluid/energy plugin parity, every malformed predicate, specialized fuel backends or refund/rollback guarantees after callbacks fail.

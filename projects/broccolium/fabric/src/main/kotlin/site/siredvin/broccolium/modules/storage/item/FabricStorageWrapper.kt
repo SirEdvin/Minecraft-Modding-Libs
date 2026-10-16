@@ -31,7 +31,7 @@ open class FabricStorageWrapper(internal val storage: FabricStorage<ItemVariant>
             }
             return to.moveFrom(this, limit, -1, takePredicate)
         }
-        if (toSlot < -1 && to !is SlottedAgnosticSink<ItemStack, Int>) {
+        if (toSlot > -1 && to !is SlottedAgnosticSink<ItemStack, Int>) {
             BroccoliumCore.LOGGER.warn("To storage doesn't support slotting, so slot is just ignored")
             return FabricStorageUtils.moveToTargetable(this.storage, to, limit, -1, takePredicate)
         }
@@ -45,7 +45,7 @@ open class FabricStorageWrapper(internal val storage: FabricStorage<ItemVariant>
         takePredicate: Predicate<ItemStack>,
     ): Int {
         if (from is FabricSlottedStorageWrapper) {
-            if (fromSlot > 0) {
+            if (fromSlot > -1) {
                 val slotStorage = from.getSingleSlot(fromSlot)
                 return StorageUtil.move(
                     slotStorage,
@@ -56,7 +56,6 @@ open class FabricStorageWrapper(internal val storage: FabricStorage<ItemVariant>
                 ).toInt()
             }
             return StorageUtil.move(from.storage, storage, FabricStorageUtils.wrapItem(takePredicate), limit.toLong(), null).toInt()
-            // TODO: catch this case with testing!
         }
         if (from is FabricStorageWrapper) {
             if (fromSlot > -1) {

@@ -3,9 +3,6 @@ type: subproject
 title: Testiarium registration and reporting harness
 description: Cross-loader GameTest discovery, API/fixture feature separation, tag precedence, reflective invocation, report generation and fresh-report validation.
 tags: [testiarium, gametest, reports, testing, lifecycle]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
   - id: openwiki-source-8e467af86822c4e36a35b699
     resource: repo://gradle/gametest-reports.gradle.kts
@@ -25,11 +22,18 @@ sources:
     resource: repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/report/TestReporters.kt
   - id: openwiki-source-5c995101f4d15764e6e6bad1
     resource: repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt
+  - id: openwiki-source-92e059d623663e35e7119566
+    resource: repo://projects/testiarium/src/test/kotlin/site/siredvin/testiarium/RegistrationTests.kt
   - id: openwiki-source-58839584b723383a5a3f8fea
     resource: repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/StandaloneGameTests.kt
+  - id: openwiki-source-e6f1dfcc133174a9f3e0dafb
+    resource: repo://projects/testiarium/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt
   - id: openwiki-source-ad69366c415d4ac2663d3100
     resource: repo://projects/testiarium/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Testiarium registration and reporting harness
@@ -50,7 +54,9 @@ Fabric's adapter initializes lifecycle hooks and has a guarded registerTests cal
 
 init optionally installs a structure directory and replaces the global reporter with JUnit plus native log reporters. onServerStarted fixes time/daylight and clears old test space. 1.20.1 uses the fixed origin (0,-60,0); 1.21.1 derives x/z from shared spawn, uses y=-59 and clears located structure bounds. onServerStopped finalizes reporting.
 
-sequence appends thenSucceed; immediate runs an action and succeeds. thenExecuteFailFast preserves GameTestAssertException but converts other Throwables into one using the error message/type, so a sequence failure becomes visible to GameTest rather than escaping as an unrelated task error. Assertion helpers retrieve typed entities/containers/block entities and inspect world state; they do not bootstrap a missing fixture or dependency mod.
+sequence appends thenSucceed; immediate runs an action and succeeds. Legacy thenExecuteFailFast preserves GameTestAssertException and converts other Throwables using their message/type, then rethrows through native thenExecute before the wait barrier. That immediate parent failure prevents delayed competing success; merely throwing later from the wait barrier could leave the parent error unset until timeout. The 1.21.1 override observes the native parent's error after thenExecute and relies on the testmod sequence mixin. Required native outer observers cover assertions, ordinary exceptions and assertion errors, one action execution and blocked later callbacks.
+
+assertContainer compares the larger actual/expected range, treating missing entries as empty: extra empty padding is allowed, but a nonempty expected stack beyond capacity fails. Helpers do not bootstrap missing fixtures or dependency mods. RegistrationTests restore both native function/name registries and Testiarium's private registered-class set in finally, checking isolation after success and failure rather than leaving global discovery state polluted.
 
 ## XML/HTML reports and false success prevention
 
@@ -58,4 +64,6 @@ JunitTestReporter records required failures as failure elements and optional fai
 
 Root gradle/gametest-reports.gradle.kts guards specific loader runs. Before launch it deletes the exact prior XML or fails; afterwards it requires a report, disables DOCTYPE parsing, requires more cases than skips and no failure/error elements, and compares the declared tests count to actual testcase elements. This does not compare every possible declared XML attribute. The guard catches startup paths that exit zero without running tests, but it only applies to the task/report map it configures.
 
-See [client and CCT protocols](client-cct.md) for asynchronous completion and [verification workflows](../testing/verification.md) for exact task routes. This page describes inspected coverage mechanisms; no application or GameTest run was executed during wiki creation.
+The standalone server guard additionally requires exactly one of each intentional negative fixture, skipped with its exact expected sentinel; an unrelated failure or accidental pass cannot satisfy that check. Both Fabric storage runners are mapped separately and allow no skips. Reporter fixtures check escaped text, success/failure/skip counts and idempotent finish. The final four-target Testiarium run contains 12 cases per target, including three intentional negative skips, with no failures/errors.
+
+See [client and CCT protocols](client-cct.md) for asynchronous completion and [verification workflows](../testing/verification.md) for executed task routes and limits. The coverage task ran server fixtures; it did not establish the optional client/CCT matrix.

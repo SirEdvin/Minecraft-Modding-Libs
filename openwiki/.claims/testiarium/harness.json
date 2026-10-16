@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:a51f383abd2c545d29e8d78aaf1498efd4710639d5d50aa03691e6a991167152",
+  "pageVersion": "sha256:ba20e26f66e9783468eab11c76680f7f24534ec235f83fef8fb7d9eb4ab99e42",
   "claims": [
     {
       "id": "claim_6ca405e8c32343abaf4557b1b47a326f",
@@ -50,19 +50,23 @@
     },
     {
       "id": "claim_7c229c23d525437ea60a68385f3cd585",
-      "statement": "Harness initialization installs optional structure/report destinations, lifecycle clears old test space with version-specific origin logic, and fail-fast sequence helpers convert arbitrary action failures into GameTest assertions.",
+      "statement": "Harness initialization installs structure/report destinations and clears old test space; legacy fail-fast rethrows the captured assertion through native thenExecute before its wait barrier, while modern fail-fast observes the native parent error.",
       "evidence": [
         {
           "resource": "repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt#L38-L61",
           "version": "repo-lines-v1:sha256:4a39dd151f12b34e085058aa8f9dc7cc6d57892fc25b13ee7cc499e0f9409d6c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNzM5NzQyNTk2ZWNlZmEyZjY4NWM5MWFkOTkyM2ZhZTExNWY0ZDY3MjNjNTNjMjA5NjIzOGY5NzI4YjU2NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjMDYzYmRkZDg1YjE5MDU0NjBhZGZkNDRjNWRiNjYyZmJkNGU0YmU3OTI3MWJmZjIyMzZiOWM1NzdiNzIwNGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5YTFiYzhjYWE5ZDc4ZTk5MDE5ZjFmODc0OGI0MWU3N2MyYzg4ZTJjMWQ0ODhiODg4MDVhYjA1Zjk2NGMwOWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5YTFiYzhjYWE5ZDc4ZTk5MDE5ZjFmODc0OGI0MWU3N2MyYzg4ZTJjMWQ0ODhiODg4MDVhYjA1Zjk2NGMwOWMifQ"
         },
         {
-          "resource": "repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt#L26-L35",
-          "version": "repo-lines-v1:sha256:8b76ae4832c94d396bc20fdcd67b06989e958b5610cc2ef7eea6fe73efb4d399:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0YWMwMTkzNDBlZTkxNGM4ZmYyNzQxNjNmNmRiNDZiNzMwMWVkMjk0YTMzMTAxNmM5ZmEzZjEwOWQxMTEyM2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU3MDFmNzBlMWY2ODkwYTBiNzBhMTlmNjYzNDFlNGE5ZjlkNmRlNDQ4YTQ5NTMwZTI3YTc5ZjIzYWM4ZWZkYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0OTkyYzYyOWIyZmMyMzkxNDIyMWRhOWQ2ZWU5Zjk0YmU2MjJkYjk2ZjAxMTkwMDk4YzU1OGY1ZDcwMDRlMzYifQ"
+          "resource": "repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt#L26-L41",
+          "version": "repo-lines-v1:sha256:785a0d4f06a39bf725c6caea052c79aa7b5f44b7a49f3db1dc0bce56d806eb43:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MDYyN2QzZmFiM2RiYzBiZDQ3ZjlhNGVkMzZkOWUxNDViYTc5NmE4NjVjNjljMWM0NDhiY2ZlMTVhODk4NTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU3MDFmNzBlMWY2ODkwYTBiNzBhMTlmNjYzNDFlNGE5ZjlkNmRlNDQ4YTQ5NTMwZTI3YTc5ZjIzYWM4ZWZkYTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0OTkyYzYyOWIyZmMyMzkxNDIyMWRhOWQ2ZWU5Zjk0YmU2MjJkYjk2ZjAxMTkwMDk4YzU1OGY1ZDcwMDRlMzYifQ"
         },
         {
           "resource": "repo://projects/testiarium/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt#L36-L72",
           "version": "repo-lines-v1:sha256:b8665bc1a1ddc37e0d79a48a7d5a16077f490e6148d41d1a1d9776d559b2a813:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNzM5NzQyNTk2ZWNlZmEyZjY4NWM5MWFkOTkyM2ZhZTExNWY0ZDY3MjNjNTNjMjA5NjIzOGY5NzI4YjU2NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjMDYzYmRkZDg1YjE5MDU0NjBhZGZkNDRjNWRiNjYyZmJkNGU0YmU3OTI3MWJmZjIyMzZiOWM1NzdiNzIwNGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5YTFiYzhjYWE5ZDc4ZTk5MDE5ZjFmODc0OGI0MWU3N2MyYzg4ZTJjMWQ0ODhiODg4MDVhYjA1Zjk2NGMwOWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5YTFiYzhjYWE5ZDc4ZTk5MDE5ZjFmODc0OGI0MWU3N2MyYzg4ZTJjMWQ0ODhiODg4MDVhYjA1Zjk2NGMwOWMifQ"
+        },
+        {
+          "resource": "repo://projects/testiarium/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt#L25-L29",
+          "version": "repo-lines-v1:sha256:20db9c73ebc9ada342d781ba45cdbdb1e946920fcedda98d92e138b2ea8f4070:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjM3NDk3NGNkZmZjMjAyYmY1YzAyMjVmMTFkY2JkZmU2MGQzZWZkZjlkNmFlMzcwOGU0NTcyYTlkNTYzZTQzYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTcwMWY3MGUxZjY4OTBhMGI3MGExOWY2NjM0MWU0YTlmOWQ2ZGU0NDhhNDk1MzBlMjdhNzlmMjNhYzhlZmRhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzQ5OTJjNjI5YjJmYzIzOTE0MjIxZGE5ZDZlZTlmOTRiZTYyMmRiOTZmMDExOTAwOThjNTU4ZjVkNzAwNGUzNiJ9"
         }
       ]
     },
@@ -75,7 +79,7 @@
           "version": "repo-lines-v1:sha256:96d2f9b63bd108afe2e80b5bf523d8187832020673288f631414ba5ddae0aa56:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlOGI5Y2E1ZmY4ZjkyNzE2MDNlNWM3ZDQwMTEwNDk3MjM4OTM1MjFkODMxODMzZTY5MGIwODk1MDM5OGY4OTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0MTdjNmE0ZjFmODc2M2I1NWY2YWIzZjhiOGM4NzdjMDg1YjA4NWU5MTJiZGE0NDdiNGI1MGU0NGY4NmNkZTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzNjcxYjMyOTVhMDU5ZTcwZGY1NzdhNTliMjE0NDlmNjZlMDM4ZWYzZDAxNDEwZTI5MWExYWI1MGViNWFmOWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2NGZhYTNhNDU4NmQxMWJlZmQxMTRhZTBhNWI2Y2ZjMTRlMGM4OGZlMzM2NzhhYzU2OGMyYmU5MTIwZjgyZWIifQ"
         },
         {
-          "resource": "repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/StandaloneGameTests.kt#L20-L24",
+          "resource": "repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/StandaloneGameTests.kt#L30-L34",
           "version": "repo-lines-v1:sha256:1e89c0d9bafcf04c6b7d8351c5983d70a714e17c6fdb72c3a66b6c988d4faf4e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTI0NDlkNWVhMjg5ODA0N2QzNDhhNjliMTM5NmQxMWZlM2RjYmMzNjM5YmU5MDNjNGU0Mjc2OWE0Mjk1YjY2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmU2N2QxNzhkYzUxMjhkMjljZmFkMTU3ZWMyMGFlYjU2NTQwMDcwMmE3MjVhNzFlMjQyOGQ4ODJhYmYyNGZhMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDk2ZmE3Zjc4ZDRlYTQ0MWNkMTU0YWE3NDNkY2I2NmE4ZGVlMWFiYzU1ZTE3OTdmNmI2ZWU3MzJjYWZlN2MyOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGViOWRkMmZkYTUzODM0NzlmMDFmMzgzYTMwZWFlMzU2ZDZkOTU1Yzk5ZDU3ZTExMzFlNzViNTlhZmRkN2RkNCJ9"
         }
       ]
@@ -85,14 +89,42 @@
       "statement": "Mapped GameTest tasks delete stale XML before launch and require fresh nonempty nonskip evidence without failure/errors and with consistent declared testcase count, rather than trusting process exit alone.",
       "evidence": [
         {
-          "resource": "repo://gradle/gametest-reports.gradle.kts#L4-L42",
-          "version": "repo-lines-v1:sha256:5c84828889acf70f93c82f53100a0e3e84cdf467727ebea5a8c660785237b0e0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0N2ZiMTU0Nzg0NmRmNjM4ZDllZTk5OTkxYWFkNDY3OGE4MmZhZDc0MjJkNzg0ZmM5MzVmOTg3YTBkY2UyYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiZGM5NDcxMWNmMTFmNTVjNDQ5NmQyNDdmYTBkNzM2NmFjNmFjYzEyYWZhMjZkNjMzNmM2ZjJiY2U1MmI2YTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg1OGNiMjBlNmRkZjE1NmFlOTI5YmIxMmZlZjY2NDYxOTU3ZTA3ZTA1NTljNTk3MGY3NDgwOTQzNjMzNzFkZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0YTM2NWE5MGVjMTFlOTA0MzI3NTJjZjkzNzZlYzVlZDM2YjgwYmE1ZThlNjg1NGZjZjk4OTcwZDMwNDQ0NjkifQ"
+          "resource": "repo://gradle/gametest-reports.gradle.kts#L4-L65",
+          "version": "repo-lines-v1:sha256:709639a8ba7af798885f784986fdee1f50129d069570570348b2c3800a06b8fc:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0N2ZiMTU0Nzg0NmRmNjM4ZDllZTk5OTkxYWFkNDY3OGE4MmZhZDc0MjJkNzg0ZmM5MzVmOTg3YTBkY2UyYWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiZGM5NDcxMWNmMTFmNTVjNDQ5NmQyNDdmYTBkNzM2NmFjNmFjYzEyYWZhMjZkNjMzNmM2ZjJiY2U1MmI2YTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg1OGNiMjBlNmRkZjE1NmFlOTI5YmIxMmZlZjY2NDYxOTU3ZTA3ZTA1NTljNTk3MGY3NDgwOTQzNjMzNzFkZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0YTM2NWE5MGVjMTFlOTA0MzI3NTJjZjkzNzZlYzVlZDM2YjgwYmE1ZThlNjg1NGZjZjk4OTcwZDMwNDQ0NjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ccf0f7c19e8d40d69b29cac35d2f1c26",
+      "statement": "Container assertions allow empty padding but reject nonempty expected contents outside actual capacity; registration tests restore both native registries and private class registration after success or failure.",
+      "evidence": [
+        {
+          "resource": "repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt#L67-L74",
+          "version": "repo-lines-v1:sha256:b1bc8446e45445c976a31d8cf97212ba8e0c8c8080fb1ec377b3c6bf80bbb865:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmExYmM2YWI4ZmFjYzYzZWFmMTQ1MTQyZjhlMzM4YjZiYjgyNjEyNTU5ZGU3ODFhMjY0NTU1YjFiMmViZjUzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdjOTQ3NzJhYjE2Y2I5ZGRjMDBkYWRhOWNmY2YyMDE1NzEyOGFmODZhYzBmZjI5NDcyYjI1OTNmYWE1YjgyOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmRkMTUwMzg1NjkxOGZkYzIyNTcxNWIxYWJlNGMwNTYxMjQ2MjI3MmVjMjlmMmUyZTBmMDYwODMyYmI3ODQ3MCJ9"
+        },
+        {
+          "resource": "repo://projects/testiarium/src/test/kotlin/site/siredvin/testiarium/RegistrationTests.kt#L53-L118",
+          "version": "repo-lines-v1:sha256:029f97fbbaae727a67f7729d4c6e67310e27110403e722722100543540c23edb:eyJzZWxlY3RlZExpbmVDb3VudCI6NjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyZjA1MmM0MDQwYmQwMTUxNWU0NDNjYzZjYThlNzhmNDIxMDg2NTc4MTFhNGE2NGE4Mjk2ZDkyNGU5Y2UxNzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhlMGIxZDU2MWUxNGFjNzY1MTRkOWQ4MzMwZWNlY2QzNzJlZWJjNTI3N2RhM2ZlMTMxOTM1YjVjYzdmMTQwNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4YzVjZTMzMTU4NzMzNmE5ZjYwMGY5ZGMzMzY5ZWY1YWQ3MmJjYjM3MDAxYmMzN2ZjODVjY2Y3YTdjODllNDAifQ"
+        },
+        {
+          "resource": "repo://projects/testiarium/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt#L54-L61",
+          "version": "repo-lines-v1:sha256:b1bc8446e45445c976a31d8cf97212ba8e0c8c8080fb1ec377b3c6bf80bbb865:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmExYmM2YWI4ZmFjYzYzZWFmMTQ1MTQyZjhlMzM4YjZiYjgyNjEyNTU5ZGU3ODFhMjY0NTU1YjFiMmViZjUzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdjOTQ3NzJhYjE2Y2I5ZGRjMDBkYWRhOWNmY2YyMDE1NzEyOGFmODZhYzBmZjI5NDcyYjI1OTNmYWE1YjgyOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzhhNTM4NTRjZTY4NDI2YjA3OTg5NTcyYzNkYTQ3Njk2OTFmMTU4ZjJmNDNlZDkxMzgwMGJmZmE1OTQyZjFlOSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_de2ad045961a4907821e5dbd3c47e368",
+      "statement": "The report guard rejects all storage skips and requires exact unique intended skipped-fixture names and sentinels in standalone Testiarium reports.",
+      "evidence": [
+        {
+          "resource": "repo://gradle/gametest-reports.gradle.kts#L43-L63",
+          "version": "repo-lines-v1:sha256:ce1f225f1dbc1609eb8e34466cc30a1eaf6e7353deb24186432c3723779fb2a0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2N2QzYzI0MzRjNzcwYjFmMDdmMzA0Y2NmODJlZWYxODRmNGQxZGVjZDg1ZDgwMDJlZDI2ODViYTRlZTljYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNjQ3OWNjMjMwNDQwZmQ0MWU4MjI0MjE4Njc5Njk4NTU5ZDI4OTNiZDY3YjQzODBhZmFiODExYjM4YTU1YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyMTI5ZGFkMjAxNTFmMWQyZDk1NTljNTFhYmIwYzZiNTZkNDk0MGM0MjAxZmJkYjg5OTY1MWI5NjVmNjU5MjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjYWZkNDI2ZjQ3YjM5ZDk0OGFiZDFjNWI5Y2EzYTUzNGZjNGViMTVlMTU2YjU1YWU0NjEwYWNlZWMwNmYxOTYifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

@@ -3,9 +3,6 @@ type: contracts
 title: Typed peripheral API contracts and packaging
 description: Independently maintained TypeScript-to-Lua contracts, provider identities, extension patterns and runtime mismatch risks outside the Stonecutter loader graph.
 tags: [typescript, lua, contracts, packaging, peripherals]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
   - id: openwiki-source-4233540ba9ca00ff82292190
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/FuelBoon.kt
@@ -23,11 +20,18 @@ sources:
     resource: repo://projects/typed-peripheral-api/package.json
   - id: openwiki-source-4e770d7aa46adca7decc7ee6
     resource: repo://projects/typed-peripheral-api/scan.ts
+  - id: openwiki-source-b2992bb4316ae5243156d682
+    resource: repo://projects/typed-peripheral-api/tests/contracts.ts
+  - id: openwiki-source-71740f0c246eb7ba5071f1f1
+    resource: repo://projects/typed-peripheral-api/tests/tsconfig.json
   - id: openwiki-source-4f62992ed54861aafcd9fce3
     resource: repo://projects/typed-peripheral-api/tsconfig.json
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-16T19:56:35.545Z
 ---
 
 # Typed peripheral API contracts and packaging
@@ -54,4 +58,8 @@ ScanApi gives overloads for item, block, entity, player and xp results. Its bloc
 
 ## Extension and verification
 
-For a new API, coordinate the Kotlin plugin's method names, additional type name, table schema and error/multi-result behavior with its TypeScript interface and provider. Add a root .ts file to tsconfig's explicit include list when appropriate; preserve existing consumer contracts. The manifest contains an npm test placeholder that exits unsuccessfully, not a test suite. No TypeScript build, npm test, Lua runtime or downstream consumer was executed during this documentation-only run. [Build/publication](../build/stonecutter-publication.md) and [verification](../testing/verification.md) distinguish available commands from actual evidence.
+For a new API, coordinate the Kotlin plugin's method names, additional type name, table schema and error/multi-result behavior with its TypeScript interface and provider. Add a root .ts file to tsconfig's explicit include list when appropriate; preserve existing consumer contracts.
+
+npm test now invokes tsc with tests/tsconfig.json and noEmit. Gradle check depends on testContracts; it mustRunAfter compileTypeScript when both are selected, avoiding declaration-file read/write overlap without requiring emission for standalone checks. The contract suite compares inferred types in both directions and rejects any erasure, calls every inventory/item-storage list overload, all five scan modes, and both wrapping overloads of all nine exported providers. Twelve expected-error directives protect invalid arguments and scan filters.
+
+The coverage task passed standalone and combined builds and replayed compiler mutations: 66 of 67 detected, all 12 negative diagnostics verified for the intended reason. Removing null remains undetected with inherited strictNullChecks disabled; enabling it exposes five errors in dependency TypeScript source. No suppression conceals this limit. The inherited dependency audit also reports one high-severity picomatch advisory; dependency remediation was not bundled into the contract-test patch. These checks do not execute emitted Lua or prove runtime client/server schema parity. [Build/publication](../build/stonecutter-publication.md) and [verification](../testing/verification.md) distinguish packaging, compiler assertions and runtime evidence.

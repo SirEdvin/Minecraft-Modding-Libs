@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:f86e95b4445210f4483f8d023a6514343735ec486c725e263f2eb83f910914c2",
+  "pageVersion": "sha256:5bdb1e4ba489353f6cfc582b6780843aa7336f75ac97be3aff3f8e05329137e4",
   "claims": [
     {
       "id": "claim_9dcb5d0aad5c4fab836c713ffa6893ec",
@@ -46,13 +46,27 @@
         },
         {
           "resource": "repo://gradle/gametest-reports.gradle.kts",
-          "version": "repo-file-v1:sha256:5e05aabb7f8776e23437312ebdd11626a92f0332c242407d8aef86e04cf40930"
+          "version": "repo-file-v1:sha256:82a1480fed43b987a7653d3c6515b694a88ff6fa1291ea91f809c5a7fb23dcf4"
+        }
+      ]
+    },
+    {
+      "id": "claim_8b0bdb77bc5d4aeba673918486860363",
+      "statement": "CI invokes both Fabric storage targets plus four Testiarium and four Tweakium native runs; report guards forbid storage skips and require exact expected standalone negative-fixture failures.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/ci.yml#L43-L56",
+          "version": "repo-lines-v1:sha256:6300791d09c04d2b290c2dcd52facd77058a5d34cb9ed0649dc03bb54d214a29:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3NzRkZDVhNGQ0YTA0ODc0YWU2ZDM3ZDhmNzM2ZGZkMDc2YzJiNWE3YTY1YjkwNDY5NjlhNzhiNjgxMzFjNTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkODYzYjFlNWFiZDZhOTM1NzFmMjk4MTFiMjk2ODcxYjdiYmM2MmI3OGFiZDFjNDY2Mzg3MDEwMDVlM2Q0YzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkZGJhMDgwMjkxOWFhZGMwZjU5NzA1ZWFhOTc1NzZlMDU2OGI4NzUxNzI0NDFjZTg4YTg3MjcyY2EzMDYzMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ3ZjZiOTg2YzBjZmVlZTExMjllMTRhNGM4YTgwNGVjZTQ3YWQxNTU1YjI2NTMwNjk3ZWM5NDM5NjhjODViYjEifQ"
+        },
+        {
+          "resource": "repo://gradle/gametest-reports.gradle.kts#L43-L63",
+          "version": "repo-lines-v1:sha256:ce1f225f1dbc1609eb8e34466cc30a1eaf6e7353deb24186432c3723779fb2a0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2N2QzYzI0MzRjNzcwYjFmMDdmMzA0Y2NmODJlZWYxODRmNGQxZGVjZDg1ZDgwMDJlZDI2ODViYTRlZTljYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNjQ3OWNjMjMwNDQwZmQ0MWU4MjI0MjE4Njc5Njk4NTU5ZDI4OTNiZDY3YjQzODBhZmFiODExYjM4YTU1YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcyMTI5ZGFkMjAxNTFmMWQyZDk1NTljNTFhYmIwYzZiNTZkNDk0MGM0MjAxZmJkYjg5OTY1MWI5NjVmNjU5MjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjYWZkNDI2ZjQ3YjM5ZDk0OGFiZDFjNWI5Y2EzYTUzNGZjNGViMTVlMTU2YjU1YWU0NjEwYWNlZWMwNmYxOTYifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-16T19:56:35.545Z"
   }
 }

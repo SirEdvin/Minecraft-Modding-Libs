@@ -28,6 +28,7 @@ forgeconfigapirt121 = "21.1.6"
 modmenu120 = "7.2.1"
 modmenu121 = "11.0.1"
 teamreborn-energy = "3.0.0"
+teamreborn-energy121 = "4.1.0"
 
 # Forge dependencies
 forge = "47.1.0"
@@ -94,6 +95,7 @@ ccTweakedFabric121 = {module = "cc.tweaked:cc-tweaked-1.21.1-fabric", version.re
 modmenu120 = {module = "com.terraformersmc:modmenu", version.ref="modmenu120"}
 modmenu121 = {module = "maven.modrinth:modmenu", version.ref="modmenu121"}
 teamreborn-energy = {module = "teamreborn:energy", version.ref = "teamreborn-energy"}
+teamreborn-energy121 = {module = "teamreborn:energy", version.ref = "teamreborn-energy121"}
 
 # Forge mod dependencies
 cc-tweaked-forge =  {module = "cc.tweaked:cc-tweaked-1.20.1-forge", version.ref="ccTweaked120"}
@@ -136,9 +138,9 @@ ccfabric120 = ["ccTweakedFabric120", "ccTweakedCore120"]
 ccfabric121 = ["ccTweakedFabric121", "ccTweakedCore121"]
 fabric-core = ["fabric-loader"]
 fabricApiBundle120 = ["teamreborn-energy"]
-fabricApiBundle121 = ["teamreborn-energy"]
+fabricApiBundle121 = ["teamreborn-energy121"]
 fabric120 = ["fabricApi120", "fabric-kotlin", "fabricConfig120"]
-fabric121 = ["fabricApi121", "fabric-kotlin", "teamreborn-energy"]
+fabric121 = ["fabricApi121", "fabric-kotlin", "teamreborn-energy121"]
 fabricTest120 = ["fabricJunit120"]
 fabricTest121 = ["fabricJunit121"]
 forge-raw = ["forge-kotlin"]
