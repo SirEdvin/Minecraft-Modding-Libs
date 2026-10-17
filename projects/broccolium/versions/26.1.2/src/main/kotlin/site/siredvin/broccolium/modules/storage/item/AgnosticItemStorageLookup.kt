@@ -51,6 +51,7 @@ object AgnosticItemStorageLookup : BaseLookup<AgnosticStorage<ItemStack, Int>>()
         blockEntity: BlockEntity?,
         direction: Direction?,
     ): AgnosticStorage<ItemStack, Int>? {
+        if (blockEntity?.isRemoved == true) return null
         if (blockEntity is AgnosticItemStorageProvider) return blockEntity.itemStorage
         val result = super.extractFromBlock(level, pos, blockEntity, direction)
         if (result != null) return result

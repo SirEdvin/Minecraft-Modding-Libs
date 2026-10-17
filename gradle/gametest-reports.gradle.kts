@@ -3,7 +3,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 // Some Minecraft startup failures exit zero. Require fresh, non-empty test evidence.
 subprojects {
     val reports = when {
-        path.startsWith(":broccolium:fabric:") -> mapOf("runStorageGameTest" to "storage-gametest.xml")
+        path.startsWith(":broccolium:fabric:") || path == ":broccolium:forge:26.1.2" -> mapOf("runStorageGameTest" to "storage-gametest.xml")
         path.startsWith(":testiarium:fabric:") -> mapOf(
             "runServer" to "gametest.xml",
             "runCctGameTest" to "cct-gametest.xml",

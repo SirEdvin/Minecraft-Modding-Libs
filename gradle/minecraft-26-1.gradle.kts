@@ -152,6 +152,9 @@ tasks.named<ProcessResources>("processResources") {
         expand("version" to libraryVersion)
     }
     exclude(".cache")
+    // The canonical common resource is a legacy named-namespace widener. The
+    // target loader owns the merged official widener; do not shadow it at runtime.
+    if (library == "broccolium" && loader == "common") exclude("broccolium.accesswidener")
 }
 
 if (loader != "common") {
@@ -181,6 +184,70 @@ if (loader != "common") {
     tasks.named<Jar>("jar") {
         from(commonProject.extensions.getByType<SourceSetContainer>().named("main").map { it.output })
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+}
+
+if (library == "broccolium") {
+    val testiarium = project(":testiarium${if (loader == "common") "" else ":$loader"}:$minecraftVersion")
+    evaluationDependsOn(testiarium.path)
+    val harnessSets = testiarium.extensions.getByType<SourceSetContainer>()
+    val common = if (loader == "common") project else project(":broccolium:$minecraftVersion")
+    val commonSets = common.extensions.getByType<SourceSetContainer>()
+    val testMod = sourceSets.create("testMod") {
+        compileClasspath += sourceSets.main.get().compileClasspath + sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath + sourceSets.main.get().output
+        for (name in listOf("main", "testMod")) {
+            compileClasspath += harnessSets.named(name).get().output
+            runtimeClasspath += harnessSets.named(name).get().output
+        }
+        if (loader != "common") {
+            val coreHarness = project(":testiarium:$minecraftVersion").extensions.getByType<SourceSetContainer>()
+            for (name in listOf("main", "testMod")) {
+                compileClasspath += coreHarness.named(name).get().output
+                runtimeClasspath += coreHarness.named(name).get().output
+            }
+            compileClasspath += commonSets.named("testMod").get().output
+            runtimeClasspath += commonSets.named("testMod").get().output
+        }
+    }
+    configurations.named(testMod.implementationConfigurationName) { extendsFrom(configurations.implementation.get()) }
+    if (loader != "common") {
+        val coreHarness = project(":testiarium:$minecraftVersion").extensions.getByType<SourceSetContainer>()
+        val report = layout.buildDirectory.file("test-results/storage-gametest.xml").get().asFile.absolutePath
+        val structures = rootProject.file("projects/testiarium/src/testMod/resources/gameteststructures").absolutePath
+        val tags = "broccolium_reverse,broccolium_slots,broccolium_integrations,broccolium_native"
+        if (loader == "fabric") extensions.configure<LoomGradleExtensionAPI> {
+            mods {
+                register("broccolium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
+                register("broccolium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
+                register("testiarium") { sourceSet(harnessSets.named("main").get()); sourceSet(coreHarness.named("main").get()) }
+                register("testiarium_testmod") { sourceSet(harnessSets.named("testMod").get()); sourceSet(coreHarness.named("testMod").get()) }
+            }
+            runs.create("storageGameTest") {
+                server(); source(testMod)
+                property("fabric-api.gametest", "true")
+                property("testiarium.tags", tags)
+                property("testiarium.structures", structures)
+                property("testiarium.gametest-report", report)
+                vmArg("-ea")
+                runDir("run/storage-gametest")
+            }
+        } else extensions.configure<NeoForgeExtension> {
+            val production = mods.getByName("broccolium")
+            val fixture = mods.create("broccolium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
+            val harness = mods.create("testiarium") { sourceSet(harnessSets.named("main").get()); sourceSet(coreHarness.named("main").get()) }
+            val generic = mods.create("testiarium_testmod") { sourceSet(harnessSets.named("testMod").get()); sourceSet(coreHarness.named("testMod").get()) }
+            runs.create("storageGameTest") {
+                type = "gameTestServer"
+                sourceSet.set(testMod)
+                loadedMods.addAll(production, fixture, harness, generic)
+                systemProperty("testiarium.tags", tags)
+                systemProperty("testiarium.structures", structures)
+                systemProperty("testiarium.gametest-report", report)
+                jvmArgument("-ea")
+                gameDirectory = file("run/storage-gametest")
+            }
+        }
     }
 }
 
