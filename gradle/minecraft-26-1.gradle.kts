@@ -1,3 +1,4 @@
+import net.fabricmc.loom.api.LoomGradleExtensionAPI
 import net.neoforged.moddevgradle.dsl.NeoForgeExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
@@ -59,6 +60,12 @@ if (loader == "forge") {
     apply(plugin = "net.fabricmc.fabric-loom")
     // No mappings/remapping configuration: target Minecraft uses official names.
     dependencies.add("minecraft", "com.mojang:minecraft:$minecraftVersion")
+    val targetAccessWidener = rootProject.file("projects/$library/versions/$minecraftVersion/src/main/resources/$library-common.accesswidener")
+    if (targetAccessWidener.exists()) {
+        extensions.configure<LoomGradleExtensionAPI> {
+            accessWidenerPath.set(targetAccessWidener)
+        }
+    }
 }
 
 dependencies {
@@ -70,6 +77,9 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.2")
     testImplementation("net.bytebuddy:byte-buddy:1.17.8")
     testImplementation("net.bytebuddy:byte-buddy-agent:1.17.8")
+    testImplementation("org.hamcrest:hamcrest:2.2")
+    testImplementation("net.jqwik:jqwik-api:1.7.2")
+    testRuntimeOnly("net.jqwik:jqwik-engine:1.7.2")
     if (loader == "fabric") {
         implementation("net.fabricmc:fabric-loader:0.19.5")
         implementation("net.fabricmc.fabric-api:fabric-api:0.155.3+26.1.2")
@@ -99,6 +109,26 @@ dependencies {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+if (library == "broccolium" && loader == "common") {
+    val fixtures = sourceSets.create("testFixtures") {
+        compileClasspath += sourceSets.main.get().compileClasspath
+        compileClasspath += sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().output
+    }
+    sourceSets.test {
+        compileClasspath += fixtures.output
+        runtimeClasspath += fixtures.output
+    }
+    dependencies.add(fixtures.compileOnlyConfigurationName, "org.jetbrains.kotlin:kotlin-test-junit5:2.4.0")
+    dependencies.add(fixtures.compileOnlyConfigurationName, "org.junit.jupiter:junit-jupiter:5.9.2")
+    dependencies.add(fixtures.compileOnlyConfigurationName, "org.hamcrest:hamcrest:2.2")
+    dependencies.add(fixtures.compileOnlyConfigurationName, "net.jqwik:jqwik-api:1.7.2")
+    java.registerFeature("testFixtures") {
+        usingSourceSet(fixtures)
+        disablePublication()
+    }
 }
 
 tasks.named<ProcessResources>("processResources") {

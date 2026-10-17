@@ -18,7 +18,7 @@ import site.siredvin.broccolium.modules.platform.api.RegistryEntry
 import java.util.function.Function
 
 object BlockCodec {
-    val BOOLEAN_CODEC = Codec.unit(false)
+    val BOOLEAN_CODEC: Codec<Boolean> = Codec.BOOL
 
     fun <B : Block> propertiesCodec(): RecordCodecBuilder<B, BlockBehaviour.Properties> = BlockBehaviour.Properties.CODEC.fieldOf("properties")
         .forGetter { obj: B -> obj.properties() }

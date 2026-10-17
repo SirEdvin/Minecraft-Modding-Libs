@@ -64,7 +64,7 @@ abstract class BaseNBTBlock<T>(
                 for (property in savableProperties) {
                     @Suppress("UNCHECKED_CAST")
                     property as Property<Comparable<Any>>
-                    state = state.setValue(property, savedState.getValue(property) as Comparable<Any>)
+                    state = state.setValue(property, savedState.getValue(property))
                 }
             }
             val savedData = stack.get(DataComponents.CUSTOM_DATA)

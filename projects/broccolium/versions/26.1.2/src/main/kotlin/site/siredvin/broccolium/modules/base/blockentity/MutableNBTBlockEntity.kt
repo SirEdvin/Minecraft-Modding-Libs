@@ -34,11 +34,15 @@ abstract class MutableNBTBlockEntity(
 
     override fun getUpdatePacket(): ClientboundBlockEntityDataPacket = ClientboundBlockEntityDataPacket.create(this)
 
+    // Native root MapCodec hooks are deprecated, but a named child would change
+    // the existing public payload layout. Keep suppression at this boundary.
+    @Suppress("DEPRECATION")
     override fun loadAdditional(input: ValueInput) {
         super.loadAdditional(input)
         loadInternalData(input.read(INTERNAL_DATA_CODEC).orElseGet(::CompoundTag))
     }
 
+    @Suppress("DEPRECATION")
     override fun saveAdditional(output: ValueOutput) {
         super.saveAdditional(output)
         output.store(INTERNAL_DATA_CODEC, saveInternalData(CompoundTag()))

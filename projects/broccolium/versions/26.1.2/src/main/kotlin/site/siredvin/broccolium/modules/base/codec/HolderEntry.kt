@@ -4,6 +4,6 @@ import net.minecraft.core.Holder
 import net.minecraft.resources.Identifier
 import site.siredvin.broccolium.modules.platform.api.RegistryEntry
 
-class HolderEntry<T>(override val id: Identifier, private val holder: Holder<T>) : RegistryEntry<T> {
+class HolderEntry<T : Any>(override val id: Identifier, private val holder: Holder<T>) : RegistryEntry<T> {
     override fun get(): T = holder.value()
 }
