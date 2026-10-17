@@ -8,7 +8,6 @@ package site.siredvin.testiarium.fixture.client
 
 import net.minecraft.client.CloudStatus
 import net.minecraft.client.Minecraft
-import net.minecraft.server.level.ParticleStatus
 import net.minecraft.client.gui.screens.AccessibilityOnboardingScreen
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.client.gui.screens.TitleScreen
@@ -17,16 +16,15 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.gametest.framework.GameTestBatchFactory
 import net.minecraft.gametest.framework.GameTestInfo
 import net.minecraft.gametest.framework.GameTestListener
-
 import net.minecraft.gametest.framework.GameTestRunner
 import net.minecraft.gametest.framework.GlobalTestReporter
 import net.minecraft.gametest.framework.MultipleTestTracker
 import net.minecraft.gametest.framework.StructureGridSpawner
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ParticleStatus
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.Difficulty
-
 import net.minecraft.world.level.GameType
 import net.minecraft.world.level.LevelSettings
 import net.minecraft.world.level.WorldDataConfiguration

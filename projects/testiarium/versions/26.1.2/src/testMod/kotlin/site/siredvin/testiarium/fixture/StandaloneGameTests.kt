@@ -1,13 +1,13 @@
 package site.siredvin.testiarium.fixture
 
 import net.minecraft.core.BlockPos
-import site.siredvin.testiarium.api.GameTest
 import net.minecraft.gametest.framework.GameTestAssertException
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
 import site.siredvin.testiarium.api.ClientGameTest
+import site.siredvin.testiarium.api.GameTest
 import site.siredvin.testiarium.api.TestGroup
 import site.siredvin.testiarium.api.TestTags
 import site.siredvin.testiarium.api.assertContainer
@@ -42,6 +42,28 @@ class StandaloneGameTests {
             activation.teardown()
         }
         check(rules.get(rule) == original) { "Native environment teardown did not restore the rule" }
+        val sourceProperty = System.getProperty("testiarium.fixture-source")
+        val packProperty = System.getProperty("testiarium.structures")
+        val probe = File(System.getProperty("testiarium.gametest-report")).parentFile.resolve("fixture-command-probe")
+        val source = probe.resolve("source").also { it.mkdirs() }
+        val pack = probe.resolve("pack")
+        val fixture = source.resolve("empty.snbt")
+        fixture.writeText(File(sourceProperty, "empty.snbt").readText())
+        try {
+            System.setProperty("testiarium.fixture-source", source.absolutePath)
+            System.setProperty("testiarium.structures", pack.absolutePath)
+            val dispatcher = helper.level.server.commands.dispatcher
+            val commandSource = helper.level.server.createCommandSourceStack()
+            check(dispatcher.execute("testiarium import", commandSource) == 1)
+            val imported = pack.resolve("data/minecraft/structure/empty.snbt")
+            check(imported.readText() == fixture.readText())
+            imported.appendText("\n")
+            check(dispatcher.execute("testiarium export", commandSource) == 1)
+            check(fixture.readText() == imported.readText())
+        } finally {
+            System.setProperty("testiarium.fixture-source", sourceProperty)
+            System.setProperty("testiarium.structures", packProperty)
+        }
         helper.succeed()
     }
 

@@ -74,14 +74,16 @@ class CctHarnessGameTests {
             check(actions == 1 && later == 0)
             helper.runAfterDelay(2) {
                 ReporterFixtures.tick(child)
-                GameTestHelper(child).startSequence().also { it.thenSucceed(); it.tickAndContinue(2) }
+                GameTestHelper(child).startSequence().also {
+                    it.thenSucceed()
+                    it.tickAndContinue(2)
+                }
                 check(child.error === failure && child.hasFailed() && !child.hasSucceeded())
                 check(actions == 1 && later == 0)
                 helper.succeed()
             }
         }
         // The delayed outer assertion, not this sequence, owns success.
-
     }
 
     private fun startComputer(helper: GameTestHelper, label: String) {

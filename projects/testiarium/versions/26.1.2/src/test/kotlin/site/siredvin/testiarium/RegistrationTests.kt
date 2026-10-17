@@ -40,7 +40,10 @@ class RegistrationTests {
         assertEquals(setOf("enabled", "throwsoriginal"), functions.keys.map { it.path.substringAfter('.') }.toSet())
         val instances = linkedMapOf<Identifier, GameTestInstance>()
         val environments = linkedMapOf<Identifier, TestEnvironmentDefinition<*>>()
-        Testiarium.registerInstances({ id, environment -> environments[id] = environment; Holder.direct(environment) }, { id, test -> instances[id] = test })
+        Testiarium.registerInstances({ id, environment ->
+            environments[id] = environment
+            Holder.direct(environment)
+        }, { id, test -> instances[id] = test })
         assertEquals(2, instances.size)
         val test = instances.getValue(Identifier.parse("testiarium:fixture.enabled"))
         assertEquals(Identifier.parse("example:explicit_template"), test.structure())
@@ -117,32 +120,54 @@ class RegistrationTests {
 
     @TestGroup("disabled")
     class Fixture {
-        companion object { val failure = IllegalStateException("original cause") }
+        companion object {
+            val failure = IllegalStateException("original cause")
+        }
+
         @TestGroup("common")
         @GameTest(template = "example:explicit_template", batch = "metadata_batch", timeoutTicks = 77, setupTicks = 12, required = false, rotationSteps = 1, manualOnly = true, attempts = 5, requiredSuccesses = 2, skyAccess = true, padding = 3)
         fun enabled(helper: GameTestHelper) = helper.succeed()
-        @TestGroup("common") @GameTest
+
+        @TestGroup("common")
+        @GameTest
         fun throwsOriginal(@Suppress("UNUSED_PARAMETER") helper: GameTestHelper): Unit = throw failure
-        @TestGroup("common") fun fallback() = Unit
+
+        @TestGroup("common")
+        fun fallback() = Unit
+
         @GameTest fun disabled(helper: GameTestHelper) = helper.succeed()
     }
     class DefaultFixture {
         @GameTest fun defaults(helper: GameTestHelper) = helper.succeed()
+
         @ClientGameTest fun clientExcluded(helper: GameTestHelper) = helper.succeed()
     }
     class StaticFixture private constructor() {
         companion object {
             val failure = IllegalStateException("static original cause")
-            @JvmStatic @GameTest fun throwsOriginal(@Suppress("UNUSED_PARAMETER") helper: GameTestHelper): Unit = throw failure
+
+            @JvmStatic @GameTest
+            fun throwsOriginal(@Suppress("UNUSED_PARAMETER") helper: GameTestHelper): Unit = throw failure
         }
     }
     class NoDefaultConstructor(@Suppress("UNUSED_PARAMETER") value: Int) {
         @GameTest fun test(helper: GameTestHelper) = helper.succeed()
     }
-    class One { class SameName { @GameTest fun test(helper: GameTestHelper) = helper.succeed() } }
-    class Two { class SameName { @GameTest fun test(helper: GameTestHelper) = helper.succeed() } }
+    class One {
+        class SameName {
+            @GameTest fun test(helper: GameTestHelper) = helper.succeed()
+        }
+    }
+    class Two {
+        class SameName {
+            @GameTest fun test(helper: GameTestHelper) = helper.succeed()
+        }
+    }
     class BatchCollision {
-        @GameTest(batch = "Batch") fun first(helper: GameTestHelper) = helper.succeed()
-        @GameTest(batch = "batch") fun second(helper: GameTestHelper) = helper.succeed()
+        @GameTest(batch = "Batch")
+        fun first(helper: GameTestHelper) = helper.succeed()
+
+        @GameTest(batch = "batch")
+        fun second(helper: GameTestHelper) = helper.succeed()
     }
 }

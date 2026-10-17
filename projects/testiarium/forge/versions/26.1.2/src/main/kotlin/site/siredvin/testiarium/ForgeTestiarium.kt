@@ -1,5 +1,6 @@
 package site.siredvin.testiarium
 
+import net.minecraft.core.registries.Registries
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.common.NeoForge
@@ -7,7 +8,6 @@ import net.neoforged.neoforge.event.RegisterGameTestsEvent
 import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppingEvent
 import net.neoforged.neoforge.registries.RegisterEvent
-import net.minecraft.core.registries.Registries
 
 @Mod(Testiarium.MOD_ID)
 class ForgeTestiarium(modBus: IEventBus) {

@@ -42,7 +42,10 @@ object Testiarium {
 
     @JvmStatic
     fun init() {
-        System.getProperty("testiarium.structures")?.let { StructureUtils.testStructuresSourceDir = File(it).toPath() }
+        System.getProperty("testiarium.structures")?.let {
+            StructureUtils.testStructuresSourceDir = File(it).toPath()
+            StructureUtils.testStructuresTargetDir = File(it).toPath()
+        }
         System.getProperty("testiarium.gametest-report")?.let {
             GlobalTestReporter.replaceWith(MultiTestReporter(JunitTestReporter(File(it)), LogTestReporter()))
         }
@@ -104,10 +107,12 @@ object Testiarium {
         val environments = tests.map { it.metadata.batch }.distinct().associateWith { batch ->
             registerEnvironment.apply(
                 Identifier.fromNamespaceAndPath(MOD_ID, batch.lowercase(Locale.ROOT)),
-                TestEnvironmentDefinition.SetGameRules(net.minecraft.world.level.gamerules.GameRuleMap.of().apply {
-                    set(net.minecraft.world.level.gamerules.GameRules.ADVANCE_TIME, false)
-                    set(net.minecraft.world.level.gamerules.GameRules.SPAWN_MOBS, false)
-                }),
+                TestEnvironmentDefinition.SetGameRules(
+                    net.minecraft.world.level.gamerules.GameRuleMap.of().apply {
+                        set(net.minecraft.world.level.gamerules.GameRules.ADVANCE_TIME, false)
+                        set(net.minecraft.world.level.gamerules.GameRules.SPAWN_MOBS, false)
+                    },
+                ),
             )
         }
         tests.forEach { test ->

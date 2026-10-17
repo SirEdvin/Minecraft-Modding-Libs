@@ -8,11 +8,11 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.gametest.framework.StructureUtils
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
+import net.minecraft.util.ProblemReporter
+import net.minecraft.world.entity.EntitySpawnReason
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.block.entity.TestInstanceBlockEntity
-import net.minecraft.world.entity.EntitySpawnReason
 import net.minecraft.world.level.storage.TagValueInput
-import net.minecraft.util.ProblemReporter
 import site.siredvin.testiarium.Testiarium
 import java.nio.file.Files
 import java.nio.file.Path
@@ -57,12 +57,16 @@ object FixtureCommands {
                         player.level().getEntities(EntityType.ARMOR_STAND) { it.isAlive && it.name.string == testName }
                             .forEach { it.discard() }
                         EntityType.ARMOR_STAND.create(player.level(), EntitySpawnReason.COMMAND)?.apply {
-                            load(TagValueInput.create(ProblemReporter.DISCARDING, player.level().registryAccess(),
-                                CompoundTag().apply {
-                                    putBoolean("Marker", true)
-                                    putBoolean("Invisible", true)
-                                },
-                            ))
+                            load(
+                                TagValueInput.create(
+                                    ProblemReporter.DISCARDING,
+                                    player.level().registryAccess(),
+                                    CompoundTag().apply {
+                                        putBoolean("Marker", true)
+                                        putBoolean("Invisible", true)
+                                    },
+                                ),
+                            )
                             snapTo(player.x, player.y, player.z, player.yRot, player.xRot)
                             customName = Component.literal(testName)
                             player.level().addFreshEntity(this)
@@ -75,7 +79,7 @@ object FixtureCommands {
 
     private fun source(): Path = Path.of(requireProperty("testiarium.fixture-source"))
 
-    private fun destination(): Path = Path.of(requireProperty("testiarium.structures"))
+    private fun destination(): Path = Path.of(requireProperty("testiarium.structures")).resolve("data/minecraft/structure")
 
     private fun requireProperty(name: String): String = System.getProperty(name) ?: error("Set -D$name to use Testiarium fixture commands")
 
