@@ -98,6 +98,9 @@ dependencies {
         api(project(":tweakium${if (loader == "common") "" else ":$loader"}:$minecraftVersion"))
     }
     if (library == "tweakium") {
+        if (loader != "common") {
+            api(project(":broccolium:$minecraftVersion"))
+        }
         if (loader == "common") {
             for (part in listOf("common", "common-api", "core")) {
                 compileOnly("cc.tweaked:cc-tweaked-$minecraftVersion-$part:1.120.0")
@@ -263,6 +266,118 @@ if (library == "broccolium") {
                 systemProperty("testiarium.gametest-report", report)
                 jvmArgument("-ea")
                 gameDirectory = file("run/storage-gametest")
+            }
+        }
+    }
+}
+
+if (library == "tweakium") {
+    val harness = project(":testiarium${if (loader == "common") "" else ":$loader"}:$minecraftVersion")
+    evaluationDependsOn(harness.path)
+    val harnessSets = harness.extensions.getByType<SourceSetContainer>()
+    val coreHarness = project(":testiarium:$minecraftVersion").extensions.getByType<SourceSetContainer>()
+    val common = if (loader == "common") project else project(":tweakium:$minecraftVersion")
+    val commonSets = common.extensions.getByType<SourceSetContainer>()
+    val testMod = sourceSets.create("testMod") {
+        compileClasspath += sourceSets.main.get().compileClasspath + sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath + sourceSets.main.get().output
+        for (sets in listOf(harnessSets, coreHarness).distinct()) {
+            for (name in listOf("main", "testMod", "cctTestMod")) {
+                compileClasspath += sets.named(name).get().output
+                runtimeClasspath += sets.named(name).get().output
+            }
+        }
+        if (loader != "common") {
+            compileClasspath += commonSets.named("testMod").get().output
+            runtimeClasspath += commonSets.named("testMod").get().output
+            resources.srcDir(rootProject.file("projects/tweakium/src/testMod/resources"))
+            resources.srcDir(rootProject.file("projects/tweakium/versions/$minecraftVersion/src/testMod/resources"))
+        }
+    }
+    configurations.named(testMod.implementationConfigurationName) { extendsFrom(configurations.implementation.get()) }
+    if (loader == "common") {
+        for (part in listOf("common", "common-api", "core")) {
+            dependencies.add(testMod.compileOnlyConfigurationName, "cc.tweaked:cc-tweaked-$minecraftVersion-$part:1.120.0")
+        }
+    } else {
+        tasks.named<ProcessResources>(testMod.processResourcesTaskName) {
+            from(rootProject.file("projects/tweakium/src/testMod/resources/gameteststructures")) {
+                into("data/minecraft/structure")
+            }
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        }
+        if (loader == "fabric") {
+            val fixtures = sourceSets.create("testFixtures") {
+                compileClasspath += sourceSets.main.get().compileClasspath + sourceSets.main.get().output
+            }
+            dependencies.add(fixtures.compileOnlyConfigurationName, "org.junit.jupiter:junit-jupiter:5.9.2")
+            sourceSets.test { compileClasspath += fixtures.output; runtimeClasspath += fixtures.output }
+        }
+        val broccolium = project(":broccolium:$loader:$minecraftVersion")
+        val brocSets = broccolium.extensions.getByType<SourceSetContainer>()
+        val brocCore = project(":broccolium:$minecraftVersion").extensions.getByType<SourceSetContainer>()
+        val report = layout.buildDirectory.file("test-results/peripheral-gametest.xml").get().asFile.absolutePath
+        val structures = layout.buildDirectory.dir("resources/testMod").get().asFile.absolutePath
+        val computers = rootProject.file("projects/tweakium/src/testMod/resources/computer").absolutePath
+        val generated = rootProject.file("projects/tweakium/$loader/versions/$minecraftVersion/src/generated/resources")
+        sourceSets.main.get().resources.srcDir(generated)
+        sourceSets.test {
+            val brocFixtures = brocCore.named("testFixtures").get().output
+            compileClasspath += brocFixtures
+            runtimeClasspath += brocFixtures
+        }
+        if (loader == "fabric") extensions.configure<LoomGradleExtensionAPI> {
+            mods {
+                register("tweakium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
+                register("tweakium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
+                register("broccolium") { sourceSet(brocSets.named("main").get()); sourceSet(brocCore.named("main").get()) }
+                register("testiarium") { sourceSet(harnessSets.named("main").get()); sourceSet(coreHarness.named("main").get()) }
+                register("testiarium_testmod") { sourceSet(harnessSets.named("testMod").get()); sourceSet(coreHarness.named("testMod").get()) }
+                register("testiarium_cct_testmod") { sourceSet(harnessSets.named("cctTestMod").get()); sourceSet(coreHarness.named("cctTestMod").get()) }
+            }
+            runs.create("peripheralGameTest") {
+                server(); source(testMod)
+                property("testiarium.fixture.consumer", "true")
+                property("fabric-api.gametest", "true")
+                property("testiarium.tags", "tweakium")
+                property("testiarium.structures", structures)
+                property("testiarium.cct-fixtures", computers)
+                property("testiarium.gametest-report", report)
+                vmArg("-ea")
+                runDir("run/peripheral-gametest")
+            }
+            runs.create("datagen") {
+                client(); source(sourceSets.main.get())
+                property("fabric-api.datagen", "true")
+                property("fabric-api.datagen.modid", "tweakium")
+                property("fabric-api.datagen.output-dir", generated.absolutePath)
+                runDir("run/datagen")
+            }
+        } else extensions.configure<NeoForgeExtension> {
+            val production = mods.create("tweakium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
+            val fixture = mods.create("tweakium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
+            val base = mods.create("broccolium") { sourceSet(brocSets.named("main").get()); sourceSet(brocCore.named("main").get()) }
+            val core = mods.create("testiarium") { sourceSet(harnessSets.named("main").get()); sourceSet(coreHarness.named("main").get()) }
+            val generic = mods.create("testiarium_testmod") { sourceSet(harnessSets.named("testMod").get()); sourceSet(coreHarness.named("testMod").get()) }
+            val cct = mods.create("testiarium_cct_testmod") { sourceSet(harnessSets.named("cctTestMod").get()); sourceSet(coreHarness.named("cctTestMod").get()) }
+            unitTest { enable(); testedMod.set(production) }
+            runs.create("gameTestServer") {
+                type = "gameTestServer"
+                sourceSet.set(testMod)
+                loadedMods.addAll(production, fixture, base, core, generic, cct)
+                systemProperty("testiarium.tags", "tweakium")
+                systemProperty("testiarium.structures", structures)
+                systemProperty("testiarium.cct-fixtures", computers)
+                systemProperty("testiarium.gametest-report", report)
+                jvmArgument("-ea")
+                gameDirectory = file("run/peripheral-gametest")
+            }
+            for (clientData in listOf(true, false)) runs.create(if (clientData) "clientData" else "serverData") {
+                if (clientData) clientData() else serverData()
+                sourceSet.set(sourceSets.main.get())
+                loadedMods.addAll(production, base)
+                programArguments.addAll("--mod", "tweakium", "--output", generated.absolutePath)
+                gameDirectory = file("run/datagen")
             }
         }
     }

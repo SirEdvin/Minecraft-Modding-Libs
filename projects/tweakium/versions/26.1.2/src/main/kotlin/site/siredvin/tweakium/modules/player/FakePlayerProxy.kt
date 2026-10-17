@@ -153,13 +153,12 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
         val hit = findHit(skipEntity, skipBlock, entityFilter)
         if (hit is BlockHitResult) {
             return withConsumer(level, hit.blockPos) {
-                if (fakePlayer.pose != Pose.CROUCHING) {
-                    val useOnResult = PlatformToolkit.get().useOn(fakePlayer, fakePlayer.mainHandItem, hit) { true }
-                    if (useOnResult.consumesAction()) return@withConsumer useOnResult
-                }
                 level.destroyBlockProgress(fakePlayer.id, hit.blockPos, -1)
+                // The native game mode owns loader hooks, sneak/block/item use
+                // and protection. A manual toolkit pass would dispatch twice
+                // and retry a loader veto whose result does not consume action.
                 val useItemResult = gameMode.useItemOn(fakePlayer, level, fakePlayer.mainHandItem, InteractionHand.MAIN_HAND, hit)
-                if (useItemResult.consumesAction()) return@withConsumer useItemResult
+                if (useItemResult != InteractionResult.PASS) return@withConsumer useItemResult
                 gameMode.useItem(fakePlayer, level, fakePlayer.mainHandItem, InteractionHand.MAIN_HAND)
             }
         }

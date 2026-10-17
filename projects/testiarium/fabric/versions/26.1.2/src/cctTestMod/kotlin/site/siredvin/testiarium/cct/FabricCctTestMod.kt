@@ -10,12 +10,14 @@ import site.siredvin.testiarium.fixture.StandaloneGameTests
 object FabricCctTestMod : ModInitializer {
     override fun onInitialize() {
         CctComputers.initialize()
-        Testiarium.register(StandaloneGameTests::class.java, CctHarnessGameTests::class.java)
+        if (!java.lang.Boolean.getBoolean("testiarium.fixture.consumer")) {
+            Testiarium.register(StandaloneGameTests::class.java, CctHarnessGameTests::class.java)
+        }
         CommandRegistrationCallback.EVENT.register { dispatcher, context, _ -> CctFixtureCommands.register(dispatcher, context) }
         ServerLifecycleEvents.SERVER_STARTING.register {
             CctComputers.reset()
             CctFixtureCommands.importFiles(it)
         }
-        FabricTestiarium.registerTests()
+        if (!java.lang.Boolean.getBoolean("testiarium.fixture.consumer")) FabricTestiarium.registerTests()
     }
 }

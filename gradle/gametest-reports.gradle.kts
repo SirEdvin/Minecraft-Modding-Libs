@@ -86,6 +86,43 @@ subprojects {
                     "Storage discovery must match its exact once-only fixture inventory: expected $expected, got $names ($file)"
                 }
             }
+            if (project.path.startsWith(":tweakium:") && project.name == "26.1.2") {
+                check(skipped == 0) { "Tweakium capability tests must not be skipped: $file" }
+                val expected = setOf(
+                    "CreativeFillerGameTests.fillsInventory",
+                    "NativeSessionGameTests.nativeSelectedSlotsRestoreReplacedToolsAndPermanentAttributesOnAllExits",
+                    "NativeSessionGameTests.changedSelectionDuringNativeActionDoesNotRemapToAnotherSourceSlot",
+                    "NativeSessionGameTests.changedNativeOwnerCannotReusePreviousPlayersIdentity",
+                    "NativeUpgradeGameTests.liveTurtleInstallRemoveReinstallKeepsIndependentSideSettings",
+                    "NativeUpgradeGameTests.livePocketInstallRemoveReinstallUsesNativeSideAccessAndPlayerInventory",
+                    "NativeUpgradeGameTests.nativeChunkDiskUnloadReloadKeepsInstalledUpgradeSettings",
+                    "NativeInteractionGameTests.oneNativeUseAndLoaderCancellationAndBreakProtectionArePreserved",
+                    "ModuleBehaviorGameTests.nativeRegistriesRoundTripWithoutInventingMissingKeys",
+                    "ModuleBehaviorGameTests.lookupUsesFirstNonNullResultAndForwardsNativeContext",
+                    "ModuleBehaviorGameTests.itemAndBlockQueriesEvaluateNativeRegistryValues",
+                    "ModuleBehaviorGameTests.inventoryQueryPullHonorsDestinationAndConservesItems",
+                    "ModuleBehaviorGameTests.numericPullRejectsOutOfRangeDestinationBeforeMutation",
+                    "ModuleBehaviorGameTests.malformedQueriesAreRejectedBeforeNativeTransfer",
+                    "ModuleBehaviorGameTests.fakePlayerMissAndUnbreakableBlockDoNotMutateWorld",
+                    "ModuleBehaviorGameTests.failedPlayerActionAlwaysReleasesGlobalDropCapture",
+                    "RuntimeBehaviorGameTests.nativeMethodDiscoveryBindsAndInvokesPluginsExactlyOnce",
+                    "RuntimeBehaviorGameTests.scanningUsesNativeFiltersBoundsAndOperationPolicy",
+                    "RuntimeBehaviorGameTests.successfulFakePlayerBreakCapturesExactlyOneDrop",
+                    "RuntimeBehaviorGameTests.livingDropCaptureTargetsOnlyConfiguredEntityAndPreservesRemainder",
+                    "WorldBehaviorGameTests.blockTraversalHonorsBoundaryPredicateAndRelativeCoordinates",
+                    "WorldBehaviorGameTests.luaRepresentationsExposeNativeCountsAndBlockProperties",
+                    "WorldBehaviorGameTests.registeredPeripheralPreservesOwnerAndSettingsAcrossNativeNbtReload",
+                    "UpgradeBehaviorGameTests.pocketStateSurvivesItemSerializationWithoutChangingCraftingItem",
+                    "UpgradeBehaviorGameTests.turtleStateSurvivesItemSerializationWithoutChangingCraftingItem",
+                    "UpgradeBehaviorGameTests.pocketExplicitRemovalSurvivesItemRoundTrip",
+                    "UpgradeBehaviorGameTests.turtleExplicitRemovalSurvivesItemRoundTrip",
+                )
+                val nodes = document.getElementsByTagName("testcase")
+                val names = (0 until nodes.length).map { (nodes.item(it) as org.w3c.dom.Element).getAttribute("name") }
+                check(names.filter { it != "minecraft:always_pass" }.toSet() == expected && names.distinct().size == names.size) {
+                    "Tweakium discovery must match its exact once-only fixture inventory: expected $expected, got $names ($file)"
+                }
+            }
             if (project.path.startsWith(":testiarium:") && reports.getValue(name) in setOf("gametest.xml", "cct-gametest.xml")) {
                 // Negative fixtures must fail for the intended reason, not silently pass or
                 // fail later in an unrelated assertion while still being counted as skipped.

@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="tweakium_testmod"
+version="1.0"
+displayName="Tweakium Testmod"
+
+[[dependencies.tweakium_testmod]]
+modId="tweakium"
+type="required"
+versionRange="[2.0.0,)"
+ordering="AFTER"
+side="BOTH"

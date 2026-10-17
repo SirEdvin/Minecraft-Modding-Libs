@@ -2,7 +2,11 @@ package site.siredvin.tweakium.testmod
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+//? if <26.1 {
 import net.minecraft.gametest.framework.GameTest
+//?} else {
+/*import site.siredvin.testiarium.api.GameTest
+*///?}
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -58,7 +62,7 @@ class WorldBehaviorGameTests {
     fun registeredPeripheralPreservesOwnerAndSettingsAcrossNativeNbtReload(helper: GameTestHelper) = helper.immediate {
         val position = BlockPos(1, 1, 1)
         helper.setBlock(position, TweakiumBlocks.CREATIVE_FILLER.get())
-        val block = helper.getBlockEntity(position) as CreativeFillerBlockEntity
+        val block = helper.level.getBlockEntity(helper.absolutePos(position)) as CreativeFillerBlockEntity
         val owner = UUID.fromString("1da2d610-d080-4f35-9650-7c4c68d595c1")
         block.ownerPlayerUUID = owner
         DataStorageUtil.getDataStorage(block).putInt("limit", 42)
