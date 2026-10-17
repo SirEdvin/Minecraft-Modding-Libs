@@ -27,6 +27,10 @@ The authoritative graph is settings.gradle.kts: four Stonecutter roots (broccoli
 13. Toolchain/publication: Java 25 launcher/JDK including jmods for target; retained Java/Kotlin JVM 17 and 21 for old leaves. Wrapper is already Gradle 9.5.0. Preserve site.siredvin coordinates, version 2.0.0 property ownership and loader/common/core suffixes; no release version bump is implied. Build changes and compiler metadata policy below precede gameplay work.
 14. Acceptance: build/unit/native/datagen/server/client/copied-save/multiplayer/local-consumer/publication and canonical-restoration gates are specified in the plan. Existing coverage is inherited, not a target pass. Runtime incompatibilities become implementation findings, not retrospective failures of this planning card.
 
+## Approved implementation finding: observer notifications
+
+On 2026-10-17 (Europe/Kyiv), the user approved the target-only `IObservingBlockEntity.onNeighbourChange(neighbourBlock: Block, orientation: Orientation?)` contract. The resolved 26.1.2 native hook no longer supplies the causal neighbor position. Target consumers must implement the new signature and use the native block/orientation (which may be null), not infer a precise neighbor position. Existing 1.20.1/1.21.1 consumers retain `onNeighbourChange(neighbour: BlockPos)` and unchanged causal-position behavior. This is scoped approval, not proof of implementation or runtime verification; see [the checkpoint](minecraft-26-1-verification.md).
+
 ## Feature inventory and ownership
 
 Paths in this table are existing repository paths; `modules/...` means below that library's `src/main/kotlin/site/siredvin/<library>/`. Apply the matching 1.21.1 full-file override when one exists. The [coverage matrix](module-test-coverage.md) gives concrete test families and remaining gaps; OpenWiki is navigation, not independent runtime evidence.

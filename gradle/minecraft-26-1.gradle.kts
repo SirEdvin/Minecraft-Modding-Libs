@@ -65,6 +65,11 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.jetbrains.kotlinx:atomicfu-jvm:0.20.2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.4.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.2")
+    testImplementation("net.bytebuddy:byte-buddy:1.17.8")
+    testImplementation("net.bytebuddy:byte-buddy-agent:1.17.8")
     if (loader == "fabric") {
         implementation("net.fabricmc:fabric-loader:0.19.5")
         implementation("net.fabricmc.fabric-api:fabric-api:0.155.3+26.1.2")
@@ -90,6 +95,18 @@ dependencies {
             implementation("cc.tweaked:cc-tweaked-$minecraftVersion-$loader:1.120.0")
         }
     }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}
+
+tasks.named<ProcessResources>("processResources") {
+    inputs.property("version", libraryVersion)
+    filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml")) {
+        expand("version" to libraryVersion)
+    }
+    exclude(".cache")
 }
 
 if (loader != "common") {
