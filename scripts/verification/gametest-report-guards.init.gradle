@@ -1,0 +1,87 @@
+// Execute only the real report guard actions, never a synthetic Minecraft result.
+// ./gradlew r1ReportGuardProbe -I scripts/verification/gametest-report-guards.init.gradle --no-daemon
+import groovy.xml.MarkupBuilder
+
+gradle.projectsEvaluated {
+    def owner = gradle.rootProject.project(':testiarium:fabric:26.1.2')
+    def run = owner.tasks.named('runServer').get()
+    def report = owner.layout.buildDirectory.file('test-results/gametest.xml').get().asFile
+    def negatives = [
+        'StandaloneGameTests.requiredFailure': 'required failure fixture',
+        'StandaloneGameTests.optionalFailure': 'optional failure fixture',
+        'StandaloneGameTests.failFastFailureCannotBecomeSuccess': 'fail-fast sentinel',
+    ]
+    def positives = [
+        'passes', 'failFastSequence', 'failFastAssertionIsImmediatelyTerminal',
+        'failFastExceptionIsImmediatelyTerminal', 'failFastErrorIsImmediatelyTerminal',
+        'containerMatchesIncludingImplicitEmptySlots', 'containerRejectsMismatchedActualSlots',
+        'containerRejectsNonemptyExpectedSlotsBeyondItsSize', 'reporterCountsEscapesAndFinishesOnce',
+        'nativeEnvironmentSetupAndTeardown',
+    ].collect { "StandaloneGameTests.$it".toString() }
+    def base = positives.collect { [name: it] } + negatives.collect { name, message -> [name: name, skipped: message] }
+    def xml = { cases, declared = cases.size() ->
+        def writer = new StringWriter()
+        new MarkupBuilder(writer).testsuite(tests: declared, failures: cases.count { it.failure }, errors: cases.count { it.error }, skipped: cases.count { it.skipped }) {
+            cases.each { entry ->
+                testcase(name: entry.name, classname: 'fixture', time: '0') {
+                    if (entry.skipped) skipped(message: entry.skipped)
+                    if (entry.failure) failure(message: entry.failure)
+                    if (entry.error) error(message: entry.error)
+                }
+            }
+        }
+        writer.toString()
+    }
+    gradle.rootProject.tasks.register('r1ReportGuardProbe') {
+        doLast {
+            def guards = run.actions.findAll { action ->
+                def field = action.class.declaredFields.find { it.name == 'action' }
+                if (field == null) return false
+                field.accessible = true
+                def delegate = field.get(action)
+                println "ACTION ${delegate.class.name}"
+                delegate.class.name.contains('Gametest_reports_gradle')
+            }
+            assert guards.size() == 2 : "Expected exactly two report guards; refuse to execute unrelated actions: $guards"
+            def before = guards.first()
+            def after = guards.last()
+            def saved = report.isFile() ? report.bytes : null
+            def scenarios = [
+                [name: 'passing-exact-inventory', accepted: true, text: xml(base)],
+                [name: 'missing-fresh-report', accepted: false, text: null],
+                [name: 'empty-report', accepted: false, text: xml([])],
+                [name: 'skip-only-report', accepted: false, text: xml(negatives.collect { name, message -> [name: name, skipped: message] })],
+                [name: 'required-failure', accepted: false, text: xml(base + [[name: 'failure', failure: 'sentinel']])],
+                [name: 'error-report', accepted: false, text: xml(base + [[name: 'error', error: 'sentinel']])],
+                [name: 'declared-count-mismatch', accepted: false, text: xml(base, 99)],
+                [name: 'unexpected-optional-skip', accepted: false, text: xml(base + [[name: 'unexpected', skipped: 'wrong']])],
+                [name: 'missing-negative-fixture', accepted: false, text: xml(base.findAll { it.name != negatives.keySet().first() })],
+                [name: 'duplicate-negative-fixture', accepted: false, text: xml(base + [base.last()])],
+                [name: 'wrong-negative-sentinel', accepted: false, text: xml(base.collect { it.name == negatives.keySet().first() ? [name: it.name, skipped: 'wrong'] : it })],
+                [name: 'duplicate-positive-discovery', accepted: false, text: xml(base + [base.first()])],
+                [name: 'missing-positive-discovery', accepted: false, text: xml(base.drop(1))],
+                [name: 'unexpected-positive-discovery', accepted: false, text: xml(base + [[name: 'unexpected']])],
+                [name: 'doctype-rejected', accepted: false, text: '<!DOCTYPE testsuite [<!ENTITY example "unsafe">]>' + xml(base)],
+            ]
+            def failures = []
+            try {
+                scenarios.each { scenario ->
+                    report.parentFile.mkdirs()
+                    report.text = 'stale sentinel'
+                    before.execute(run)
+                    assert !report.exists() : 'The guard did not delete stale evidence'
+                    if (scenario.text != null) report.text = scenario.text
+                    def accepted = true
+                    def diagnostic = ''
+                    try { after.execute(run) } catch (Exception error) { accepted = false; diagnostic = error.message }
+                    println "GUARD ${scenario.name}: expected=${scenario.accepted}, accepted=$accepted, diagnostic=$diagnostic"
+                    if (accepted != scenario.accepted) failures.add(scenario.name)
+                }
+            } finally {
+                if (saved == null) report.delete() else report.bytes = saved
+            }
+            assert failures.empty : "Report guard regression(s): $failures"
+            println "Verified ${scenarios.size()} report guard cases, including stale deletion on every case. This is not native GameTest evidence."
+        }
+    }
+}

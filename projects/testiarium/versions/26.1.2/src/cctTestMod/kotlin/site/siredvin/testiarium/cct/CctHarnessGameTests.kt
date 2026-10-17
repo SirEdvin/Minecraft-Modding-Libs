@@ -12,6 +12,24 @@ import site.siredvin.testiarium.fixture.ReporterFixtures
 
 class CctHarnessGameTests {
     @GameTest(template = "empty", timeoutTicks = 400)
+    fun queuedActionAfterLuaStartupExecutesOnce(helper: GameTestHelper) {
+        val label = "harness.late"
+        startComputer(helper, label)
+        lateinit var monitor: CctComputers.CctComputerMonitor
+        var actions = 0
+        helper.startSequence().thenWaitUntil {
+            if (CctComputerState.get(label)?.isDone(CctComputerState.DONE) != true) throw GameTestAssertException("Waiting for Lua startup")
+        }.thenExecuteFailFast {
+            monitor = CctComputers.enqueue(helper.level.server, label) { actions++ }
+        }.thenWaitUntil {
+            if (!monitor.isFinished) throw GameTestAssertException("Post-startup action never dispatched")
+        }.thenExecuteFailFast {
+            monitor.check()
+            check(actions == 1)
+        }.thenIdle(2).thenExecuteFailFast { check(actions == 1) }.thenSucceed()
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 400)
     fun realLuaAndQueuedActionExecuteOnce(helper: GameTestHelper) {
         val label = "harness.pass"
         var actions = 0

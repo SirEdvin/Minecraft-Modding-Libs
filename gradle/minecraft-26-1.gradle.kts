@@ -211,6 +211,7 @@ if (library == "testiarium") {
         java.registerFeature(feature.name) {
             capability("site.siredvin", "testiarium-${if (loader == "common") "core" else loader}-${if (feature == testMod) "test-mod" else "cct-test-mod"}", libraryVersion)
             usingSourceSet(feature)
+            withSourcesJar()
         }
         tasks.named<ProcessResources>(feature.processResourcesTaskName) {
             inputs.property("version", libraryVersion)
@@ -248,6 +249,11 @@ if (library == "testiarium") {
                 register("testiarium_cct_testmod") { sourceSet(cctTestMod); sourceSet(commonSets.named("cctTestMod").get()) }
             }
             runs {
+                create("productionServer") {
+                    server()
+                    source(sourceSets.main.get())
+                    runDir("run/server")
+                }
                 named("server") {
                     source(testMod)
                     property("fabric-api.gametest", "true")
@@ -276,6 +282,13 @@ if (library == "testiarium") {
             val generic = mods.create("testiarium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
             val cct = mods.create("testiarium_cct_testmod") { sourceSet(cctTestMod); sourceSet(commonSets.named("cctTestMod").get()) }
             runs {
+                create("server") {
+                    server()
+                    sourceSet.set(sourceSets.main.get())
+                    loadedMods.add(production)
+                    programArgument("--nogui")
+                    gameDirectory = file("run/server")
+                }
                 create("gameTestServer") {
                     type = "gameTestServer"
                     val withCct = providers.gradleProperty("testiarium.cct").isPresent

@@ -40,18 +40,25 @@ subprojects {
             check(document.documentElement.getAttribute("tests").toInt() == cases) {
                 "GameTest report count does not match its test cases: $file"
             }
+            for ((attribute, actual) in mapOf("failures" to failures, "errors" to errors, "skipped" to skipped)) {
+                val declared = document.documentElement.getAttribute(attribute).ifEmpty { "0" }.toInt()
+                check(declared == actual) { "GameTest declared $attribute does not match its elements: $file" }
+            }
             if (reports.getValue(name) == "storage-gametest.xml") {
                 check(skipped == 0) { "Storage conservation regressions must not be skipped: $file" }
             }
-            if (project.path.startsWith(":testiarium:") && reports.getValue(name) == "gametest.xml") {
+            if (project.path.startsWith(":testiarium:") && reports.getValue(name) in setOf("gametest.xml", "cct-gametest.xml")) {
                 // Negative fixtures must fail for the intended reason, not silently pass or
                 // fail later in an unrelated assertion while still being counted as skipped.
-                val expectedFailures = mapOf(
+                val expectedFailures = linkedMapOf(
                     "StandaloneGameTests.requiredFailure" to "required failure fixture",
                     "StandaloneGameTests.optionalFailure" to "optional failure fixture",
                     "StandaloneGameTests.failFastFailureCannotBecomeSuccess" to "fail-fast sentinel",
                 )
+                val targetCct = project.name == "26.1.2" && reports.getValue(name) == "cct-gametest.xml"
+                if (targetCct) expectedFailures["CctHarnessGameTests.luaFailureCannotBecomeSuccess"] = "cct lua sentinel"
                 val testCases = document.getElementsByTagName("testcase")
+                val elements = (0 until testCases.length).map { testCases.item(it) as org.w3c.dom.Element }
                 for ((testName, message) in expectedFailures) {
                     val matches = (0 until testCases.length).map { testCases.item(it) as org.w3c.dom.Element }
                         .filter { it.getAttribute("name") == testName }
@@ -60,6 +67,31 @@ subprojects {
                     check(skips.length == 1 && (skips.item(0) as org.w3c.dom.Element).getAttribute("message") == message) {
                         "Negative fixture $testName did not preserve its expected failure '$message' ($file)"
                     }
+                }
+                check(skipped == expectedFailures.size) { "Unexpected optional failure(s) in Testiarium report: $file" }
+                val expectedNames = mutableSetOf(
+                    "passes", "failFastSequence", "failFastAssertionIsImmediatelyTerminal",
+                    "failFastExceptionIsImmediatelyTerminal", "failFastErrorIsImmediatelyTerminal",
+                    "containerMatchesIncludingImplicitEmptySlots", "containerRejectsMismatchedActualSlots",
+                    "containerRejectsNonemptyExpectedSlotsBeyondItsSize", "reporterCountsEscapesAndFinishesOnce",
+                ).mapTo(mutableSetOf()) { "StandaloneGameTests.$it" }
+                expectedNames.addAll(expectedFailures.keys)
+                if (project.name == "26.1.2") expectedNames.add("StandaloneGameTests.nativeEnvironmentSetupAndTeardown")
+                if (targetCct) expectedNames.addAll(listOf(
+                    "CctHarnessGameTests.realLuaAndQueuedActionExecuteOnce",
+                    "CctHarnessGameTests.luaFailureIsObservedByRequiredOuterTest",
+                    "CctHarnessGameTests.queuedActionAfterLuaStartupExecutesOnce",
+                ))
+                val names = elements.map { it.getAttribute("name") }
+                val nativeNames = names.filter { it != "minecraft:always_pass" }
+                check(nativeNames.toSet() == expectedNames && names.distinct().size == names.size) {
+                    "Testiarium discovery must match its exact once-only fixture inventory: expected $expectedNames, got $names ($file)"
+                }
+            }
+            if (project.path.startsWith(":testiarium:") && reports.getValue(name) == "client-gametest.xml") {
+                val testCases = document.getElementsByTagName("testcase")
+                check(cases == 1 && skipped == 0 && (testCases.item(0) as org.w3c.dom.Element).getAttribute("name") == "StandaloneGameTests.clientFixture") {
+                    "Expected exactly one passing Testiarium client fixture: $file"
                 }
             }
             logger.lifecycle("Verified GameTest report: {} tests, {} skipped ({})", cases, skipped, file)

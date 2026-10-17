@@ -104,7 +104,10 @@ object Testiarium {
         val environments = tests.map { it.metadata.batch }.distinct().associateWith { batch ->
             registerEnvironment.apply(
                 Identifier.fromNamespaceAndPath(MOD_ID, batch.lowercase(Locale.ROOT)),
-                TestEnvironmentDefinition.AllOf(),
+                TestEnvironmentDefinition.SetGameRules(net.minecraft.world.level.gamerules.GameRuleMap.of().apply {
+                    set(net.minecraft.world.level.gamerules.GameRules.ADVANCE_TIME, false)
+                    set(net.minecraft.world.level.gamerules.GameRules.SPAWN_MOBS, false)
+                }),
             )
         }
         tests.forEach { test ->

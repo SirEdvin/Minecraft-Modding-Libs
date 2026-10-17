@@ -146,8 +146,9 @@ object CctComputerState {
 
         internal fun ok(marker: String) = markers.add(marker)
         internal fun fail(message: String) {
-            markers.add(DONE)
             error = message
+            // Publish completion only after the failure is visible to the server observer.
+            markers.add(DONE)
         }
     }
 
@@ -162,6 +163,10 @@ private class CctTestApi(private val computer: IComputerSystem) : ILuaAPI {
         label = computer.label ?: "#${computer.id}"
         state = CctComputerState.start(label)
         CctComputers.run(label, computer)
+    }
+
+    override fun update() {
+        if (::label.isInitialized) CctComputers.run(label, computer)
     }
 
     override fun shutdown() = Unit

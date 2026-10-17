@@ -25,6 +25,27 @@ private fun GameTestAssertException(message: String) = GameTestAssertException(n
 
 class StandaloneGameTests {
     @GameTest(template = "empty")
+    fun nativeEnvironmentSetupAndTeardown(helper: GameTestHelper) {
+        val environment = helper.level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.TEST_ENVIRONMENT)
+            .getOrThrow(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.TEST_ENVIRONMENT, net.minecraft.resources.Identifier.parse("testiarium:defaultbatch"))).value()
+        check(environment is net.minecraft.gametest.framework.TestEnvironmentDefinition.SetGameRules) { "The native batch must own its rule setup/teardown" }
+        val rules = helper.level.gameRules
+        check(!rules.get(net.minecraft.world.level.gamerules.GameRules.ADVANCE_TIME))
+        check(!rules.get(net.minecraft.world.level.gamerules.GameRules.SPAWN_MOBS))
+        val rule = net.minecraft.world.level.gamerules.GameRules.ADVANCE_WEATHER
+        val original = rules.get(rule)
+        val changed = net.minecraft.world.level.gamerules.GameRuleMap.of().apply { set(rule, !original) }
+        val activation = net.minecraft.gametest.framework.TestEnvironmentDefinition.activate(net.minecraft.gametest.framework.TestEnvironmentDefinition.SetGameRules(changed), helper.level)
+        try {
+            check(rules.get(rule) == !original)
+        } finally {
+            activation.teardown()
+        }
+        check(rules.get(rule) == original) { "Native environment teardown did not restore the rule" }
+        helper.succeed()
+    }
+
+    @GameTest(template = "empty")
     fun passes(helper: GameTestHelper) {
         helper.succeed()
     }
