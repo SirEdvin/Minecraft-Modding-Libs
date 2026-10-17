@@ -23,6 +23,7 @@ object BroccoliumTestiariumFabricTestMod : ModInitializer {
             ItemBridgeContractGameTests::class.java,
             EnergyIntegrationGameTests::class.java,
             NativeBehaviorGameTests::class.java,
+            RegistryCodecGameTests::class.java,
             FabricProviderGameTests::class.java,
         )
         FabricTestiarium.registerTests()

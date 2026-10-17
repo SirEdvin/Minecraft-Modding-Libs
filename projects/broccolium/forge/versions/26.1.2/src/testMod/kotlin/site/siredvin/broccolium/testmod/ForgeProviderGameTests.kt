@@ -102,6 +102,7 @@ class ForgeProviderGameTests {
         val chest = helper.level.getBlockEntity(pos) as net.minecraft.world.Container
         chest.setItem(0, ItemStack(Items.BUCKET))
         val origin = ContainerWrapper(chest)
+        NativeAccessAssertions.nestedBucketRollback(origin)
         val fluid = checkNotNull(ForgeStorageUtils.extractFluidStorageFromItem(helper.level, origin, 0))
         check(fluid.store(AgnosticFluidStack(Fluids.WATER, 1000.0), true).isEmpty)
         check(chest.getItem(0).`is`(Items.BUCKET))

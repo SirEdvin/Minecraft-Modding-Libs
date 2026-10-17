@@ -25,11 +25,23 @@ object NativeFixtures {
     const val MOD_ID = "broccolium_testmod"
     lateinit var block: RegistryEntry<GenericBlockEntityBlock<ObservedEntity>>
     lateinit var type: RegistryEntry<BlockEntityType<ObservedEntity>>
+    lateinit var tooltipItem: RegistryEntry<site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem>
+    var tooltipCalls = 0
+    var tooltipEnabled = true
+    var typeResolutions = 0
 
     fun register(platform: BasePlatform) {
+        val itemId = Identifier.fromNamespaceAndPath(MOD_ID, "tooltip")
+        tooltipItem = platform.registerItem("tooltip", {
+            site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem(
+                net.minecraft.world.item.Item.Properties().setId(ResourceKey.create(Registries.ITEM, itemId)),
+                { tooltipEnabled }, true,
+                java.util.function.Function { tooltipCalls++; listOf(net.minecraft.network.chat.Component.literal("first"), net.minecraft.network.chat.Component.literal("second")) },
+            )
+        })
         val id = Identifier.fromNamespaceAndPath(MOD_ID, "observer")
         block = platform.registerBlock("observer", {
-            GenericBlockEntityBlock({ type }, true, true, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id)))
+            GenericBlockEntityBlock({ typeResolutions++; type }, true, true, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id)))
         })
         type = platform.registerBlockEntity("observer", {
             PlatformToolkit.get().createBlockEntityType(::ObservedEntity, block.get())

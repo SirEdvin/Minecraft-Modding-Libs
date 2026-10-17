@@ -9,6 +9,6 @@ public final class BroccoliumTestiariumForgeTestMod {
     public BroccoliumTestiariumForgeTestMod(IEventBus bus) {
         ForgeNativeFixtures.register(bus);
         bus.addListener(ForgeProviders::register);
-        Testiarium.register(NativeBehaviorGameTests.class, ForgeProviderGameTests.class);
+        Testiarium.register(NativeBehaviorGameTests.class, RegistryCodecGameTests.class, ForgeProviderGameTests.class);
     }
 }

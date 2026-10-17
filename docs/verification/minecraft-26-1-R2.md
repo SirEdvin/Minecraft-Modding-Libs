@@ -41,6 +41,27 @@ Modern inventory in modern-overrides.txt: all target counterparts present except
 Next: registry/supplier codec and text/model proofs, negative bounds/removal coverage, owning unit matrix, deterministic Broccolium datagen twice per target loader and release-resource/bytecode checks. R2 remains incomplete.
 
 ## Ownership boundaries
+## Phase 2 recovery checkpoint — acceptance remains incomplete
+
+Owning nine-node unit campaign exited0: common/Fabric/Forge counts are 175/232/128 on1.20.1, 175/232/128 on1.21.1, 186/240/134 on26.1.2. Fresh versioned XML counts matched testcases with no skips/failures/errors (unit-receipt.json). Target common adds book component/raw page order, translation keys and native model collectors, material textures, all four direction rotations, five flat layers and invalid-layer rejection. Native client codec interface is initialized before its implementing record to avoid vanilla's circular static codec initialization in isolated JUnit; no production suppression.
+
+Native world registered tooltip/lazy hooks and registry entry roundtrip/missing-key rejection execute. Supplier resolution is now measured on the registered block; constructing extra unregistered blocks at runtime is prohibited by frozen NeoForge registries. The original exploratory Forge failure (7zilVj) is retained; it is a fixture lifecycle error, not evidence that registry lookup failed. Registered fixture passed afterward (I2hrvB/tUC0lb).
+
+World-origin NeoForge ItemAccess bucket nested commit/outer abort verifies exact custom-name/component-removal restoration using a test-only Java bridge to Kotlin-internal code. No bridge is published.
+
+Broccolium datagen ran twice on each target loader: Fabric runDatagen and NeoForge runClientData/runServerData, all explicit300s Xvfb wrapper commands exit0. Four generated language JSON files have identical pass1/pass2 hashes (datagen-pass1.json/datagen-pass2.json); resources are generated, not hand-authored. Target JAR tasks exit0 (release-jars.log). Exact packaged access/bytecode and compiled-fixture exclusion inspection is still pending.
+
+Old Fabric storage runs on1.20.1 and1.21.1 both exit0 (fWG6x5/hgK5xz), no skips. Latest target suites before the additional entity fixture passed (I2hrvB/tUC0lb). Additional complete player/minecart inventory fixture is being exercised; its first compile failed only on native mock-player deprecation under-Werror, now suppressed at that test-only native call. This is not a new behavioral pass until rerun.
+
+Remaining acceptance before completion: parse final exact native inventories/reports, finish positive provider invalid-bound/removal/nullable-side coverage and sibling stale-provider audit; release seven-rule resources/transformed visibility and LimitedInventory bytecode checks; review/hash generated resources and modern overrides into durable evidence; formatting/source-hash checks; cumulative local commit and evidence attachment. Full copied-world/process/network/visual gates remain downstream, not waived. R2 must not complete or release R3 from this checkpoint.
+
+Latest post-checkpoint execution: Fabric ZsUoaO exit0 with36 cases/zero skips. Forge ssxNKE exit1 with12 cases/one required failure in `NativeBehaviorGameTests.entityInventoriesExposeFirstAndLastNativeSlots` (generic Check failed). All other11 Forge cases pass. Added precise minecart/player assertion messages; these message-only edits are not yet rerun. Do not treat the earlier green11-case report as current acceptance. Investigate native entity capability precedence vs complete player inventory before choosing a production change; no cause is established yet.
+
+checkpoint-receipt.json records exact four native reports including the failure, three target JAR hashes and packaged access text. Compiled testMod class identities are excluded from each owning release JAR. javap confirms target LimitedInventory is public/non-final. Visibility checks for every transformed native access target and common-fixture identity checks remain pending. Native receipts intentionally retain failing state.
+
+Exact next command: scripts/verification/run-gametest.sh :broccolium:forge:26.1.2:runStorageGameTest, then read the new precise failing assertion and trace native entity capability/provider selection. Use existing work/evidence rather than repeat reconnaissance.
+
+## Downstream boundaries
 
 R3 plugins depend on this completed baseline. Full publications/consumers remain R5; production server/save/multiplayer R6; full client visuals R7. This checkpoint does not release downstream tasks.
 

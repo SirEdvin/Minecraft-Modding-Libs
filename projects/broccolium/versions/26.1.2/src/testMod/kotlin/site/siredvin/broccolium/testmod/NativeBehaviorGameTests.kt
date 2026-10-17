@@ -30,6 +30,37 @@ object NativeTestStructures {
 @TestGroup("broccolium_native")
 class NativeBehaviorGameTests {
     @GameTest(template = "empty")
+    fun entityInventoriesExposeFirstAndLastNativeSlots(helper: GameTestHelper) = helper.immediate {
+        val cart = checkNotNull(EntityType.CHEST_MINECART.create(helper.level, EntitySpawnReason.COMMAND))
+        cart.setPos(helper.absolutePos(BlockPos(1, 1, 1)).center)
+        helper.level.addFreshEntity(cart)
+        try {
+            cart.setItem(0, ItemStack(Items.DIAMOND, 2))
+            cart.setItem(cart.containerSize - 1, ItemStack(Items.EMERALD, 7))
+            val storage = checkNotNull(AgnosticItemStorageLookup.extractFromEntity(helper.level, cart, null))
+            check(storage.getContent().asSequence().sumOf { it.count } == 9) { "Minecart lookup omitted native cargo slots" }
+            check(storage.take({ it.`is`(Items.EMERALD) }, 10, false).count == 7) { "Minecart last-slot extraction failed" }
+            check(cart.getItem(0).count == 2) { "Minecart unrelated first slot changed" }
+        } finally {
+            cart.discard()
+        }
+        @Suppress("DEPRECATION") // Native inventory fixture only; no login/network claim.
+        val player = helper.makeMockServerPlayerInLevel()
+        try {
+            val inventory = player.inventory
+            inventory.setItem(0, ItemStack(Items.DIAMOND, 2))
+            inventory.setItem(inventory.containerSize - 1, ItemStack(Items.EMERALD, 7))
+            val storage = checkNotNull(AgnosticItemStorageLookup.extractFromEntity(helper.level, player, Direction.NORTH))
+            check(storage.getContent().asSequence().sumOf { it.count } == 9) { "Player lookup omitted native inventory slots (size=${inventory.containerSize})" }
+            check(storage.take({ it.`is`(Items.EMERALD) }, 10, false).count == 7) { "Player last-slot extraction failed" }
+            check(inventory.getItem(0).count == 2) { "Player unrelated first slot changed" }
+        } finally {
+            player.inventory.clearContent()
+            player.discard()
+        }
+    }
+
+    @GameTest(template = "empty")
     fun observerUsesNativeBlockOrientationAndRemovalOrder(helper: GameTestHelper) {
         val pos = helper.absolutePos(BlockPos(1, 1, 1))
         val block = NativeFixtures.block.get()

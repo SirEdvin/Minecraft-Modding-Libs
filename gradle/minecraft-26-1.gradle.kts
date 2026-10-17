@@ -216,12 +216,21 @@ if (library == "broccolium") {
         val report = layout.buildDirectory.file("test-results/storage-gametest.xml").get().asFile.absolutePath
         val structures = rootProject.file("projects/testiarium/src/testMod/resources/gameteststructures").absolutePath
         val tags = "broccolium_reverse,broccolium_slots,broccolium_integrations,broccolium_native"
+        val generated = rootProject.file("projects/broccolium/$loader/versions/$minecraftVersion/src/generated/resources")
+        sourceSets.main.get().resources.srcDir(generated)
         if (loader == "fabric") extensions.configure<LoomGradleExtensionAPI> {
             mods {
                 register("broccolium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
                 register("broccolium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
                 register("testiarium") { sourceSet(harnessSets.named("main").get()); sourceSet(coreHarness.named("main").get()) }
                 register("testiarium_testmod") { sourceSet(harnessSets.named("testMod").get()); sourceSet(coreHarness.named("testMod").get()) }
+            }
+            runs.create("datagen") {
+                client(); source(sourceSets.main.get())
+                property("fabric-api.datagen", "true")
+                property("fabric-api.datagen.modid", "broccolium")
+                property("fabric-api.datagen.output-dir", generated.absolutePath)
+                runDir("run/datagen")
             }
             runs.create("storageGameTest") {
                 server(); source(testMod)
@@ -237,6 +246,13 @@ if (library == "broccolium") {
             val fixture = mods.create("broccolium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
             val harness = mods.create("testiarium") { sourceSet(harnessSets.named("main").get()); sourceSet(coreHarness.named("main").get()) }
             val generic = mods.create("testiarium_testmod") { sourceSet(harnessSets.named("testMod").get()); sourceSet(coreHarness.named("testMod").get()) }
+            for (clientData in listOf(true, false)) runs.create(if (clientData) "clientData" else "serverData") {
+                if (clientData) clientData() else serverData()
+                sourceSet.set(sourceSets.main.get())
+                loadedMods.add(production)
+                programArguments.addAll("--mod", "broccolium", "--output", generated.absolutePath)
+                gameDirectory = file("run/datagen")
+            }
             runs.create("storageGameTest") {
                 type = "gameTestServer"
                 sourceSet.set(testMod)
