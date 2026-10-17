@@ -151,6 +151,19 @@ if (loader != "common") {
             compileClasspath += commonSourceSets.named("testFixtures").get().output
             runtimeClasspath += commonSourceSets.named("testFixtures").get().output
         }
+        if (loader == "forge") {
+            extensions.configure<NeoForgeExtension> {
+                val tested = mods.create(library) {
+                    sourceSet(sourceSets.main.get())
+                    sourceSet(commonSourceSets.named("main").get())
+                    sourceSet(commonSourceSets.named("testFixtures").get())
+                }
+                unitTest {
+                    enable()
+                    testedMod.set(tested)
+                }
+            }
+        }
     }
     tasks.named<Jar>("jar") {
         from(commonProject.extensions.getByType<SourceSetContainer>().named("main").map { it.output })
