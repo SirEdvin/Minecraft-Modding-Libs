@@ -1,6 +1,5 @@
 package site.siredvin.broccolium.test
 
-import com.google.gson.JsonObject
 import com.mojang.serialization.JsonOps
 import net.minecraft.client.data.models.BlockModelGenerators
 import net.minecraft.client.data.models.ItemModelGenerators
@@ -23,8 +22,8 @@ import site.siredvin.broccolium.modules.data.model.horizontalOrientedModel
 import site.siredvin.broccolium.modules.data.model.toYAngle
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 @WithMinecraft
 class ModelCollectorTests {
@@ -37,8 +36,12 @@ class ModelCollectorTests {
         val models = linkedMapOf<Identifier, ModelInstance>()
         val items = mutableListOf<Item>()
         val output = object : ItemModelOutput {
-            override fun accept(item: Item, model: ItemModel.Unbaked, properties: ClientItem.Properties) { items.add(item) }
-            override fun copy(source: Item, target: Item) { error("Unexpected model copy") }
+            override fun accept(item: Item, model: ItemModel.Unbaked, properties: ClientItem.Properties) {
+                items.add(item)
+            }
+            override fun copy(source: Item, target: Item) {
+                error("Unexpected model copy")
+            }
         }
         val blocks = BlockModelGenerators(definitions::add, output) { id, model -> check(models.put(id, model) == null) }
         genericBlock(blocks, Blocks.STONE)

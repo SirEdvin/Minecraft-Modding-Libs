@@ -1,32 +1,22 @@
 package site.siredvin.broccolium.test
 
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.contents.TranslatableContents
 import net.minecraft.resources.Identifier
-import net.minecraft.resources.ResourceKey
 import net.minecraft.server.network.Filterable
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.item.component.WritableBookContent
 import net.minecraft.world.item.component.WrittenBookContent
 import org.junit.jupiter.api.Test
-import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem
 import site.siredvin.broccolium.modules.base.util.TextBookUtils
 import site.siredvin.broccolium.modules.base.util.itemExtra
 import site.siredvin.broccolium.modules.base.util.itemTooltip
 import site.siredvin.broccolium.modules.base.util.pocketAdjectiveComponent
 import site.siredvin.broccolium.modules.base.util.turtleAdjectiveComponent
 import java.util.Optional
-import java.util.function.Function
-import java.util.function.Supplier
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 @WithMinecraft
 class TargetTextTests {
@@ -52,6 +42,5 @@ class TargetTextTests {
         val id = Identifier.fromNamespaceAndPath("example", "fixture")
         assertEquals("turtle.example.fixture", (turtleAdjectiveComponent(id).contents as TranslatableContents).key)
         assertEquals("pocket.example.fixture", (pocketAdjectiveComponent(id).contents as TranslatableContents).key)
-
     }
 }

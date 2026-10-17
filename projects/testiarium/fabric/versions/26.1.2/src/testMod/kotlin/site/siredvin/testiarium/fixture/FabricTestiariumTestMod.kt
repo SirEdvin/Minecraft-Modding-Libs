@@ -8,9 +8,11 @@ import site.siredvin.testiarium.Testiarium
 
 object FabricTestiariumTestMod : ModInitializer {
     override fun onInitialize() {
-        Testiarium.register(StandaloneGameTests::class.java)
-        // The CCT entrypoint contributes its classes before the single static-registry scan.
-        if (!FabricLoader.getInstance().isModLoaded("testiarium_cct_testmod")) FabricTestiarium.registerTests()
+        if (!java.lang.Boolean.getBoolean("testiarium.fixture.consumer")) {
+            Testiarium.register(StandaloneGameTests::class.java)
+            // Consumer and CCT entrypoints own their single static-registry scan.
+            if (!FabricLoader.getInstance().isModLoaded("testiarium_cct_testmod")) FabricTestiarium.registerTests()
+        }
         CommandRegistrationCallback.EVENT.register { dispatcher, context, _ -> FixtureCommands.register(dispatcher, context) }
     }
 }

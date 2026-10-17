@@ -18,6 +18,7 @@ import site.siredvin.broccolium.modules.storage.item.api.*
 
 object AgnosticItemStorageLookup : BaseLookup<AgnosticStorage<ItemStack, Int>>() {
     override fun extractFromEntity(level: Level, entity: Entity, direction: Direction?): AgnosticStorage<ItemStack, Int>? {
+        if (entity.isRemoved) return null
         val result = super.extractFromEntity(level, entity, direction)
         if (result != null) return result
         if (entity is Player) return ContainerWrapper(entity.inventory)

@@ -234,6 +234,7 @@ if (library == "broccolium") {
             }
             runs.create("storageGameTest") {
                 server(); source(testMod)
+                property("testiarium.fixture.consumer", "true")
                 property("fabric-api.gametest", "true")
                 property("testiarium.tags", tags)
                 property("testiarium.structures", structures)

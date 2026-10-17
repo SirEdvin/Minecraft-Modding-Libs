@@ -14,7 +14,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler
-import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler
 import net.neoforged.neoforge.transfer.transaction.Transaction
 import site.siredvin.broccolium.modules.storage.ForgeStorageUtils
@@ -54,6 +53,18 @@ object ForgeProviders {
 @TestGroup("broccolium_native")
 class ForgeProviderGameTests {
     @GameTest(template = "empty")
+    fun completePlayerEquipmentRetainsNativeRulesAndNestedRollback(helper: GameTestHelper) = helper.immediate {
+        @Suppress("DEPRECATION")
+        val player = helper.makeMockServerPlayerInLevel()
+        try {
+            NativeAccessAssertions.completePlayerRollback(player)
+        } finally {
+            player.inventory.clearContent()
+            player.discard()
+        }
+    }
+
+    @GameTest(template = "empty")
     fun worldPositiveProvidersConserveAndRejectRemoved(helper: GameTestHelper) = helper.immediate {
         val pos = helper.absolutePos(BlockPos(1, 1, 1))
         helper.level.setBlockAndUpdate(pos, NativeFixtures.block.get().defaultBlockState())
@@ -75,6 +86,26 @@ class ForgeProviderGameTests {
             check(energy.getContent().asSequence().sumOf { it.amount } == 0L)
             check(energy.store(AgnosticEnergyStack(Energies.FORGE, 150), false).amount == 50L)
             check(energy.take({ true }, Long.MAX_VALUE, false).amount == 100L)
+            for (invalid in listOf(-1.0, Double.NaN, Double.POSITIVE_INFINITY)) {
+                try {
+                    fluid.take({ true }, invalid, false)
+                    error("Invalid native fluid limit accepted")
+                } catch (_: IllegalArgumentException) {
+                    check(fluid.getContent().asSequence().sumOf { it.amount } == 0.0)
+                }
+            }
+            try {
+                items.take(1, -1, 0, { true }, false)
+                error("Invalid native item slot accepted")
+            } catch (_: IllegalArgumentException) {
+                check(items.getContent().asSequence().all { it.isEmpty })
+            }
+            try {
+                energy.take({ true }, -1, false)
+                error("Invalid native energy limit accepted")
+            } catch (_: IllegalArgumentException) {
+                check(energy.firstEnergy.amount == 0L)
+            }
         }
         check(ForgeStorageUtils.extractStorageFromBlock(helper.level, pos, entity, Direction.DOWN) == null)
         check(ForgeStorageUtils.extractFluidStorageFromBlock(helper.level, pos, entity, Direction.DOWN) == null)

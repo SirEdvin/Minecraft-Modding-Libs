@@ -35,13 +35,20 @@ object NativeFixtures {
         tooltipItem = platform.registerItem("tooltip", {
             site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem(
                 net.minecraft.world.item.Item.Properties().setId(ResourceKey.create(Registries.ITEM, itemId)),
-                { tooltipEnabled }, true,
-                java.util.function.Function { tooltipCalls++; listOf(net.minecraft.network.chat.Component.literal("first"), net.minecraft.network.chat.Component.literal("second")) },
+                { tooltipEnabled },
+                true,
+                java.util.function.Function {
+                    tooltipCalls++
+                    listOf(net.minecraft.network.chat.Component.literal("first"), net.minecraft.network.chat.Component.literal("second"))
+                },
             )
         })
         val id = Identifier.fromNamespaceAndPath(MOD_ID, "observer")
         block = platform.registerBlock("observer", {
-            GenericBlockEntityBlock({ typeResolutions++; type }, true, true, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id)))
+            GenericBlockEntityBlock({
+                typeResolutions++
+                type
+            }, true, true, BlockBehaviour.Properties.of().setId(ResourceKey.create(Registries.BLOCK, id)))
         })
         type = platform.registerBlockEntity("observer", {
             PlatformToolkit.get().createBlockEntityType(::ObservedEntity, block.get())
@@ -49,7 +56,9 @@ object NativeFixtures {
     }
 }
 
-class ObservedEntity(pos: BlockPos, state: BlockState) : MutableNBTBlockEntity(NativeFixtures.type.get(), pos, state), IObservingBlockEntity {
+class ObservedEntity(pos: BlockPos, state: BlockState) :
+    MutableNBTBlockEntity(NativeFixtures.type.get(), pos, state),
+    IObservingBlockEntity {
     val cargo = SimpleContainer(ItemStack(Items.DIAMOND, 4))
     val neighbours = mutableListOf<Pair<Block, Orientation?>>()
     var destroys = 0
@@ -61,7 +70,9 @@ class ObservedEntity(pos: BlockPos, state: BlockState) : MutableNBTBlockEntity(N
         neighbours.add(neighbourBlock to orientation)
     }
 
-    override fun blockTick() { ticks++ }
+    override fun blockTick() {
+        ticks++
+    }
 
     override fun destroy() {
         destroys++

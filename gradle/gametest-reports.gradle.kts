@@ -46,6 +46,45 @@ subprojects {
             }
             if (reports.getValue(name) == "storage-gametest.xml") {
                 check(skipped == 0) { "Storage conservation regressions must not be skipped: $file" }
+                val expected = mutableSetOf<String>()
+                fun expect(testClass: String, vararg methods: String) {
+                    methods.mapTo(expected) { "$testClass.$it" }
+                }
+                if (project.path.startsWith(":broccolium:fabric:")) {
+                    expect("ReverseItemBridgeGameTests", "occupiedInsertCommit", "occupiedExtractCommit",
+                        "occupiedInsertAbort", "occupiedExtractAbort", "nestedInsertCommitOuterAbort",
+                        "nestedExtractCommitOuterAbort", "differentDataCannotMergeIntoOccupiedSlot")
+                    expect("ItemBridgeSlotGameTests", "getSlotZeroPreservesCountAndData",
+                        "explicitSourceZeroDoesNotSpillIntoNextSlot", "explicitSourceZeroDoesNotSkipRejectedVariant",
+                        "explicitDestinationZeroDoesNotSpillIntoNextSlot", "explicitDestinationOnNonSlottedSinkUsesDocumentedFallback")
+                    expect("ItemBridgeContractGameTests", "emptySlotInsertionCommitAndAbort", "fullExtractionCommitAndAbort",
+                        "variantReplacementCommitAndNestedAbort", "detachedGetterSupportsCommitAndRollback",
+                        "rollbackBypassesInsertionPolicy", "replacementCopiesCallerStack", "insertionHonorsPerSlotLimit",
+                        "unsupportedReverseAdapterRefusesBeforeWrites", "oversizedStacksRefusedWithoutTruncation",
+                        "nativeSlotCommitAbortAndNestedRollback", "nestedAbortPreservesOuterCommit")
+                    expect("EnergyIntegrationGameTests", "absentEnergyProvidersReturnNullWithoutChangingItems")
+                }
+                if (project.name == "26.1.2") {
+                    expect("NativeBehaviorGameTests", "entityInventoriesExposeFirstAndLastNativeSlots",
+                        "horseCargoExcludesEquipmentAndKeepsEveryCargoSlot", "nativeChunkClearDoesNotDestroyObserver",
+                        "nativeSaveRetainsRootPayloadAndRegistryType", "observerUsesNativeBlockOrientationAndRemovalOrder",
+                        "removedProvidersDoNotResolveReplacementOrDiscardedCargo", "removedWorldChestIsNotExposed",
+                        "worldChestLookupConservesItems")
+                    expect("RegistryCodecGameTests", "registeredTooltipHooksAreLazyAndDoNotLoadClientOnServer",
+                        "registryEntryCodecResolvesRealSupplierAndRejectsUnknown")
+                    if (project.path.contains(":fabric:")) {
+                        expect("FabricProviderGameTests", "worldBucketReplacementConservesNativeUnits",
+                            "worldPositiveFluidEnergyProvidersAndNestedRollback")
+                    } else {
+                        expect("ForgeProviderGameTests", "nativeBucketProviderReplacesWorldOriginAndRejectsUnsupported",
+                            "worldPositiveProvidersConserveAndRejectRemoved", "completePlayerEquipmentRetainsNativeRulesAndNestedRollback")
+                    }
+                }
+                val nodes = document.getElementsByTagName("testcase")
+                val names = (0 until nodes.length).map { (nodes.item(it) as org.w3c.dom.Element).getAttribute("name") }
+                check(names.filter { it != "minecraft:always_pass" }.toSet() == expected && names.distinct().size == names.size) {
+                    "Storage discovery must match its exact once-only fixture inventory: expected $expected, got $names ($file)"
+                }
             }
             if (project.path.startsWith(":testiarium:") && reports.getValue(name) in setOf("gametest.xml", "cct-gametest.xml")) {
                 // Negative fixtures must fail for the intended reason, not silently pass or

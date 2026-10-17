@@ -1,6 +1,45 @@
 # R2 — Broccolium native behavior, access and data parity
 
-Status: INCOMPLETE; initial reconnaissance checkpoint. No R2 acceptance is claimed.
+Status: COMPLETE — card-local R2 behavior/access/data milestone verified. Historical incomplete checkpoints below are retained as chronology, not the final result. Full migration/release acceptance remains with R3–R7/F.
+
+## Final acceptance summary
+
+Target remains exactly Minecraft26.1.2: Fabric Loader0.19.5/API0.155.3+26.1.2, NeoForge26.1.2.122, Loom1.17.11/MDG2.0.142, KGP2.4.0 and Java25.0.3+9. Gradle9.5.0 and Stonecutter0.9.8 retained; old Java17/21 and canonical1.20.1 controllers/settings/properties are unchanged from R1. No version bump, disabled integration, push, primary merge, release or remote publication.
+
+The R2 evidence ZIP contains `final-receipt.json` (exact paths, testcase identities, skip maps, SHA256 source/artifact/report hashes), `modern-audit-inventory.json`, full modern source diffs, commands/logs, real failed regression reports, generated-resource hashes and the receipt-verification script. The cumulative local commit and durable artifact path are recorded in the task completion handoff.
+
+| Version | Common unit | Fabric unit | Forge-family unit |
+| --- | ---: | ---: | ---: |
+| 1.20.1 | 175 | 232 | 128 |
+| 1.21.1 | 175 | 233 | 128 |
+| 26.1.2 | 186 | 241 | 135 |
+
+Fresh executed versioned XML:1,633 unit cases, zero failures/errors/skips. No stale unversioned reports were counted. Final unit executions are in `final-units-jars-guards.log`, `final-common-guards.log` and `final-atomic-units-jars.log`; the final six affected nodes were refreshed after the atomic-save fix. All exits0.
+
+| Executed native command (`scripts/verification/run-gametest.sh`) | Cases | Skips | Final log suffix |
+| --- | ---: | ---: | --- |
+| `:broccolium:fabric:1.20.1:runStorageGameTest` | 24 | 0 | lsAvSz |
+| `:broccolium:fabric:1.21.1:runStorageGameTest` | 24 | 0 | bVR4nY |
+| `:broccolium:fabric:26.1.2:runStorageGameTest` | 37 | 0 | ncPzFr |
+| `:broccolium:forge:26.1.2:runStorageGameTest` | 14 | 0 | HqCIMH |
+| `:testiarium:fabric:26.1.2:runServer` | 14 | 3 intentional | BqrVHE |
+| `:testiarium:fabric:26.1.2:runCctGameTest` | 18 | 4 intentional | wCOZWE |
+
+All native commands exited0 with exact once-only discovery guards. Broccolium totals99 passing cases:97 owning cases plus2 vanilla `minecraft:always_pass` cases, zero skipped. Testiarium regression skips preserve exact requiredFailure/optionalFailure/failFastFailureCannotBecomeSuccess sentinels, plus luaFailureCannotBecomeSuccess only in CCT; these are not storage skips. Both report guards were executed via `r2StorageGuardProbe r1ReportGuardProbe` with their checked-in init scripts:24 storage mutation scenarios and15 Testiarium scenarios passed, including rejection of an always-pass-only storage report. Probes are guard evidence, not simulated Minecraft acceptance.
+
+### Access, modern overrides and resources
+
+- Audited75 modern override rows:73 direct target counterparts, one new1.21 test covered by the equivalent target native codec test, and the old package-private Forge BlockEntityTypeBuilder replaced by the native constructor in target ForgeInnerPlatformToolkit. Each row has source hashes, disposition and proof boundary; the complete code diff was reviewed, not merely counted. Native observer/block-entity registration executes that constructor on NeoForge.
+- Both loader release JARs contain all seven exact common access members in official-name AW/AT form. Fabric metadata selects its owning merged widener. `FabricTargetAccessTests` and `ForgeTargetAccessTests` check the actual loader-transformed public field/method modifiers and descriptors without reflection access overrides. Both pass; XML stdout preserves the seven-member check. `javap` independently confirms public/non-final LimitedInventory in the release common JAR.
+- Three target owning JARs built successfully, contain only class-major69 classes, and exclude actual compiled test/testMod/testFixtures class identities (54 common,91 Fabric,78 Forge identities checked). This is owning binary/access/fixture isolation, not the complete publication/consumer contract owned by R5.
+- Datagen ran twice again against the final candidate: `timeout --foreground 300s xvfb-run --auto-servernum ./gradlew :broccolium:fabric:26.1.2:runDatagen :broccolium:forge:26.1.2:runClientData :broccolium:forge:26.1.2:runServerData --no-daemon --console=plain`. Both exits0; `final-datagen-3.log`/`final-datagen-4.log`. Each language JSON matches its counterpart across loaders; all four resources match their respective hashes across all four recorded passes. JSON/keys/values reviewed; caches excluded, generated source never hand-edited.
+- Root Spotless cannot resolve this linked worktree's Git metadata. A standalone exact-source snapshot exposed inherited target formatting violations outside R2 (e.g. FabricMenuOpeningData/FabricPlatformToolkit/FabricRegistryWrapper); these remain the existing R5 global gate. The scoped R2 Java/Kotlin source check passes using the unchanged formatter in that snapshot (`final-r2-spotless.log`); no production lint/warning policy was disabled. Shared Gradle convention formatting was not swept into this milestone. `git diff --check` passes.
+
+### Last causal regression and compatibility boundaries
+
+Native target DBTVpK demonstrated `Encode failure partially mutated caller NBT`; old1.21 `old-fluid-encode-red-2.xml` independently demonstrated added fluid/amount keys after failed encoding. Stage registry ID/component encoding before writing the supplied CompoundTag in both component-bearing versions. Target native checks also roundtrip a custom-name patch with explicit ENCHANTMENTS removal. The first exploratory old assertion failed only because Kotlin test contributors crossed loader classloaders; switched that test to the established JUnit Assertions convention, then recorded the genuine behavioral red. No failures were relabeled as passes.
+
+R2 preserves old positional observer callbacks, target exact nullable Orientation/block callbacks, root saved payload layout and registry IDs. Native unload proof uses a task-owned detached chunk's real cleanup, not completed disk unload/reload. Mock players prove native inventory/callback behavior, not real network negotiation. Callback side effects are not claimed transactional. Mutable runtime values remain ItemStack; no persistence ownership or public coordinates changed. Full fake-player/upgrade/plugin behavior remains R3, dependent content/recipes R4, full builds/publications/consumers/global lint R5, copied saves/real server processes/multiplayer R6, and actual client visual/integration behavior R7. No campaign-wide compatibility pass is claimed here.
 
 ## Baseline and authorization
 
@@ -62,6 +101,16 @@ checkpoint-receipt.json records exact four native reports including the failure,
 Exact next command: scripts/verification/run-gametest.sh :broccolium:forge:26.1.2:runStorageGameTest, then read the new precise failing assertion and trace native entity capability/provider selection. Use existing work/evidence rather than repeat reconnaissance.
 
 ## Downstream boundaries
+
+## Phase 3 resume — native regressions closed; bounded acceptance pending
+
+- Reproduced the saved player failure in FCCVBs: NeoForge's default `PlayerInventoryWrapper.resize` explicitly stops at `Inventory.SLOT_BODY_ARMOR`, omitting body/saddle slots from the native43-slot inventory. Source evidence is the pinned26.1.2.122 sources JAR, CapabilityHooks and PlayerInventoryWrapper. Extend only that default provider with cached transactional journals for omitted slots; preserve existing armor validation/curse rules and custom-provider precedence. Native nested commit/outer abort now verifies exact component removal/custom name/count restoration and shared journals. Existing native equipment callbacks remain on root commit.
+- A resumed Fabric run mEJQuB returned0 but contained only `minecraft:always_pass`; it is NOT acceptance. The generic Testiarium testmod can scan before Broccolium registration. Broccolium now explicitly owns scanning via a test-only consumer property; standalone/CCT behavior defaults stay unchanged. Storage report guards now require exact once-only inventories on all supported storage routes, not merely a nonempty report.
+- Real native red k6F63z:37 cases, removed fluid block entity incorrectly resolved a replacement provider. Real native red rsEkl8:13 cases, discarded minecart exposed stale cargo. Target fluid/energy common lookups now reject removed block entities before providers; item lookup and all three NeoForge entity adapter paths reject removed entities. Old-version implementations remain unchanged.
+- Latest native green8nqHqu/YxpT83: both commands exit0, exact discovery guards pass. Final counts/identities are to be parsed into the final receipt; no result is inferred from process status alone.
+- Added native Forge invalid item slot, fluid negative/NaN/infinite and energy negative-limit no-mutation checks. Existing nullable-side/provider rejection, native buckets and rollback remain green.
+
+Next: verify seven packaged access rules and actual transformed native modifiers on both loaders; run narrow refreshed units, standalone/CCT fixture regressions and storage-guard rejection probes; reconcile reports, audit generated resources/source hashes, local cumulative commit and durable evidence attachment.
 
 R3 plugins depend on this completed baseline. Full publications/consumers remain R5; production server/save/multiplayer R6; full client visuals R7. This checkpoint does not release downstream tasks.
 

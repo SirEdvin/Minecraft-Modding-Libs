@@ -1,22 +1,7 @@
 package site.siredvin.broccolium.testmod
 
-//? if >=26.1 {
-/*import site.siredvin.broccolium.testmod.NativeTestStructures as FabricGameTest
-*///?} else {
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest
-//?}
-//? if >=26.1 {
-/*import net.fabricmc.fabric.api.transfer.v1.item.ContainerStorage as InventoryStorage
-*///?} else {
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
-//?}
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-//? if >=26.1 {
-/*import site.siredvin.testiarium.api.GameTest
-*///?} else {
-import net.minecraft.gametest.framework.GameTest
-//?}
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.item.ItemStack

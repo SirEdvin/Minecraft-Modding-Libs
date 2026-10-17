@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.gametest.framework.GameTestHelper
-
 import net.minecraft.world.entity.EntitySpawnReason
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.EquipmentSlot
@@ -18,6 +17,8 @@ import net.minecraft.world.level.chunk.LevelChunk
 import net.minecraft.world.level.redstone.Orientation
 import net.minecraft.world.phys.AABB
 import site.siredvin.broccolium.modules.base.block.FacingBlockEntityBlock
+import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStorageLookup
+import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStorageLookup
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
 import site.siredvin.testiarium.api.GameTest
 import site.siredvin.testiarium.api.TestGroup
@@ -29,6 +30,28 @@ object NativeTestStructures {
 
 @TestGroup("broccolium_native")
 class NativeBehaviorGameTests {
+    @GameTest(template = "empty")
+    fun removedProvidersDoNotResolveReplacementOrDiscardedCargo(helper: GameTestHelper) = helper.immediate {
+        val pos = helper.absolutePos(BlockPos(1, 1, 1))
+        val state = NativeFixtures.block.get().defaultBlockState()
+        helper.level.setBlockAndUpdate(pos, state)
+        val old = checkNotNull(helper.level.getBlockEntity(pos))
+        checkNotNull(AgnosticFluidStorageLookup.extractFromBlock(helper.level, pos, old, null))
+        checkNotNull(AgnosticEnergyStorageLookup.extractFromBlock(helper.level, pos, old, null))
+        helper.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState())
+        helper.level.setBlockAndUpdate(pos, state)
+        check(old.isRemoved)
+        check(AgnosticItemStorageLookup.extractFromBlock(helper.level, pos, old, null) == null)
+        check(AgnosticFluidStorageLookup.extractFromBlock(helper.level, pos, old, null) == null) { "Removed fluid entity resolved replacement provider" }
+        check(AgnosticEnergyStorageLookup.extractFromBlock(helper.level, pos, old, null) == null) { "Removed energy entity resolved replacement provider" }
+        val cart = checkNotNull(EntityType.CHEST_MINECART.create(helper.level, EntitySpawnReason.COMMAND))
+        cart.setPos(helper.absolutePos(BlockPos(1, 1, 1)).center)
+        helper.level.addFreshEntity(cart)
+        cart.setItem(0, ItemStack(Items.DIAMOND, 2))
+        cart.discard()
+        check(AgnosticItemStorageLookup.extractFromEntity(helper.level, cart, null) == null) { "Discarded entity exposed stale cargo" }
+    }
+
     @GameTest(template = "empty")
     fun entityInventoriesExposeFirstAndLastNativeSlots(helper: GameTestHelper) = helper.immediate {
         val cart = checkNotNull(EntityType.CHEST_MINECART.create(helper.level, EntitySpawnReason.COMMAND))

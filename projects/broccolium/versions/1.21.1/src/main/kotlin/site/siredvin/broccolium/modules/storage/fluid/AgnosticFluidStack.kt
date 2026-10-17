@@ -65,14 +65,11 @@ data class AgnosticFluidStack(val fluid: Fluid, var amount: Double, var componen
     }
 
     fun save(targetTag: CompoundTag): CompoundTag {
-        targetTag.putString("fluid", PlatformRegistries.FLUIDS.getKey(fluid).toString())
+        val fluidId = PlatformRegistries.FLUIDS.getKey(fluid).toString()
+        val encodedComponents = if (components.isEmpty) null else DataComponentUtil.patchToNBT(components)
+        targetTag.putString("fluid", fluidId)
         targetTag.putDouble("amount", amount)
-        if (!components.isEmpty) {
-            val potentialTag = DataComponentUtil.patchToNBT(components)
-            if (potentialTag != null) {
-                targetTag.put("tag", potentialTag)
-            }
-        }
+        if (encodedComponents != null) targetTag.put("tag", encodedComponents)
         return targetTag
     }
 }
