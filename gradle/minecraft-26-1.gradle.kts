@@ -84,6 +84,7 @@ dependencies {
         implementation("net.fabricmc:fabric-loader:0.19.5")
         implementation("net.fabricmc.fabric-api:fabric-api:0.155.3+26.1.2")
         implementation("net.fabricmc:fabric-language-kotlin:1.13.12+kotlin.2.4.0")
+        testImplementation("net.fabricmc:fabric-loader-junit:0.19.5")
         api("teamreborn:energy:5.0.0")
     } else if (loader == "forge") {
         implementation("thedarkcolour:kotlinforforge-neoforge:6.4.0")
@@ -109,6 +110,7 @@ dependencies {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+
 }
 
 if (library == "broccolium" && loader == "common") {
@@ -142,7 +144,14 @@ tasks.named<ProcessResources>("processResources") {
 if (loader != "common") {
     val commonProject = project(":$library:$minecraftVersion")
     evaluationDependsOn(commonProject.path)
-    dependencies.add("compileOnly", commonProject)
+    val commonSourceSets = commonProject.extensions.getByType<SourceSetContainer>()
+    dependencies.add("implementation", commonSourceSets.named("main").map { it.output })
+    if (library == "broccolium") {
+        sourceSets.test {
+            compileClasspath += commonSourceSets.named("testFixtures").get().output
+            runtimeClasspath += commonSourceSets.named("testFixtures").get().output
+        }
+    }
     tasks.named<Jar>("jar") {
         from(commonProject.extensions.getByType<SourceSetContainer>().named("main").map { it.output })
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
