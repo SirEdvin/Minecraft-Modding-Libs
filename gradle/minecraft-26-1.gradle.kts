@@ -97,7 +97,7 @@ dependencies {
     if (library == "peripheralium") {
         api(project(":tweakium${if (loader == "common") "" else ":$loader"}:$minecraftVersion"))
     }
-    if (library == "tweakium" || library == "testiarium") {
+    if (library == "tweakium") {
         if (loader == "common") {
             for (part in listOf("common", "common-api", "core")) {
                 compileOnly("cc.tweaked:cc-tweaked-$minecraftVersion-$part:1.120.0")
@@ -181,6 +181,123 @@ if (loader != "common") {
     tasks.named<Jar>("jar") {
         from(commonProject.extensions.getByType<SourceSetContainer>().named("main").map { it.output })
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+}
+
+if (library == "testiarium") {
+    val common = if (loader == "common") project else project(":testiarium:$minecraftVersion").also { evaluationDependsOn(it.path) }
+    val commonSets = common.extensions.getByType<SourceSetContainer>()
+    val testMod = sourceSets.create("testMod") {
+        compileClasspath += sourceSets.main.get().compileClasspath + sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath + sourceSets.main.get().output
+        if (loader != "common") {
+            compileClasspath += commonSets.named("testMod").get().output
+            runtimeClasspath += commonSets.named("testMod").get().output
+            resources.srcDir(rootProject.file("projects/testiarium/src/testMod/resources"))
+        }
+    }
+    val cctTestMod = sourceSets.create("cctTestMod") {
+        compileClasspath += testMod.compileClasspath + testMod.output
+        runtimeClasspath += testMod.runtimeClasspath + testMod.output
+        if (loader != "common") {
+            compileClasspath += commonSets.named("cctTestMod").get().output
+            runtimeClasspath += commonSets.named("cctTestMod").get().output
+        }
+    }
+    for (feature in listOf(testMod, cctTestMod)) {
+        configurations.named(feature.implementationConfigurationName) {
+            extendsFrom(configurations.implementation.get())
+        }
+        java.registerFeature(feature.name) {
+            capability("site.siredvin", "testiarium-${if (loader == "common") "core" else loader}-${if (feature == testMod) "test-mod" else "cct-test-mod"}", libraryVersion)
+            usingSourceSet(feature)
+        }
+        tasks.named<ProcessResources>(feature.processResourcesTaskName) {
+            inputs.property("version", libraryVersion)
+            filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml")) { expand("version" to libraryVersion) }
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+            if (feature == testMod) from(rootProject.file("projects/testiarium/src/testMod/resources/gameteststructures")) {
+                into("data/minecraft/structure")
+            }
+        }
+        if (loader != "common") tasks.named<Jar>(feature.jarTaskName) {
+            from(commonSets.named(feature.name).map { it.output })
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        }
+    }
+    if (loader == "common") {
+        for (part in listOf("common", "common-api", "core")) {
+            dependencies.add(cctTestMod.compileOnlyConfigurationName, "cc.tweaked:cc-tweaked-$minecraftVersion-$part:1.120.0")
+        }
+    } else {
+        dependencies.add(cctTestMod.implementationConfigurationName, "cc.tweaked:cc-tweaked-$minecraftVersion-$loader:1.120.0")
+        val structures = layout.buildDirectory.dir("resources/testMod").get().asFile.absolutePath
+        val fixtureSource = rootProject.file("projects/testiarium/src/testMod/resources/gameteststructures").absolutePath
+        val cctFixtures = rootProject.file("projects/testiarium/src/cctTestMod/resources/computer").absolutePath
+        fun runProperties(report: String, client: Boolean = false) = mapOf(
+            "testiarium.tags" to if (client) "client" else "common",
+            "testiarium.structures" to structures,
+            "testiarium.fixture-source" to fixtureSource,
+            "testiarium.cct-fixtures" to cctFixtures,
+            "testiarium.gametest-report" to layout.buildDirectory.file("test-results/$report.xml").get().asFile.absolutePath,
+        )
+        if (loader == "fabric") extensions.configure<LoomGradleExtensionAPI> {
+            mods {
+                register("testiarium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
+                register("testiarium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
+                register("testiarium_cct_testmod") { sourceSet(cctTestMod); sourceSet(commonSets.named("cctTestMod").get()) }
+            }
+            runs {
+                named("server") {
+                    source(testMod)
+                    property("fabric-api.gametest", "true")
+                    runProperties("gametest").forEach { (key, value) -> property(key, value) }
+                    vmArg("-ea")
+                    runDir("run/gametest")
+                }
+                create("cctGameTest") {
+                    server(); source(cctTestMod)
+                    property("fabric-api.gametest", "true")
+                    runProperties("cct-gametest").forEach { (key, value) -> property(key, value) }
+                    vmArg("-ea")
+                    runDir("run/cct-gametest")
+                }
+                create("clientGameTest") {
+                    client(); source(testMod)
+                    runProperties("client-gametest", true).forEach { (key, value) -> property(key, value) }
+                    property("testiarium.client", "true")
+                    property("testiarium.screenshots", layout.buildDirectory.get().asFile.absolutePath)
+                    vmArg("-ea")
+                    runDir("run/client-gametest")
+                }
+            }
+        } else extensions.configure<NeoForgeExtension> {
+            val production = mods.create("testiarium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
+            val generic = mods.create("testiarium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
+            val cct = mods.create("testiarium_cct_testmod") { sourceSet(cctTestMod); sourceSet(commonSets.named("cctTestMod").get()) }
+            runs {
+                create("gameTestServer") {
+                    type = "gameTestServer"
+                    val withCct = providers.gradleProperty("testiarium.cct").isPresent
+                    sourceSet.set(if (withCct) cctTestMod else testMod)
+                    loadedMods.addAll(production, generic)
+                    if (withCct) loadedMods.add(cct)
+                    runProperties(if (withCct) "cct-gametest" else "gametest").forEach { (key, value) -> systemProperty(key, value) }
+                    jvmArgument("-ea")
+                    gameDirectory = file("run/gametest")
+                }
+                create("clientGameTest") {
+                    client(); sourceSet.set(testMod)
+                    loadedMods.addAll(production, generic)
+                    runProperties("client-gametest", true).forEach { (key, value) -> systemProperty(key, value) }
+                    systemProperty("testiarium.client", "true")
+                    systemProperty("neoforge.enableGameTest", "true")
+                    systemProperty("testiarium.screenshots", layout.buildDirectory.get().asFile.absolutePath)
+                    jvmArgument("-ea")
+                    gameDirectory = file("run/client-gametest")
+                }
+            }
+        }
     }
 }
 

@@ -1,0 +1,7 @@
+assert(os.getComputerID() == 1)
+assert(fs.exists("startup.lua"))
+assert(type(peripheral.getNames()) == "table")
+os.queueEvent("testiarium_roundtrip", 42)
+local _, value = os.pullEvent("testiarium_roundtrip")
+assert(value == 42)
+test.ok("ready")
