@@ -10,9 +10,17 @@ import net.minecraft.world.item.ItemStack
 import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import java.util.*
 
+/**
+ * Transactional reverse adapter for explicitly [ReplaceableItemStorage] inventories only.
+ * Unsupported backings throw before any inventory access or mutation. For Fabric-native origins,
+ * use FabricStorageUtils.getSlot instead: their existing transaction participants must be retained.
+ */
 class SlottedAgnosticItemStorageWrapper(val storage: SlottedAgnosticStorage<ItemStack, Int>) :
     CombinedStorage<ItemVariant, SingleSlotStorage<ItemVariant>>(mutableListOf()),
     InventoryStorage {
+    internal val replaceableStorage: ReplaceableItemStorage = storage as? ReplaceableItemStorage
+        ?: throw UnsupportedOperationException("Transactional item slots require ReplaceableItemStorage; use FabricStorageUtils.getSlot for native storage")
+
     companion object {
         // We copy caching logic from fabric API
         val WRAPPERS: MutableMap<SlottedAgnosticStorage<ItemStack, Int>, SlottedAgnosticItemStorageWrapper> =
@@ -30,13 +38,17 @@ class SlottedAgnosticItemStorageWrapper(val storage: SlottedAgnosticStorage<Item
     val backingList: MutableList<SlottedAgnosticItemStorageSlotWrapper> = mutableListOf()
     val markDirtyParticipant: MarkDirtyParticipant = MarkDirtyParticipant(storage)
 
+    init {
+        resizeSlotList()
+    }
+
     override fun getSlots(): MutableList<SingleSlotStorage<ItemVariant>> = parts
 
     private fun resizeSlotList() {
         val inventorySize = storage.size
 
         if (inventorySize != parts.size) {
-            while (backingList!!.size < inventorySize) {
+            while (backingList.size < inventorySize) {
                 backingList.add(SlottedAgnosticItemStorageSlotWrapper(this, backingList.size))
             }
             parts =

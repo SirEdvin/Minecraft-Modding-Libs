@@ -3,6 +3,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 // Some Minecraft startup failures exit zero. Require fresh, non-empty test evidence.
 subprojects {
     val reports = when {
+        path.startsWith(":broccolium:fabric:") -> mapOf("runStorageGameTest" to "storage-gametest.xml")
         path.startsWith(":testiarium:fabric:") -> mapOf(
             "runServer" to "gametest.xml",
             "runCctGameTest" to "cct-gametest.xml",
@@ -38,6 +39,28 @@ subprojects {
             }
             check(document.documentElement.getAttribute("tests").toInt() == cases) {
                 "GameTest report count does not match its test cases: $file"
+            }
+            if (reports.getValue(name) == "storage-gametest.xml") {
+                check(skipped == 0) { "Storage conservation regressions must not be skipped: $file" }
+            }
+            if (project.path.startsWith(":testiarium:") && reports.getValue(name) == "gametest.xml") {
+                // Negative fixtures must fail for the intended reason, not silently pass or
+                // fail later in an unrelated assertion while still being counted as skipped.
+                val expectedFailures = mapOf(
+                    "StandaloneGameTests.requiredFailure" to "required failure fixture",
+                    "StandaloneGameTests.optionalFailure" to "optional failure fixture",
+                    "StandaloneGameTests.failFastFailureCannotBecomeSuccess" to "fail-fast sentinel",
+                )
+                val testCases = document.getElementsByTagName("testcase")
+                for ((testName, message) in expectedFailures) {
+                    val matches = (0 until testCases.length).map { testCases.item(it) as org.w3c.dom.Element }
+                        .filter { it.getAttribute("name") == testName }
+                    check(matches.size == 1) { "Expected exactly one negative fixture $testName ($file)" }
+                    val skips = matches.single().getElementsByTagName("skipped")
+                    check(skips.length == 1 && (skips.item(0) as org.w3c.dom.Element).getAttribute("message") == message) {
+                        "Negative fixture $testName did not preserve its expected failure '$message' ($file)"
+                    }
+                }
             }
             logger.lifecycle("Verified GameTest report: {} tests, {} skipped ({})", cases, skipped, file)
         }

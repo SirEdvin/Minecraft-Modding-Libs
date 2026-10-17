@@ -9,10 +9,10 @@ object XPUtil {
 
     fun xpToLevels(xp: Double): Int {
         if (xp > REQUIRED_FOR_31) {
-            return (18.056 + sqrt(0.222 * (xp - 752.986))).toInt()
+            return ((162.5 + sqrt(116.5 * 116.5 + 18.0 * (xp - REQUIRED_FOR_31))) / 9.0).toInt()
         }
         if (xp > REQUIRED_FOR_16) {
-            return (8.1 + sqrt(0.4 * (xp - 195.975))).toInt()
+            return ((40.5 + sqrt(39.5 * 39.5 + 10.0 * (xp - REQUIRED_FOR_16))) / 5.0).toInt()
         }
         return (sqrt(xp + 9) - 3).toInt()
     }

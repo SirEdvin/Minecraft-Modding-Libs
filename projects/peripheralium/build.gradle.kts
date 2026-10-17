@@ -25,6 +25,15 @@ vanillaShaking {
     shake()
 }
 
+evaluationDependsOn(":testiarium:${sc.current.project}")
+sourceSets.create("testMod") {
+    compileClasspath += sourceSets.main.get().compileClasspath
+    compileClasspath += sourceSets.main.get().output
+    compileClasspath += project(":testiarium:${sc.current.project}").sourceSets.main.get().output
+    runtimeClasspath += sourceSets.main.get().runtimeClasspath
+    runtimeClasspath += sourceSets.main.get().output
+}
+
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(ccCommon)

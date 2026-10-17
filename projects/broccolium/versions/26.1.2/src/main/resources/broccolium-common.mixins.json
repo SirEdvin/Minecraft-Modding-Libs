@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "site.siredvin.broccolium.modules.base.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "LevelChunkMixin"
+  ]
+}

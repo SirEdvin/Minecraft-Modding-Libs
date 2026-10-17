@@ -6,10 +6,10 @@ import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
+import site.siredvin.broccolium.modules.storage.FabricStorageUtils
 import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStorageLookup
 import site.siredvin.broccolium.modules.storage.energy.api.AgnosticEnergyStorage
-import site.siredvin.broccolium.modules.storage.item.SlottedAgnosticItemStorageWrapper
 import team.reborn.energy.api.EnergyStorage
 
 class Integration : Runnable {
@@ -29,7 +29,7 @@ class Integration : Runnable {
             val energyStorage = EnergyStorage.ITEM.find(
                 origin.get(slot),
                 ContainerItemContext.ofSingleSlot(
-                    SlottedAgnosticItemStorageWrapper.of(origin).getSlot(slot),
+                    FabricStorageUtils.getSlot(origin, slot),
                 ),
             ) ?: return null
             return EnergyStorageWrapper(energyStorage)

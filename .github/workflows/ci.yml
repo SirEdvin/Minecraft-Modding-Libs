@@ -43,6 +43,8 @@ jobs:
       - name: Run server GameTests on all loaders and versions
         run: >-
           timeout --foreground 600s ./gradlew
+          :broccolium:fabric:1.20.1:runStorageGameTest
+          :broccolium:fabric:1.21.1:runStorageGameTest
           :testiarium:forge:1.20.1:runGameTestServer
           :testiarium:forge:1.21.1:runGameTestServer
           :testiarium:fabric:1.20.1:runServer

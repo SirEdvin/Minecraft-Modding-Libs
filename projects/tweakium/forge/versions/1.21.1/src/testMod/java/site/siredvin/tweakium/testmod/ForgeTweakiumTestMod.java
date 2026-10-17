@@ -4,6 +4,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import site.siredvin.testiarium.Testiarium;
+import site.siredvin.peripheralium.testmod.PeripheraliumBehaviorGameTests;
 import site.siredvin.testiarium.cct.CctComputers;
 import site.siredvin.testiarium.cct.CctFixtureCommands;
 
@@ -15,7 +16,9 @@ public final class ForgeTweakiumTestMod {
             CctComputers.INSTANCE.reset();
             CctFixtureCommands.INSTANCE.importFiles(event.getServer());
         });
-        Testiarium.register(CreativeFillerGameTests.class);
+        Testiarium.register(CreativeFillerGameTests.class, ModuleBehaviorGameTests.class, UpgradeBehaviorGameTests.class, WorldBehaviorGameTests.class);
+        Testiarium.register(PeripheraliumBehaviorGameTests.class);
+        Testiarium.register(RuntimeBehaviorGameTests.class);
         Testiarium.register(EntityStorageGameTests.class);
     }
 }
