@@ -4,7 +4,7 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
-import net.minecraft.resources.Identifier
+import site.siredvin.tweakium.modules.peripheral.representation.LuaInterpretation
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluids
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
@@ -45,6 +45,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
 
     @LuaFunction(mainThread = true)
     fun pushFluid(computer: IComputerAccess, toName: String, limit: Optional<Double>, fluidName: Optional<String>): Double {
+        if (limit.isPresent && (!limit.get().isFinite() || limit.get() < 0)) throw LuaException("Fluid limit must be finite and nonnegative")
         val location: IPeripheral = computer.getAvailablePeripheral(toName) ?: throw LuaException("Target '$toName' does not exist")
         val direction = if (location is ISidedPeripheral) location.side else null
         val toStorage = AgnosticFluidSinkLookup.extractFromUnknown(level, location.target, direction)
@@ -52,8 +53,8 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
             Predicate { true }
         } else {
-            val fluid = PlatformRegistries.FLUIDS.get(Identifier.parse(fluidName.get()))
-            if (fluid.isSame(Fluids.EMPTY)) throw LuaException("There is no fluid ${fluidName.get()}")
+            val fluid = PlatformRegistries.FLUIDS.tryGet(LuaInterpretation.asID(fluidName.get()))
+            if (fluid == null || fluid.isSame(Fluids.EMPTY)) throw LuaException("There is no fluid ${fluidName.get()}")
             Predicate { it.fluid.isSame(fluid) }
         }
         val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))
@@ -62,6 +63,7 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
 
     @LuaFunction(mainThread = true)
     fun pullFluid(computer: IComputerAccess, fromName: String, limit: Optional<Double>, fluidName: Optional<String>): Double {
+        if (limit.isPresent && (!limit.get().isFinite() || limit.get() < 0)) throw LuaException("Fluid limit must be finite and nonnegative")
         val location: IPeripheral = computer.getAvailablePeripheral(fromName) ?: throw LuaException("Target '$fromName' does not exist")
         val direction = if (location is ISidedPeripheral) location.side else null
         val fromStorage = AgnosticFluidStorageLookup.extractFromUnknown(level, location.target, direction)
@@ -69,8 +71,8 @@ abstract class AbstractFluidStoragePlugin(protected val level: Level, protected 
         val predicate: Predicate<AgnosticFluidStack> = if (fluidName.isEmpty) {
             Predicate { true }
         } else {
-            val fluid = PlatformRegistries.FLUIDS.get(Identifier.parse(fluidName.get()))
-            if (fluid.isSame(Fluids.EMPTY)) throw LuaException("There is no fluid ${fluidName.get()}")
+            val fluid = PlatformRegistries.FLUIDS.tryGet(LuaInterpretation.asID(fluidName.get()))
+            if (fluid == null || fluid.isSame(Fluids.EMPTY)) throw LuaException("There is no fluid ${fluidName.get()}")
             Predicate { it.fluid.isSame(fluid) }
         }
         val realLimit = minOf(fluidStorageTransferLimit, limit.orElse(Double.MAX_VALUE))

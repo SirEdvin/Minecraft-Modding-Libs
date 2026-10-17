@@ -353,6 +353,14 @@ if (library == "tweakium") {
                 property("fabric-api.datagen.output-dir", generated.absolutePath)
                 runDir("run/datagen")
             }
+            runs.create("upgradeDatagen") {
+                client(); source(testMod)
+                property("testiarium.fixture.consumer", "true")
+                property("fabric-api.datagen", "true")
+                property("fabric-api.datagen.modid", "tweakium_testmod")
+                property("fabric-api.datagen.output-dir", layout.buildDirectory.dir("upgrade-datagen").get().asFile.absolutePath)
+                runDir("run/upgrade-datagen")
+            }
         } else extensions.configure<NeoForgeExtension> {
             val production = mods.create("tweakium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
             val fixture = mods.create("tweakium_testmod") { sourceSet(testMod); sourceSet(commonSets.named("testMod").get()) }
@@ -378,6 +386,13 @@ if (library == "tweakium") {
                 loadedMods.addAll(production, base)
                 programArguments.addAll("--mod", "tweakium", "--output", generated.absolutePath)
                 gameDirectory = file("run/datagen")
+            }
+            for (clientData in listOf(true, false)) runs.create(if (clientData) "upgradeClientData" else "upgradeServerData") {
+                if (clientData) clientData() else serverData()
+                sourceSet.set(testMod)
+                loadedMods.addAll(production, fixture, base, core, generic, cct)
+                programArguments.addAll("--mod", "tweakium_testmod", "--output", layout.buildDirectory.dir("upgrade-datagen").get().asFile.absolutePath)
+                gameDirectory = file("run/upgrade-datagen")
             }
         }
     }

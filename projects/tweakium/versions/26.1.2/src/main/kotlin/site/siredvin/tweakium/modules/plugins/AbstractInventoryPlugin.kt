@@ -1,0 +1,72 @@
+package site.siredvin.tweakium.modules.plugins
+
+import dan200.computercraft.api.lua.IArguments
+import dan200.computercraft.api.lua.LuaException
+import dan200.computercraft.api.lua.LuaFunction
+import dan200.computercraft.api.peripheral.IComputerAccess
+import net.minecraft.world.item.ItemStack
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticSink
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemSinkLookup
+import site.siredvin.broccolium.modules.storage.item.AgnosticItemStorageLookup
+import site.siredvin.broccolium.modules.storage.item.ItemStorageUtils
+import site.siredvin.tweakium.modules.peripheral.api.ISidedPeripheral
+import site.siredvin.tweakium.modules.peripheral.util.assertBetween
+import java.util.Optional
+
+abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
+    abstract val inventoryTransferLimit: Int
+    override val additionalType: String
+        get() = PeripheralPluginUtils.Type.INVENTORY
+    override val additionalTypes: List<String>
+        get() = listOf(PeripheralPluginUtils.Type.INVENTORY, PeripheralPluginUtils.Type.INVENTORY_EXTENDED)
+
+    override fun collectConfiguration(data: MutableMap<String, Any>) {
+        data["inventoryTransferLimit"] = inventoryTransferLimit
+        data["inventoryAPI"] = listOf(1, 1)
+    }
+
+    @LuaFunction(mainThread = true, value = ["pushItems"])
+    fun pushItemsLua(computer: IComputerAccess, arguments: IArguments): Int = pushItems(
+        computer, arguments.getString(0), arguments.transferSlotOrQuery(1), arguments.optionalTransferInt(2), arguments.optionalTransferInt(3),
+    )
+
+    @LuaFunction(mainThread = true, value = ["pullItems"])
+    fun pullItemsLua(computer: IComputerAccess, arguments: IArguments): Int = pullItems(
+        computer, arguments.getString(0), arguments.transferSlotOrQuery(1), arguments.optionalTransferInt(2), arguments.optionalTransferInt(3),
+    )
+
+    @Throws(LuaException::class)
+    fun pushItems(computer: IComputerAccess, toName: String, fromSlot: Any, limit: Optional<Int>, toSlot: Optional<Int>): Int {
+        val location = computer.getAvailablePeripheral(toName) ?: throw LuaException("Target '$toName' does not exist")
+        val direction = if (location is ISidedPeripheral) location.side else null
+        val toStorage = AgnosticItemSinkLookup.extractFromUnknown(level, location.target, direction) ?: throw LuaException("Target '$toName' is not an inventory")
+        val actualLimit = limit.orElse(Int.MAX_VALUE).coerceAtMost(inventoryTransferLimit)
+        if (actualLimit <= 0) return 0
+        if (toSlot.isPresent) {
+            if (toStorage !is SlottedAgnosticSink<ItemStack, Int>) throw LuaException("Target '$toName' is not slotted storage, so you can't provide slot")
+            assertBetween(toSlot.get(), 1, toStorage.size, "toSlot")
+        }
+        if (fromSlot is Number) {
+            assertBetween(fromSlot.toInt(), 1, storage.size, "fromSlot")
+            return storage.moveTo(toStorage, actualLimit, fromSlot.toInt() - 1, toSlot.orElse(0) - 1, ItemStorageUtils.ALWAYS)
+        }
+        return storage.moveTo(toStorage, actualLimit, toSlot.orElse(0) - 1, PeripheralPluginUtils.itemQueryToPredicate(fromSlot))
+    }
+
+    @Throws(LuaException::class)
+    fun pullItems(computer: IComputerAccess, fromName: String, fromSlot: Any, limit: Optional<Int>, toSlot: Optional<Int>): Int {
+        val location = computer.getAvailablePeripheral(fromName) ?: throw LuaException("Source '$fromName' does not exist")
+        val direction = if (location is ISidedPeripheral) location.side else null
+        val fromStorage = AgnosticItemStorageLookup.extractFromUnknown(level, location.target, direction) ?: throw LuaException("Source '$fromName' is not an inventory")
+        val actualLimit = limit.orElse(Int.MAX_VALUE).coerceAtMost(inventoryTransferLimit)
+        if (actualLimit <= 0) return 0
+        if (toSlot.isPresent) assertBetween(toSlot.get(), 1, storage.size, "toSlot")
+        if (fromSlot is Number) {
+            if (fromStorage !is SlottedAgnosticStorage<ItemStack, Int>) throw LuaException("Source '$fromName' is not slotted storage")
+            assertBetween(fromSlot.toInt(), 1, fromStorage.size, "fromSlot")
+            return storage.moveFrom(fromStorage, actualLimit, toSlot.orElse(0) - 1, fromSlot.toInt() - 1, ItemStorageUtils.ALWAYS)
+        }
+        return storage.moveFrom(fromStorage, actualLimit, toSlot = toSlot.orElse(0) - 1, takePredicate = PeripheralPluginUtils.itemQueryToPredicate(fromSlot))
+    }
+}

@@ -9,7 +9,7 @@ object ForgeInteractionFixtures {
     @JvmStatic
     fun install() {
         NativeUpgradeFixtures.configurePlayer = java.util.function.Consumer { player ->
-            net.neoforged.neoforge.network.registration.NetworkRegistry.configureMockConnection(player.connection.connection)
+            net.neoforged.neoforge.network.registration.NetworkRegistry.configureMockConnection(player.connection.getConnection())
         }
         NeoForge.EVENT_BUS.addListener { event: PlayerInteractEvent.RightClickBlock ->
             if (event.entity.gameProfile.name() == NativeInteractionHooks.PLAYER) {

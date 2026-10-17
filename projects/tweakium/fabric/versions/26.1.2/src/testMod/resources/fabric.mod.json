@@ -4,6 +4,9 @@
   "version": "1.0",
   "name": "Tweakium Testmod",
   "environment": "*",
-  "entrypoints": {"main": [{"adapter": "kotlin", "value": "site.siredvin.tweakium.testmod.FabricTweakiumTestMod"}]},
+  "entrypoints": {
+    "main": [{"adapter": "kotlin", "value": "site.siredvin.tweakium.testmod.FabricTweakiumTestMod"}],
+    "fabric-datagen": ["site.siredvin.tweakium.testmod.FabricUpgradeDataGenerator"]
+  },
   "depends": {"fabricloader": "*", "tweakium": "*", "testiarium": "*", "testiarium_cct_testmod": "*", "computercraft": "*"}
 }

@@ -22,6 +22,49 @@ import java.util.UUID
 
 @TestGroup("tweakium")
 class NativeSessionGameTests {
+    @GameTest(template = "modulebehavior.empty")
+    fun nativeEntityStorageLoansReturnToolsAndDropOnlyExactOverflowOnAllExits(helper: GameTestHelper) = helper.immediate {
+        @Suppress("DEPRECATION")
+        val realPlayer = helper.makeMockServerPlayerInLevel()
+        NativeUpgradeFixtures.configurePlayer.accept(realPlayer)
+        val pos = helper.absolutePos(BlockPos(1, 1, 1))
+        realPlayer.setPos(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())
+        val cart = checkNotNull(net.minecraft.world.entity.EntityType.CHEST_MINECART.create(helper.level, net.minecraft.world.entity.EntitySpawnReason.COMMAND))
+        cart.setPos(pos.center)
+        helper.level.addFreshEntity(cart)
+        try {
+            for (failure in listOf(false, true)) {
+                for (slot in 0 until cart.containerSize) cart.setItem(slot, ItemStack(Items.DIAMOND, 64))
+                var actor: net.minecraft.server.level.ServerPlayer? = null
+                val sentinel = IllegalStateException("native storage loan sentinel")
+                try {
+                    site.siredvin.tweakium.modules.player.FakePlayerProviderEntity.withPlayer(cart, realPlayer, { proxy ->
+                        actor = proxy.fakePlayer
+                        check(cart.isEmpty) { "Native source was copied rather than loaned" }
+                        proxy.fakePlayer.inventory.setItem(0, ItemStack(Items.EMERALD, 2))
+                        proxy.fakePlayer.inventory.setItem(40, ItemStack(Items.GOLD_INGOT, 5))
+                        if (failure) throw sentinel
+                    })
+                    check(!failure)
+                } catch (caught: IllegalStateException) { check(failure && caught === sentinel) }
+                check(cart.getItem(0).`is`(Items.EMERALD) && cart.getItem(0).count == 2)
+                check((1 until cart.containerSize).sumOf { cart.getItem(it).count } == (cart.containerSize - 1) * 64)
+                check(actor!!.inventory.isEmpty)
+                val drops = helper.level.getEntitiesOfClass(net.minecraft.world.entity.item.ItemEntity::class.java, net.minecraft.world.phys.AABB(pos).inflate(3.0))
+                    .filter { it.item.`is`(Items.GOLD_INGOT) }
+                check(drops.sumOf { it.item.count } == 5) { "Native overflow was duplicated or discarded" }
+                drops.forEach { it.discard() }
+            }
+        } finally {
+            cart.clearContent()
+            cart.discard()
+            realPlayer.inventory.clearContent()
+            helper.level.server.playerList.remove(realPlayer)
+            realPlayer.connection.disconnect(net.minecraft.network.chat.Component.literal("R3 storage fixture complete"))
+            realPlayer.discard()
+        }
+    }
+
     private fun turtle(helper: GameTestHelper): TurtleBrain {
         val pos = helper.absolutePos(BlockPos(1, 1, 1))
         helper.level.setBlockAndUpdate(pos, ModRegistry.Blocks.TURTLE_NORMAL.get().defaultBlockState())

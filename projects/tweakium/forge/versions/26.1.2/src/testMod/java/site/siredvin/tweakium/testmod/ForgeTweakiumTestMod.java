@@ -14,6 +14,8 @@ public final class ForgeTweakiumTestMod {
         NativeUpgradeFixtures.register(site.siredvin.tweakium.modules.platform.ForgeTweakiumPlatform.INSTANCE);
         CctComputers.INSTANCE.initialize();
         Testiarium.register(NativeUpgradeGameTests.class);
+        NativePluginFixtures.install();
+        Testiarium.register(NativePluginGameTests.class);
         ForgeInteractionFixtures.install();
         Testiarium.register(NativeInteractionGameTests.class);
         NeoForge.EVENT_BUS.addListener((ServerStartingEvent event) -> {

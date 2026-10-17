@@ -19,6 +19,8 @@ object FabricTweakiumTestMod : ModInitializer {
         }
         Testiarium.register(CreativeFillerGameTests::class.java, ModuleBehaviorGameTests::class.java, UpgradeBehaviorGameTests::class.java, WorldBehaviorGameTests::class.java, RuntimeBehaviorGameTests::class.java, NativeSessionGameTests::class.java)
         Testiarium.register(NativeUpgradeGameTests::class.java)
+        NativePluginFixtures.install()
+        Testiarium.register(NativePluginGameTests::class.java)
         FabricInteractionFixtures.install()
         Testiarium.register(NativeInteractionGameTests::class.java)
         FabricTestiarium.registerTests()

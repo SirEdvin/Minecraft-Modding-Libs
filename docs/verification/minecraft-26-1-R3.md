@@ -16,6 +16,18 @@ Pinned CC bytecode inspected: UpgradeManager.get accepts registries plus stack; 
 
 ## Next actions
 
+## Phase 3 checkpoint — capability green, final bounded campaign pending
+
+Both target native routes now pass30 cases each (29 owning+1 vanilla), zero failures/skips, in native-lua-green-{fabric,forge}.log. Actual native minecart inventory loans/remainders, exception/finally cleanup, selected turtles, loader protection/veto and one native interaction, live pocket/turtle upgrades, same-process disk chunk reload and real CC Lua plugin item/fluid/energy/payment/cooldown/permission tests execute. Mock player network configuration is test-only; fixtures remove/disconnect players and release task-owned chunks. Real socket negotiation/process restart remain R6.
+
+Real Lua red native-red-lua-overflow.xml: CC's generated Optional<Int> coercion saturated1e100 and transferred items instead of refusing. Target wrappers now validate raw Lua integer bounds before generated coercion, retaining existing Kotlin/Java method signatures and Lua spellings; the sibling item/energy paths use the same explicit boundary. Real Lua red native-red-lua-fluid.xml: infinity mutated native buckets; target fluid methods reject nonfinite/negative limits before lookup/transfer. Final Lua assertions compare actual counts, bucket variants, energy conservation, successful payment once, insufficient-fuel/permission refusal and cooldown with native state. Old APIs/runtime lines retain their existing signatures.
+
+Owning production EN/UA datagen and private upgrade/model datagen are implemented. Production contains no upgrades to publish; private fixtures exercise both public upgrade bootstraps and left/right model helpers. Datagen exposed two previously unexercised Broccolium target sink bugs: Fabric assumed a dimension registry in every patch and filtered by the output mod instead of the requested namespace; NeoForge's server pass deleted prior client models because skipped model providers were not registered with HashCache. Concrete missing-output/failing runs retained. Corrected those adapter boundaries, without disabling validation or exporting fixture assets in release artifacts.
+
+datagen-4.log exit0 for all six real Xvfb tasks,12 JSON outputs (four production language files plus four private upgrade/model resources per loader), semantic/hash parity across loaders. A second final pass, output inventory/assertions, current units/old native regressions, fixture exclusion, source audit/hashes and scoped formatting are still required before completion. Recent source cleanup/test assertions are not yet included in final native receipts.
+
+Exact next command: repeat the six datagen tasks with600s Xvfb bound, compare full12-file inventory/hashes, then execute the focused final unit/JAR/native campaigns. Do not treat the earlier datagen-3.log zero exit with missing output as acceptance.
+
 ## Phase 2 checkpoint — live capability proof in progress
 
 Predicate validation behavioral reds now green on target Fabric: native malformed queries reject with LuaException and unknown registry values no longer escape native exceptions. Same validation fix applied to legacy/modern variants; final old reruns pending. Fresh common units1.20.1/1.21.1/26.1.2 and target Fabric units pass (`units-3.log`, exit0), counts not yet final.

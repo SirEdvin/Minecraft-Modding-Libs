@@ -35,9 +35,10 @@ object NativeUpgradeFixtures {
         override val isEnabled = true
     }
 
-    class Turtle(stack: ItemStackTemplate) : StatefulTurtleUpgrade<Peripheral>(ID, TurtleUpgradeType.PERIPHERAL, stack) {
+    class Turtle(stack: ItemStackTemplate) : StatefulTurtleUpgrade<site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral<*>>(ID, TurtleUpgradeType.PERIPHERAL, stack) {
         override fun getType(): UpgradeType<out ITurtleUpgrade> = turtleType
-        override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): Peripheral = Peripheral(TurtlePeripheralOwner(turtle, side))
+        override fun buildPeripheral(turtle: ITurtleAccess, side: TurtleSide): site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral<*> =
+            if (turtle in NativePluginFixtures.enabledTurtles) NativePluginPeripheral(TurtlePeripheralOwner(turtle, side)) else Peripheral(TurtlePeripheralOwner(turtle, side))
     }
 
     class Pocket(stack: ItemStackTemplate) : StatefulPocketUpgrade<Peripheral>(ID, stack) {

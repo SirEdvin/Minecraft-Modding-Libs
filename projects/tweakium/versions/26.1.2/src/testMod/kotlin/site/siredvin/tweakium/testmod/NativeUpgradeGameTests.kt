@@ -93,7 +93,7 @@ class NativeUpgradeGameTests {
         } finally {
             player.inventory.clearContent()
             helper.level.server.playerList.remove(player)
-            player.connection.connection.disconnect(net.minecraft.network.chat.Component.literal("R3 fixture complete"))
+            player.connection.disconnect(net.minecraft.network.chat.Component.literal("R3 fixture complete"))
             player.discard()
         }
     }
@@ -102,6 +102,10 @@ class NativeUpgradeGameTests {
     fun nativeChunkDiskUnloadReloadKeepsInstalledUpgradeSettings(helper: GameTestHelper) {
         val pos = helper.absolutePos(BlockPos(1, 1, 1)).offset(2048, 0, 2048)
         val chunk = ChunkPos(pos.x shr 4, pos.z shr 4)
+        helper.runBeforeTestEnd {
+            helper.level.setChunkForced(chunk.x, chunk.z, false)
+            if (helper.level.chunkSource.getChunkNow(chunk.x, chunk.z) != null) helper.level.setBlockAndUpdate(pos, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState())
+        }
         helper.level.setChunkForced(chunk.x, chunk.z, true)
         val turtle = turtle(helper, pos)
         val holder = helper.level.registryAccess().lookupOrThrow(ITurtleUpgrade.REGISTRY).getOrThrow(net.minecraft.resources.ResourceKey.create(ITurtleUpgrade.REGISTRY, NativeUpgradeFixtures.ID))

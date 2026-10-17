@@ -80,6 +80,8 @@ class ForgeGeneratorSink(private val generator: DataGenerator, private val event
     })
 
     override fun models(blocks: Consumer<BlockModelGenerators>, items: Consumer<ItemModelGenerators>) {
-        if (event is GatherDataEvent.Client) add(DataProvider.Factory { ModelProvider(it, blocks, items) })
+        // Register skipped providers too: their cache must survive the server
+        // pass, otherwise its stale-file purge deletes the client models.
+        generator.addProvider(event is GatherDataEvent.Client, DataProvider.Factory { ModelProvider(it, blocks, items) })
     }
 }
