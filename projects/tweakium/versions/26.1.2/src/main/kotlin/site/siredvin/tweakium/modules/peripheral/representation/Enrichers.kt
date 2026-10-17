@@ -7,6 +7,7 @@ import net.minecraft.world.entity.animal.Animal
 import net.minecraft.world.entity.animal.bee.Bee
 import net.minecraft.world.entity.npc.villager.Villager
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.component.Bees
 import net.minecraft.world.item.trading.Merchant
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -67,7 +68,7 @@ val beeNestAnalyze = BiConsumer<BlockEntity, MutableMap<String, Any>> { entity, 
     if (entity is BeehiveBlockEntity) {
         data["isSmoked"] = entity.isSedated
         data["isFull"] = entity.isFull
-        data["bees"] = entity.collectComponents().getOrDefault(DataComponents.BEES, emptyList()).map {
+        data["bees"] = entity.collectComponents().getOrDefault(DataComponents.BEES, Bees.EMPTY).bees().map {
             val beeData = hashMapOf<String, Any>()
             beeData["ticksInHive"] = it.ticksInHive()
             beeData["minTicksInHive"] = it.minTicksInHive()

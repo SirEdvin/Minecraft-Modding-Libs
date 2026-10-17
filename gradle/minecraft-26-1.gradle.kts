@@ -113,6 +113,19 @@ tasks.withType<Test>().configureEach {
 
 }
 
+if (library == "tweakium" && loader == "common") {
+    val broccolium = project(":broccolium:$minecraftVersion")
+    evaluationDependsOn(broccolium.path)
+    val fixtures = broccolium.extensions.getByType<SourceSetContainer>().named("testFixtures")
+    sourceSets.test {
+        compileClasspath += fixtures.get().output
+        runtimeClasspath += fixtures.get().output
+    }
+    for (part in listOf("common", "common-api", "core")) {
+        dependencies.add("testImplementation", "cc.tweaked:cc-tweaked-$minecraftVersion-$part:1.120.0")
+    }
+}
+
 if (library == "broccolium" && loader == "common") {
     val fixtures = sourceSets.create("testFixtures") {
         compileClasspath += sourceSets.main.get().compileClasspath

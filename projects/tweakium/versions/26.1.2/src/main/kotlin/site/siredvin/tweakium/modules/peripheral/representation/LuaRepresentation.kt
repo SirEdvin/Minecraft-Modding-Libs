@@ -150,9 +150,9 @@ object LuaRepresentation {
         return base
     }
 
-    fun <T> tagsToList(tags: Stream<TagKey<T>>): List<String> = tags.map { key -> key.location().toString() }.collect(Collectors.toList())
+    fun <T : Any> tagsToList(tags: Stream<TagKey<T>>): List<String> = tags.map { key -> key.location().toString() }.collect(Collectors.toList())
 
-    fun <T> tagsToMap(tags: Stream<TagKey<T>>): Map<String, Boolean> = tags.map { key -> key.location().toString() }.collect(
+    fun <T : Any> tagsToMap(tags: Stream<TagKey<T>>): Map<String, Boolean> = tags.map { key -> key.location().toString() }.collect(
         Collectors.toMap({ it }, { true }),
     )
 
