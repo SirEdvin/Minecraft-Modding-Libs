@@ -16,7 +16,7 @@
   "created_count": 8,
   "created_state": "blocked",
   "execution_authorized": false,
-  "status": "all nine expanded bodies applied and held graph validated; coverage promotion approval timed out",
+  "status": "complete planning handoff; all nine expanded bodies applied, coverage promoted and held graph validated",
   "chain_edges": [
     ["t_a544bb9d", "t_728ae4df"],
     ["t_728ae4df", "t_eb583016"],
@@ -61,9 +61,9 @@
     "source_paths_verified": 364,
     "cumulative_wip_head_status_content_unchanged": true,
     "graph_and_body_acceptance_verified": true,
-    "planning_artifact_promotion_complete": false
+    "planning_artifact_promotion_complete": true
   },
-  "coverage_candidate_in_attachment": "coverage-candidate.json",
+  "coverage_artifact": "2026-10-17-minecraft-26-1-coverage.json",
   "recovery_attachment_id": 4,
-  "remaining": "Fresh authorization needed to retry the unexecuted coverage promotion. Planner remains blocked; all eight new cards and existing final owner remain held. No implementation dispatch or settings changes."
+  "remaining": "Implementation awaits explicit review/release. All eight new cards and existing final owner remain held. No implementation dispatch or settings changes were authorized by planning recovery."
 }
