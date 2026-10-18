@@ -83,6 +83,10 @@ const xp = scan.scan("xp", 4);
 const captured = capture.capture("entity", "up");
 const configured = configuration.getConfiguration();
 const filled = filler.put("energy", "target", "", 100);
+// Correlated with the real Creative Filler Lua fixture on maintained nodes.
+const filledItemWithDefaultLimit = filler.put("item", "target", "minecraft:dirt");
+const filledItem = filler.put("item", "target", "minecraft:stone", 1);
+const fillerConfiguration = filler.getConfiguration();
 const transferredEnergy = energy.pushEnergy("target", 100);
 const pulledEnergy = energy.pullEnergy("source", 100);
 const sentXP = experience.sendXP({ x: 0, y: 1, z: 0 }, 10);
@@ -123,6 +127,9 @@ type InferredResultContracts = [
     Assert<Equal<typeof captured, Result>>,
     Assert<Equal<typeof configured, { limit: number }>>,
     Assert<Equal<typeof filled, void>>,
+    Assert<Equal<typeof filledItemWithDefaultLimit, void>>,
+    Assert<Equal<typeof filledItem, void>>,
+    Assert<Equal<typeof fillerConfiguration, LuaTable<string, any>>>,
     Assert<Equal<typeof transferredEnergy, number>>,
     Assert<Equal<typeof pulledEnergy, number>>,
     Assert<Equal<typeof sentXP, TResult<number>>>,
