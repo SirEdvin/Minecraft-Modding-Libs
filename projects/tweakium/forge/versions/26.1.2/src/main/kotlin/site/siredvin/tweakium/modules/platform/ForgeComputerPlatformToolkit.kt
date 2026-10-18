@@ -23,11 +23,12 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.neoforged.fml.ModList
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import site.siredvin.tweakium.TweakiumCore
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralProvider
 import site.siredvin.tweakium.modules.platform.api.InnerComputerPlatformToolkit
 import site.siredvin.tweakium.modules.player.ForgeFakePlayer
-import thedarkcolour.kotlinforforge.neoforge.forge.MOD_CONTEXT
 
 @Suppress("UnstableApiUsage")
 object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
@@ -54,7 +55,8 @@ object ForgeComputerPlatformToolkit : InnerComputerPlatformToolkit {
 
     override fun registerGenericPeripheralLookup() {
         if (genericRegistered) return
-        MOD_CONTEXT.getKEventBus().addListener { event: RegisterCapabilitiesEvent ->
+        val eventBus = requireNotNull(ModList.get().getModContainerById(TweakiumCore.MOD_ID).orElseThrow().eventBus)
+        eventBus.addListener { event: RegisterCapabilitiesEvent ->
             for (type in BuiltInRegistries.BLOCK_ENTITY_TYPE) {
                 event.registerBlockEntity(PeripheralCapability.get(), type) { be, side ->
                     if (side != null) (be as? IPeripheralProvider<*>)?.getPeripheral(side) else null

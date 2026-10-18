@@ -9,13 +9,13 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.neoforged.fml.ModList
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.registries.DeferredRegister
 import site.siredvin.broccolium.ForgeBroccolium
 import site.siredvin.tweakium.modules.minecraft.xplat.TweakiumCommonHooks
 import site.siredvin.tweakium.modules.platform.ForgeComputerPlatformToolkit
 import site.siredvin.tweakium.modules.platform.ForgeTweakiumPlatform
-import thedarkcolour.kotlinforforge.neoforge.forge.MOD_CONTEXT
 
 @Mod(TweakiumCore.MOD_ID)
 object ForgeTweakium {
@@ -29,7 +29,8 @@ object ForgeTweakium {
 
     init {
         TweakiumCore.configure(ForgeComputerPlatformToolkit, ForgeTweakiumPlatform)
-        val eventBus = MOD_CONTEXT.getKEventBus()
+        // A Java consumer may initialize this singleton before our own constructor runs.
+        val eventBus = requireNotNull(ModList.get().getModContainerById(TweakiumCore.MOD_ID).orElseThrow().eventBus)
         TweakiumCommonHooks.onRegister()
         blocksRegistry.register(eventBus)
         blockEntityTypesRegistry.register(eventBus)
