@@ -1,6 +1,6 @@
 # R7 rendering lane — t_5eb14799
 
-Status: INCOMPLETE checkpoint, 2026-10-18. Creative Filler appearance/resources remain unapproved and missing. Combined interaction hooks have two observed runtime failures handed back to their owner. No all-content, final-candidate or R7/F acceptance is claimed.
+Status: VERIFIED SCOPED CHECKPOINT, full task BLOCKED on Creative Filler appearance/resources, 2026-10-18. Rendering and corrected combined interaction smoke pass on both target loaders with immutable inputs. Earlier failures remain documented below, superseded only by the exact successful replays. No all-content, full six-combination or R7/F acceptance is claimed.
 
 ## Source custody and ownership
 
@@ -34,6 +34,16 @@ Visual inspection: final Fabric03-content-models-tooltip and NeoForge12-reconnec
 
 ## Exact commands and manifests
 
+### Verified preservation recovery and corrected combined replay
+
+After the historical failures above, built exact committed d281b6e rendering-only sources into immutable scoped-inputs-retry/*.jar and source tree, with scoped-inputs.json retaining every source hash and javac command. The first direct scoped javac probe omitted Tweakium main mod JARs from the Broccolium launch classpath and failed; the retry explicitly adds hash-bound production mods and succeeds. This is a private fixture compilation, not an alternate production build. Both new scoped/fabric-base and scoped/forge-base execute naturally0/0,27 phases/12 screenshots/two dedicated joins each; BOTH complete check-rendering.py audits now PASS exact retained mod/screenshot identities plus4 checkpoints/28 models/4 explicit missing-material negatives. These fresh executions replace the unpreserved input limitation of historical final/*-base, without pretending to restore the old JAR.
+
+Interaction owner then supplied cumulative03476ca30a505722e1217a7e8d52c43cc5868097. Inspected and merged it at200876fbf427dcc2fa239629ff8e26e7a0fb3a04. Corrections register the private hidden-tooltip probe before freeze and provide a private typed ForgeInnerComputerBasePlatform menu DeferredRegister, matching the existing optional consumer extension contract. The earlier NPE was a private consumer's missing optional menu registry, NOT a production initialization-order defect. Explicit private ForgeClientMod ownership transfer was accepted; no concurrent edits or production platform changes. Additional interaction screenshot fix creates nested parents and waits for stable capture; all originated with the owner.
+
+Fresh wrapper clientFixtureJars compilation passes corrected-compile.log. Copied fixtures AND every hash-checked production server mod into immutable corrected-inputs/, retaining exact source SHA/fixture/main-mod hashes in corrected-inputs/manifest.json. Physical current JEI loader JARs remain hash-bound preparation inputs; viewer/transitives are absent from the shared server classpath. Both corrected/fabric-jei and corrected/forge-jei then naturally exit0/0,27 phases/12 primary screenshots/two joins each, plus three exact supplementary interaction screenshots each. Both check-rendering.py AND check-interactions.py fully PASS per loader. Corrected combined candidate200876f is now scoped-runtime accepted, superseding c13's failed hooks; it still intentionally rejects Creative Filler and is NOT all-content acceptance. Exact commands are case commands.json and compile log; explicit runner inputs are the corrected immutable manifest and combined/launch/*-production-client-info.json. Each launch uses480s foreground timeout/Xvfb, --extra-mod exact JEI path and --eula-accepted.
+
+Primary new accepted scoped evidence is scoped/ (two rendering-only base workflows) and corrected/ (two current combined JEI workflows), not the historical final/ receipts. Post-reload Fabric gallery and reconnect NeoForge gallery visually inspected in BOTH accepted sets. Corrected NeoForge supplementary reconnect menu visibly shows empty original diamond slot, seven emeralds,16 diamonds in player hotbar, native extended-menu title and JEI sidebar. JEI explicitly warns the server has no JEI; server recipe synchronization/transfer remains uncertified. All visible sampled materials are valid, with far-side turtle geometry partly occluded; actual submitted materials independently prove both upgrades.
+
 Preparation command (300s foreground timeout):
 
     ./gradlew -I scripts/verification/client-fixture.init.gradle -I scripts/verification/network-launch-info.init.gradle clientFixtureJars networkClientLaunchInfo networkForgeLaunchInfo -Pnetwork.launch-dir="$PWD/build/verification/rendering/launch" --no-daemon --console=plain
@@ -53,8 +63,8 @@ Seven rendering guards and ten shared guards pass. Full checker against historic
 ## Open gates and exact next actions
 
 1. Human input: specify Creative Filler's intended appearance, or explicitly approve vanilla dropper-model/texture reuse. Current target generator registers only languages and missing blockstate/item/model assets cannot be invented. After approval add owning failing resource/material regression, implement datagen providers, regenerate deterministically, expand gallery and replace expected negative with positive assertion.
-2. Interaction owner must correct the actual registered private tooltip probe and NeoForge menu registration ordering, provide exact local SHA, then merge correction without overwriting ClientProof/RenderProof ownership.
-3. Before rebuilding again save fixture/main JAR copies under immutable evidence paths; use copied --fixture and assembly inputs for both-loader fresh scoped smoke. Run both check-rendering.py and check-interactions.py on those exact receipts. Do not count pre-hook or failed combined attempts as current passes.
+2. DONE for scoped current candidate: interaction corrections merged at200876f; both corrected JEI workflows and both independent validators pass. Owner's broader native/CCT/tooltip regression results remain separately source-bound evidence, not claimed as executions by this rendering lane.
+3. DONE for scoped replays: immutable source/fixture/main JAR preservation and both-loader exact-input receipt audits pass as documented above. Retain the immutable-copy rule for all future rebuilds; do not count historical pre-hook or failed combined attempts as current passes.
 4. Integration merges rendering then final interaction cumulative SHAs, legacy1269644 once, and replays six optional combinations, target Lua22/27/providers19/24, affected native/client/CCT, datagen/publication/fixture-isolation and ordinary production/affected R6 bindings. Scoped rendering proof does not replace positive energy or adversarial networking.
 
 Coverage rows remain open: R7:1/R7:4 rendering/regressions; related PLAN:L107,L109,L111,L113,L116,L119 and DECISION:06,10,12, plus R7:2/R7:3 matrix gates. Immutable coverage map was not edited. Both matrix children and parent were inspected; no downstream release/final-card completion before actual missing resource/design gate is resolved. Local commits/evidence archive identities are recorded in card comments to avoid a self-referential report hash.
