@@ -42,6 +42,22 @@ public final class NetworkClient {
             if (observed != phase) { observed = phase; wait = 0; }
             if (++wait < 30) return;
             String name = minecraft.player.getGameProfile().name();
+            if (wait == 30) Files.writeString(NetworkFixture.directory().resolve(name + ".ready"), Integer.toString(phase));
+            for (String peer : new String[]{"R6Alice", "R6Bob"}) {
+                var ready = NetworkFixture.directory().resolve(peer + ".ready");
+                if (!Files.exists(ready) || !Files.readString(ready).equals(Integer.toString(phase))) return;
+            }
+            var barrier = NetworkFixture.directory().resolve("send-time-" + phase);
+            try {
+                Files.writeString(barrier, Long.toString(System.currentTimeMillis() + 1000), java.nio.file.StandardOpenOption.CREATE_NEW);
+            } catch (java.nio.file.FileAlreadyExistsException expected) { }
+            String timestamp = Files.readString(barrier);
+            if (timestamp.length() != 13) return; // The other process may still be publishing its single write.
+            long scheduled = Long.parseLong(timestamp);
+            long actual = System.currentTimeMillis();
+            if (actual < scheduled) return;
+            if (actual - scheduled > 250) throw new AssertionError("Client missed simultaneous-send barrier");
+            NetworkFixture.append(name + "-barrier.log", "phase=" + phase + " scheduled=" + scheduled + " actual=" + actual);
             int id = Integer.parseInt(control.getProperty("id." + name));
             String action = control.getProperty("action");
             int state = minecraft.player.containerMenu.getStateId();
