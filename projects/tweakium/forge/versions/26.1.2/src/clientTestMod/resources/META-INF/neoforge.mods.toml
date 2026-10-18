@@ -1,0 +1,8 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+[[mods]]
+modId="tweakium_client_testmod"
+version="1.0.0"
+[[mixins]]
+config="tweakium-client.mixins.json"

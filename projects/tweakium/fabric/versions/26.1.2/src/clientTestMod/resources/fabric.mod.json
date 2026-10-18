@@ -1,0 +1,1 @@
+{"schemaVersion":1,"id":"tweakium_client_testmod","version":"1.0.0","environment":"*","entrypoints":{"main":["site.siredvin.tweakium.clienttest.FabricClientMod"]},"mixins":["tweakium-client.mixins.json"],"depends":{"tweakium":"*","peripheralium":"*"}}

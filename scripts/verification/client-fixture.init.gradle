@@ -1,0 +1,33 @@
+// Opt-in R7 client proof; no private fixture is part of a publication.
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.jvm.tasks.Jar
+
+gradle.projectsEvaluated {
+    def root = gradle.rootProject
+    def aggregate = root.tasks.register('clientFixtureJars')
+    ['fabric', 'forge'].each { loader ->
+        def owner = root.project(":tweakium:${loader}:26.1.2")
+        def common = root.file('projects/tweakium/versions/26.1.2/src/clientTestMod')
+        def adapter = root.file("projects/tweakium/${loader}/versions/26.1.2/src/clientTestMod")
+        def classes = root.layout.buildDirectory.dir("client-fixture/${loader}/classes")
+        def compile = owner.tasks.register('compileClientFixture', JavaCompile) {
+            source(root.fileTree(new File(common, 'java')) { include '**/*.java' })
+            source(root.fileTree(new File(adapter, 'java')) { include '**/*.java' })
+            dependsOn(owner.tasks.named('classes'))
+            classpath = owner.sourceSets.main.compileClasspath + owner.sourceSets.main.output
+            destinationDirectory.set(classes)
+            javaCompiler.set(owner.javaToolchains.compilerFor { languageVersion.set(JavaLanguageVersion.of(25)) })
+            options.release.set(25)
+            options.compilerArgs.add('-proc:none')
+        }
+        def jar = owner.tasks.register('clientFixtureJar', Jar) {
+            dependsOn(compile)
+            archiveFileName.set("tweakium-client-${loader}.jar")
+            destinationDirectory.set(root.layout.buildDirectory.dir('client-fixture'))
+            from(classes)
+            from(new File(common, 'resources'))
+            from(new File(adapter, 'resources'))
+        }
+        aggregate.configure { dependsOn(jar) }
+    }
+}
