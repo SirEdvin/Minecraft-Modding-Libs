@@ -8,11 +8,6 @@ import dan200.computercraft.api.lua.ObjectArguments
 import dan200.computercraft.api.peripheral.IComputerAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-//? if <26.1 {
-import net.minecraft.gametest.framework.GameTest
-//?} else {
-/*import site.siredvin.testiarium.api.GameTest
-*///?}
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.item.ItemEntity

@@ -63,9 +63,11 @@ class UpgradeBehaviorGameTests {
         removalRoundTrip(helper, upgrade.craftingItem, upgrade::getUpgradeItem, upgrade::getUpgradeData)
     }
 
-    private fun defaults(): ItemStackTemplate = ItemStackTemplate.fromNonEmptyStack(ItemStack(Items.DIAMOND).apply {
-        set(DataComponents.CUSTOM_DATA, CustomData.of(CompoundTag().apply { putString("default", "must stay removed") }))
-    })
+    private fun defaults(): ItemStackTemplate = ItemStackTemplate.fromNonEmptyStack(
+        ItemStack(Items.DIAMOND).apply {
+            set(DataComponents.CUSTOM_DATA, CustomData.of(CompoundTag().apply { putString("default", "must stay removed") }))
+        },
+    )
 
     private fun persisted(helper: GameTestHelper, item: ItemStack): ItemStack {
         val ops = helper.level.registryAccess().createSerializationContext(NbtOps.INSTANCE)
@@ -84,10 +86,15 @@ class UpgradeBehaviorGameTests {
     }
 
     private fun roundTrip(helper: GameTestHelper, write: (DataComponentPatch) -> ItemStackTemplate, read: (ItemStackTemplate) -> DataComponentPatch, suitable: (ItemStack) -> Boolean) {
-        val patch = DataComponentPatch.builder().set(DataComponents.CUSTOM_DATA, CustomData.of(CompoundTag().apply {
-            putInt("fuel", 42)
-            putString("owner", "oak")
-        })).build()
+        val patch = DataComponentPatch.builder().set(
+            DataComponents.CUSTOM_DATA,
+            CustomData.of(
+                CompoundTag().apply {
+                    putInt("fuel", 42)
+                    putString("owner", "oak")
+                },
+            ),
+        ).build()
         val item = write(patch).create()
         check(suitable(item))
         check(!suitable(item.copy().apply { set(DataComponents.CUSTOM_NAME, Component.literal("must not be lost")) }))

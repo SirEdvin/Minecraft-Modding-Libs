@@ -26,7 +26,10 @@ class UpgradeDataStorageTests {
         val access = Proxy.newProxyInstance(api.classLoader, arrayOf(api)) { _, method, args ->
             when (method.name) {
                 "getUpgradeData" -> patch
-                "setUpgradeData" -> { patch = args.last() as DataComponentPatch; null }
+                "setUpgradeData" -> {
+                    patch = args.last() as DataComponentPatch
+                    null
+                }
                 else -> error("Unexpected CC API call: ${method.name}")
             }
         }

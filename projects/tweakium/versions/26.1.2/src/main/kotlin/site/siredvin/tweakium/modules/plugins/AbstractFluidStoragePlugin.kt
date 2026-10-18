@@ -4,7 +4,6 @@ import dan200.computercraft.api.lua.LuaException
 import dan200.computercraft.api.lua.LuaFunction
 import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
-import site.siredvin.tweakium.modules.peripheral.representation.LuaInterpretation
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluids
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
@@ -15,6 +14,7 @@ import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStorageLookup
 import site.siredvin.broccolium.modules.storage.fluid.api.AgnosticFluidStorage
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
 import site.siredvin.tweakium.modules.peripheral.api.ISidedPeripheral
+import site.siredvin.tweakium.modules.peripheral.representation.LuaInterpretation
 import site.siredvin.tweakium.modules.peripheral.representation.LuaRepresentation
 import java.util.*
 import java.util.function.Predicate

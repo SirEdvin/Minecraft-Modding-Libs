@@ -14,7 +14,6 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntitySelector
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.Pose
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.ClipContext
@@ -85,6 +84,7 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
         val traceContext = ClipContext(origin, target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, fakePlayer)
         val directionVec = traceContext.from.subtract(traceContext.to)
         val traceDirection = Direction.getApproximateNearest(directionVec.x, directionVec.y, directionVec.z)
+
         @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
         val blockHit: HitResult = if (skipBlock) {
             BlockHitResult.miss(traceContext.to, traceDirection, traceContext.to.toBlockPos())
@@ -138,7 +138,8 @@ class FakePlayerProxy(val fakePlayer: ServerPlayer, private val range: Int = 4) 
                 }
             }
         }
-        return if (closestEntity != null && closestDistance <= range &&
+        return if (closestEntity != null &&
+            closestDistance <= range &&
             (blockHit.type == HitResult.Type.MISS || fakePlayer.distanceToSqr(blockHit.location) > closestDistance * closestDistance)
         ) {
             EntityHitResult(closestEntity, closestVec!!)

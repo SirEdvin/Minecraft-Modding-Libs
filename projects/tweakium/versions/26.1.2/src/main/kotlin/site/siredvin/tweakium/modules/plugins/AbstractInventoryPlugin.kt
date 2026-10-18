@@ -28,12 +28,20 @@ abstract class AbstractInventoryPlugin : AbstractRudimentInventoryPlugin() {
 
     @LuaFunction(mainThread = true, value = ["pushItems"])
     fun pushItemsLua(computer: IComputerAccess, arguments: IArguments): Int = pushItems(
-        computer, arguments.getString(0), arguments.transferSlotOrQuery(1), arguments.optionalTransferInt(2), arguments.optionalTransferInt(3),
+        computer,
+        arguments.getString(0),
+        arguments.transferSlotOrQuery(1),
+        arguments.optionalTransferInt(2),
+        arguments.optionalTransferInt(3),
     )
 
     @LuaFunction(mainThread = true, value = ["pullItems"])
     fun pullItemsLua(computer: IComputerAccess, arguments: IArguments): Int = pullItems(
-        computer, arguments.getString(0), arguments.transferSlotOrQuery(1), arguments.optionalTransferInt(2), arguments.optionalTransferInt(3),
+        computer,
+        arguments.getString(0),
+        arguments.transferSlotOrQuery(1),
+        arguments.optionalTransferInt(2),
+        arguments.optionalTransferInt(3),
     )
 
     @Throws(LuaException::class)

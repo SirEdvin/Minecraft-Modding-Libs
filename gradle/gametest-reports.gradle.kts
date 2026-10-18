@@ -95,6 +95,7 @@ subprojects {
                     "NativeSessionGameTests.changedNativeOwnerCannotReusePreviousPlayersIdentity",
                     "NativeSessionGameTests.nativeEntityStorageLoansReturnToolsAndDropOnlyExactOverflowOnAllExits",
                     "NativeUpgradeGameTests.liveTurtleInstallRemoveReinstallKeepsIndependentSideSettings",
+                    "NativeUpgradeGameTests.creativeTabResolvesOnlyOwningRegisteredUpgradesAndIndependentStacks",
                     "NativeUpgradeGameTests.livePocketInstallRemoveReinstallUsesNativeSideAccessAndPlayerInventory",
                     "NativeUpgradeGameTests.nativeChunkDiskUnloadReloadKeepsInstalledUpgradeSettings",
                     "NativeInteractionGameTests.oneNativeUseAndLoaderCancellationAndBreakProtectionArePreserved",

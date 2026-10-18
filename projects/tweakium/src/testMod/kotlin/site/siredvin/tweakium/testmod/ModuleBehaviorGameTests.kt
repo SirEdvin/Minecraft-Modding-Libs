@@ -5,11 +5,6 @@ import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-//? if <26.1 {
-import net.minecraft.gametest.framework.GameTest
-//?} else {
-/*import site.siredvin.testiarium.api.GameTest
-*///?}
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.item.ItemEntity
@@ -92,9 +87,11 @@ class ModuleBehaviorGameTests {
     @GameTest(template = "modulebehavior.empty")
     fun malformedQueriesAreRejectedBeforeNativeTransfer(helper: GameTestHelper) = helper.immediate {
         val queries = listOf<Any>(
-            "Invalid Identifier!", mapOf("or" to emptyMap<Int, Any>()),
+            "Invalid Identifier!",
+            mapOf("or" to emptyMap<Int, Any>()),
             mapOf("and" to mapOf(1 to "not a predicate")),
-            mapOf("name" to mapOf("in" to 3)), mapOf("unknown_instruction" to "minecraft:diamond"),
+            mapOf("name" to mapOf("in" to 3)),
+            mapOf("unknown_instruction" to "minecraft:diamond"),
         )
         for (query in queries) {
             for (block in listOf(false, true)) {

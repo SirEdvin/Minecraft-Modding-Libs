@@ -10,10 +10,13 @@ import site.siredvin.broccolium.modules.platform.FabricInnerBasePlatform
 import site.siredvin.tweakium.modules.platform.api.InnerComputerBasePlatform
 import java.util.function.Supplier
 
-abstract class FabricInnerComputerBasePlatform : FabricInnerBasePlatform(), InnerComputerBasePlatform {
+abstract class FabricInnerComputerBasePlatform :
+    FabricInnerBasePlatform(),
+    InnerComputerBasePlatform {
     override fun <V : ITurtleUpgrade> registerTurtleUpgrade(key: Identifier, upgrade: UpgradeType<V>): Supplier<UpgradeType<V>> {
         @Suppress("UNCHECKED_CAST")
         val registry = BuiltInRegistries.REGISTRY.getValue(ITurtleUpgrade.typeRegistry().identifier()) as Registry<UpgradeType<ITurtleUpgrade>>
+
         @Suppress("UNCHECKED_CAST")
         val registered = Registry.register(registry, key, upgrade as UpgradeType<ITurtleUpgrade>) as UpgradeType<V>
         return Supplier { registered }
@@ -22,6 +25,7 @@ abstract class FabricInnerComputerBasePlatform : FabricInnerBasePlatform(), Inne
     override fun <V : IPocketUpgrade> registerPocketUpgrade(key: Identifier, upgrade: UpgradeType<V>): Supplier<UpgradeType<V>> {
         @Suppress("UNCHECKED_CAST")
         val registry = BuiltInRegistries.REGISTRY.getValue(IPocketUpgrade.typeRegistry().identifier()) as Registry<UpgradeType<IPocketUpgrade>>
+
         @Suppress("UNCHECKED_CAST")
         val registered = Registry.register(registry, key, upgrade as UpgradeType<IPocketUpgrade>) as UpgradeType<V>
         return Supplier { registered }

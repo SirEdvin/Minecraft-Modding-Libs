@@ -1,0 +1,70 @@
+// Execute the actual owning doLast verifier against isolated corrupt copies.
+import groovy.xml.XmlSlurper
+
+gradle.projectsEvaluated {
+    def root = gradle.rootProject
+    root.tasks.register('verifyTweakiumReportGuards') {
+        doLast {
+            ['fabric', 'forge'].each { loader ->
+                def project = root.project(":tweakium:${loader}:26.1.2")
+                def task = project.tasks.named(loader == 'fabric' ? 'runPeripheralGameTest' : 'runGameTestServer').get()
+                def report = new File(project.buildDir, 'test-results/peripheral-gametest.xml')
+                def guards = task.actions.findAll { action ->
+                    def field = action.class.declaredFields.find { it.name == 'action' }
+                    if (field == null) return false
+                    field.accessible = true
+                    field.get(action).class.name.contains('Gametest_reports_gradle')
+                }
+                assert guards.size() == 2: 'Refuse to execute unrelated task actions'
+                def guard = guards.last()
+                def original = report.getText('UTF-8')
+                def parsed = new XmlSlurper().parseText(original)
+                def names = parsed.testcase.collect { it.@name.text() }
+                def victim = names.find { it.startsWith('NativeUpgradeGameTests.') }
+                assert victim != null
+                def fixture = { selected, skipped = false ->
+                    def body = selected.collect { name ->
+                        "<testcase name='${name}' classname='minecraft:empty'>${skipped && name == victim ? '<skipped/>' : ''}</testcase>"
+                    }.join('')
+                    "<testsuite tests='${selected.size()}' failures='0' errors='0' skipped='${skipped ? 1 : 0}'>${body}</testsuite>"
+                }
+                def reject = { label, xml, reason ->
+                    report.setText(xml, 'UTF-8')
+                    try {
+                        guard.execute(task)
+                        throw new AssertionError("${loader}: accepted ${label}")
+                    } catch (Exception expected) {
+                        assert expected.message.contains(reason): "${label}: ${expected.message}"
+                        println("${loader}: rejected ${label}")
+                    }
+                }
+                try {
+                    guard.execute(task)
+                    reject('vanilla-only', fixture(['minecraft:always_pass']), 'exact once-only fixture inventory')
+                    reject('missing-owning-case', fixture(names.findAll { it != victim }), 'exact once-only fixture inventory')
+                    reject('duplicate-owning-case', fixture(names + [victim]), 'exact once-only fixture inventory')
+                    reject('unexpected-owning-case', fixture(names + ['NativeUpgradeGameTests.unexpected']), 'exact once-only fixture inventory')
+                    reject('skipped-capability', fixture(names, true), 'capability tests must not be skipped')
+                    reject('false-summary', original.replace("tests=\"${names.size()}\"", "tests=\"${names.size() - 1}\""), 'count does not match')
+                    reject('empty', '', '')
+                    reject('malformed', '<testsuite', '')
+                    reject('doctype', '<!DOCTYPE testsuite [<!ENTITY marker "injected">]>' + fixture(names), 'DOCTYPE is disallowed')
+                    report.delete()
+                    try {
+                        guard.execute(task)
+                        throw new AssertionError("${loader}: accepted missing report")
+                    } catch (Exception expected) {
+                        assert expected.message.contains('did not produce a report')
+                        println("${loader}: rejected missing report")
+                    }
+                    report.setText(original, 'UTF-8')
+                    guards.first().execute(task)
+                    assert !report.exists(): 'Stale report was not deleted'
+                    println("${loader}: deleted stale report")
+                } finally {
+                    report.setText(original, 'UTF-8')
+                }
+            }
+        }
+    }
+}

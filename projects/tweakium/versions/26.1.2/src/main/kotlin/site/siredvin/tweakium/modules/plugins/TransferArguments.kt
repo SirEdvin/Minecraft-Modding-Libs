@@ -14,8 +14,6 @@ internal fun IArguments.checkedTransferInt(index: Int): Int {
     return value.toInt()
 }
 
-internal fun IArguments.optionalTransferInt(index: Int): Optional<Int> =
-    if (index >= count() || get(index) == null) Optional.empty() else Optional.of(checkedTransferInt(index))
+internal fun IArguments.optionalTransferInt(index: Int): Optional<Int> = if (index >= count() || get(index) == null) Optional.empty() else Optional.of(checkedTransferInt(index))
 
-internal fun IArguments.transferSlotOrQuery(index: Int): Any =
-    if (get(index) is Number) checkedTransferInt(index) else get(index) ?: throw LuaException("Missing slot or item query")
+internal fun IArguments.transferSlotOrQuery(index: Int): Any = if (get(index) is Number) checkedTransferInt(index) else get(index) ?: throw LuaException("Missing slot or item query")

@@ -14,6 +14,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.gametest.framework.GameTestHelper
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
@@ -22,12 +23,40 @@ import site.siredvin.testiarium.api.GameTest
 import site.siredvin.testiarium.api.TestGroup
 import site.siredvin.testiarium.api.immediate
 import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
+import site.siredvin.tweakium.modules.peripheral.util.CreativeTabUtil
 import site.siredvin.tweakium.modules.peripheral.util.DataStorageUtil
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import site.siredvin.tweakium.modules.player.FakePlayerProviderPocket
 
 @TestGroup("tweakium")
 class NativeUpgradeGameTests {
+    @GameTest(template = "modulebehavior.empty")
+    fun creativeTabResolvesOnlyOwningRegisteredUpgradesAndIndependentStacks(helper: GameTestHelper) = helper.immediate {
+        check(java.lang.reflect.Modifier.isPublic(CreativeModeTab.Output::class.java.modifiers))
+        check(java.lang.reflect.Modifier.isPublic(net.minecraft.world.entity.animal.equine.AbstractHorse::class.java.getDeclaredField("inventory").modifiers))
+        val stacks = mutableListOf<ItemStack>()
+        val output = object : CreativeModeTab.Output {
+            override fun accept(stack: ItemStack, visibility: CreativeModeTab.TabVisibility) {
+                stacks.add(stack)
+            }
+        }
+        CreativeTabUtil.enrichCreativeTabWithUpgrades("tweakium", output, helper.level.registryAccess())
+        check(stacks.size == 8)
+        val upgraded = stacks.filter { it.has(ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get()) || it.has(ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get()) }
+        check(upgraded.size == 4)
+        for (stack in upgraded) {
+            val upgrade = stack.get(ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get())?.holder()
+                ?: stack.get(ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get())!!.holder()
+            check(upgrade.key().identifier() == NativeUpgradeFixtures.ID)
+        }
+        upgraded.first().count = 2
+        check(upgraded.drop(1).all { it.count == 1 })
+        stacks.clear()
+        CreativeTabUtil.enrichCreativeTabWithUpgrades("no_matching_fixture", output, helper.level.registryAccess())
+        check(stacks.size == 4)
+        check(stacks.none { it.has(ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get()) || it.has(ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get()) })
+    }
+
     private fun turtle(helper: GameTestHelper, pos: BlockPos): TurtleBrain {
         helper.level.setBlockAndUpdate(pos, ModRegistry.Blocks.TURTLE_NORMAL.get().defaultBlockState())
         return (helper.level.getBlockEntity(pos) as TurtleBlockEntity).access as TurtleBrain

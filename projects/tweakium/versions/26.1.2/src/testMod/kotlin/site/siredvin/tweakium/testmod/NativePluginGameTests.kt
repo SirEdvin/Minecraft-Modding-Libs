@@ -49,7 +49,9 @@ object NativePluginFixtures {
         AgnosticFluidStorageLookup.addBlockLookup { level, _, entity, _ ->
             if (entity in bucketTargets && entity is net.minecraft.world.Container) {
                 AgnosticFluidStorageLookup.extractFromInventoryStack(level, ContainerWrapper(entity), 0)
-            } else null
+            } else {
+                null
+            }
         }
     }
 }

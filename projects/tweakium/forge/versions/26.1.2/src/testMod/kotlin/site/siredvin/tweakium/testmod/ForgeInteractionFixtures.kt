@@ -1,9 +1,9 @@
 package site.siredvin.tweakium.testmod
 
+import net.minecraft.world.InteractionResult
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.level.block.BreakBlockEvent
-import net.minecraft.world.InteractionResult
 
 object ForgeInteractionFixtures {
     @JvmStatic

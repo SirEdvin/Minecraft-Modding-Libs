@@ -50,7 +50,9 @@ class DataStorageTests {
         val custom = object : CustomDataComputerDataStorage() {
             override var patch = DataComponentPatch.EMPTY
             override fun extractCustomData(): Optional<CustomData> = Optional.of(CustomData.of(tag.copy()))
-            override fun setCustomData(data: CustomData) { writes++ }
+            override fun setCustomData(data: CustomData) {
+                writes++
+            }
         }
         val compound = CompoundTagDataStorage(tag) { writes++ }
         for (storage in listOf(custom, compound)) assertThrows<IllegalArgumentException> { storage.getUUID("owner") }

@@ -2,11 +2,6 @@ package site.siredvin.tweakium.testmod
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-//? if <26.1 {
-import net.minecraft.gametest.framework.GameTest
-//?} else {
-/*import site.siredvin.testiarium.api.GameTest
-*///?}
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items

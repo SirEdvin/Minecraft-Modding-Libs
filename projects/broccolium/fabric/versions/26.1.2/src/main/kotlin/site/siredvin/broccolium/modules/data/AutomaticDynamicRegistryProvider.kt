@@ -11,8 +11,10 @@ class AutomaticDynamicRegistryProvider(private val name: String, output: FabricP
     override fun configure(registries: HolderLookup.Provider, entries: Entries) {
         // A registry patch need not contain every world registry (notably
         // dimensions). Serialize the registries actually present in the patch.
-        for (registry in DynamicRegistries.getWorldRegistries()) registries.lookup(registry.key()).ifPresent { lookup ->
-            lookup.listElements().filter { it.key().identifier().namespace == name }.forEach { entries.add(it) }
+        for (registry in DynamicRegistries.getWorldRegistries()) {
+            registries.lookup(registry.key()).ifPresent { lookup ->
+                lookup.listElements().filter { it.key().identifier().namespace == name }.forEach { entries.add(it) }
+            }
         }
     }
 
