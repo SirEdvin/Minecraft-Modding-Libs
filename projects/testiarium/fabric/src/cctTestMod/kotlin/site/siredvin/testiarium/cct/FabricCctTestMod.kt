@@ -4,7 +4,6 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.loader.api.FabricLoader
-import site.siredvin.testiarium.FabricTestiarium
 
 object FabricCctTestMod : ModInitializer {
     override fun onInitialize() {
@@ -15,6 +14,6 @@ object FabricCctTestMod : ModInitializer {
             CctComputers.reset()
             CctFixtureCommands.importFiles(it)
         }
-        FabricTestiarium.registerTests()
+        // The owning testmod registers its classes before the one-shot scan.
     }
 }
