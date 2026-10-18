@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:dusts/redstone",
+    "#c:dusts/glowstone"
+  ],
+  "result": {
+    "id": "peripheralium:peripheralium_dust"
+  }
+}

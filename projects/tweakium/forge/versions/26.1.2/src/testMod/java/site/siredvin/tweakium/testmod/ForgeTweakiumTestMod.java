@@ -18,6 +18,7 @@ public final class ForgeTweakiumTestMod {
         Testiarium.register(NativePluginGameTests.class);
         ForgeInteractionFixtures.install();
         Testiarium.register(NativeInteractionGameTests.class);
+        Testiarium.register(site.siredvin.peripheralium.testmod.PeripheraliumBehaviorGameTests.class);
         NeoForge.EVENT_BUS.addListener((ServerStartingEvent event) -> {
             CctComputers.INSTANCE.reset();
             CctFixtureCommands.INSTANCE.importFiles(event.getServer());

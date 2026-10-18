@@ -119,6 +119,11 @@ subprojects {
                     "UpgradeBehaviorGameTests.turtleStateSurvivesItemSerializationWithoutChangingCraftingItem",
                     "UpgradeBehaviorGameTests.pocketExplicitRemovalSurvivesItemRoundTrip",
                     "UpgradeBehaviorGameTests.turtleExplicitRemovalSurvivesItemRoundTrip",
+                    "PeripheraliumBehaviorGameTests.registeredItemsAndBlockMatchTrackedObjects",
+                    "PeripheraliumBehaviorGameTests.recipeOutputsAndInvalidPatternsPreserveContracts",
+                    "PeripheraliumBehaviorGameTests.loadedRecipesCraftWithNativeIngredientsAndRejectWrongCenter",
+                    "PeripheraliumBehaviorGameTests.bothLanguagesContainEveryTrackedTranslation",
+                    "PeripheraliumBehaviorGameTests.blockLootDropsExactlyOneRegisteredBlock",
                 )
                 val nodes = document.getElementsByTagName("testcase")
                 val names = (0 until nodes.length).map { (nodes.item(it) as org.w3c.dom.Element).getAttribute("name") }

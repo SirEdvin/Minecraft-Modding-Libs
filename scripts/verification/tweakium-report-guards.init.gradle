@@ -22,6 +22,8 @@ gradle.projectsEvaluated {
                 def names = parsed.testcase.collect { it.@name.text() }
                 def victim = names.find { it.startsWith('NativeUpgradeGameTests.') }
                 assert victim != null
+                def contentVictim = names.find { it.startsWith('PeripheraliumBehaviorGameTests.') }
+                assert contentVictim != null
                 def fixture = { selected, skipped = false ->
                     def body = selected.collect { name ->
                         "<testcase name='${name}' classname='minecraft:empty'>${skipped && name == victim ? '<skipped/>' : ''}</testcase>"
@@ -44,6 +46,10 @@ gradle.projectsEvaluated {
                     reject('missing-owning-case', fixture(names.findAll { it != victim }), 'exact once-only fixture inventory')
                     reject('duplicate-owning-case', fixture(names + [victim]), 'exact once-only fixture inventory')
                     reject('unexpected-owning-case', fixture(names + ['NativeUpgradeGameTests.unexpected']), 'exact once-only fixture inventory')
+                    reject('missing-content-case', fixture(names.findAll { it != contentVictim }), 'exact once-only fixture inventory')
+                    reject('missing-content-suite', fixture(names.findAll { !it.startsWith('PeripheraliumBehaviorGameTests.') }), 'exact once-only fixture inventory')
+                    reject('duplicate-content-case', fixture(names + [contentVictim]), 'exact once-only fixture inventory')
+                    reject('unexpected-content-case', fixture(names + ['PeripheraliumBehaviorGameTests.unexpected']), 'exact once-only fixture inventory')
                     reject('skipped-capability', fixture(names, true), 'capability tests must not be skipped')
                     reject('false-summary', original.replace("tests=\"${names.size()}\"", "tests=\"${names.size() - 1}\""), 'count does not match')
                     reject('empty', '', '')

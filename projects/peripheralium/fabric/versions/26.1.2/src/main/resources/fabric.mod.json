@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "peripheralium",
+  "version": "${version}",
+  "name": "Peripheralium",
+  "description": "A basic mod for modding libs test",
+  "authors": ["SirEdvin"],
+  "contact": {
+    "homepage": "https://github.com/SirEdvin/Minecraft-Modding-Libs",
+    "issues": "https://github.com/SirEdvin/Minecraft-Modding-Libs/issues",
+    "sources": "https://github.com/SirEdvin/Minecraft-Modding-Libs"
+  },
+  "license": "MIT",
+  "icon": "pack.png",
+  "environment": "*",
+  "accessWidener": "peripheralium.accesswidener",
+  "entrypoints": {
+    "main": [{"adapter": "kotlin", "value": "site.siredvin.peripheralium.FabricPeripheralium"}],
+    "fabric-datagen": [{"adapter": "kotlin", "value": "site.siredvin.peripheralium.PeripheraliumDataGenerator"}]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=1.13.12+kotlin.2.4.0",
+    "minecraft": "26.1.2",
+    "java": ">=25",
+    "computercraft": ">=1.120.0",
+    "broccolium": ">=2.0.0",
+    "tweakium": ">=2.0.0"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {"modmenu.discord": "https://discord.gg/dYHKMQYRPp"},
+      "badges": ["library"]
+    }
+  }
+}

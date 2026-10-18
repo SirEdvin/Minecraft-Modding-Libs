@@ -23,6 +23,7 @@ object FabricTweakiumTestMod : ModInitializer {
         Testiarium.register(NativePluginGameTests::class.java)
         FabricInteractionFixtures.install()
         Testiarium.register(NativeInteractionGameTests::class.java)
+        Testiarium.register(site.siredvin.peripheralium.testmod.PeripheraliumBehaviorGameTests::class.java)
         FabricTestiarium.registerTests()
     }
 }

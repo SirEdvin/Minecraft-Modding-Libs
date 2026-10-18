@@ -1,11 +1,15 @@
 package site.siredvin.broccolium.modules.platform
 
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformIngredients
 
 object FabricPlatformIngredients : InnerPlatformIngredients {
+    override fun redstone(registries: HolderLookup.Provider): Ingredient = Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(ConventionalItemTags.REDSTONE_DUSTS))
+
     override val redstone: Ingredient
         get() = Ingredient.of(PlatformToolkit.get().lookup(net.minecraft.core.registries.Registries.ITEM).getOrThrow(ConventionalItemTags.REDSTONE_DUSTS))
     override val glowstoneDust: Ingredient

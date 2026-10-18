@@ -1,0 +1,5 @@
+accessWidener v2 official
+
+transitive-accessible class net/minecraft/world/item/CreativeModeTab$Output
+transitive-accessible class net/minecraft/world/item/CreativeModeTab$TabVisibility
+transitive-accessible class net/minecraft/data/recipes/RecipeProvider$Runner

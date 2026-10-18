@@ -96,6 +96,10 @@ dependencies {
     }
     if (library == "peripheralium") {
         api(project(":tweakium${if (loader == "common") "" else ":$loader"}:$minecraftVersion"))
+        if (loader != "common") {
+            api(project(":broccolium:$minecraftVersion"))
+            api(project(":tweakium:$minecraftVersion"))
+        }
     }
     if (library == "tweakium") {
         if (loader != "common") {
@@ -158,6 +162,7 @@ tasks.named<ProcessResources>("processResources") {
     // The canonical common resource is a legacy named-namespace widener. The
     // target loader owns the merged official widener; do not shadow it at runtime.
     if (library == "broccolium" && loader == "common") exclude("broccolium.accesswidener")
+    if (library == "peripheralium" && loader == "common") exclude("peripheralium.accesswidener")
 }
 
 if (loader != "common") {
@@ -395,6 +400,78 @@ if (library == "tweakium") {
                 gameDirectory = file("run/upgrade-datagen")
             }
         }
+    }
+}
+
+if (library == "peripheralium") {
+    val coreHarness = project(":testiarium:$minecraftVersion")
+    evaluationDependsOn(coreHarness.path)
+    val harnessSets = coreHarness.extensions.getByType<SourceSetContainer>()
+    val testMod = sourceSets.create("testMod") {
+        compileClasspath += sourceSets.main.get().compileClasspath + sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().runtimeClasspath + sourceSets.main.get().output
+        for (name in listOf("main", "testMod")) {
+            compileClasspath += harnessSets.named(name).get().output
+            runtimeClasspath += harnessSets.named(name).get().output
+        }
+    }
+    configurations.named(testMod.implementationConfigurationName) { extendsFrom(configurations.implementation.get()) }
+    if (loader != "common") {
+        val commonSets = project(":peripheralium:$minecraftVersion").extensions.getByType<SourceSetContainer>()
+        val generated = rootProject.file("projects/peripheralium/$loader/versions/$minecraftVersion/src/generated/resources")
+        sourceSets.main.get().resources.srcDir(generated)
+        val dependencySets = listOf("broccolium", "tweakium").associateWith { dependency ->
+            listOf(project(":$dependency:$loader:$minecraftVersion"), project(":$dependency:$minecraftVersion")).map {
+                evaluationDependsOn(it.path)
+                it.extensions.getByType<SourceSetContainer>().named("main").get()
+            }
+        }
+        if (loader == "fabric") extensions.configure<LoomGradleExtensionAPI> {
+            mods {
+                register("peripheralium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
+                dependencySets.forEach { (name, sets) -> register(name) { sets.forEach { sourceSet(it) } } }
+            }
+            runs.create("datagen") {
+                client(); source(sourceSets.main.get())
+                property("fabric-api.datagen", "true")
+                property("fabric-api.datagen.modid", "peripheralium")
+                property("fabric-api.datagen.output-dir", generated.absolutePath)
+                runDir("run/datagen")
+            }
+        } else extensions.configure<NeoForgeExtension> {
+            val production = mods.create("peripheralium") { sourceSet(sourceSets.main.get()); sourceSet(commonSets.named("main").get()) }
+            val dependencies = dependencySets.map { (name, sets) -> mods.create(name) { sets.forEach { sourceSet(it) } } }
+            for (clientData in listOf(true, false)) runs.create(if (clientData) "clientData" else "serverData") {
+                if (clientData) clientData() else serverData()
+                sourceSet.set(sourceSets.main.get())
+                loadedMods.add(production)
+                loadedMods.addAll(dependencies)
+                programArguments.addAll("--mod", "peripheralium", "--output", generated.absolutePath)
+                gameDirectory = file("run/datagen")
+            }
+        }
+    }
+}
+
+// Content belongs only on the private native runner, never Tweakium main outputs.
+if (library == "tweakium" && loader != "common") gradle.projectsEvaluated {
+    val content = project(":peripheralium:$loader:$minecraftVersion")
+    val contentSets = content.extensions.getByType<SourceSetContainer>()
+    val contentCore = project(":peripheralium:$minecraftVersion").extensions.getByType<SourceSetContainer>()
+    val testMod = sourceSets.named("testMod").get()
+    for (sets in listOf(contentSets, contentCore)) {
+        testMod.compileClasspath += sets.named("main").get().output
+        testMod.runtimeClasspath += sets.named("main").get().output
+    }
+    testMod.compileClasspath += contentCore.named("testMod").get().output
+    testMod.runtimeClasspath += contentCore.named("testMod").get().output
+    if (loader == "fabric") project.extensions.configure<LoomGradleExtensionAPI> {
+        mods.register("peripheralium") { sourceSet(contentSets.named("main").get()); sourceSet(contentCore.named("main").get()) }
+        mods.named("tweakium_testmod") { sourceSet(contentCore.named("testMod").get()) }
+    } else project.extensions.configure<NeoForgeExtension> {
+        val mod = mods.create("peripheralium") { sourceSet(contentSets.named("main").get()); sourceSet(contentCore.named("main").get()) }
+        mods.named("tweakium_testmod") { sourceSet(contentCore.named("testMod").get()) }
+        runs.named("gameTestServer") { loadedMods.add(mod) }
     }
 }
 

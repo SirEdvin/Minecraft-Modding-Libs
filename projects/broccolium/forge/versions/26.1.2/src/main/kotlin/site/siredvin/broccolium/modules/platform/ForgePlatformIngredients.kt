@@ -1,5 +1,6 @@
 package site.siredvin.broccolium.modules.platform
 
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
@@ -7,6 +8,9 @@ import net.neoforged.neoforge.common.Tags
 import site.siredvin.broccolium.modules.platform.api.InnerPlatformIngredients
 
 object ForgePlatformIngredients : InnerPlatformIngredients {
+    override fun redstone(registries: HolderLookup.Provider): Ingredient = Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(Tags.Items.DUSTS_REDSTONE))
+    override fun glowstoneDust(registries: HolderLookup.Provider): Ingredient = Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(Tags.Items.DUSTS_GLOWSTONE))
+
     override val redstone: Ingredient
         get() = Ingredient.of(PlatformToolkit.get().lookup(Registries.ITEM).getOrThrow(Tags.Items.DUSTS_REDSTONE))
     override val glowstoneDust: Ingredient
