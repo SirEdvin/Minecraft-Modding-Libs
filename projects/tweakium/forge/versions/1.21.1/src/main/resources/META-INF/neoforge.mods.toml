@@ -6,6 +6,9 @@ logoFile="pack.png"
 
 license="MIT"
 
+[[mixins]]
+config="tweakium.mixins.json"
+
 [[mods]]
 modId="tweakium"
 version="${file.jarVersion}"
