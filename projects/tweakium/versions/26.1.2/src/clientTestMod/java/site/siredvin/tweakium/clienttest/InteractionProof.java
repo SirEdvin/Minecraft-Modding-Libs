@@ -76,6 +76,19 @@ public final class InteractionProof {
 
     /** Return false while a real menu operation is awaiting server acknowledgement. */
     public static boolean advance(Minecraft mc, int phase) {
+        if (phase == 6) {
+            require(mc.screen instanceof net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen, "Visible creative screen");
+            var screen = (net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen) mc.screen;
+            var visible = screen.getMenu().items.stream().map(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()).toList();
+            require(visible.size() == 3 && Set.copyOf(visible).equals(Set.of("peripheralium:peripheralium_dust", "peripheralium:peripheralium_upgrade_template", "peripheralium:peripheralium_block")), "Visible creative inventory changed before screenshot: " + visible);
+            try {
+                var field = screen.getClass().getDeclaredField("selectedTab");
+                field.setAccessible(true);
+                require(field.get(null) == BuiltInRegistries.CREATIVE_MODE_TAB.getValue(Identifier.fromNamespaceAndPath("peripheralium", "tab")), "Visible creative label/tab changed");
+            } catch (ReflectiveOperationException exception) { throw new AssertionError(exception); }
+            ClientFixture.record("interactions.log", "PASS visible-creative-tab peripheralium:tab exact-display=3");
+            return true;
+        }
         if (phase != 19 && phase != 24) return true;
         if (++ticks > 600) throw new AssertionError("Interaction deadline phase=" + phase + " step=" + step);
         if (!captured) return false;

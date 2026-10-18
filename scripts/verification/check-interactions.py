@@ -31,6 +31,7 @@ def validate(run):
         raise ValueError("Exact consumer upgrade creative variants mismatch")
     log = (control / "interactions.log").read_text()
     expected = {
+        "PASS visible-creative-tab peripheralium:tab exact-display=3": 1,
         "menu-decode registry-context=true schema=BlockPos,Int": 3,
         "server-open token=initial ": 1,
         "server-open token=reopen ": 1,
