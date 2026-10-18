@@ -21,16 +21,14 @@ import site.siredvin.testiarium.api.immediate
 
 @TestGroup("broccolium_native")
 class RegistryCodecGameTests {
-    @GameTest(template = "empty")
-    fun absentTooltipTranslationsDoNotLeakRawKeysForItemsOrBlocks(helper: GameTestHelper) = helper.immediate {
+    private fun absentTooltipTranslationsDoNotLeakRawKeysForItemsOrBlocks(helper: GameTestHelper) {
         val tooltip = mutableListOf<Component>()
         NativeFixtures.untranslatedItem.get().appendHoverText(net.minecraft.world.item.ItemStack(NativeFixtures.untranslatedItem.get()), net.minecraft.world.item.Item.TooltipContext.of(helper.level), net.minecraft.world.item.component.TooltipDisplay.DEFAULT, tooltip::add, net.minecraft.world.item.TooltipFlag.NORMAL)
         NativeFixtures.untranslatedBlockItem.get().appendHoverText(net.minecraft.world.item.ItemStack(NativeFixtures.untranslatedBlockItem.get()), net.minecraft.world.item.Item.TooltipContext.of(helper.level), net.minecraft.world.item.component.TooltipDisplay.DEFAULT, tooltip::add, net.minecraft.world.item.TooltipFlag.NORMAL)
         check(tooltip.isEmpty())
     }
 
-    @GameTest(template = "empty")
-    fun registeredBlockTooltipHooksAreLazyOrderedAndServerSafe(helper: GameTestHelper) = helper.immediate {
+    private fun registeredBlockTooltipHooksAreLazyOrderedAndServerSafe(helper: GameTestHelper) {
         val item = NativeFixtures.tooltipBlockItem.get()
         val tooltip = mutableListOf<Component>()
         repeat(2) {
@@ -49,6 +47,8 @@ class RegistryCodecGameTests {
 
     @GameTest(template = "empty")
     fun registeredTooltipHooksAreLazyAndDoNotLoadClientOnServer(helper: GameTestHelper) = helper.immediate {
+        absentTooltipTranslationsDoNotLeakRawKeysForItemsOrBlocks(helper)
+        registeredBlockTooltipHooksAreLazyOrderedAndServerSafe(helper)
         val item = NativeFixtures.tooltipItem.get()
         val tooltip = mutableListOf<net.minecraft.network.chat.Component>()
         repeat(2) {

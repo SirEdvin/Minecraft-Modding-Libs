@@ -28,7 +28,8 @@ public final class InteractionProof {
     private static int step;
     private static int ticks;
     private static int firstMenu;
-    private static boolean captured = true;
+    private static volatile boolean captured = true;
+    private static int stable;
     private static boolean screenRegistered;
 
     public static void verify(Minecraft mc) {
@@ -43,6 +44,19 @@ public final class InteractionProof {
         require(tab != null, "Peripheralium creative tab");
         List<String> display = tab.getDisplayItems().stream().map(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()).toList();
         require(display.size() == 3 && Set.copyOf(display).equals(Set.of("peripheralium:peripheralium_dust", "peripheralium:peripheralium_upgrade_template", "peripheralium:peripheralium_block")), "Exact creative entries " + display);
+        var upgradeCreative = new java.util.ArrayList<String>();
+        site.siredvin.tweakium.modules.peripheral.util.CreativeTabUtil.INSTANCE.enrichCreativeTabWithUpgrades("tweakium", (stack, visibility) -> {
+            var turtle = stack.get(dan200.computercraft.shared.ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get());
+            var pocket = stack.get(dan200.computercraft.shared.ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get());
+            var upgrade = turtle != null ? turtle : pocket;
+            upgradeCreative.add(BuiltInRegistries.ITEM.getKey(stack.getItem()) + "|" + (upgrade == null ? "base" : upgrade.holder().key().identifier().toString()));
+        }, mc.level.registryAccess());
+        var expectedUpgrades = new java.util.ArrayList<String>();
+        for (String item : List.of("pocket_computer_normal", "pocket_computer_advanced", "turtle_normal", "turtle_advanced")) {
+            expectedUpgrades.add("computercraft:" + item + "|base");
+            expectedUpgrades.add("computercraft:" + item + "|tweakium:r7_visual");
+        }
+        require(upgradeCreative.equals(expectedUpgrades), "Exact consumer upgrade creative entries " + upgradeCreative);
         ItemStack book = mc.player.getInventory().getItem(6);
         require(TextBookUtils.INSTANCE.getBookText(book).equals(ClientFixture.BOOK_PAGES), "Synchronized written book exact pages/order");
         var content = book.get(DataComponents.WRITTEN_BOOK_CONTENT);
@@ -55,7 +69,7 @@ public final class InteractionProof {
         require(prompt.stream().anyMatch(line -> line.getString().contains("Left shift")), "Native hidden tooltip prompt");
         require(prompt.stream().noneMatch(line -> line.getString().equals("private hook")), "Hidden hook leaked without Left Shift");
         try {
-            Files.writeString(ClientFixture.directory().resolve("interaction-inventory.json"), new GsonBuilder().setPrettyPrinting().create().toJson(Map.of("items", items, "blocks", blocks, "peripheraliumCreativeDisplay", display, "bookPages", ClientFixture.BOOK_PAGES, "privateConsumers", List.of("tweakium:r7_visual turtle left/right", "tweakium:r7_visual pocket", "tweakium:r7_interaction_menu", ClientFixture.HIDDEN_PROBE.toString()))) + "\n");
+            Files.writeString(ClientFixture.directory().resolve("interaction-inventory.json"), new GsonBuilder().setPrettyPrinting().create().toJson(Map.of("items", items, "blocks", blocks, "peripheraliumCreativeDisplay", display, "consumerUpgradeCreative", upgradeCreative, "bookPages", ClientFixture.BOOK_PAGES, "privateConsumers", List.of("tweakium:r7_visual turtle left/right", "tweakium:r7_visual pocket", "tweakium:r7_interaction_menu", ClientFixture.HIDDEN_PROBE.toString()))) + "\n");
         } catch (java.io.IOException exception) { throw new AssertionError(exception); }
         ClientFixture.record("interactions.log", "verify dedicated=" + !mc.hasSingleplayerServer() + " exact-items=4 exact-blocks=2 creative=3 book-pages=2 descriptive-tooltip=1 hidden-prompt=true thread=" + Thread.currentThread().getName());
     }
@@ -81,10 +95,12 @@ public final class InteractionProof {
                     }
                     case 2 -> {
                         if (!(mc.player.containerMenu instanceof ChestMenu menu) || menu.getType() != InteractionMenus.type.get() || !menu.getSlot(0).getItem().is(Items.DIAMOND)) return false;
+                        if (++stable < 5) return false;
                         require(menu.getSlot(0).getItem().getCount() == 16, "Broccolium menu initial diamond count");
                         checkEmerald(menu);
                         firstMenu = menu.containerId;
                         shot(mc, "01-extended-menu");
+                        stable = 0;
                         step = 3;
                     }
                     case 3 -> {
@@ -106,8 +122,10 @@ public final class InteractionProof {
                     }
                     case 6 -> {
                         if (!mutated(mc)) return false;
+                        if (++stable < 5) return false;
                         require(mc.player.containerMenu.containerId != firstMenu, "Reopen must create a fresh menu id");
                         shot(mc, "02-reopened-menu");
+                        stable = 0;
                         ClientFixture.record("interactions.log", "PASS extended-open transfer-server-ack exact-conservation close-reopen fresh-menu-id");
                         step = 7;
                     }
@@ -123,6 +141,7 @@ public final class InteractionProof {
                     }
                     case 8 -> {
                         if (!mutated(mc)) return false;
+                        if (++stable < 5) return false;
                         shot(mc, "03-reconnected-menu");
                         ClientFixture.record("interactions.log", "PASS reconnect authoritative-chest-and-player-state");
                         step = 9;
@@ -144,8 +163,14 @@ public final class InteractionProof {
     private static void checkEmerald(ChestMenu menu) { require(menu.getSlot(1).getItem().is(Items.EMERALD) && menu.getSlot(1).getItem().getCount() == 7, "Untouched emerald count"); }
     private static void require(boolean condition, String message) { if (!condition) throw new AssertionError(message); }
     private static void shot(Minecraft mc, String name) {
+        var directory = ClientFixture.directory().resolve("interaction");
+        try { Files.createDirectories(directory.resolve("screenshots")); }
+        catch (java.io.IOException exception) { throw new AssertionError(exception); }
         captured = false;
-        Screenshot.grab(ClientFixture.directory().resolve("interaction").toFile(), name + ".png", mc.getMainRenderTarget(), 1, ignored -> captured = true);
+        Screenshot.grab(directory.toFile(), name + ".png", mc.getMainRenderTarget(), 1, ignored -> {
+            if (!Files.isRegularFile(directory.resolve("screenshots").resolve(name + ".png"))) ClientFixture.record("failure.txt", "Interaction screenshot failed: " + name);
+            captured = true;
+        });
     }
     // Same isolated private vanilla registration boundary as the existing R6 fixture.
     private static void registerScreen() {

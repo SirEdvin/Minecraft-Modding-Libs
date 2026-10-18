@@ -26,6 +26,9 @@ def validate(run):
         raise ValueError("Creative identity mismatch")
     if inventory["bookPages"] != ["Broccolium book text\nPeripheralium content\nTweakium facing models", "Second page: resource reload and reconnect."]:
         raise ValueError("Synchronized book mismatch")
+    expected_upgrades = [f"computercraft:{item}|{variant}" for item in ("pocket_computer_normal", "pocket_computer_advanced", "turtle_normal", "turtle_advanced") for variant in ("base", "tweakium:r7_visual")]
+    if inventory["consumerUpgradeCreative"] != expected_upgrades:
+        raise ValueError("Exact consumer upgrade creative variants mismatch")
     log = (control / "interactions.log").read_text()
     expected = {
         "menu-decode registry-context=true schema=BlockPos,Int": 3,
