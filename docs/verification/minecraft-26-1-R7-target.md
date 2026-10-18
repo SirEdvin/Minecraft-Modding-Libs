@@ -1,6 +1,6 @@
 # R7 target execution lane — t_9c4d988f
 
-Status: INCOMPLETE, resumed 2026-10-18 with approved target JEI. The initial checkpoint below is historical; the resume section records fresh bounded runtime evidence. Creative Filler design/all-content acceptance remains open.
+Status: VERIFIED TARGET CLIENT PHASE, 2026-10-19 Europe/Kyiv (2026-10-18 UTC). Both prior external decisions are resolved: approved target JEI and approved toxic-purple barrel resources. The sections before “Final aggregate acceptance” below are immutable historical checkpoints, not current blockers or final totals. Combined publication/ordinary-production/save/R6 and original R7/F acceptance remain with the existing downstream owners.
 
 ## Source custody and scope
 
@@ -82,3 +82,44 @@ Remaining required input is ONLY the Creative Filler appearance/resource design:
 Independent `PYTHONDONTWRITEBYTECODE=1 python3 build/verification/jei-policy/verify-phase.py` exits0: reconciles three real receipts/process exits/phase/screenshot inventories, fresh native XML names/timestamps/hashes, JEI initialization and no-JEI-server warning, classpath/mod input hashes, eight publications and all eight rebuilt target runtime JAR entry payloads against the actual inherited production assembly JARs. Private compiled client fixture classes are absent from all eight runtime artifacts. `phase-audit.json` preserves source/execution-input hashes. This establishes unchanged production payloads, not new adversarial R6/provider/Lua execution; no recipe viewer is added to the production server assemblies, so the inherited R6 receipt is not replaced by these UI-only joins. Renew full binding after the eventual resource repair/combined integration.
 
 KotlinGradle Spotless first fails before linting in the linked worktree (`Cannot find git repository in any parent directory`, lint.log). Repeated the original ratcheted task in a task-owned standalone shared clone at build/verification/jei-policy/lint-checkout, preserving origin/multiversion and overlaying exactly the four edited files; `timeout --foreground 180s .../gradlew -p ... spotlessKotlinGradleCheck --no-daemon --console=plain` exits0 (lint-standalone.log). No ratchet or check disabled. Final source diff whitespace check also passes. Final checkpoint SHA and independently verified evidence ZIP identity are recorded on the card, avoiding a self-referential commit hash in this report.
+
+## Final aggregate acceptance — 2026-10-19 Europe/Kyiv
+
+Resumed after all six implementation/matrix/integration prerequisites completed. Clean assigned branch `wt/t_9c4d988f` fast-forwarded from c68817f to exact cumulative `ef875c8ea269c83525528acb2ba319163ec3dddd`. Runtime source is `293098d81f654ec979db0853ab54fcc88a002736`; subsequent commits are report-only. Verified planner b8fd1dd, cumulative R6 66436bc, baseline0783e34 and legacy12696448274129313f7616a51e130f1d8c291953 ancestry. No repeated helper-only cherry-pick or new implementation was needed. This final aggregate performs independent custody/receipt validation, not additional Minecraft launches or a fabricated fresh full build.
+
+Authoritative detailed final client report: [client integration](minecraft-26-1-R7-client-integration.md). It carries exact commands, source/artifact identities, six dependency manifests, individual coverage contributions, fresh-versus-inherited native reports and runtime limitations. Constituent [rendering](minecraft-26-1-R7-rendering.md), [interactions](minecraft-26-1-R7-interactions.md), [Fabric](minecraft-26-1-R7-fabric-matrix.md) and [NeoForge](minecraft-26-1-R7-neoforge-matrix.md) reports retain owning regressions and failure evidence.
+
+Completed implementation includes deterministic generator-owned approved purple barrel resources, positive eight-entry material/snapshot proof, strict creative/menu/tooltip/book/reconnect assertions, and the observed NeoForge foreign-mod-context race repair through an owning-event-bus adapter. No live mutable world read was introduced in render submission. Historical missing design/model/EMI blockers above are resolved, not waived. REI combinations are explicitly superseded by dashboard removal; target JEI29.47.0.111 is approved, legacy EMI remains unchanged. Config-port26.1.5 is conditional N/A under actual R0/R5 usage findings, not a removed required integration; Night Config remains present.
+
+### Accepted final client matrix
+
+All cases below are actual final integration executions, independently revalidated here. Paths are relative to `/home/siredvin/projects/Minecraft-Modding-Libs/.worktrees/t_07f62912/build/verification/client-integration/accepted/`. Each directory retains commands.json, dependency-manifest.json, native logs, process exits, material/menu proof and raw PNGs. JEI and ModMenu/Placeholder are physically client-only.
+
+| Case | Directory | Result |
+| --- | --- | --- |
+| Fabric base | fabric-base | PASS |
+| Fabric + ModMenu18.0.2 + Placeholder3.0.0+26.1 | fabric-modmenu | PASS |
+| Fabric + JEI29.47.0.111 | fabric-jei | PASS |
+| Fabric + JEI + ModMenu + Placeholder | fabric-jei-modmenu | PASS |
+| NeoForge base, no JEI/Mezzdev | forge-base | PASS |
+| NeoForge + JEI29.47.0.111 | forge-jei | PASS |
+
+Final integration totals, not added to earlier checkpoint executions: six workflows, each27 phases/server0/client0/two real dedicated joins;90 raw PNGs;192 positive model submissions including24 Creative Filler checkpoints. Integration freshly ran stronger Fabric22 Lua36, JVM50 across11 XML and TypeScript contracts, with89 evidence guards. Provider/native evidence from prerequisite lanes is separately inherited and identity-correlated, not six new provider executions. Exact dependency pins and native skip identities remain in the linked integration report. No aggregate all-node/native/publication certification is inferred from graphical success.
+
+### Independent final aggregate verification
+
+Actual command from this worktree: `PYTHONDONTWRITEBYTECODE=1 python3 build/verification/target-final-audit.py > build/verification/target-final-audit-retry.log 2>&1`, exit0. The first audit assumed the NeoForge ZIP used the same manifest name as the other two; its genuine KeyError is retained in target-final-audit.log. Reading the actual `archive-manifest.json` schema fixed the audit; no runtime artifact or acceptance guard changed.
+
+Audit verified all three ZIP SHA256/CRC and every payload inventory: integration2042, Fabric1982, NeoForge1267. All1128 final source hashes match this assigned checkout. All six cases pass current material/interaction validators, receipt hashes,27 phases, two actual joins, physical mod hashes and actual classpath hashes. No optional viewer is present in server mod directories. Exact paths/digests/counts are in build/verification/target-final-audit.json. Upstream evidence was read only, not overwritten.
+
+Two archived full-resolution originals additionally inspected here: Fabric both-optionals `03-content-models-tooltip.png` shows all eight gallery entries including textured purple barrel and descriptive dust tooltip, without visible missing-texture checkerboard; NeoForge+JEI `interaction/screenshots/03-reconnected-menu.png` shows emerald7 retained, diamond16 in player hotbar and real JEI sidebar. Limited front/top icon views do not establish arbitrary world geometry or every face. Tutorial/chat warnings partially occlude UI. JEI's actual no-JEI-server warning remains visible: server recipe synchronization/search/transfer are not certified.
+
+The source integration compact archive is `/home/siredvin/projects/Minecraft-Modding-Libs/.worktrees/t_07f62912/build/verification/t_07f62912-R7-client-integration-v2.zip`, SHA256 `31e4442ba658293c6503dcb4c4a148e52ffd52416b0ca0381808f45805e9ec58`,24,649,245 bytes. Its two prerequisite archives retain four deduplicated optional JAR copies; hashes/provenance/reproduction inputs remain explicit. The task-owned final delivery bundles that original compact archive plus this report and aggregate audit, with independent CRC/payload readback. Its identity and final report-only local SHA are recorded in the adjacent delivery JSON and Kanban handoff.
+
+### Downstream disposition — not card-local blockers
+
+Changed contribution rows: R7:1–4; PLAN:L107,L109,L111,L113,L116,L119,L159,L161,L162,L164; DECISION:06,10,12. The original204-row ledger is unchanged. Existing t_49598f9c must merge this exact cumulative delivery SHA (legacy1269644 is already an ancestor, do not duplicate) and own combined datagen/publication/all-variant viewer isolation/external consumers/private-fixture exclusion, ordinary NO-FIXTURE dedicated lifecycle/affected saves and any affected legacy replay. Current private-fixture graphical startup is not ordinary production evidence.
+
+Affected R6 rows PLAN:L114,L115/DECISION:09/R6:4 require exact-candidate adversarial two-client replay or defensible renewed binding: the NeoForge event-bus production binary differs from old R6. Normal visual reconnects do not waive that gate. Root t_14e20aca/F retain aggregate ownership. The inherited npm high warning has existing read-only triage t_470a1973, not a new guessed fix here. Both existing children were inspected before completion; this card releases them by completion, not duplicate same-card review. No push, primary merge, release, remote Maven, protected F edits, shared-service/profile changes or external coding agents.
+
+Hotspots carried: gradle/minecraft-26-1.gradle.kts (target viewer wiring), gradle/libs.versions.toml (target viewer aliases), gradle/gametest-reports.gradle.kts (unchanged exact guards), build.gradle.kts (inherited legacy Fabric feature edges; unchanged here). No new shared production edits in this aggregate.
