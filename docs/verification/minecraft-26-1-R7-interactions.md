@@ -1,6 +1,6 @@
 # R7 interactions — t_a4740f06
 
-Status: INCOMPLETE checkpoint2. Preparation cumulative d43491fb943e1458c8984b539d56aa57d28a206d fast-forwarded into the assigned wt/t_a4740f06; working tree initially clean. Real native CCT/client receipts now exist; extended-menu client chain is running, not yet accepted.
+Status: INCOMPLETE checkpoint3. Preparation cumulative d43491fb943e1458c8984b539d56aa57d28a206d fast-forwarded into the assigned wt/t_a4740f06; working tree initially clean. Native and extended-menu workflows pass, but image inspection caught stale Fabric creative selection; rendering-owned fix and stricter combined replay pending.
 
 ## Scope and ownership
 
@@ -31,6 +31,12 @@ Evidence root `build/verification/interactions` (Git-ignored; all screenshots ou
 Runtime proof now checks exact4 production item IDs/2 blocks, exact Peripheralium tab3 and eight ordered private-consumer creative variants (normal/advanced pocket/turtle, base/upgraded), registered hidden-tooltip prompt, synchronized exact two book pages/title/author. It registers a real Broccolium extended ChestMenu with exact12-byte consumer schema and actual player registry context, verifies vanilla chest seed16diamonds/7emeralds, transfers through native client input, requires independent server-thread ACK, closes/reopens with fresh menu id, then reopens again after dedicated reconnect. Three extra screenshots live under `control/interaction/screenshots`; shared phase/screenshot/model schema unchanged. `check-interactions.py` is executable supplemental acceptance; cannot certify absent hooks or missing ACK.
 
 ## Acceptance checklist (pending executable implementation)
+
+Checkpoint3: `pre-creative-audit.json/log` independently revalidates two frozen-input base workflows (four actual dedicated joins,24 core+6 interaction PNGs),89 native reported cases/8 expected skips/0 errors/failures,22 JUnit cases and806 identical Java/Kotlin files for authorized standalone Spotless. Supplemental evidence mutation checks each passed10 under the earlier schema. New native tooltip replay passes37 Fabric/14 NeoForge with exact existing discovery; all tooltip helpers execute inside the existing test identity. Both standalone Spotless Java/Kotlin checks exit0; original linked-worktree JGit failure retained.
+
+Do NOT treat directory `final/` as final acceptance. Visual inspection of its Fabric `04-creative-tab.png` shows Building Blocks, not Peripheralium. Registry/tab payload assertions were insufficient. Added strict phase6 check of actual visible ItemPickerMenu.items and selectedTab, and validator requires its event; old receipt is now correctly rejected (`visible-creative-negative.log`). Requested actual target Fabric public creative-tab API dispatch from rendering owner (comments162-164), preserving file ownership. Exact current Fabric module was extracted from the installed0.155.3+26.1.2 bundle; public interface is `net.fabricmc.fabric.api.client.creativetab.v1.FabricCreativeModeInventoryScreen`, not the cached legacy Yarn itemgroup name. No production defect inferred from bypassing its page-selection facade in the private fixture.
+
+All six extended-menu crops and all four book-page crops visually inspected: initial chest16 diamonds/7 emeralds, then diamonds16 in player inventory and chest slot0 empty on reopen/reconnect; visible page1/2 text correct on both loaders. Both gallery tooltips are readable and seven entries drawn. NeoForge Peripheralium creative tab shows all3 production entries. Real Testiarium world images also inspected. Creative Filler appearance remains independently blocked, not fixed by this work.
 
 - [ ] Exact registry and creative entries, not cardinality alone.
 - [ ] Descriptive/hidden tooltip behavior, absent translation, hidden component semantics.

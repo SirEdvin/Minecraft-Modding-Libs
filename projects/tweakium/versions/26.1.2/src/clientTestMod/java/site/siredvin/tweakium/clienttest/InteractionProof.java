@@ -61,6 +61,10 @@ public final class InteractionProof {
         require(TextBookUtils.INSTANCE.getBookText(book).equals(ClientFixture.BOOK_PAGES), "Synchronized written book exact pages/order");
         var content = book.get(DataComponents.WRITTEN_BOOK_CONTENT);
         require(content != null && content.title().raw().equals("R7 field notes") && content.author().equals("Testiarium"), "Synchronized book metadata");
+        var pocket = mc.player.getInventory().getItem(5).get(dan200.computercraft.shared.ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get());
+        require(pocket != null && pocket.holder().key().identifier().equals(ClientFixture.ID), "Synchronized equipped pocket identity");
+        var pocketName = pocket.get(DataComponents.CUSTOM_NAME);
+        require(pocketName != null && pocketName.getString().equals("R7 state"), "Equipped pocket component state lost across reload/reconnect");
         ItemStack dust = mc.player.getInventory().getItem(0);
         var tooltip = dust.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, TooltipFlag.NORMAL);
         require(tooltip.stream().filter(line -> line.getString().equals("R7 consumer description via Broccolium")).count() == 1, "Native descriptive tooltip exactly once");

@@ -67,6 +67,11 @@ class InteractionEvidenceTests(unittest.TestCase):
         path.write_text(path.read_text().replace("menu-decode registry-context=true", "omitted-decode", 1))
         self.rejected()
 
+    def test_missing_visible_creative_selection_is_rejected(self):
+        path = self.run_path / "control/interactions.log"
+        path.write_text(path.read_text().replace("PASS visible-creative-tab peripheralium:tab exact-display=3", "omitted-selection", 1))
+        self.rejected()
+
     def test_missing_screenshot_is_rejected(self):
         (self.run_path / "control/interaction/screenshots/02-reopened-menu.png").unlink()
         self.rejected()
