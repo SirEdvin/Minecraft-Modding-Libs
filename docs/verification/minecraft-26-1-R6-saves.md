@@ -1,8 +1,9 @@
-# R6 copied-save workstream — incomplete prerequisite checkpoint
+# R6 copied-save compatibility evidence
 
 Task: `t_4ecc7749`, split from R6 `t_997f2d4d` on 2026-10-18.
-Status: **INCOMPLETE — authorized runtime underway; migration acceptance pending.**
-The historical prerequisite checkpoint below is retained; the EULA blocker is now cleared.
+Status: **COMPLETE for this copied-save child.** Final acceptance is recorded below.
+Historical checkpoints retain their original limitations and failed hypotheses;
+they are not the final status. This is not completion of R6 or the campaign.
 
 ## Verified inputs
 
@@ -183,3 +184,156 @@ and unrelated BE identity. Scoped formatter uses unchanged project rules on
 all five authored Java/Kotlin files and passes. Canonical1.20.1 and all target
 sources remain unchanged. Full candidate matrix/publication refresh is still
 pending; this is not card completion.
+
+## Final verified acceptance
+
+Implementation candidate: `90eec90bcdf9323c5e47ec7d27aab4b9ba402183`.
+Planner `b8fd1ddfd5134c45402040fe2c1ca5be343ac48f`, exact R5
+`4a07553673bcd51576e0857301dda867bc176a2c` and completed production sibling
+`7771c48431a2ed7f8208a8a62bead8d1c42496fd` are verified ancestors.
+Later changes only harden probe creation/path guards and document evidence;
+the tested production sources and seven refreshed JAR hashes are unchanged.
+
+The final `matrix-final/save-matrix.json` is PASS: **20 actual production
+server executions and20 exact semantic comparisons**, all ready, live block
+queries, console `save-all flush`, console `stop`, complete dimension save and
+natural exit0, zero timeouts/forced termination. Four original fixture saves
+were created and independently validated before this matrix. Rejected draft,
+debug and failed repair executions are not included in the accepted20.
+
+| Same-loader route | Fabric | Forge-family | Boots per loader |
+| --- | --- | --- | --- |
+| 1.20.1 copied save, open + restart | PASS | PASS | 2 |
+| 1.21.1 copied save, open + restart | PASS | PASS | 2 |
+| 1.21.1 →26.1.2, save/stop + restart | PASS | PASS | 2 |
+| 1.20.1 →1.21.1, save/stop + restart | PASS | PASS | 2 |
+| preserved intermediate1.21.1 →26.1.2, save/stop + restart | PASS | PASS | 2 |
+
+Actual disk DataVersions are3465,3955,4790 respectively. Native26.1 world
+layout moved to `dimensions/minecraft/overworld/region`; probes read actual
+regions, not merely level.dat. All four true original worlds and six final
+backup copies/archives were rehashed after the matrix and native replay and
+remain unchanged. No original world was reopened. Only scratch copies were
+upgraded; all failed copies and any native migration outputs are retained.
+
+### Fixture inventory and semantic checks
+
+At fixed positions `(0..3,80,0)`: the real Tweakium creative_filler with
+`ownerProfile=[I;1,2,3,4]`, enabled/limit/nested peripheral settings and modern
+`__patch_storage__`; the real Peripheralium block; a chest containing dust17,
+template3, an installed-speaker pocket, damaged pickaxe, water/lava buckets
+and diamonds23; a north-facing installed-speaker turtle with diamonds11,
+water bucket, fuel1234, selected slot2, ID42, label and real owner UUID/name.
+Left/right/back upgrade settings are independently distinguishable. Modern
+upgrade patches carry explicit CUSTOM_NAME removals and unrelated DAMAGE;
+the pickaxe removes its real default TOOL component. Legacy `storedData`
+survives componentization inside CUSTOM_DATA. Comparison covers exact block
+states, IDs, slot/count/variant data, settings/patches/removals, owner identity,
+side association, labels, fuel and inventory. It does not equate empty/default
+snapshots to success. Only known structural encodings are normalized (item
+Count/tag→count/components, upgrade component/back-pocket key, native owner
+UUID encoding); raw before/after NBT accompanies every accepted receipt.
+
+The production representation limits documented above remain explicit:
+no private `r3_native` registration is invented on old nodes, no persistent
+fluid tank/battery exists in this production content, no fuel-as-energy
+claim, no legacy-only blend in a shared-ID staged fixture. Water/lava buckets
+are actual fluid containers, not proof of a nonexistent library tank. The
+owning library settings are tested through the real filler BE save/load;
+the registered native CC upgrades test actual installed disk schemas, not a
+claim that every downstream custom upgrade or unrelated mod is compatible.
+
+### Untouched backup archive SHA-256
+
+Per-file manifests, source paths and archive lengths are in the final matrix.
+
+| Backup | SHA-256 |
+| --- | --- |
+| original1.20.1 Fabric | `d5e8566ad3438135a24f7a0d6db26125bfe17d7a1e7264cfea0445dcc6715d75` |
+| original1.20.1 Forge | `c6892b239450d7f07de63775e331d33000f1fe5e55ac69202dabf7e1953f1c48` |
+| original1.21.1 Fabric | `68e87cb75858a97bd10312b24799111045ccc760d959079307a76bafda73b4e0` |
+| original1.21.1 NeoForge | `8e81cdf666ee782c804961291b2317a4fc206e42b054f7d14c177c2aa88c983a` |
+| staged intermediate Fabric | `bdb9754ebd9beb78aeabf6fca59c14302cb3ec382eb2f82f80bd5fabe13bcf33` |
+| staged intermediate NeoForge | `ff19f3c5079a5ba757331cba31bd5191e6bab69f96547f73cb1a73aeb73365d9` |
+
+### Refreshed artifacts and owning verification
+
+Only Tweakium1.21.1 common/Fabric/NeoForge production artifacts change; old
+1.20.1 and target production artifacts remain exact R5 inputs. Refreshed
+seven JARs comprise three main, three merged-source and one raw adapter JAR.
+All three owning publication contracts pass the existing checker (same
+dependency/capability/source/metadata/access/JVM/fixture-isolation checks,
+explicitly selecting only the owning library/version). Main SHA-256:
+
+- common: `a7426bbbf01d2b6d62192b6c4f4bc6e6f2ce12e844f4cccb8fbb7d774f8b2df9`
+- Fabric: `ae053c3e5d60f4301fddfc614d666ea998fe2711f588c81234f98f3a249c70f2`
+- NeoForge (and raw): `fbc11ad27e98819acc10a0da71dcbbb710a5b4432102a11ada21ee55cad9231a`
+
+Exact-source standalone wrapper build invokes all nine Tweakium version/branch
+test tasks with `cleanTest`, all three affected1.21.1 `build`/POM/module tasks
+and root `spotlessCheck`; exit0 in140.448s. Fresh reports: **95 cases /21 XML /
+seven nonempty nodes**, zero failure/error/skip. The two old Forge-family unit
+tasks explicitly report NO-SOURCE and are not counted as tests. Five new
+owning repair cases are included. Actual1.21.1 native replay then passes
+`:tweakium:fabric:1.21.1:runPeripheralGameTest` and
+`:tweakium:forge:1.21.1:runGameTestServer`: **25+26 cases**, zero failure/error/
+skip, both task executions exit0. Root report guards remained enabled.
+Fifteen Python probe guards pass (including observed owner-schema red→green,
+exclusive backups, truncation, removals and refusing existing-world creation).
+Probe guards are tooling tests, not additional Minecraft cases. Seven actual
+JAR hashes were rechecked unchanged after native replay; no task JVM remains.
+
+### Exact reproduction / evidence custody
+
+Scratch root: `$TMPDIR/t_4ecc7749-validation`. Each `assembly.json` records
+the exact Java17/21/25 command, pinned loader installer URL, R5/candidate SHA
+and every production mod hash. Forge-family installers were run with the
+recorded Java and `-jar installer.jar --installServer`; all three exit0.
+Fabric production launchers resolve their pinned distribution. Assemblies
+bind loopback with ephemeral ports, online mode true, no enabled remote
+administration and explicit project-authorized EULA. No test-only mod or dev
+launcher is used for the copied-save20. Recipes/content registrations are
+also covered by the separate51-case owning native replay.
+
+Creation command (run once per prepared empty1.20.1/1.21.1 assembly):
+`python3 scripts/verification/save-fixture.py <assembly> --label create-v2 --create`.
+The complete console SNBT commands and live readback are retained, not
+hand-edited region files. Matrix command:
+`PYTHONDONTWRITEBYTECODE=1 python3 scripts/verification/save-matrix.py "$TMPDIR/t_4ecc7749-validation/matrix-final" --assemblies "$TMPDIR/t_4ecc7749-validation/servers-candidate"`.
+Use a new output directory for a replay; the helper intentionally refuses
+existing receipt/backup/output paths. Every matrix copy opens/saves/stops
+then restarts without reapplying fixture state. Full Gradle argv/status is in
+`candidate-build-command.json`, with `--no-daemon`, explicit540s bound; native
+argv has480s bound. Exact standalone source90eec90 is recorded, not an
+uncommitted unrelated checkout. The prior failed nine-nonempty-unit-node
+bookkeeping assumption is corrected above; it did not invalidate the real
+exit0 matrix and is not reported as nine executed test suites.
+
+Durable evidence: this assigned worktree's ignored
+`build/verification/t_4ecc7749-R6-save-evidence.zip`, with adjacent
+`t_4ecc7749-R6-save-delivery.json` containing its verified CRC/hash/size/member
+receipt. Archive holds actual six backup archives, final saved worlds, raw
+and semantic observations, manifests/commands/logs, refreshed seven artifacts,
+actual consumed R5 main artifacts, POM/module metadata, fresh XML, unchanged
+source hashes and failed probes. It excludes distribution caches, account
+credentials and generated administration secrets. This document does not
+assert that the full ZIP is a native board attachment.
+
+### Integration limits
+
+No direct1.20.1→26.1.2, Fabric↔Forge world conversion, arbitrary third-party
+save compatibility or downgrade is certified. Forge-family staging follows
+the specified maintained nodes (Forge47.1.0→NeoForge21.1.9→NeoForge26.1.2.122),
+not a generic loader-conversion promise. No version/dependency pin, primary
+branch, release/public publication, service or profile changed; protected
+`t_16b4e35f` was neither copied nor modified. Canonical1.20.1 source state
+remains intact. Build/report hotspots remain unchanged.
+
+Existing integration child t_fa26ffb6 must merge this cumulative local commit
+and the other R6 branches, retain these exact artifact/source mappings and
+replay affected checks if combined artifact bytes/behavior change. The
+1.21.1 Tweakium fix invalidates old R5/sibling native receipts for those three
+artifacts; this child supplies refreshed builds/publications/native/save
+proof, not a blanket118-JAR reproducibility or final integrated-matrix pass.
+Network target artifacts are unchanged here. R7 client/integration and final
+campaign requirements remain downstream; no new duplicate follow-up card.

@@ -55,6 +55,17 @@ class SaveProbeTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 FIXTURE['manifest'](root)
 
+    def test_create_never_opens_existing_world(self):
+        with tempfile.TemporaryDirectory() as root:
+            root = Path(root)
+            (root / 'world').mkdir()
+            with self.assertRaises(FileExistsError):
+                FIXTURE['run'](root, 'create', True)
+
+    def test_receipt_path_traversal_rejected_before_launch(self):
+        with self.assertRaises(ValueError):
+            FIXTURE['run'](Path('/nonexistent'), '../outside')
+
     def test_removed_components_and_unrelated_patch_retained(self):
         item = {'Slot': 2, 'id': 'computercraft:pocket_computer_normal', 'count': 1, 'components': {'!minecraft:custom_name': {}, 'computercraft:pocket_upgrade': {'id': 'computercraft:wireless_modem_normal', 'components': {'minecraft:custom_data': {'setting': 37}, '!minecraft:custom_name': {}, 'minecraft:damage': 5}}}}
         first = FIXTURE['normalize_item'](item)

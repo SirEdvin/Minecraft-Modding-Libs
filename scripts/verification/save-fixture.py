@@ -32,7 +32,7 @@ def digest(path):
 
 def manifest(directory):
     files = sorted(directory.rglob("*"))
-    if not directory.is_dir() or any(p.is_symlink() for p in files):
+    if not directory.is_dir() or directory.is_symlink() or any(p.is_symlink() for p in files):
         raise ValueError("Expected real directory, no symlinks")
     return {str(p.relative_to(directory)): digest(p) for p in files if p.is_file()}
 
@@ -79,6 +79,10 @@ def creation_commands(version):
 
 
 def run(directory, label, create=False):
+    if not re.fullmatch(r'[A-Za-z0-9_-]+', label):
+        raise ValueError('Receipt label must be a simple filename component')
+    if create and (directory / 'world').exists():
+        raise FileExistsError('Creation requires a new world; existing worlds are never overwritten')
     assembly = json.loads((directory / "assembly.json").read_text())
     if not re.search(r"(?m)^eula=true\s*$", (directory / "eula.txt").read_text()):
         raise ValueError("Explicit existing EULA authorization required")
@@ -151,6 +155,9 @@ def run(directory, label, create=False):
     try:
         raw, semantic = inspect(directory / 'world')
         result['semantic'] = semantic
+        if create:
+            validate(semantic, version != '1.20.1')
+            result['checks']['fixture_expected_state'] = True
         (directory / f'{label}-nbt.json').write_text(json.dumps(raw, indent=2) + '\n')
         result['nbt_sha256'] = digest(directory / f'{label}-nbt.json')
     except Exception as error:
