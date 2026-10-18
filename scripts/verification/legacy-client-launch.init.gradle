@@ -21,6 +21,7 @@ gradle.projectsEvaluated {
                         runtime:owner.sourceSets.main.runtimeClasspath.files*.absolutePath,
                         compile:owner.sourceSets.main.compileClasspath.files*.absolutePath,
                         workingDir:run.workingDir.absolutePath,
+                        modClasses:run.environment.get('MOD_CLASSES'),
                     ]
                     new File(target, "${version}-${loader}.json").text = JsonOutput.prettyPrint(JsonOutput.toJson(info)) + '\n'
                 }

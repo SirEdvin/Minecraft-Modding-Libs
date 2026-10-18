@@ -89,15 +89,23 @@ def main():
     (game / 'options.txt').write_text('renderDistance:3\nsimulationDistance:5\nmaxFps:30\nfullscreen:false\nonboardAccessibility:false\npauseOnLostFocus:false\nsoundCategory_master:0.0\n')
     info = json.loads(args.client_info.read_text())
     jvm = [arg for arg in info['jvm'] if not arg.startswith(('-Xmx', '-Xms'))]
+    client_environment = os.environ.copy()
+    mod_classes = info.get('modClasses')
+    if assembly['route'] == '1.20.1-forge' and not mod_classes:
+        # Forge47's pinned CommonLaunchHandler reads MOD_CLASSES, not the
+        # modern fml.modFolders property emitted by this launch-info snapshot.
+        mod_classes = next(arg.split('=', 1)[1] for arg in jvm if arg.startswith('-Dfml.modFolders='))
+    if mod_classes:
+        client_environment['MOD_CLASSES'] = mod_classes
     client_command = [str(args.java), '-Xms256M', '-Xmx1800M', *jvm, '-cp', os.pathsep.join(info['classpath']), info['main'], *info['args'], '--username', 'R7Legacy', '--accessToken', '0', '--width', '1100', '--height', '700', '--quickPlayMultiplayer', f'127.0.0.1:{port}']
-    commands = {'server': assembly['command'], 'client': client_command, 'client_model': 'Unchanged Gradle development launch; production-source binding required separately'}
+    commands = {'server': assembly['command'], 'client': client_command, 'client_MOD_CLASSES': mod_classes, 'client_model': 'Gradle development launch with explicit native legacy mod-discovery environment; production-source binding required separately'}
     (output / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n')
     processes = []
     started = time.monotonic()
     try:
-        def launch(command, cwd, log):
+        def launch(command, cwd, log, environment=None):
             handle = log.open('w')
-            process = subprocess.Popen(command, cwd=cwd, stdout=handle, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, text=True)
+            process = subprocess.Popen(command, cwd=cwd, stdout=handle, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, text=True, env=environment)
             processes.append((process, handle))
             return process
         server_process = launch(assembly['command'], server, output / 'server.log')
@@ -110,11 +118,21 @@ def main():
                     raise TimeoutError(f'No {expected} within {limit}s')
                 time.sleep(0.5)
         await_text(output / 'server.log', 'Done (', 120)
-        client = launch(client_command, game, output / 'client.log')
+        client = launch(client_command, game, output / 'client.log', client_environment)
         await_text(output / 'server.log', 'R7Legacy joined the game', 150)
         assert server_process.stdin is not None
-        server_process.stdin.write('gamemode creative R7Legacy\ntp R7Legacy 0.5 70 0.5 0 35\nsetblock 0 68 0 minecraft:stone\nsetblock 0 69 3 peripheralium:peripheralium_block\n')
+        server_process.stdin.write('gamemode creative R7Legacy\nforceload add -16 -16 16 16\n')
         server_process.stdin.flush()
+        chunk_deadline = time.monotonic() + 30
+        while 'R7_CHUNK_READY' not in (output / 'server.log').read_text(errors='replace'):
+            if time.monotonic() > chunk_deadline:
+                raise TimeoutError('Task-owned view chunk never became loaded')
+            server_process.stdin.write('execute if loaded 0 69 3 run say R7_CHUNK_READY\n')
+            server_process.stdin.flush()
+            time.sleep(0.5)
+        server_process.stdin.write('fill -4 68 -2 4 68 6 minecraft:stone\nfill -4 69 -2 4 73 6 minecraft:air\nsetblock 0 69 3 peripheralium:peripheralium_block\nsetblock -2 69 3 tweakium:creative_filler\ngive R7Legacy peripheralium:peripheralium_dust\ntime set day\nweather clear\ntp R7Legacy 0.5 69 0.5 0 0\nexecute if block 0 69 3 peripheralium:peripheralium_block run say R7_SCENE_READY\n')
+        server_process.stdin.flush()
+        await_text(output / 'server.log', 'R7_SCENE_READY', 30)
         time.sleep(15)
         ImageGrab.grab().save(output / 'joined.png')
         windows = subprocess.check_output(['xwininfo', '-root', '-tree'], text=True)
@@ -125,9 +143,15 @@ def main():
         close_window(int(match.group(1), 16))
         client.wait(timeout=40)
         await_text(output / 'server.log', 'R7Legacy left the game', 40)
-        server_process.stdin.write('stop\n')
+        server_process.stdin.write('forceload remove -16 -16 16 16\nstop\n')
         server_process.stdin.flush()
-        server_process.wait(timeout=60)
+        try:
+            server_process.wait(timeout=40)
+        except subprocess.TimeoutExpired:
+            # Preserve native thread evidence before a bounded shutdown fails.
+            with (output / 'shutdown-threads.txt').open('w') as threads:
+                subprocess.run([str(args.java.parent / 'jcmd'), str(server_process.pid), 'Thread.print'], stdout=threads, stderr=subprocess.STDOUT, timeout=15, check=False)
+            server_process.wait(timeout=50)
         assert client.returncode == server_process.returncode == 0
         text = (output / 'server.log').read_text()
         assert 'Saving worlds' in text and 'All dimensions are saved' in text
