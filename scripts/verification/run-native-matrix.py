@@ -87,7 +87,7 @@ def main():
         with (directory / "runner.log").open("w") as log:
             process = subprocess.Popen(command, cwd=root, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             try:
-                entry["exit"] = process.wait(timeout=960)
+                entry["exit"] = process.wait(timeout=360 if task == "runClientGameTest" else 960)
             except subprocess.TimeoutExpired:
                 entry["exit"] = 124
                 entry["timeout"] = True
@@ -103,6 +103,13 @@ def main():
         try:
             entry["result"] = inspect_report(report, entry["started_ns"], directory / filename, library == "broccolium")
             entry["accepted"] = entry["exit"] == 0
+            if task == "runClientGameTest" and entry["accepted"]:
+                screenshot = report.parents[1] / "screenshots/fixture.png"
+                if not screenshot.is_file() or screenshot.stat().st_mtime_ns < entry["started_ns"]:
+                    raise ValueError(f"Missing or stale client screenshot: {screenshot}")
+                data = screenshot.read_bytes()
+                (directory / "fixture.png").write_bytes(data)
+                entry["screenshot_sha256"] = hashlib.sha256(data).hexdigest()
         except (ValueError, OSError, ET.ParseError) as error:
             entry["accepted"] = False
             entry["diagnostic"] = str(error)
