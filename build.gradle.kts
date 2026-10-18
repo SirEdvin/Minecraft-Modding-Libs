@@ -57,6 +57,13 @@ subprojects {
             source.startsWith(sharedSources) && localSources.resolve(sharedSources.relativize(source).toString()).isFile
         }
         pluginManager.withPlugin("java") {
+            tasks.withType<ProcessResources>().configureEach {
+                // Published 0.9.0 conventions do not track raw dependency mappings.
+                for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
+                    inputs.property("${library}Version", providers.gradleProperty("${library}Version"))
+                }
+                inputs.file(project.buildFile)
+            }
             extensions.getByType<SourceSetContainer>().configureEach {
                 java.exclude(overridden)
                 resources.exclude(overridden)
@@ -90,6 +97,10 @@ subprojects {
                     "core"
                 }
                 for (feature in listOf("testMod", "cctTestMod")) {
+                    if (minecraftVersion != "26.1.2") {
+                        // KGP's new compiler must not choose the feature runtime floor.
+                        dependencies.add("${feature}Api", "org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
+                    }
                     // Feature JARs contain only feature output, not the core API.
                     dependencies.add("${feature}Api", project(path))
                     if (feature == "cctTestMod") {

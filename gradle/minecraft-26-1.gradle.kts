@@ -156,7 +156,11 @@ if (library == "broccolium" && loader == "common") {
 tasks.named<ProcessResources>("processResources") {
     inputs.property("version", libraryVersion)
     filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml")) {
-        expand("version" to libraryVersion)
+        expand(
+            "version" to libraryVersion,
+            "broccoliumVersion" to providers.gradleProperty("broccoliumVersion").get(),
+            "tweakiumVersion" to providers.gradleProperty("tweakiumVersion").get(),
+        )
     }
     exclude(".cache")
     // The canonical common resource is a legacy named-namespace widener. The

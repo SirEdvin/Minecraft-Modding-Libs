@@ -26,6 +26,16 @@ Scratch `file-maven.init.gradle` adds only a file repository and a narrowly name
 
 Inspect the existing public publishing convention and normalized dependency rules, add owning publication regressions, implement surgical target contracts, verify scratch file-Maven artifacts and consumers. Then run all active-state builds, fresh report reconciliation, owning datagen and canonical source hashes; update CI using actual task maps. Preserve failed runs and evidence.
 
+## Phase 2 checkpoint — external consumers and incremental metadata
+
+Nine isolated external consumer routes resolve all36 main libraries plus18 Testiarium fixture capabilities from exclusive scratch file-Maven (no producer class/output directories). Both Java extension and Kotlin extension compile and execute on every route; actual Kotlin2.0 compiler/JDK17 or21 on six old routes, Kotlin2.4/JDK25 on three target routes. Sources exercise platform MenuBuilder, typed storage, OwnedPeripheral/IPeripheralPlugin, CC MethodResult, Peripheralium configure and both Testiarium features. `consumer-resolve-kotlin.log` and `consumer-compile-2.log` exit0; exact commands, native Minecraft/CC dependencies and class hashes in `consumer-results.json` and per-route receipt/source/log files. These are API/compiler consumers, not server/client startup acceptance.
+
+Consumer probes exposed a real feature-only Kotlin stdlib2.4 leak on old nodes; checker red (`feature-stdlib-red.log`), explicit old feature API stdlib2.0 dependency, rebuilt/re-published checker green (`stdlib-publish-classpaths-2.log`). Inherited NeoForge runtime2.1 remains unchanged. Initial consumer setup mistakes are retained: wrong relative file repository (fixed with exclusiveContent), asserting pre-transform identities on Loom outputs, missing Mojang repository, and absent Kotlin-plugin metadata remapper in the scratch Fabric consumer. Enabling normal Kotlin-aware Loom transforms fixes the latter; compilation still uses actual old2.0 CLI, not the producer's compiler. No metadata was manually rewritten or ignored.
+
+Exact dependency metadata incremental regression found7 stale/hardcoded outputs among12 Tweakium/Peripheralium loader/version routes (`incremental-red-exact.json`). Added repository-owned raw-version input tracking/shared build-file inputs and target dependency placeholders/expansion. Probe now updates12/12 without clean/rerun (`incremental-green.json`); restored normal values (`incremental-restore.log`,exit0). Final acceptance must repeat after restoration without source changes and check default metadata.
+
+CI now defines three active-state full builds with Java25 launcher and17/21/25 toolchains, fresh19-owning-unit-node guards and36-publication checks; six loader/version native jobs retain exact report guards, CCT routes, client Xvfb/deadlines and failure logs. Remote CI has NOT run. Local workflow/task-map checks, full fresh active-state matrix, all-provider datagen, reproducibility and durable evidence remain INCOMPLETE.
+
 Hotspot: gradle/minecraft-26-1.gradle.kts — serial target publication/feature wiring.
 Hotspot: gradle/gametest-reports.gradle.kts — retain R1–R4 exact native guard contracts.
 

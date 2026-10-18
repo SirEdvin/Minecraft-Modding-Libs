@@ -25,8 +25,8 @@
     "minecraft": "26.1.2",
     "java": ">=25",
     "computercraft": ">=1.120.0",
-    "broccolium": ">=2.0.0",
-    "tweakium": ">=2.0.0"
+    "broccolium": ">=${broccoliumVersion}",
+    "tweakium": ">=${tweakiumVersion}"
   },
   "custom": {
     "modmenu": {

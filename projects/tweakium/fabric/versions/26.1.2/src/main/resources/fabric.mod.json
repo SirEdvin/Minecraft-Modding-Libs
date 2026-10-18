@@ -21,7 +21,7 @@
     "minecraft": "26.1.2",
     "java": ">=25",
     "computercraft": ">=1.120.0",
-    "broccolium": ">=2.0.0"
+    "broccolium": ">=${broccoliumVersion}"
   },
   "contact": {
     "homepage": "https://github.com/SirEdvin/Minecraft-Modding-Libs",
