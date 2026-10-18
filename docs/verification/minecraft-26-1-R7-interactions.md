@@ -1,6 +1,6 @@
 # R7 interactions — t_a4740f06
 
-Status: INCOMPLETE checkpoint. Preparation cumulative d43491fb943e1458c8984b539d56aa57d28a206d fast-forwarded into the assigned wt/t_a4740f06; working tree initially clean. No new runtime pass yet.
+Status: INCOMPLETE checkpoint2. Preparation cumulative d43491fb943e1458c8984b539d56aa57d28a206d fast-forwarded into the assigned wt/t_a4740f06; working tree initially clean. Real native CCT/client receipts now exist; extended-menu client chain is running, not yet accepted.
 
 ## Scope and ownership
 
@@ -17,6 +17,18 @@ Interaction owns target Broccolium menus/tooltips/books/tests, Testiarium client
 ## Next action
 
 Add exact content/creative identity manifest and private interaction assertions, seed persistent chest state and strengthen synchronized book contract without changing the rendering gallery slots. Build both fixtures with Java25 and execute fresh bounded Xvfb target client routes; inspect real screenshots. Run focused text/tooltip regressions and Testiarium client/CCT routes as affected. Record checked/unchecked/blocked explicitly and send phase hook contract to rendering/integration.
+
+## Checkpoint2 evidence
+
+Local checkpoint1ec8a021f485ae13ca3a248cbb6592bde187871c added proof;3c6927233619bb2e7afd7abc324b61862aac627f corrected tooltip probe lifecycle. Rendering-owned exact hook SHA c13c9a94a429848b0f4666808cc27d0f8425f016 inspected/merged at6a78eba07e2f87c818f90b1906171faa1e85d007. No concurrent ClientProof edit. Production code remains unchanged.
+
+Evidence root `build/verification/interactions` (Git-ignored; all screenshots outside tracked source). `prepare.log` records two Java fixture compile errors corrected in `prepare-retry.log`. `focused-tests.log` records intentional deprecated native callback compilation warning in experimental JUnit probe; `focused-tests-retry.log` then proves unregistered Item construction cannot occur after registry freeze. Rather than unfreeze registries, moved probes into registered native testmod fixtures; removed experimental JUnit class. `focused-native-placement.log` passes four TargetTextTests and the existing Fabric menu codec suite plus both fixture compilations. No production bug inferred from fixture lifecycle errors.
+
+`native/commands.json`: routes21/26 each18 tests,4 intentional skips,0 failures/errors; routes23/28 each1 test,0 skips/failures/errors. Each command exit0/accepted=true. Native fixture PNGs visually inspected: actual downward-looking world/beam/grass/slimes, no crash/loading screen. This is harness evidence, not menu/content appearance proof.
+
+`native-tooltips/commands.json` first attempt is honestly rejected: all game assertions pass but two added public tests violate exact shared discovery guard (39 Fabric/16 NeoForge instead of expected37/14). New tooltip assertions now execute as private helpers inside existing registeredTooltipHooksAreLazyAndDoNotLoadClientOnServer; no guard edits/bypass and no claim of extra testcase identities. Fresh replay pending.
+
+Runtime proof now checks exact4 production item IDs/2 blocks, exact Peripheralium tab3 and eight ordered private-consumer creative variants (normal/advanced pocket/turtle, base/upgraded), registered hidden-tooltip prompt, synchronized exact two book pages/title/author. It registers a real Broccolium extended ChestMenu with exact12-byte consumer schema and actual player registry context, verifies vanilla chest seed16diamonds/7emeralds, transfers through native client input, requires independent server-thread ACK, closes/reopens with fresh menu id, then reopens again after dedicated reconnect. Three extra screenshots live under `control/interaction/screenshots`; shared phase/screenshot/model schema unchanged. `check-interactions.py` is executable supplemental acceptance; cannot certify absent hooks or missing ACK.
 
 ## Acceptance checklist (pending executable implementation)
 

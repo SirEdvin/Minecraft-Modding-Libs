@@ -7,15 +7,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem;
 import site.siredvin.broccolium.modules.base.util.TextBookUtils;
 import java.nio.file.Files;
 import java.util.List;
@@ -31,14 +28,15 @@ public final class InteractionProof {
     private static int step;
     private static int ticks;
     private static int firstMenu;
-    private static boolean captured = true;
+    private static volatile boolean captured = true;
+    private static int stable;
     private static boolean screenRegistered;
 
     public static void verify(Minecraft mc) {
         registerScreen();
         Set<String> items = new TreeSet<>();
         Set<String> blocks = new TreeSet<>();
-        BuiltInRegistries.ITEM.keySet().stream().filter(id -> NAMESPACES.contains(id.getNamespace())).forEach(id -> items.add(id.toString()));
+        BuiltInRegistries.ITEM.keySet().stream().filter(id -> NAMESPACES.contains(id.getNamespace()) && !id.equals(ClientFixture.HIDDEN_PROBE)).forEach(id -> items.add(id.toString()));
         BuiltInRegistries.BLOCK.keySet().stream().filter(id -> NAMESPACES.contains(id.getNamespace())).forEach(id -> blocks.add(id.toString()));
         require(items.equals(ITEMS), "Exact production item inventory " + items);
         require(blocks.equals(BLOCKS), "Exact production block inventory " + blocks);
@@ -46,6 +44,19 @@ public final class InteractionProof {
         require(tab != null, "Peripheralium creative tab");
         List<String> display = tab.getDisplayItems().stream().map(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()).toList();
         require(display.size() == 3 && Set.copyOf(display).equals(Set.of("peripheralium:peripheralium_dust", "peripheralium:peripheralium_upgrade_template", "peripheralium:peripheralium_block")), "Exact creative entries " + display);
+        var upgradeCreative = new java.util.ArrayList<String>();
+        site.siredvin.tweakium.modules.peripheral.util.CreativeTabUtil.INSTANCE.enrichCreativeTabWithUpgrades("tweakium", (stack, visibility) -> {
+            var turtle = stack.get(dan200.computercraft.shared.ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get());
+            var pocket = stack.get(dan200.computercraft.shared.ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get());
+            var upgrade = turtle != null ? turtle : pocket;
+            upgradeCreative.add(BuiltInRegistries.ITEM.getKey(stack.getItem()) + "|" + (upgrade == null ? "base" : upgrade.holder().key().identifier().toString()));
+        }, mc.level.registryAccess());
+        var expectedUpgrades = new java.util.ArrayList<String>();
+        for (String item : List.of("pocket_computer_normal", "pocket_computer_advanced", "turtle_normal", "turtle_advanced")) {
+            expectedUpgrades.add("computercraft:" + item + "|base");
+            expectedUpgrades.add("computercraft:" + item + "|tweakium:r7_visual");
+        }
+        require(upgradeCreative.equals(expectedUpgrades), "Exact consumer upgrade creative entries " + upgradeCreative);
         ItemStack book = mc.player.getInventory().getItem(6);
         require(TextBookUtils.INSTANCE.getBookText(book).equals(ClientFixture.BOOK_PAGES), "Synchronized written book exact pages/order");
         var content = book.get(DataComponents.WRITTEN_BOOK_CONTENT);
@@ -53,14 +64,12 @@ public final class InteractionProof {
         ItemStack dust = mc.player.getInventory().getItem(0);
         var tooltip = dust.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, TooltipFlag.NORMAL);
         require(tooltip.stream().filter(line -> line.getString().equals("R7 consumer description via Broccolium")).count() == 1, "Native descriptive tooltip exactly once");
-        var id = Identifier.fromNamespaceAndPath("tweakium", "r7_hidden_probe");
-        var properties = new Item.Properties().setId(ResourceKey.create(Registries.ITEM, id));
-        var hidden = new HiddenDescriptiveItemItem(properties, () -> true, false, item -> List.of(Component.literal("private hook")));
+        var hidden = ClientFixture.hiddenProbe.get();
         var prompt = new ItemStack(hidden).getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, TooltipFlag.NORMAL);
         require(prompt.stream().anyMatch(line -> line.getString().contains("Left shift")), "Native hidden tooltip prompt");
         require(prompt.stream().noneMatch(line -> line.getString().equals("private hook")), "Hidden hook leaked without Left Shift");
         try {
-            Files.writeString(ClientFixture.directory().resolve("interaction-inventory.json"), new GsonBuilder().setPrettyPrinting().create().toJson(Map.of("items", items, "blocks", blocks, "peripheraliumCreativeDisplay", display, "bookPages", ClientFixture.BOOK_PAGES, "privateConsumers", List.of("tweakium:r7_visual turtle left/right", "tweakium:r7_visual pocket", "tweakium:r7_interaction_menu"))) + "\n");
+            Files.writeString(ClientFixture.directory().resolve("interaction-inventory.json"), new GsonBuilder().setPrettyPrinting().create().toJson(Map.of("items", items, "blocks", blocks, "peripheraliumCreativeDisplay", display, "consumerUpgradeCreative", upgradeCreative, "bookPages", ClientFixture.BOOK_PAGES, "privateConsumers", List.of("tweakium:r7_visual turtle left/right", "tweakium:r7_visual pocket", "tweakium:r7_interaction_menu", ClientFixture.HIDDEN_PROBE.toString()))) + "\n");
         } catch (java.io.IOException exception) { throw new AssertionError(exception); }
         ClientFixture.record("interactions.log", "verify dedicated=" + !mc.hasSingleplayerServer() + " exact-items=4 exact-blocks=2 creative=3 book-pages=2 descriptive-tooltip=1 hidden-prompt=true thread=" + Thread.currentThread().getName());
     }
@@ -86,10 +95,12 @@ public final class InteractionProof {
                     }
                     case 2 -> {
                         if (!(mc.player.containerMenu instanceof ChestMenu menu) || menu.getType() != InteractionMenus.type.get() || !menu.getSlot(0).getItem().is(Items.DIAMOND)) return false;
+                        if (++stable < 5) return false;
                         require(menu.getSlot(0).getItem().getCount() == 16, "Broccolium menu initial diamond count");
                         checkEmerald(menu);
                         firstMenu = menu.containerId;
                         shot(mc, "01-extended-menu");
+                        stable = 0;
                         step = 3;
                     }
                     case 3 -> {
@@ -111,8 +122,10 @@ public final class InteractionProof {
                     }
                     case 6 -> {
                         if (!mutated(mc)) return false;
+                        if (++stable < 5) return false;
                         require(mc.player.containerMenu.containerId != firstMenu, "Reopen must create a fresh menu id");
                         shot(mc, "02-reopened-menu");
+                        stable = 0;
                         ClientFixture.record("interactions.log", "PASS extended-open transfer-server-ack exact-conservation close-reopen fresh-menu-id");
                         step = 7;
                     }
@@ -128,6 +141,7 @@ public final class InteractionProof {
                     }
                     case 8 -> {
                         if (!mutated(mc)) return false;
+                        if (++stable < 5) return false;
                         shot(mc, "03-reconnected-menu");
                         ClientFixture.record("interactions.log", "PASS reconnect authoritative-chest-and-player-state");
                         step = 9;
@@ -149,8 +163,14 @@ public final class InteractionProof {
     private static void checkEmerald(ChestMenu menu) { require(menu.getSlot(1).getItem().is(Items.EMERALD) && menu.getSlot(1).getItem().getCount() == 7, "Untouched emerald count"); }
     private static void require(boolean condition, String message) { if (!condition) throw new AssertionError(message); }
     private static void shot(Minecraft mc, String name) {
+        var directory = ClientFixture.directory().resolve("interaction");
+        try { Files.createDirectories(directory.resolve("screenshots")); }
+        catch (java.io.IOException exception) { throw new AssertionError(exception); }
         captured = false;
-        Screenshot.grab(ClientFixture.directory().resolve("interaction").toFile(), name + ".png", mc.getMainRenderTarget(), 1, ignored -> captured = true);
+        Screenshot.grab(directory.toFile(), name + ".png", mc.getMainRenderTarget(), 1, ignored -> {
+            if (!Files.isRegularFile(directory.resolve("screenshots").resolve(name + ".png"))) ClientFixture.record("failure.txt", "Interaction screenshot failed: " + name);
+            captured = true;
+        });
     }
     // Same isolated private vanilla registration boundary as the existing R6 fixture.
     private static void registerScreen() {
