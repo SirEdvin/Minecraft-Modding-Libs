@@ -1,8 +1,8 @@
 # R6 copied-save workstream — incomplete prerequisite checkpoint
 
 Task: `t_4ecc7749`, split from R6 `t_997f2d4d` on 2026-10-18.
-Status: **INCOMPLETE — needs explicit applicable Minecraft EULA acceptance before runtime.**
-No save compatibility result, immutable world backup, or migration pass is claimed.
+Status: **INCOMPLETE — authorized runtime underway; migration acceptance pending.**
+The historical prerequisite checkpoint below is retained; the EULA blocker is now cleared.
 
 ## Verified inputs
 
@@ -59,3 +59,60 @@ After that input:
 All runtime acceptance above remains outstanding. This checkpoint does not complete this card or R6, and does not waive any downstream integration requirement. No push, primary-branch merge, release, public publication, service restart or profile change occurred; `t_16b4e35f` was not copied or modified.
 
 Hotspots carried without edits: `gradle/minecraft-26-1.gradle.kts` and `gradle/gametest-reports.gradle.kts`. Sibling workers own other R6 lanes; this checkpoint deliberately uses a distinct report path to avoid competing edits to the aggregate R6 report.
+
+## Authorized resumption / owning fixture checkpoint
+
+The user explicitly confirmed EULA acceptance in this card on 2026-10-18:
+"retry it again, I confirm minecraft eula should be true". Also read production
+owner t_b52730bf's original project acceptance. Set true only in six new,
+exclusive task-local scratch assemblies. Merged completed production sibling
+`7771c48431a2ed7f8208a8a62bead8d1c42496fd` to reuse its actual bounded
+ready/stop/save verifier, not its empty-world results as migration proof.
+Re-executed R5 preflight: all118 artifact and27 source hashes match, ancestry
+unchanged. Read the plan, brief, ledger and owning source again at resumption.
+
+Scratch root: `$TMPDIR/t_4ecc7749-validation`. Production assembly manifests
+and installed distributions were read/copied from the completed sibling, never
+modified there. Its scratch cache had lost old distribution libraries; the
+copied NeoForge1.21.1 attempt really failed `BootstrapLauncher` before ready.
+Re-executed all three exact Forge-family installers in this card's assemblies,
+all exit0. No server/world or service outside this task was restarted.
+
+New owning helpers: `scripts/verification/save-fixture.py`, `save-nbt.py` and
+`test-save-fixture.py`. Twelve tooling guards pass; these are not Minecraft
+cases. The probe validates exact R5 main JAR hashes, uses actual console
+creation and `/data get block`, requires ordinary ready/save/stop/natural0,
+reads actual compressed Anvil/NBT and records raw plus normalized semantic
+state. Backup copying refuses an existing destination and checks both sides.
+No helper accepts terms, rewrites NBT, runs a data fixer, deletes migration
+files, downgrades or converts loaders.
+
+Fixture v1 was correctly rejected by independent semantic checks after real
+Fabric1.21.1 save: a native modem overwrites its own managed data, and vanilla
+ItemStack normalizes away a removal for a component absent from defaults.
+Retained this failed draft world/log/NBT and its hashed untouched backup under
+`attempts`; never counted it as accepted. Fixture v2 instead uses non-ticking
+speaker upgrades with distinct left/right/back custom data, meaningful removal
+of the pickaxe's default `minecraft:tool`, explicit-removal entries inside
+upgrade DataComponentPatch and owning `__patch_storage__`. Actual Fabric
+v2 creation reached ready/save/stop/natural0, raw disk evidence and independent
+hardcoded expected-state validation pass. Cross-version opening/restarts
+remain outstanding at this checkpoint.
+
+Production representation boundary (not a silent waiver): Tweakium registers
+the real creative_filler/settings/owner BE, but no concrete stateful upgrade
+definitions. Existing `r3_native` is private and target-only; do not fabricate
+an old registration or introduce it into production assemblies. Use real
+CC speaker pockets/turtles for installed upgrade disk schemas and side data.
+CreativeFiller's item/fluid/energy sinks are void sinks, not persistent tanks
+or batteries; native storage acceptance is a separate R6 lane. Represent real
+item/fluid containers (water/lava buckets) and turtle fuel; do not label fuel
+as a Broccolium energy store or invent saved fluid/energy providers. Stable
+Peripheralium block/dust/template IDs are represented; legacy-only blend is
+intentionally excluded from the staged shared-content fixture.
+
+Next exact action: create/independently validate NeoForge1.21.1 and both1.20.1
+fixtures; hash exclusive untouched backups, same-version restarts, then
+independent copied1.21.1→26.1.2 and staged1.20.1→1.21.1→26.1.2 save/stop/
+restart comparisons per loader. Preserve failures, commands and native
+layout migration files. No production source change or migration pass claimed.
