@@ -4,6 +4,8 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -75,6 +77,18 @@ class ClientEvidenceGuards(unittest.TestCase):
 
 
 class EmiEvidenceGuards(unittest.TestCase):
+    def test_reject_search_without_inventory_and_plugin_guards(self):
+        for flags in ([], ['--inventory-screenshot'], ['--require-emi']):
+            with self.subTest(flags=flags):
+                result = subprocess.run(
+                    [sys.executable, str(Path(__file__).with_name('run-legacy-client.py')),
+                     '--server-source', 'unused', '--client-info', 'unused', '--java', 'unused',
+                     '--output', 'unused', '--eula-accepted', '--emi-search', *flags],
+                    capture_output=True, text=True, check=False,
+                )
+                self.assertEqual(result.returncode, 2)
+                self.assertIn('--emi-search requires --inventory-screenshot and --require-emi', result.stderr)
+
     def test_reject_join_without_emi(self):
         with self.assertRaises(ValueError):
             legacy_runner.validate_emi('SYNTHETIC: player joined the game')
