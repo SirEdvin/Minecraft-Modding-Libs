@@ -30,6 +30,7 @@ public final class InteractionProof {
     private static int firstMenu;
     private static volatile boolean captured = true;
     private static int stable;
+    private static int creativeTicks;
     private static boolean screenRegistered;
 
     public static void verify(Minecraft mc) {
@@ -83,6 +84,18 @@ public final class InteractionProof {
         if (phase == 6) {
             require(mc.screen instanceof net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen, "Visible creative screen");
             var screen = (net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen) mc.screen;
+            if (creativeTicks++ == 0) {
+                // Fabric's public facade selects the tab's page as well; private vanilla selectTab does not.
+                // This private consumer is compiled for both loaders, so resolve only that public optional API.
+                try {
+                    var api = Class.forName("net.fabricmc.fabric.api.client.creativetab.v1.FabricCreativeModeInventoryScreen");
+                    api.getMethod("setSelectedTab", net.minecraft.world.item.CreativeModeTab.class).invoke(screen, BuiltInRegistries.CREATIVE_MODE_TAB.getValue(Identifier.fromNamespaceAndPath("peripheralium", "tab")));
+                    ClientFixture.record("interactions.log", "creative-selector=fabric-public-page-aware");
+                } catch (ClassNotFoundException expectedOnNeoForge) {
+                    ClientFixture.record("interactions.log", "creative-selector=native-neoforge");
+                } catch (ReflectiveOperationException exception) { throw new AssertionError(exception); }
+            }
+            if (creativeTicks < 5) return false;
             var visible = screen.getMenu().items.stream().map(stack -> BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()).toList();
             require(visible.size() == 3 && Set.copyOf(visible).equals(Set.of("peripheralium:peripheralium_dust", "peripheralium:peripheralium_upgrade_template", "peripheralium:peripheralium_block")), "Visible creative inventory changed before screenshot: " + visible);
             try {
