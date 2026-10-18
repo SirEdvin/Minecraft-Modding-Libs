@@ -1,0 +1,34 @@
+// Private, opt-in fixture builds. Never added to production source sets/publications.
+// ./gradlew -I scripts/verification/network-fixture.init.gradle networkFixtureJars --no-daemon
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.jvm.tasks.Jar
+
+gradle.projectsEvaluated {
+    def root = gradle.rootProject
+    def aggregate = root.tasks.register('networkFixtureJars')
+    ['fabric', 'forge'].each { loader ->
+        def owner = root.project(":broccolium:${loader}:26.1.2")
+        def common = root.file('projects/broccolium/versions/26.1.2/src/networkTestMod')
+        def adapter = root.file("projects/broccolium/${loader}/versions/26.1.2/src/networkTestMod")
+        def classes = root.layout.buildDirectory.dir("network-fixture/${loader}/classes")
+        def compile = owner.tasks.register('compileNetworkFixture', JavaCompile) {
+            source(root.fileTree(new File(common, 'java')) { include '**/*.java' })
+            source(root.fileTree(new File(adapter, 'java')) { include '**/*.java' })
+            dependsOn(owner.tasks.named('classes'))
+            classpath = owner.sourceSets.main.compileClasspath + owner.sourceSets.main.output
+            destinationDirectory.set(classes)
+            javaCompiler.set(owner.javaToolchains.compilerFor { languageVersion.set(JavaLanguageVersion.of(25)) })
+            options.release.set(25)
+            options.compilerArgs.add('-proc:none')
+        }
+        def jar = owner.tasks.register('networkFixtureJar', Jar) {
+            dependsOn(compile)
+            archiveFileName.set("broccolium-network-${loader}.jar")
+            destinationDirectory.set(root.layout.buildDirectory.dir('network-fixture'))
+            from(classes)
+            from(new File(common, 'resources'))
+            from(new File(adapter, 'resources'))
+        }
+        aggregate.configure { dependsOn(jar) }
+    }
+}
