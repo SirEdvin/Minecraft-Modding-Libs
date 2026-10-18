@@ -44,6 +44,7 @@ parchmentMc-forge = "1.20.1"
 # Dev mod dependenceis
 jei = "15.1.0.19"
 jei-neoforge = "19.27.0.340"
+jei261 = "29.47.0.111"
 emi120 = "1.1.24+1.20.1"
 emi121 = "1.1.24+1.21.1"
 
@@ -106,6 +107,8 @@ forge-kotlin-neoforge = {module = "thedarkcolour:kotlinforforge-neoforge", versi
 # Dev mod dependencies
 jei-forge = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei" }
 jei-neoforge = { module = "mezz.jei:jei-1.21.1-neoforge", version.ref = "jei-neoforge" }
+jei261-fabric = { module = "mezz.jei:jei-26.1.2-fabric", version.ref = "jei261" }
+jei261-neoforge = { module = "mezz.jei:jei-26.1.2-neoforge", version.ref = "jei261" }
 emiFabric120 = {module = "dev.emi:emi-fabric", version.ref = "emi120"}
 emiFabric121 = {module = "dev.emi:emi-fabric", version.ref = "emi121"}
 emi-forge = {module = "dev.emi:emi-forge", version.ref = "emi120"}

@@ -68,6 +68,19 @@ if (loader == "forge") {
     }
 }
 
+// The approved 26.1 viewer is development-only, never part of published variants.
+// NeoForge discovers mods from runtimeClasspath, not clientAdditionalRuntimeClasspath.
+if (loader == "fabric") {
+    dependencies.add("localRuntime", libs.jei261.fabric)
+} else if (loader == "forge") {
+    val localRuntime = configurations.create("localRuntime") {
+        isCanBeConsumed = false
+        isCanBeResolved = false
+    }
+    configurations.named("runtimeClasspath") { extendsFrom(localRuntime) }
+    dependencies.add(localRuntime.name, libs.jei261.neoforge)
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")

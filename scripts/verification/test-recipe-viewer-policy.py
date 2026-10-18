@@ -31,6 +31,22 @@ class RecipeViewerPolicy(unittest.TestCase):
         for library in ('broccolium', 'tweakium', 'peripheralium'):
             self.assertIn('modLocalRuntime(runtimeMods)', (ROOT / f'projects/{library}/fabric/build.gradle.kts').read_text())
 
+    def test_target_primary_is_local_jei(self):
+        self.assertEqual(self.catalog['versions']['jei261'], '29.47.0.111')
+        for loader in ('fabric', 'neoforge'):
+            self.assertEqual(self.catalog['libraries'][f'jei261-{loader}'], {
+                'module': f'mezz.jei:jei-26.1.2-{loader}', 'version': {'ref': 'jei261'},
+            })
+        target = (ROOT / 'gradle/minecraft-26-1.gradle.kts').read_text()
+        self.assertIn('dependencies.add("localRuntime", libs.jei261.fabric)', target)
+        self.assertIn('libs.jei261.fabric', target)
+        self.assertIn('libs.jei261.neoforge', target)
+        self.assertIn('isCanBeConsumed = false', target)
+        self.assertIn('isCanBeResolved = false', target)
+        self.assertIn('extendsFrom(localRuntime)', target)
+        self.assertNotIn('libs.emi', target)
+        self.assertNotIn('implementation("mezz.jei:', target)
+
     def test_forge_primary_is_emi_and_excluded_from_publication(self):
         self.assertEqual(self.catalog['libraries']['emi-forge']['module'], 'dev.emi:emi-forge')
         self.assertEqual(self.catalog['libraries']['emi-neoforge']['module'], 'dev.emi:emi-neoforge')
