@@ -117,7 +117,14 @@ subprojects {
                         dependencies.add("${feature}Api", "org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
                     }
                     // Feature JARs contain only feature output, not the core API.
-                    dependencies.add("${feature}Api", project(path))
+                    // Old Loom runtimeElements carries intermediary mod dependencies.
+                    // Local feature runs already inherit the named main classpath.
+                    val coreDependency = if (part == "fabric" && minecraftVersion != "26.1.2") {
+                        dependencies.project(mapOf("path" to path, "configuration" to "namedElements"))
+                    } else {
+                        project(path)
+                    }
+                    dependencies.add("${feature}Api", coreDependency)
                     if (feature == "cctTestMod") {
                         val testModDependency = (dependencies.project(mapOf("path" to path)) as ProjectDependency).apply {
                             capabilities {
