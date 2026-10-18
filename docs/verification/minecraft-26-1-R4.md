@@ -1,6 +1,60 @@
 # R4 — Peripheralium content and generated resources
 
-Status: INCOMPLETE — initial reconnaissance checkpoint, no acceptance claimed.
+Status: COMPLETE — card-local R4 content/resource capability. Historical incomplete checkpoints below are chronology. Full migration acceptance remains R5–R7/F.
+
+## Final source and compatibility
+
+Source commit: `3c3b5d4c9ac5a3dcc4130e4cc75008bd112bf826`, cumulative over immediate predecessor `ec9f18a9df1092afde543886c5d50829ce87cc05` and planner `b8fd1ddfd5134c45402040fe2c1ca5be343ac48f`. All earlier R0/R1/R2/original plan/coverage/OpenWiki ancestors verified. Exact final documentation/cumulative commit is in the task completion handoff.
+
+Target stays Minecraft26.1.2, NeoForge26.1.2.122, Fabric Loader0.19.5/API0.155.3+26.1.2, CC1.120.0 (`-forge` coordinate), FLK1.13.12+kotlin.2.4.0/KFF6.4.0, energy5.0.0, Stonecutter0.9.8, Gradle9.5.0, Loom1.17.11, MDG2.0.142, KGP2.4.0 and verified Temurin25.0.3+9. Worker memory limit8GiB observed before bytecode inspection; old17/21 toolchains retained. Settings, properties, catalog and four controllers are byte-identical to R3; canonical1.20.1 never switched. No release bump, disabled integration, new persistence ownership, push, primary merge, publication or service change.
+
+Preserved modern three-item inventory (dust/template/block item), one block, creative tab and four recipe identities; target intentionally has no legacy blend/smelting recipe. Registration supplies native resource keys before block/item construction. Existing common core/creative builder and Fabric lifecycle are reused; NeoForge registries attach to its native mod bus. Runtime/native server tests resolve these classes without physical-client linkage failures; that is not a production ready/stop receipt.
+
+Reviewed all31 modern Peripheralium override paths, each with a direct target counterpart. `modern-audit.json` retains source/target hashes and full diffs. Target model helpers emit native client item definitions, block state/model and flat-item models; recipes use registry-aware native runners/templates; loot uses native codecs. Existing language values/keys remain complete. Empty Forge mixin descriptor is target-versioned with the correct own package; there are no active Peripheralium mixins to migrate. Obsolete old beehive/model access rules are replaced by the used target helper access from Broccolium plus owning creative-output/visibility and RecipeProvider.Runner rules. Datagen and native launch exercise those boundaries.
+
+Only target Broccolium ingredient API/adapters change outside the content port: explicit registry lookup overloads let providers resolve tag holders before a live server exists, while existing getter contracts remain. Both original loader-specific glowstone policies are preserved. No old source or generated resource is changed. Save/world upgrades, cross-version network peers and external add-on binaries are not certified here; no persistence/network format redesign was introduced.
+
+## Actual execution gates
+
+All commands use the wrapper, `--no-daemon --console=plain`, explicit240/300s bounds and scratch logs under `${TMPDIR}/t_d2dea3b5-validation`. Datagen additionally uses `xvfb-run --auto-servernum`. `commands.json` retains exact argv/status/log mapping, including failures and the interrupted first attempt; `final-receipt.json` records exact report identities/counts/hashes and59 changed non-document source/resource hashes.
+
+### Loaded native content and old regressions
+
+| Version | Fabric task / cases | Forge-family task / cases |
+| --- | --- | --- |
+|1.20.1|`:tweakium:fabric:1.20.1:runPeripheralGameTest` /23|`:tweakium:forge:1.20.1:runGameTestServer` /23|
+|1.21.1|`:tweakium:fabric:1.21.1:runPeripheralGameTest` /25|`:tweakium:forge:1.21.1:runGameTestServer` /26|
+|26.1.2|`:tweakium:fabric:26.1.2:runPeripheralGameTest` /36|`:tweakium:forge:26.1.2:runGameTestServer` /36|
+
+All six routes exit0:169 actual cases, zero failures/errors/skips. Exactly five Peripheralium fixtures execute on each route (30 owning invocations total). Target exact inventory retains all30 R3 cases plus five content cases and vanilla always_pass, once each. Fresh versioned XML is reconciled against declared summaries and task/run freshness; no stale/unversioned or interrupted report is counted. Logs: native-old1201.log, native-old1211.log and final-target-build-native-format-guards.log.
+
+Target fixtures exercise native registry identities/tracker membership and creative tab contents/icon; actual loaded dust/block/uncraft/template crafting and reverse shapeless inputs; wrong-center refusal; four loaded recipe displays; provider codec output/no unintended advancement output/duplicate definition and malformed shape refusal; both complete packaged EN/UA files compared with providers; actual world placement/native block destruction and exactly one registered block-item drop from loaded loot. Old routes execute their own version-appropriate registered content/provider/crafting/loot/language regressions unchanged.
+
+Peripheralium-owned fixtures remain common testMod outputs, contributed only to Tweakium private runner classpaths and loaded-mod models. `dependency-boundaries.log` exits0 after inspecting six actual production runtime classpaths: no fixture/harness leakage and no reverse Tweakium→Peripheralium production dependency; both private loader runners contain the required content outputs.32 actual owning report-guard scenarios pass, including missing/duplicate/unexpected content cases and missing entire content suite. These isolated corrupt-report probes are not native execution evidence.
+
+### Deterministic datagen, builds, units and artifacts
+
+datagen-3.log and datagen-4.log both exit0 for `:peripheralium:fabric:26.1.2:runDatagen`, `:peripheralium:forge:26.1.2:runClientData` and `runServerData`.14 exact JSON resources per loader are byte-identical between passes: three client item definitions, three model files, block state, two languages, four recipes and one loot table. Paired loaders differ only in inherited dust glowstone policy and NeoForge's native loot random_sequence; loot payloads otherwise match. No owning tag provider exists: conventional tag references are preserved, loaded and successfully craft. All output was generated through providers; datagen caches are untracked/excluded, and no cross-version tree changed.
+
+`build-target.log` and final-target-build-native-format-guards.log exit0 for `:peripheralium:26.1.2:build`, `:peripheralium:fabric:26.1.2:build` and `:peripheralium:forge:26.1.2:build`. Peripheralium has no unit test bodies; its native tests above are the owning behavioral evidence, not a zero-test unit claim. Adjacent changed Broccolium target nodes ran explicit cleanTest/test: common186, Fabric241, NeoForge135, total562 executed units, no failures/errors/skips (adjacent-units-guards.log).22 scoped Java/Kotlin source files pass unchanged formatter rules; explicit full-file targets replace only the worktree JGit ratchet. `git diff --check` passes. Global formatter/build/publication campaign remains R5.
+
+Three release JARs pass ZIP integrity, class-major69, production class/metadata/access rules and generated-resource byte equality checks.181 actual unique compiled private test/testMod/testFixtures/CCT class identities are excluded, as are Testiarium classes, computer scripts, caches and legacy blend/smelting resources. This is owning release-JAR isolation, not full Maven publication/consumer proof.
+
+| Artifact | SHA-256 |
+| --- | --- |
+|peripheralium-common-26.1.2-2.0.0.jar|fc23d5e4db8e6287b4e77b5675c1c223b3a4f915d1ea0b6fb934871fb4ba4803|
+|peripheralium-fabric-26.1.2-2.0.0.jar|8f05b6c77f9cd9c062da7f29549d1815f35daa1073ee44a3b41fcf40f6c24857|
+|peripheralium-forge-26.1.2-2.0.0.jar|f1504f6199ed6006ae62b988b51988e67547844c781b334c64727fa23e674b0a|
+
+The task evidence ZIP contains full command ledger/logs, executable collectors, exact XML identities and preserved failed XML, datagen inventories,31-row modern audit/full diffs, source hashes, scoped-lint/boundary checks and these three JARs. Durable artifact location/checksum is in the task handoff.
+
+## Ownership and downstream limits
+
+All four owning coverage rows R4:1–4 map to the source/native/data/build receipts above. Immutable204-row campaign ownership map is not rewritten into a campaign-wide pass. R5 (`t_f0a99e8c`) must merge the final cumulative SHA and owns full all-version builds/global lint, source/publication metadata, file-Maven consumers and CI. The additive target ingredient API changes invalidate earlier exact-source Broccolium artifact receipts; refreshed units and target native routes are provided here, and R5 must assemble refreshed cumulative artifacts rather than reuse old JAR hashes blindly.
+
+R6 owns production dedicated ready/stop, copied saves/process restart and multiplayer/adversarial network checks; R7 owns visual/client/optional integration combinations. Native GameTests are not production startup, copied-save migration or visual proof. F alone owns final OpenWiki/skills/Obsidian reporting. Hotspots remain gradle/minecraft-26-1.gradle.kts and gradle/gametest-reports.gradle.kts; keep the exact extended fixtures/inventory when modifying them.
+
+## Historical initial reconnaissance and phase checkpoints
 
 Merged planner b8fd1ddfd5134c45402040fe2c1ca5be343ac48f and immediate predecessor ec9f18a9df1092afde543886c5d50829ce87cc05 by fast-forward; both ancestry checks exit0. Read original brief, source ledger, remaining plan and R3 receipt. Execution authorization on the card supersedes historical planning holds. Canonical1.20.1 retained; no push/publication/release authorized.
 
