@@ -84,6 +84,60 @@ def validate_emi(log):
         raise ValueError('No actual completed EMI/ComputerCraft plugin reload; a joined world alone is not EMI acceptance')
 
 
+def inspect_emi_search(window, output):
+    """Native mouse/key input only; screenshots still require visual inspection."""
+    geometry = subprocess.check_output(['xwininfo', '-id', hex(window)], text=True)
+    def value(label):
+        match = re.search(rf'{label}:\s+(-?\d+)', geometry)
+        if not match:
+            raise ValueError(f'Missing native window geometry: {label}')
+        return int(match.group(1))
+    left, top = value('Absolute upper-left X'), value('Absolute upper-left Y')
+    width, height = value('Width'), value('Height')
+    xlib = ctypes.CDLL(ctypes.util.find_library('X11'))
+    xtest = ctypes.CDLL(ctypes.util.find_library('Xtst'))
+    xlib.XOpenDisplay.argtypes = [ctypes.c_char_p]
+    xlib.XOpenDisplay.restype = ctypes.c_void_p
+    display = xlib.XOpenDisplay(None)
+    if not display:
+        raise RuntimeError('No X display')
+    xlib.XKeysymToKeycode.argtypes = [ctypes.c_void_p, ctypes.c_ulong]
+    xlib.XKeysymToKeycode.restype = ctypes.c_ubyte
+    xlib.XFlush.argtypes = [ctypes.c_void_p]
+    xlib.XCloseDisplay.argtypes = [ctypes.c_void_p]
+    xtest.XTestFakeMotionEvent.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_ulong]
+    xtest.XTestFakeButtonEvent.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_int, ctypes.c_ulong]
+    xtest.XTestFakeKeyEvent.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_int, ctypes.c_ulong]
+    def click(x, y):
+        assert xtest.XTestFakeMotionEvent(display, -1, left + x, top + y, 0)
+        for down in (1, 0):
+            assert xtest.XTestFakeButtonEvent(display, 1, down, 0)
+        xlib.XFlush(display)
+        time.sleep(0.5)
+    try:
+        # Existing fixed 1100x700 launch, GUI auto scale2: EMI's bottom search.
+        if (width, height) != (1100, 700):
+            raise ValueError(f'Unexpected native search geometry: {width}x{height}')
+        click(width // 2, height - 25)
+        for char in 'peripheralium':
+            key = xlib.XKeysymToKeycode(display, ord(char))
+            if not key:
+                raise RuntimeError(f'Unmapped native key: {char}')
+            for down in (1, 0):
+                assert xtest.XTestFakeKeyEvent(display, key, down, 0)
+            xlib.XFlush(display)
+            time.sleep(0.05)
+        time.sleep(3)
+        ImageGrab.grab().save(output / 'emi-search.png')
+        # The first result may be a compatibility item without a recipe.
+        # This capture proves neither recipe availability nor transfer support.
+        click(width - 310, 58)
+        time.sleep(3)
+        ImageGrab.grab().save(output / 'emi-recipe.png')
+    finally:
+        xlib.XCloseDisplay(display)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--server-source', type=Path, required=True)
@@ -92,10 +146,13 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--inventory-screenshot', action='store_true', help='Open the native inventory; screenshot requires separate visual inspection')
     parser.add_argument('--require-emi', action='store_true', help='Require actual EMI and CC plugin reload evidence')
+    parser.add_argument('--emi-search', action='store_true', help='Type a native search and click its first result; requires separate screenshot inspection')
     parser.add_argument('--eula-accepted', action='store_true')
     args = parser.parse_args()
     if not args.eula_accepted:
         parser.error('Requires explicit recorded project EULA acceptance')
+    if args.emi_search and not (args.inventory_screenshot and args.require_emi):
+        parser.error('--emi-search requires --inventory-screenshot and --require-emi')
     if not args.java.is_file():
         parser.error('Selected Java launcher does not exist')
     output = args.output.resolve()
@@ -178,6 +235,8 @@ def main():
             open_inventory(int(match.group(1), 16))
             time.sleep(5)
             ImageGrab.grab().save(output / 'inventory.png')
+        if args.emi_search:
+            inspect_emi_search(int(match.group(1), 16), output)
         close_window(int(match.group(1), 16))
         client.wait(timeout=40)
         await_text(output / 'server.log', 'R7Legacy left the game', 40)
@@ -200,6 +259,9 @@ def main():
             receipt['inventory_screenshot_sha256'] = hashlib.sha256((output / 'inventory.png').read_bytes()).hexdigest()
             receipt['inventory_visual_acceptance'] = 'Separate inspection required; capture alone is not an assertion'
         receipt['emi_plugin_reload_verified'] = args.require_emi
+        if args.emi_search:
+            receipt['emi_native_input_screenshots'] = {name: hashlib.sha256((output / name).read_bytes()).hexdigest() for name in ('emi-search.png', 'emi-recipe.png')}
+            receipt['emi_search_visual_acceptance'] = 'Separate inspection required; native input and capture alone are not assertions'
         (output / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
         print(json.dumps(receipt, indent=2))
     finally:
