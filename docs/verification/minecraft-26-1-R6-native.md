@@ -1,6 +1,6 @@
 # R6 assembled native/observer matrix
 
-Status: INCOMPLETE — task t_2d0802de, 2026-10-18. No fresh native result is claimed yet.
+Status: native matrix VERIFIED; artifact/consumer refresh INCOMPLETE — task t_2d0802de, 2026-10-18. Historical checkpoints below retain failed/nonfinal attempts.
 
 ## Scope and baseline
 
@@ -43,3 +43,44 @@ Root of route3: old Fabric CCT initializer scans the one-shot registry before th
 Explicit dashboard confirmation now authorizes `eula=true` for disposable project verification instances if required. This supersedes the historical no-acceptance observation above; it does not widen observer/product scope or authorize production/shared-service changes. No EULA write was needed for these native routes.
 
 Exact source identity is recorded in `$TMPDIR/t_2d0802de-validation/resume-source-hashes.json`:1166 tracked files match the assigned worktree and standalone byte-for-byte at replay launch. `refresh-artifacts.py` in that evidence root will replay the existing full build/unit/publication checks, compare all118 R5 JAR identities, and resolve/compile/execute all nine isolated file-Maven Java/Kotlin consumers. Artifact and consumer acceptance is still pending. Next: finish matrix-3, reconcile every exact identity/skip/exit/screenshot, then execute the artifact refresh serially and preserve durable evidence.
+
+## Fresh complete native receipt
+
+Implementation source:2660281 (same implementation bytes as the matrix launch; documentation alone changed since `resume-source-hashes.json`). `matrix-3/commands.json` has all28 routes in order, each actual Gradle invocation exit0, accepted by unchanged exact native guards. `summarize-native.py` independently reconciles copied XML hashes, freshness, every negative identity/message and all six client screenshot hashes; exits0. Total434 reported cases:396 positive cases and38 intentional negative-fixture skips, zero failures/errors. Storage and Tweakium have zero skips. Target native suites also include Minecraft's built-in `minecraft:always_pass` where emitted; the exact once-only guard excludes only that named built-in from owning inventories.
+
+The outer interactive Zsh wrapper subsequently exits1 because its bookkeeping variable `status` is read-only; it ran after the collector printed `Accepted 28 actual native routes`. This shell bookkeeping error is preserved, not misrepresented as a passing shell invocation or a failing native route. All28 individual runner exit codes and reports are complete and independently verified. Subsequent shell bookkeeping uses `rc`.
+
+| # | Native task / flags | Cases | Expected negative skips | Exit |
+| --- | --- | ---: | ---: | ---: |
+| 1 | `:broccolium:fabric:1.20.1:runStorageGameTest` | 24 | 0 | 0 |
+| 2 | `:testiarium:fabric:1.20.1:runServer` | 12 | 3 | 0 |
+| 3 | `:testiarium:fabric:1.20.1:runCctGameTest` | 12 | 3 | 0 |
+| 4 | `:tweakium:fabric:1.20.1:runPeripheralGameTest` | 23 | 0 | 0 |
+| 5 | `:testiarium:fabric:1.20.1:runClientGameTest` | 1 | 0 | 0 |
+| 6 | `:testiarium:forge:1.20.1:runGameTestServer` | 12 | 3 | 0 |
+| 7 | `:testiarium:forge:1.20.1:runGameTestServer -Ptestiarium.cct` | 12 | 3 | 0 |
+| 8 | `:tweakium:forge:1.20.1:runGameTestServer` | 23 | 0 | 0 |
+| 9 | `:testiarium:forge:1.20.1:runClientGameTest` | 1 | 0 | 0 |
+| 10 | `:broccolium:fabric:1.21.1:runStorageGameTest` | 24 | 0 | 0 |
+| 11 | `:testiarium:fabric:1.21.1:runServer` | 12 | 3 | 0 |
+| 12 | `:testiarium:fabric:1.21.1:runCctGameTest` | 12 | 3 | 0 |
+| 13 | `:tweakium:fabric:1.21.1:runPeripheralGameTest` | 25 | 0 | 0 |
+| 14 | `:testiarium:fabric:1.21.1:runClientGameTest` | 1 | 0 | 0 |
+| 15 | `:testiarium:forge:1.21.1:runGameTestServer` | 12 | 3 | 0 |
+| 16 | `:testiarium:forge:1.21.1:runGameTestServer -Ptestiarium.cct` | 12 | 3 | 0 |
+| 17 | `:tweakium:forge:1.21.1:runGameTestServer` | 26 | 0 | 0 |
+| 18 | `:testiarium:forge:1.21.1:runClientGameTest` | 1 | 0 | 0 |
+| 19 | `:broccolium:fabric:26.1.2:runStorageGameTest` | 37 | 0 | 0 |
+| 20 | `:testiarium:fabric:26.1.2:runServer` | 14 | 3 | 0 |
+| 21 | `:testiarium:fabric:26.1.2:runCctGameTest` | 18 | 4 | 0 |
+| 22 | `:tweakium:fabric:26.1.2:runPeripheralGameTest` | 36 | 0 | 0 |
+| 23 | `:testiarium:fabric:26.1.2:runClientGameTest` | 1 | 0 | 0 |
+| 24 | `:broccolium:forge:26.1.2:runStorageGameTest` | 14 | 0 | 0 |
+| 25 | `:testiarium:forge:26.1.2:runGameTestServer` | 14 | 3 | 0 |
+| 26 | `:testiarium:forge:26.1.2:runGameTestServer -Ptestiarium.cct` | 18 | 4 | 0 |
+| 27 | `:tweakium:forge:26.1.2:runGameTestServer` | 36 | 0 | 0 |
+| 28 | `:testiarium:forge:26.1.2:runClientGameTest` | 1 | 0 | 0 |
+
+Every standalone/CCT report preserves `StandaloneGameTests.requiredFailure` → `required failure fixture`, `StandaloneGameTests.optionalFailure` → `optional failure fixture`, and `StandaloneGameTests.failFastFailureCannotBecomeSuccess` → `fail-fast sentinel`. Only target CCT adds `CctHarnessGameTests.luaFailureCannotBecomeSuccess` → `cct lua sentinel`. No other skip is accepted. The required outer assertion/exception/error and target real-Lua queued-action observers pass; their exact identities are retained in each receipt.
+
+Commands: `python3 <standalone>/scripts/verification/run-native-matrix.py --output <evidence>/matrix-3`; it invokes checked-in `run-gametest.sh` for every table row, with `--no-daemon --console=plain`, native900s/client300s deadlines and Xvfb for clients. Collector outer watchdogs are960s/360s. Six existing report/publication guard tests also exit0 (`guard-tests-resumed.log`); these are collector/contract checks, not additional native gameplay cases. Actual environment: Temurin25.0.3+9 launcher, retained native Java17/21, worker `MemoryMax=8589934592`, `/usr/bin/xvfb-run`, restored disk capacity. Artifact refresh is now running as tracked process `proc_2ad532add69f`; no completion claimed yet.
