@@ -112,6 +112,8 @@ public final class ClientFixture {
             pocket.set(ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get(), UpgradeData.of(pocketHolder, DataComponentPatch.builder().set(DataComponents.CUSTOM_NAME, Component.literal("R7 state")).build()));
             player.getInventory().setItem(5, pocket);
             player.getInventory().setItem(6, book());
+            player.getInventory().setItem(7, new ItemStack(BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath("tweakium", "creative_filler"))));
+            level.setBlockAndUpdate(new BlockPos(-3, 65, 3), BuiltInRegistries.BLOCK.getValue(Identifier.fromNamespaceAndPath("tweakium", "creative_filler")).defaultBlockState());
             level.setBlockAndUpdate(new BlockPos(0, 65, 3), BuiltInRegistries.BLOCK.getValue(Identifier.fromNamespaceAndPath("peripheralium", "peripheralium_block")).defaultBlockState());
             level.setBlockAndUpdate(new BlockPos(3, 65, 3), Blocks.CHEST.defaultBlockState());
             var chest = (net.minecraft.world.level.block.entity.ChestBlockEntity) level.getBlockEntity(InteractionMenus.CHEST);

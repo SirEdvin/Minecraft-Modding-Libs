@@ -19,12 +19,25 @@ final class RenderProof {
     private static final String DIAMOND = "minecraft:block/diamond_block";
 
     static void verify(Minecraft mc, List<ItemStack> gallery, String checkpoint) {
-        for (int slot = 0; slot < gallery.size(); slot++) {
-            ItemStack source = gallery.get(slot).copy();
+        var all = new ArrayList<>(gallery);
+        var filler = mc.player.getInventory().getItem(7);
+        if (!BuiltInRegistries.ITEM.getKey(filler.getItem()).toString().equals("tweakium:creative_filler")) {
+            throw new AssertionError("Missing synchronized Creative Filler");
+        }
+        all.add(filler.copy());
+        for (int slot = 0; slot < all.size(); slot++) {
+            ItemStack source = all.get(slot).copy();
             var state = new TrackingItemStackRenderState();
             mc.getItemModelResolver().updateForTopItem(state, source, ItemDisplayContext.GUI, mc.level, mc.player, 0);
             var before = submit(state);
             before.requireMaterials();
+            if (slot == 7) {
+                for (var face : List.of("side", "top", "bottom")) {
+                    if (before.materials.stream().noneMatch(line -> line.startsWith("tweakium:block/creative_filler_" + face + "|"))) {
+                        throw new AssertionError("Creative Filler omitted approved barrel face: " + face);
+                    }
+                }
+            }
             // CC's pocket definition renders its computer frame, not the crafting item of its upgrade.
             if ((slot == 3 || slot == 4) && before.materials.stream().noneMatch(line -> line.startsWith(DIAMOND + "|"))) {
                 throw new AssertionError("Equipped upgrade omitted diamond material at slot " + slot + ": " + before.materials);
@@ -39,22 +52,9 @@ final class RenderProof {
                 throw new AssertionError("Mutable source leaked into render submission at slot " + slot);
             }
             ClientFixture.record("materials.log", "checkpoint=" + checkpoint + " slot=" + slot + " item="
-                + BuiltInRegistries.ITEM.getKey(gallery.get(slot).getItem()) + " quads=" + before.materials.size()
+                + BuiltInRegistries.ITEM.getKey(all.get(slot).getItem()) + " quads=" + before.materials.size()
                 + " materials=" + new java.util.TreeSet<>(before.materials) + " snapshot=stable pose=restored");
         }
-        // A nonempty missing-model render state used to pass ClientProof.verify. Keep this explicit
-        // negative until an approved Creative Filler design exists; it is NOT all-content acceptance.
-        var filler = BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.fromNamespaceAndPath("tweakium", "creative_filler"));
-        var missing = new TrackingItemStackRenderState();
-        mc.getItemModelResolver().updateForTopItem(missing, new ItemStack(filler), ItemDisplayContext.GUI, mc.level, mc.player, 0);
-        var probe = submit(missing);
-        try {
-            probe.requireMaterials();
-        } catch (MissingMaterial expected) {
-            ClientFixture.record("materials.log", "checkpoint=" + checkpoint + " negative=creative_filler missing-material-rejected all-content=BLOCKED");
-            return;
-        }
-        throw new AssertionError("Creative Filler negative changed: replace probe with approved all-content assertion");
     }
 
     private static Materials submit(ItemStackRenderState state) {

@@ -2,7 +2,7 @@
 """Validate target submitted-material proof in addition to the shared visual receipt.
 
 Usage: python3 scripts/verification/check-rendering.py <run-directory>
-This is scoped proof for the seven-entry gallery, NOT all-content certification.
+This is scoped proof for the eight-entry gallery, NOT exhaustive world geometry certification.
 """
 import hashlib
 import json
@@ -19,13 +19,14 @@ ITEMS = (
     "computercraft:turtle_advanced",
     "computercraft:pocket_computer_advanced",
     "minecraft:written_book",
+    "tweakium:creative_filler",
 )
 
 
 def validate_materials(text, route):
     lines = text.splitlines()
     if len(lines) != 32:
-        raise ValueError("Expected exactly four checkpoints, each seven models and one explicit negative")
+        raise ValueError("Expected exactly four checkpoints, each eight positive models")
     for index, phase in enumerate((2, 12, 16, 23)):
         for slot, item in enumerate(ITEMS):
             line = lines[index * 8 + slot]
@@ -38,15 +39,17 @@ def validate_materials(text, route):
             material = count[2]
             if "|atlas=minecraft:textures/atlas/" not in material or "|blend=" not in material:
                 raise ValueError("Missing actual atlas/material contract")
+            if slot == 7:
+                for face in ("side", "top", "bottom"):
+                    if f"tweakium:block/creative_filler_{face}|" not in material:
+                        raise ValueError(f"Approved purple barrel face omitted: {face}")
+                continue
             expected = "minecraft:block/diamond_block" if slot in (3, 4) else (
                 "computercraft:item/pocket_computer_advanced" if slot == 5 else
                 (item.replace(":", ":block/", 1) if slot == 2 else item.replace(":", ":item/", 1)))
             if expected + "|" not in material:
                 raise ValueError(f"Expected material omitted: {expected}")
-        negative = lines[index * 8 + 7]
-        if negative != f"checkpoint={route}:{phase} negative=creative_filler missing-material-rejected all-content=BLOCKED":
-            raise ValueError("Creative Filler missing-material gate was hidden or waived")
-    return {"checkpoints": 4, "models": 28, "explicit_missing_material_negatives": 4}
+    return {"checkpoints": 4, "models": 32, "creative_filler_positive_checkpoints": 4}
 
 
 def validate(run):
@@ -67,7 +70,7 @@ def validate(run):
             raise ValueError(f"Screenshot changed: {path}")
     return {"passed": True, "run": str(run.resolve()), "route": receipt["route"], **proof,
             "screenshots": len(images), "mods": receipt["mods"], "limitations": [
-                "Creative Filler remains blocked pending approved appearance/resources",
+                "approved purple barrel resources are checked separately by check-creative-filler.py",
                 "submission proof is GUI item extraction, not exhaustive world block-entity geometry",
                 "screenshots need independent visual inspection; positive energy and adversarial networking are separate gates"]}
 

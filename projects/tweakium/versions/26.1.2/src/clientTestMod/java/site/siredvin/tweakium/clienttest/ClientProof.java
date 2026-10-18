@@ -41,6 +41,7 @@ public final class ClientProof {
     private static boolean captured = true;
     private static CompletableFuture<Void> reload;
     private static List<ItemStack> gallery = List.of();
+    private static ItemStack filler = ItemStack.EMPTY;
     private static String route;
 
     public static void tick() {
@@ -130,6 +131,7 @@ public final class ClientProof {
     private static void verify(Minecraft mc) {
         CreativeModeTabs.tryRebuildTabContents(mc.level.enabledFeatures(), true, mc.level.registryAccess());
         gallery = java.util.stream.IntStream.range(0, 7).mapToObj(i -> mc.player.getInventory().getItem(i).copy()).toList();
+        filler = mc.player.getInventory().getItem(7).copy();
         var tooltip = gallery.get(0).getTooltipLines(net.minecraft.world.item.Item.TooltipContext.of(mc.level), mc.player, net.minecraft.world.item.TooltipFlag.NORMAL);
         if (tooltip.stream().noneMatch(line -> line.getString().equals("R7 consumer description via Broccolium"))) throw new AssertionError("Native descriptive tooltip hook");
         for (int i = 0; i < gallery.size(); i++) {
@@ -166,7 +168,10 @@ public final class ClientProof {
                 gui.pose().pushMatrix(); gui.pose().translate(x, 45); gui.pose().scale(2); gui.item(stack, 0, 0); gui.pose().popMatrix();
                 gui.text(font, Integer.toString(i), x + 10, 82, 0xffaaddee);
             }
-            gui.text(font, "Both facing turtle sides; equipped pocket; two-page book", 10, 105, 0xffeeeeee);
+
+            gui.pose().pushMatrix(); gui.pose().translate(310, 45); gui.pose().scale(2); gui.item(filler, 0, 0); gui.pose().popMatrix();
+            gui.text(font, "7", 320, 82, 0xffaaddee);
+            gui.text(font, "Both turtle sides; pocket; book; purple-barrel filler", 10, 105, 0xffeeeeee);
             gui.setTooltipForNextFrame(font, gallery.get(0), 35, 125);
             frames++;
         }

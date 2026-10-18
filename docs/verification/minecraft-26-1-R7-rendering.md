@@ -1,6 +1,6 @@
 # R7 rendering lane — t_5eb14799
 
-Status: VERIFIED MATERIAL CHECKPOINT, full task BLOCKED on Creative Filler appearance/resources, 2026-10-18. Rendering material/snapshot proof and menu/reconnect assertions pass on both targets with immutable inputs. Late visual review independently confirms the Fabric creative screenshot shows Building Blocks, not Peripheralium; the interaction owner is fixing the phase6 public-API selection/strict visible-tab guard. Previous validators passed a narrower schema and do NOT establish visible creative acceptance. No all-content, full client-interaction, six-combination or R7/F acceptance is claimed.
+Status: INCOMPLETE RESUMED IMPLEMENTATION, 2026-10-19. Dashboard approved barrel textures tinted toxic purple. Completed interaction commit bbbd1dc is integrated (strict visible creative guard and public Fabric page selection); prerequisite ancestry checked. Implementing target-only datagen resources and positive Creative Filler regression. Historical material receipts and their limitations below remain unchanged; fresh builds and both-loader replay are pending. No all-content, six-combination or R7/F acceptance is claimed.
 
 ## Source custody and ownership
 
