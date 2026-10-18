@@ -27,10 +27,29 @@ object NativeFixtures {
     lateinit var type: RegistryEntry<BlockEntityType<ObservedEntity>>
     lateinit var tooltipItem: RegistryEntry<site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem>
     var tooltipCalls = 0
+    lateinit var untranslatedItem: RegistryEntry<site.siredvin.broccolium.modules.base.item.DescriptiveItem>
+    lateinit var untranslatedBlockItem: RegistryEntry<site.siredvin.broccolium.modules.base.item.DescriptiveBlockItem>
+    lateinit var tooltipBlockItem: RegistryEntry<site.siredvin.broccolium.modules.base.item.HiddenDescriptiveBlockItem>
+    var blockTooltipCalls = 0
     var tooltipEnabled = true
     var typeResolutions = 0
 
     fun register(platform: BasePlatform) {
+        fun properties(name: String) = net.minecraft.world.item.Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(MOD_ID, name)))
+        untranslatedItem = platform.registerItem("untranslated_item", { site.siredvin.broccolium.modules.base.item.DescriptiveItem(properties("untranslated_item")) })
+        untranslatedBlockItem = platform.registerItem("untranslated_block", { site.siredvin.broccolium.modules.base.item.DescriptiveBlockItem(net.minecraft.world.level.block.Blocks.STONE, properties("untranslated_block")) })
+        tooltipBlockItem = platform.registerItem("tooltip_block", {
+            site.siredvin.broccolium.modules.base.item.HiddenDescriptiveBlockItem(
+                net.minecraft.world.level.block.Blocks.STONE,
+                properties("tooltip_block"),
+                { tooltipEnabled },
+                true,
+                java.util.function.Function {
+                    blockTooltipCalls++
+                    listOf(net.minecraft.network.chat.Component.literal("block first"), net.minecraft.network.chat.Component.literal("block second"))
+                },
+            )
+        })
         val itemId = Identifier.fromNamespaceAndPath(MOD_ID, "tooltip")
         tooltipItem = platform.registerItem("tooltip", {
             site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem(

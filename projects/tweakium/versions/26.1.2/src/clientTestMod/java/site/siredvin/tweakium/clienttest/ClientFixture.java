@@ -40,6 +40,8 @@ import java.util.Set;
 public final class ClientFixture {
     public static final Identifier ID = Identifier.fromNamespaceAndPath("tweakium", "r7_visual");
     public static final List<String> BOOK_PAGES = List.of("Broccolium book text\nPeripheralium content\nTweakium facing models", "Second page: resource reload and reconnect.");
+    public static final Identifier HIDDEN_PROBE = Identifier.fromNamespaceAndPath("tweakium", "r7_hidden_probe");
+    public static java.util.function.Supplier<site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem> hiddenProbe;
     private static final UpgradeType<Turtle> TURTLE = UpgradeType.simpleWithCustomItem(Turtle::new);
     private static final UpgradeType<Pocket> POCKET = UpgradeType.simpleWithCustomItem(Pocket::new);
     private static final Set<String> prepared = new HashSet<>();
@@ -54,6 +56,9 @@ public final class ClientFixture {
         platform.registerTurtleUpgrade(ID, TURTLE);
         platform.registerPocketUpgrade(ID, POCKET);
         InteractionMenus.register(platform);
+        hiddenProbe = platform.registerItem(HIDDEN_PROBE, () -> new site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem(
+            new net.minecraft.world.item.Item.Properties().setId(ResourceKey.create(net.minecraft.core.registries.Registries.ITEM, HIDDEN_PROBE)),
+            () -> true, false, item -> List.of(Component.literal("private hook"))));
     }
     public static final class Turtle extends AbstractTurtleUpgrade {
         public Turtle(ItemStackTemplate item) { super(TurtleUpgradeType.PERIPHERAL, Component.literal("R7 Facing Block"), item); }

@@ -7,15 +7,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
-import site.siredvin.broccolium.modules.base.item.HiddenDescriptiveItemItem;
 import site.siredvin.broccolium.modules.base.util.TextBookUtils;
 import java.nio.file.Files;
 import java.util.List;
@@ -38,7 +35,7 @@ public final class InteractionProof {
         registerScreen();
         Set<String> items = new TreeSet<>();
         Set<String> blocks = new TreeSet<>();
-        BuiltInRegistries.ITEM.keySet().stream().filter(id -> NAMESPACES.contains(id.getNamespace())).forEach(id -> items.add(id.toString()));
+        BuiltInRegistries.ITEM.keySet().stream().filter(id -> NAMESPACES.contains(id.getNamespace()) && !id.equals(ClientFixture.HIDDEN_PROBE)).forEach(id -> items.add(id.toString()));
         BuiltInRegistries.BLOCK.keySet().stream().filter(id -> NAMESPACES.contains(id.getNamespace())).forEach(id -> blocks.add(id.toString()));
         require(items.equals(ITEMS), "Exact production item inventory " + items);
         require(blocks.equals(BLOCKS), "Exact production block inventory " + blocks);
@@ -53,14 +50,12 @@ public final class InteractionProof {
         ItemStack dust = mc.player.getInventory().getItem(0);
         var tooltip = dust.getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, TooltipFlag.NORMAL);
         require(tooltip.stream().filter(line -> line.getString().equals("R7 consumer description via Broccolium")).count() == 1, "Native descriptive tooltip exactly once");
-        var id = Identifier.fromNamespaceAndPath("tweakium", "r7_hidden_probe");
-        var properties = new Item.Properties().setId(ResourceKey.create(Registries.ITEM, id));
-        var hidden = new HiddenDescriptiveItemItem(properties, () -> true, false, item -> List.of(Component.literal("private hook")));
+        var hidden = ClientFixture.hiddenProbe.get();
         var prompt = new ItemStack(hidden).getTooltipLines(Item.TooltipContext.of(mc.level), mc.player, TooltipFlag.NORMAL);
         require(prompt.stream().anyMatch(line -> line.getString().contains("Left shift")), "Native hidden tooltip prompt");
         require(prompt.stream().noneMatch(line -> line.getString().equals("private hook")), "Hidden hook leaked without Left Shift");
         try {
-            Files.writeString(ClientFixture.directory().resolve("interaction-inventory.json"), new GsonBuilder().setPrettyPrinting().create().toJson(Map.of("items", items, "blocks", blocks, "peripheraliumCreativeDisplay", display, "bookPages", ClientFixture.BOOK_PAGES, "privateConsumers", List.of("tweakium:r7_visual turtle left/right", "tweakium:r7_visual pocket", "tweakium:r7_interaction_menu"))) + "\n");
+            Files.writeString(ClientFixture.directory().resolve("interaction-inventory.json"), new GsonBuilder().setPrettyPrinting().create().toJson(Map.of("items", items, "blocks", blocks, "peripheraliumCreativeDisplay", display, "bookPages", ClientFixture.BOOK_PAGES, "privateConsumers", List.of("tweakium:r7_visual turtle left/right", "tweakium:r7_visual pocket", "tweakium:r7_interaction_menu", ClientFixture.HIDDEN_PROBE.toString()))) + "\n");
         } catch (java.io.IOException exception) { throw new AssertionError(exception); }
         ClientFixture.record("interactions.log", "verify dedicated=" + !mc.hasSingleplayerServer() + " exact-items=4 exact-blocks=2 creative=3 book-pages=2 descriptive-tooltip=1 hidden-prompt=true thread=" + Thread.currentThread().getName());
     }
