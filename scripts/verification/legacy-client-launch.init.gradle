@@ -1,0 +1,31 @@
+// Opt-in old-node launch manifests; no processes or production model changes.
+import groovy.json.JsonOutput
+
+gradle.projectsEvaluated {
+    def root = gradle.rootProject
+    def aggregate = root.tasks.register('legacyClientLaunchInfo')
+    ['1.20.1', '1.21.1'].each { version ->
+        ['fabric', 'forge'].each { loader ->
+            def owner = root.project(":peripheralium:${loader}:${version}")
+            def run = owner.tasks.getByName('runClient')
+            def task = owner.tasks.register('legacyClientInfo') {
+                dependsOn(run.taskDependencies.getDependencies(run))
+                doLast {
+                    def target = root.file(root.providers.gradleProperty('client.launch-dir').get())
+                    target.mkdirs()
+                    def info = [
+                        classpath:(loader == 'fabric' ? run.classpath : run.classpathProvider).files*.absolutePath,
+                        jvm:run.allJvmArgs,
+                        args:run.args,
+                        main:run.mainClass.get(),
+                        runtime:owner.sourceSets.main.runtimeClasspath.files*.absolutePath,
+                        compile:owner.sourceSets.main.compileClasspath.files*.absolutePath,
+                        workingDir:run.workingDir.absolutePath,
+                    ]
+                    new File(target, "${version}-${loader}.json").text = JsonOutput.prettyPrint(JsonOutput.toJson(info)) + '\n'
+                }
+            }
+            aggregate.configure { dependsOn(task) }
+        }
+    }
+}

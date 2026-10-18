@@ -9,10 +9,36 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import socket
 import subprocess
 import time
+
+
+def validate_evidence(output, exits):
+    control = output / 'control'
+    result = json.loads((control / 'result.json').read_text())
+    if not result['passed'] or result['phases'] != 26 or exits != [0, 0]:
+        raise ValueError('Incomplete workflow or nonzero process exit')
+    phases = [int(value) for value in re.findall(r'^phase=(\d+) ', (control / 'client.log').read_text(), re.MULTILINE)]
+    if phases != list(range(27)):
+        raise ValueError(f'Incomplete/duplicate client phase inventory: {phases}')
+    expected = ['01-title', '02-integrated-world', '03-content-models-tooltip', '04-creative-tab', '05-book-page-one', '06-book-page-two', '07-reloaded-models', '08-dedicated-join', '09-native-menu', '10-equipped-pocket-menu', '11-dedicated-reconnect', '12-reconnected-models']
+    shots = list((control / 'screenshots').glob('*.png'))
+    if {p.stem for p in shots} != set(expected):
+        raise ValueError('Screenshot identity inventory mismatch')
+    server = (output / 'server.log').read_text(errors='replace')
+    if server.count('R7Viewer joined the game') != 2 or server.count('R7Viewer left the game') != 2:
+        raise ValueError('Missing actual dedicated join/leave/reconnect')
+    if 'Stopping server' not in server or 'All dimensions are saved' not in server:
+        raise ValueError('No natural dedicated-server save/shutdown')
+    models = (control / 'models.log').read_text()
+    if len(models.splitlines()) != 28 or 'failure.txt' in {p.name for p in control.iterdir()}:
+        raise ValueError('Missing extracted model assertions or fixture failure')
+    result.pop('phases')
+    result.update(maximum_phase=26, phase_count=len(phases), actual_dedicated_joins=2, screenshots={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in shots})
+    return result
 
 
 def main():
@@ -85,20 +111,20 @@ def main():
         while not (control / 'result.json').exists():
             if (control / 'failure.txt').exists():
                 raise RuntimeError((control / 'failure.txt').read_text())
+            if 'Could not create REI Plugin' in (output / 'client.log').read_text(errors='replace'):
+                raise RuntimeError('Actual REI initialization failed; inspect client.log and publisher entrypoint/class inventory')
             if client.poll() is not None or server_process.poll() is not None:
                 raise RuntimeError('Process exited before visual acceptance')
             if time.monotonic() - started > 420:
                 raise TimeoutError('Visual workflow exceeded 420s')
             time.sleep(0.5)
         client.wait(timeout=40)
+        assert server_process.stdin is not None
         server_process.stdin.write('stop\n')
         server_process.stdin.flush()
         server_process.wait(timeout=40)
-        receipt = json.loads((control / 'result.json').read_text())
-        shots = list((control / 'screenshots').glob('*.png'))
-        assert receipt['passed'] and len(shots) == 12
-        assert client.returncode == server_process.returncode == 0
-        receipt.update(mods=mods, screenshots={p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in shots}, exits=[server_process.returncode, client.returncode], elapsed_seconds=time.monotonic() - started, eula_authorization='t_b52730bf explicit dashboard project acceptance; disposable fixture only')
+        receipt = validate_evidence(output, [server_process.returncode, client.returncode])
+        receipt.update(mods=mods, exits=[server_process.returncode, client.returncode], elapsed_seconds=time.monotonic() - started, eula_authorization='t_b52730bf explicit dashboard project acceptance; disposable fixture only')
         (output / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
         print(json.dumps(receipt, indent=2))
     finally:

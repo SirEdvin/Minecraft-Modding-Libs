@@ -1,6 +1,5 @@
 package site.siredvin.tweakium.clienttest;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -85,7 +84,7 @@ public final class ClientProof {
                     reload.join(); verify(mc); mc.setScreen(new Gallery());
                 }
                 case 13 -> { if (frames < 10) return; shot(mc, "07-reloaded-models"); }
-                case 14 -> { mc.disconnectWithSavingScreen(); mc.setScreen(new TitleScreen()); }
+                case 14 -> { mc.disconnectFromWorld(Component.literal("R7 integrated complete")); mc.setScreen(new TitleScreen()); }
                 case 15 -> connect(mc);
                 case 16 -> { if (!ready(mc) || mc.hasSingleplayerServer()) return; verify(mc); shot(mc, "08-dedicated-join"); }
                 case 17 -> {
@@ -97,14 +96,14 @@ public final class ClientProof {
                     if (!(mc.screen instanceof dan200.computercraft.client.gui.AbstractComputerScreen<?>)) return;
                     shot(mc, "10-equipped-pocket-menu");
                 }
-                case 21 -> { mc.player.closeContainer(); mc.disconnectWithSavingScreen(); mc.setScreen(new TitleScreen()); }
+                case 21 -> { mc.player.closeContainer(); mc.disconnectFromWorld(Component.literal("R7 reconnect")); mc.setScreen(new TitleScreen()); }
                 case 22 -> connect(mc);
                 case 23 -> { if (!ready(mc)) return; verify(mc); shot(mc, "11-dedicated-reconnect"); }
                 case 24 -> { mc.setScreen(new Gallery()); }
                 case 25 -> { if (frames < 10) return; shot(mc, "12-reconnected-models"); }
                 case 26 -> {
                     Files.writeString(ClientFixture.directory().resolve("result.json"), "{\"passed\":true,\"route\":\"" + route + "\",\"phases\":26,\"screenshots\":12,\"thread\":\"" + Thread.currentThread().getName() + "\"}\n");
-                    mc.disconnectWithSavingScreen(); mc.stop();
+                    mc.disconnectFromWorld(Component.literal("R7 complete")); mc.stop();
                 }
                 default -> { return; }
             }
@@ -130,6 +129,8 @@ public final class ClientProof {
     private static void verify(Minecraft mc) {
         CreativeModeTabs.tryRebuildTabContents(mc.level.enabledFeatures(), true, mc.level.registryAccess());
         gallery = java.util.stream.IntStream.range(0, 7).mapToObj(i -> mc.player.getInventory().getItem(i).copy()).toList();
+        var tooltip = gallery.get(0).getTooltipLines(net.minecraft.world.item.Item.TooltipContext.of(mc.level), mc.player, net.minecraft.world.item.TooltipFlag.NORMAL);
+        if (tooltip.stream().noneMatch(line -> line.getString().equals("R7 consumer description via Broccolium"))) throw new AssertionError("Native descriptive tooltip hook");
         for (int i = 0; i < gallery.size(); i++) {
             var stack = gallery.get(i);
             if (stack.isEmpty()) throw new AssertionError("Missing synchronized fixture slot " + i);
