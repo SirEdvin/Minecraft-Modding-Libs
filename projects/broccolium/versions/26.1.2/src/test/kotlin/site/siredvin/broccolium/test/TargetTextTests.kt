@@ -17,9 +17,44 @@ import site.siredvin.broccolium.modules.base.util.pocketAdjectiveComponent
 import site.siredvin.broccolium.modules.base.util.turtleAdjectiveComponent
 import java.util.Optional
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @WithMinecraft
 class TargetTextTests {
+    @Test
+    fun writtenBookExtractionPreservesRawStyledUnicodePagesWithoutMutatingComponents() {
+        val first = Component.literal("Перша 🌳").append(Component.literal(" page").withStyle(net.minecraft.ChatFormatting.BOLD))
+        val content = WrittenBookContent(
+            Filterable("raw title", Optional.of("filtered title")),
+            "author",
+            2,
+            listOf(Filterable(first, Optional.of(Component.literal("filtered"))), Filterable.passThrough(Component.empty()), Filterable.passThrough(Component.literal("third\nline"))),
+            true,
+        )
+        val book = ItemStack(Items.WRITTEN_BOOK)
+        book.set(DataComponents.WRITTEN_BOOK_CONTENT, content)
+        val before = book.copy()
+
+        repeat(2) { assertEquals(listOf("Перша 🌳 page", "", "third\nline"), TextBookUtils.getBookText(book)) }
+        assertTrue(ItemStack.matches(before, book))
+        assertEquals(content, book.get(DataComponents.WRITTEN_BOOK_CONTENT))
+    }
+
+    @Test
+    fun writableBookExtractionKeepsEmptyPagesAndDoesNotTreatForeignComponentsAsBooks() {
+        val content = WritableBookContent(listOf(Filterable.passThrough(""), Filterable("raw\nline", Optional.of("filtered")), Filterable.passThrough("останній")))
+        val book = ItemStack(Items.WRITABLE_BOOK)
+        book.set(DataComponents.WRITABLE_BOOK_CONTENT, content)
+        val before = book.copy()
+        assertEquals(listOf("", "raw\nline", "останній"), TextBookUtils.getBookText(book))
+        assertTrue(ItemStack.matches(before, book))
+        val stone = ItemStack(Items.STONE)
+        stone.set(DataComponents.WRITABLE_BOOK_CONTENT, content)
+        assertEquals(emptyList(), TextBookUtils.getBookText(stone))
+        book.remove(DataComponents.WRITABLE_BOOK_CONTENT)
+        assertEquals(emptyList(), TextBookUtils.getBookText(book))
+    }
+
     @Test
     fun booksUseRawNativeComponentsAndKeepPageOrder() {
         val writable = ItemStack(Items.WRITABLE_BOOK)
