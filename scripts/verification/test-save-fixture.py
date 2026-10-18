@@ -67,6 +67,13 @@ class SaveProbeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             FIXTURE['normalize_upgrade'](None)
 
+    def test_actual_game_profile_schema_migration_keeps_uuid_and_name(self):
+        legacy = {'UpperId': 4294967298, 'LowerId': 12884901892, 'Name': 'R6Owner'}
+        modern = {'id': [1, 2, 3, 4], 'name': 'R6Owner'}
+        self.assertEqual(FIXTURE['normalize_owner'](legacy), FIXTURE['normalize_owner'](modern))
+        modern['id'][3] = 5
+        self.assertNotEqual(FIXTURE['normalize_owner'](legacy), FIXTURE['normalize_owner'](modern))
+
     def test_empty_snapshot_is_not_a_fixture_pass(self):
         with self.assertRaises((KeyError, AssertionError)):
             FIXTURE['validate']({}, True)

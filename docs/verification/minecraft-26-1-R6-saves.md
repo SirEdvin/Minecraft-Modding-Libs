@@ -116,3 +116,41 @@ fixtures; hash exclusive untouched backups, same-version restarts, then
 independent copied1.21.1→26.1.2 and staged1.20.1→1.21.1→26.1.2 save/stop/
 restart comparisons per loader. Preserve failures, commands and native
 layout migration files. No production source change or migration pass claimed.
+
+## Actual staged loss / compatibility repair checkpoint — incomplete
+
+All four v2 sources passed independent expected-state checks. Four exclusive
+source backups were hashed before opening copies. Fabric same-version1.20.1
+and1.21.1 each passed two copied-world boots; direct1.21.1→26.1.2 passed
+save/stop/restart with semantic equality after a narrowly tested normalization
+of native GameProfile `{UpperId,LowerId,Name}` to `{id,name}`. Raw NBT is
+retained. Guard red/green proves actual UUID/name changes are still rejected.
+
+The staged1.20.1→1.21.1 copy exposed a real data-loss gate: installed turtle
+upgrade IDs survived, but both legacy `LeftUpgradeNbt`/`RightUpgradeNbt`
+custom settings disappeared. Pocket state, filler owner/settings, inventory
+and fuel did not show this loss. `matrix-v2/save-matrix.json` remains
+INCOMPLETE with the exact false comparison and original hashes; the loss
+has not been normalized away or waived as an expected migration.
+
+Traced the exact1.120.0 CC source JAR: `V1460Mixin` makes the upgrade ID a
+typed field; `ComponentizationFixers.makeBlockEntityRewrites` looks for that
+ID only in the remainder, so its legacy data migration does not run. Modern
+`TurtleBrain.readCommon` accepts the string ID as a default upgrade and drops
+the separate legacy data when saving. The failed real process is the
+behavioral red, not a compile error.
+
+Scoped repair candidate (not yet verified):1.21.1-only loader Mixins restore
+legacy data immediately before the actual CC reader using a common helper.
+Only string IDs paired with nonempty compound legacy data are converted;
+modern patches and removals win, malformed/missing/removed upgrades are not
+invented, original legacy input fields remain untouched. No new persistent
+file ownership, datapack registry, version pin or root build wiring. Target
+code and1.20.1 are unchanged; the required staged route passes through the
+repaired1.21.1 boundary. Direct1.20.1→26.1.2 is not a supported/tested route.
+
+Next: compile/test/format the owning helper+adapters, rebuild the three1.21.1
+Tweakium publications, re-run actual staged copies from the immutable old
+backups with refreshed artifact hashes on both loaders. Re-run direct and
+same-version routes against the refreshed cumulative candidate. Preserve all
+prior failed receipts; card remains incomplete until the full matrix passes.

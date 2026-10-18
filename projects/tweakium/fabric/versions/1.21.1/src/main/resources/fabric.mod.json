@@ -25,6 +25,7 @@
     ]
   },
   "mixins": [
+    "tweakium.persistence.mixins.json"
   ],
   "depends": {
     "fabricloader": "*",

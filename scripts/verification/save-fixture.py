@@ -193,12 +193,23 @@ def normalize_item(item):
     return result
 
 
+def normalize_owner(owner):
+    if not isinstance(owner, dict):
+        raise ValueError('Missing turtle owner profile')
+    if 'UpperId' in owner and 'LowerId' in owner:
+        parts = [(owner[key] >> shift) & 0xffffffff for key in ('UpperId', 'LowerId') for shift in (32, 0)]
+        return {'id': [part if part < 0x80000000 else part - 0x100000000 for part in parts], 'name': owner['Name']}
+    if 'id' in owner and 'name' in owner:
+        return {'id': owner['id'], 'name': owner['name']}
+    raise ValueError(f'Unsupported owner profile: {owner!r}')
+
+
 def inspect(world):
     chunk = NBT['chunk'](world)
     entities = {(be['x'], be['y'], be['z']): be for be in chunk['block_entities']}
     raw = {'data_version': NBT['level'](world)['Data']['DataVersion'], 'blocks': {name: NBT['block_at'](chunk, x, 80, 0) for name, x in POSITIONS.items()}, 'entities': {name: entities[(x, 80, 0)] for name, x in POSITIONS.items() if name != 'content'}}
     filler, chest, turtle = (raw['entities'][name] for name in ('filler', 'chest', 'turtle'))
-    result = {'blocks': raw['blocks'], 'filler': {'id': filler['id'], 'owner': filler.get('ownerProfile'), 'settings': filler.get('peripheralData')}, 'chest': sorted((normalize_item(x) for x in chest.get('Items', [])), key=lambda x: x['slot']), 'turtle': {'id': turtle['id'], 'label': turtle.get('Label'), 'computer': turtle.get('ComputerId'), 'fuel': turtle.get('Fuel'), 'slot': turtle.get('Slot'), 'owner': turtle.get('Owner'), 'items': sorted((normalize_item(x) for x in turtle.get('Items', [])), key=lambda x: x['slot']), 'left': normalize_upgrade(turtle.get('LeftUpgrade'), turtle.get('LeftUpgradeNbt')), 'right': normalize_upgrade(turtle.get('RightUpgrade'), turtle.get('RightUpgradeNbt'))}}
+    result = {'blocks': raw['blocks'], 'filler': {'id': filler['id'], 'owner': filler.get('ownerProfile'), 'settings': filler.get('peripheralData')}, 'chest': sorted((normalize_item(x) for x in chest.get('Items', [])), key=lambda x: x['slot']), 'turtle': {'id': turtle['id'], 'label': turtle.get('Label'), 'computer': turtle.get('ComputerId'), 'fuel': turtle.get('Fuel'), 'slot': turtle.get('Slot'), 'owner': normalize_owner(turtle.get('Owner')), 'items': sorted((normalize_item(x) for x in turtle.get('Items', [])), key=lambda x: x['slot']), 'left': normalize_upgrade(turtle.get('LeftUpgrade'), turtle.get('LeftUpgradeNbt')), 'right': normalize_upgrade(turtle.get('RightUpgrade'), turtle.get('RightUpgradeNbt'))}}
     return raw, result
 
 
@@ -220,7 +231,7 @@ def validate(semantic, modern):
         assert inventory[3]['patch']['!minecraft:tool'] == {}
     turtle = semantic['turtle']
     assert (turtle['fuel'], turtle['slot'], turtle['computer'], turtle['label']) == (1234, 2, 42, 'R6 turtle')
-    assert turtle['owner'] == {'UpperId': 4294967298, 'LowerId': 12884901892, 'Name': 'R6Owner'}
+    assert turtle['owner'] == {'id': OWNER, 'name': 'R6Owner'}
     assert [(x['id'], x['count']) for x in turtle['items']] == [('minecraft:diamond', 11), ('minecraft:water_bucket', 1)]
     for side, upgrade, expected_id in [('left', turtle['left'], 'computercraft:speaker'), ('right', turtle['right'], 'computercraft:speaker'), ('back', inventory[2]['pocket'], 'computercraft:speaker')]:
         assert upgrade['id'] == expected_id
