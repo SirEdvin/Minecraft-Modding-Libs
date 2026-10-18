@@ -1,6 +1,6 @@
 # R7 rendering lane — t_5eb14799
 
-Status: VERIFIED SCOPED CHECKPOINT, full task BLOCKED on Creative Filler appearance/resources, 2026-10-18. Rendering and corrected combined interaction smoke pass on both target loaders with immutable inputs. Earlier failures remain documented below, superseded only by the exact successful replays. No all-content, full six-combination or R7/F acceptance is claimed.
+Status: VERIFIED MATERIAL CHECKPOINT, full task BLOCKED on Creative Filler appearance/resources, 2026-10-18. Rendering material/snapshot proof and menu/reconnect assertions pass on both targets with immutable inputs. Late visual review independently confirms the Fabric creative screenshot shows Building Blocks, not Peripheralium; the interaction owner is fixing the phase6 public-API selection/strict visible-tab guard. Previous validators passed a narrower schema and do NOT establish visible creative acceptance. No all-content, full client-interaction, six-combination or R7/F acceptance is claimed.
 
 ## Source custody and ownership
 
@@ -62,8 +62,14 @@ Seven rendering guards and ten shared guards pass. Full checker against historic
 
 ## Open gates and exact next actions
 
+### Late visual-review correction (supersedes broader interaction wording above)
+
+Read the interaction owner's later comments only at final board-state readback: they found Fabric04-creative-tab.png selected Building Blocks, despite exact registered tab-content assertions passing. Independently opened this lane's corrected/fabric-jei/control/screenshots/04-creative-tab.png and confirmed Building Blocks/Spruce Trapdoor, not Peripheralium. Therefore the four scoped workflows remain valid MATERIAL/snapshot/execution/input-integrity evidence only, and the200876f interaction-validator passes are explicitly its OLDER03476ca schema (menus/books/registry identity), not full visible creative UI acceptance. Do not relabel these receipts as passes under the newer strict schema.
+
+Interaction owner's5f2b36b/479d68b introduce strict phase6 selected-tab+actual displayed-items assertions and mutation regression. The owner has explicitly taken the narrow fix inside their OWN InteractionProof.advance phase6 using the pinned FabricCreativeModeInventoryScreen public interface, with stable-frame wait; no concurrent ClientProof edit is being made here. Their red/green replay and final exact commit must be integrated downstream. This is an additional open technical replay gate, not another missing human decision. Exact source-phase/render material assertions remain unchanged and valid; no old archive hash is rewritten to conceal the limitation. The corrected checkpoint delivery revision records this visual finding explicitly.
+
 1. Human input: specify Creative Filler's intended appearance, or explicitly approve vanilla dropper-model/texture reuse. Current target generator registers only languages and missing blockstate/item/model assets cannot be invented. After approval add owning failing resource/material regression, implement datagen providers, regenerate deterministically, expand gallery and replace expected negative with positive assertion.
-2. DONE for scoped current candidate: interaction corrections merged at200876f; both corrected JEI workflows and both independent validators pass. Owner's broader native/CCT/tooltip regression results remain separately source-bound evidence, not claimed as executions by this rendering lane.
+2. PARTIAL: menu/probe corrections merged at200876f; both corrected JEI workflows and the old independent validators pass their exact schemas. Visible Fabric creative selection is NOT accepted; merge interaction owner's later public-API fix/strict guard and replay before claiming full interaction UI. Owner's broader native/CCT/tooltip results remain separately source-bound, not claimed as this lane's executions.
 3. DONE for scoped replays: immutable source/fixture/main JAR preservation and both-loader exact-input receipt audits pass as documented above. Retain the immutable-copy rule for all future rebuilds; do not count historical pre-hook or failed combined attempts as current passes.
 4. Integration merges rendering then final interaction cumulative SHAs, legacy1269644 once, and replays six optional combinations, target Lua22/27/providers19/24, affected native/client/CCT, datagen/publication/fixture-isolation and ordinary production/affected R6 bindings. Scoped rendering proof does not replace positive energy or adversarial networking.
 
