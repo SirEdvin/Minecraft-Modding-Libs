@@ -1,48 +1,106 @@
-# R7 interactions — t_a4740f06
+# R7 target interactions — t_a4740f06
 
-Status: INCOMPLETE checkpoint3. Preparation cumulative d43491fb943e1458c8984b539d56aa57d28a206d fast-forwarded into the assigned wt/t_a4740f06; working tree initially clean. Native and extended-menu workflows pass, but image inspection caught stale Fabric creative selection; rendering-owned fix and stricter combined replay pending.
+Status: SCOPED IMPLEMENTATION/REGRESSION PHASE VERIFIED on 2026-10-18. Both target base clients pass the final strict interaction workflow, including corrected visible Fabric creative selection. This releases the pre-created matrix/review children, not R7/F or all-content appearance acceptance. Creative Filler's appearance remains an explicit downstream human decision.
 
-## Scope and ownership
+## Source, ownership and commits
 
-Interaction owns target Broccolium menus/tooltips/books/tests, Testiarium client/CCT helpers, ClientFixture.java world/inventory data and new interaction assertions. Rendering owns ClientProof.java; requested hooks via comment141 on t_5eb14799. Integration owns runner/evidence schema/build/catalog. No shared rendering/runner edits here.
+Assigned branch `wt/t_a4740f06` fast-forwarded the verified preparation `d43491fb943e1458c8984b539d56aa57d28a206d`; planner/R6/task0 ancestry retained. Local interaction checkpoints: `1ec8a021f485ae13ca3a248cbb6592bde187871c`, `3c6927233619bb2e7afd7abc324b61862aac627f`, `03476ca30a505722e1217a7e8d52c43cc5868097`, strict visible guard `5f2b36bf39892f75c1ae9871e77252533910261a`, pocket/state checkpoint `479d68bc385d84536f1baaa61562c4582dbf1ee3`, and actual page-selection fix `e4e4bfa685f3906948a9a450bfd9167801a452bb`. The final report-only SHA is recorded in the card handoff.
 
-## Initial observations
+Rendering-owned hooks `c13c9a94a429848b0f4666808cc27d0f8425f016` were inspected and merged at `6a78eba07e2f87c818f90b1906171faa1e85d007`; rendering report/checkers `92ce65e5e1fd208fe0da1067ebd060004d26914c` merged at `b1ebf182df65af612b9ed5b711a867e5de5334f7`. That later merge changes no runtime Java from the tested e4e4bfa. No concurrent ClientProof.java edits: its two hooks came from the owner. The private NeoForge consumer fixture adapter change was explicitly coordinated (comments158/160). Shared runner/schema/build/catalog/report guards/controllers and production `src/main` are unchanged. No external coding agent, model override, remote publication/push, primary merge, protected F access or profile/service changes.
 
-- Current client workflow opens a vanilla empty chest once and a pocket once; it checks screen presence, not menu contents, server mutations, close/reopen, or post-reconnect menu state. Broccolium extended menu codec has separate R6 adversarial tests; a vanilla chest is not that API.
-- Peripheralium target registers two descriptive items and one descriptive block item; blend is legacy-only. Creative tab is built from registered items and blocks; current client checks size3 only, not identity.
-- Tweakium target registers Creative Filler and its block item; intended resource appearance remains a separate human decision owned by rendering. Production libraries contain no concrete turtle/pocket upgrade definitions: private r7_visual consumers cover these APIs, not production content.
-- Book fixture uses two pages but checks page count only; raw/filtered native component behavior has existing TargetTextTests.
-- Hidden description explicitly advertises Left Shift, so Right Shift absence is not inferred to be a bug. Always-show short-circuits client input access. No demonstrated production defect yet.
+## Implemented assertions and observed fixture fixes
 
-## Next action
+- `InteractionMenus` consumes the real Broccolium menu registration/opening API. Its private schema is exactly BlockPos(3,65,3)+Int(27),12 bytes, decoded with the actual player's RegistryFriendlyByteBuf registry context. No custom packet protocol or weakened trust-boundary validation was added.
+- `ClientFixture` seeds16 diamonds/7 emeralds, retains existing gallery slots0..6 and exact two-page book text. `InteractionProof` checks the vanilla chest's synchronized seed, opens the extended menu, performs native QUICK_MOVE, waits for an independently written server-thread conservation ACK, checks client state/cursor, closes/reopens with a fresh menu id, and reopens again after an actual dedicated reconnect. All diamonds remain in the player's inventory and untouched emeralds remain in the chest.
+- Exact registry/tab identities replace sample/cardinality-only acceptance. Checks run on integrated world, after resource reload, dedicated join and reconnect. Synchronized book title/author/pages and equipped pocket holder/custom-name `R7 state` are checked at all four checkpoints. Native descriptive tooltip appears once; registered hidden probe shows the Left Shift prompt and does not leak its hook without the key.
+- Added two book JUnit regressions for styled Unicode/raw versus filtered text, empty pages, page order, foreign components and no ItemStack mutation. Extended the existing native registered-tooltip testcase with real registered untranslated item/block and hidden block probes: no raw key leakage, ordered/lazy hook computation, live enable supplier and server-safe always-show path. These are new assertions inside the existing exact-discovery identity, not invented extra native testcase counts.
+- Actual fixture failures were corrected rather than misdiagnosed as production defects: post-freeze unregistered Item construction became initialization-time registered probes; NeoForge's intentionally optional menu registry became a consumer-owned DeferredRegister through its existing typed platform extension; nested screenshot directories are created and checked, callback visibility is volatile, and capture waits for stable rendered frames.
+- Visual inspection caught a real acceptance defect missed by the original validator: Fabric's old private vanilla selectTab left the visible screenshot on Building Blocks. A fresh strict-guard run naturally fails at phase6 (`red-visible/fabric-base/control/failure.txt`). The fix is wholly inside interaction-owned phase6: invoke the pinned public Fabric page-aware `FabricCreativeModeInventoryScreen.setSelectedTab`, wait five ticks, require exact visible menu contents and selectedTab, then allow the unchanged rendering-owned screenshot phase. This optional public-interface reflection is confined to the two-loader private test consumer, not a production/render adapter. Final corrected Fabric screenshot visibly shows Peripheralium and all three entries; NeoForge retains its native path.
 
-Add exact content/creative identity manifest and private interaction assertions, seed persistent chest state and strengthen synchronized book contract without changing the rendering gallery slots. Build both fixtures with Java25 and execute fresh bounded Xvfb target client routes; inspect real screenshots. Run focused text/tooltip regressions and Testiarium client/CCT routes as affected. Record checked/unchecked/blocked explicitly and send phase hook contract to rendering/integration.
+## Complete target content inventory
 
-## Checkpoint2 evidence
+The executable `interaction-inventory.json` in each accepted run records these exact sets, not only counts:
 
-Local checkpoint1ec8a021f485ae13ca3a248cbb6592bde187871c added proof;3c6927233619bb2e7afd7abc324b61862aac627f corrected tooltip probe lifecycle. Rendering-owned exact hook SHA c13c9a94a429848b0f4666808cc27d0f8425f016 inspected/merged at6a78eba07e2f87c818f90b1906171faa1e85d007. No concurrent ClientProof edit. Production code remains unchanged.
+| Owner | Production items | Production blocks | Creative expectation |
+| --- | --- | --- | --- |
+| Broccolium | none | none | Extension APIs, no concrete production tab |
+| Testiarium | none | none | Harness APIs, no concrete production tab |
+| Peripheralium | `peripheralium:peripheralium_dust`, `peripheralium:peripheralium_upgrade_template`, `peripheralium:peripheralium_block` | `peripheralium:peripheralium_block` | `peripheralium:tab` displays exactly these3 identities |
+| Tweakium | `tweakium:creative_filler` | `tweakium:creative_filler` | No automatically registered production Tweakium tab; appearance is NOT accepted |
 
-Evidence root `build/verification/interactions` (Git-ignored; all screenshots outside tracked source). `prepare.log` records two Java fixture compile errors corrected in `prepare-retry.log`. `focused-tests.log` records intentional deprecated native callback compilation warning in experimental JUnit probe; `focused-tests-retry.log` then proves unregistered Item construction cannot occur after registry freeze. Rather than unfreeze registries, moved probes into registered native testmod fixtures; removed experimental JUnit class. `focused-native-placement.log` passes four TargetTextTests and the existing Fabric menu codec suite plus both fixture compilations. No production bug inferred from fixture lifecycle errors.
+Peripheralium blend is deliberately legacy-only, not missing target content. Its target items are passive DescriptiveItem/DescriptiveBlockItem consumers, not an invented active interaction API. Production libraries supply upgrade APIs, not concrete installed upgrade definitions. The private `tweakium:r7_visual` consumer verifies eight ordered CreativeTabUtil outputs: normal/advanced pocket and turtle, each base and right/back upgraded variant. Gallery additionally covers both advanced turtle sides. `tweakium:r7_hidden_probe` is explicitly the one private item excluded from the production inventory and is listed in privateConsumers; `tweakium:r7_interaction_menu` is also private. Ordinary main mods contain neither private client nor native testmod classes (all17 retained main-mod JARs scanned).
 
-`native/commands.json`: routes21/26 each18 tests,4 intentional skips,0 failures/errors; routes23/28 each1 test,0 skips/failures/errors. Each command exit0/accepted=true. Native fixture PNGs visually inspected: actual downward-looking world/beam/grass/slimes, no crash/loading screen. This is harness evidence, not menu/content appearance proof.
+## Fresh verification results
 
-`native-tooltips/commands.json` first attempt is honestly rejected: all game assertions pass but two added public tests violate exact shared discovery guard (39 Fabric/16 NeoForge instead of expected37/14). New tooltip assertions now execute as private helpers inside existing registeredTooltipHooksAreLazyAndDoNotLoadClientOnServer; no guard edits/bypass and no claim of extra testcase identities. Fresh replay pending.
+Evidence root (all PNGs Git-ignored, outside tracked source):
+`/home/siredvin/projects/Minecraft-Modding-Libs/.worktrees/t_a4740f06/build/verification/interactions`
 
-Runtime proof now checks exact4 production item IDs/2 blocks, exact Peripheralium tab3 and eight ordered private-consumer creative variants (normal/advanced pocket/turtle, base/upgraded), registered hidden-tooltip prompt, synchronized exact two book pages/title/author. It registers a real Broccolium extended ChestMenu with exact12-byte consumer schema and actual player registry context, verifies vanilla chest seed16diamonds/7emeralds, transfers through native client input, requires independent server-thread ACK, closes/reopens with fresh menu id, then reopens again after dedicated reconnect. Three extra screenshots live under `control/interaction/screenshots`; shared phase/screenshot/model schema unchanged. `check-interactions.py` is executable supplemental acceptance; cannot certify absent hooks or missing ACK.
+| Execution | Fresh result |
+| --- | --- |
+| Common TargetTextTests |4 JUnit cases,0 failures/errors/skips |
+| Fabric FabricMenuOpeningDataTests |18 JUnit cases,0 failures/errors/skips |
+| Native19 Fabric storage/provider/tooltip |37 reported cases,0 failures/errors/skips; exact discovery guard passed |
+| Native24 NeoForge storage/provider/tooltip |14 reported cases,0 failures/errors/skips; exact discovery guard passed |
+| Native21/26 Testiarium CCT |18 reported cases each,4 exact intended negative skips each,0 failures/errors |
+| Native23/28 Testiarium actual clients |1 case each,0 failures/errors/skips; real world screenshot each |
+| `accepted/fabric-base`, `accepted/forge-base` |Each server/client exit0,27 core phases,12 core+3 interaction PNGs,2 actual dedicated joins, natural server save/shutdown; strict visible creative, menu ACK/reopen/reconnect, book/tooltip/pocket checks pass |
+| Supplemental interaction evidence mutations |11 per accepted run;22 checks pass, using disposable copies of actual runtime artifacts, never fabricated execution evidence |
+| Rendering validator regressions |7 pass; both accepted runs also pass the rendering owner's ordered material/snapshot checker |
+| Ratcheted Spotless Java/Kotlin |Pass in exact-source standalone;806 Java/Kotlin files and unchanged origin/multiversion ratchet independently compared |
 
-## Acceptance checklist (pending executable implementation)
+Totals from `audit.json`:22 fresh JUnit cases;89 native reported cases including8 intentional negative skips,0 failures/errors;2 accepted extended client workflows,4 actual dedicated joins,24 core+6 interaction PNGs. Native CCT skips are exactly `StandaloneGameTests.failFastFailureCannotBecomeSuccess` (fail-fast sentinel), `optionalFailure` (optional failure fixture), `requiredFailure` (required failure fixture), and `CctHarnessGameTests.luaFailureCannotBecomeSuccess` (cct lua sentinel), on each loader. Those skips are not passes.
 
-Checkpoint3: `pre-creative-audit.json/log` independently revalidates two frozen-input base workflows (four actual dedicated joins,24 core+6 interaction PNGs),89 native reported cases/8 expected skips/0 errors/failures,22 JUnit cases and806 identical Java/Kotlin files for authorized standalone Spotless. Supplemental evidence mutation checks each passed10 under the earlier schema. New native tooltip replay passes37 Fabric/14 NeoForge with exact existing discovery; all tooltip helpers execute inside the existing test identity. Both standalone Spotless Java/Kotlin checks exit0; original linked-worktree JGit failure retained.
+Each accepted client also records28 positive GUI material/snapshot submissions and4 explicit Creative Filler missing-material negatives across four checkpoints. This is scoped rendering evidence inherited through the coordinated hook, not all-content certification. Final six menu crops, four book page crops, both creative tabs and the gallery tooltip images were visually inspected; Testiarium PNGs show actual world/beam/grass/slimes, not blank/crash/loading screens. `menus-contact.png` and `books-contact.png` retain unmodified crops of the original independently hashed PNGs.
 
-Do NOT treat directory `final/` as final acceptance. Visual inspection of its Fabric `04-creative-tab.png` shows Building Blocks, not Peripheralium. Registry/tab payload assertions were insufficient. Added strict phase6 check of actual visible ItemPickerMenu.items and selectedTab, and validator requires its event; old receipt is now correctly rejected (`visible-creative-negative.log`). Requested actual target Fabric public creative-tab API dispatch from rendering owner (comments162-164), preserving file ownership. Exact current Fabric module was extracted from the installed0.155.3+26.1.2 bundle; public interface is `net.fabricmc.fabric.api.client.creativetab.v1.FabricCreativeModeInventoryScreen`, not the cached legacy Yarn itemgroup name. No production defect inferred from bypassing its page-selection facade in the private fixture.
+## Executable acceptance checklist and exact commands
 
-All six extended-menu crops and all four book-page crops visually inspected: initial chest16 diamonds/7 emeralds, then diamonds16 in player inventory and chest slot0 empty on reopen/reconnect; visible page1/2 text correct on both loaders. Both gallery tooltips are readable and seven entries drawn. NeoForge Peripheralium creative tab shows all3 production entries. Real Testiarium world images also inspected. Creative Filler appearance remains independently blocked, not fixed by this work.
+Run from the assigned checkout with pinned Java25; every Gradle command uses the checked-in wrapper and `--no-daemon`. The build/verification helper `launch-base.sh` is included in the delivery archive. It refuses existing input paths, hash-checks and copies main/fixture JARs before launch, filters optional viewer artifacts from both classpath arrays for the base cases, supplies480s/Xvfb and scoped existing EULA authorization. It never mutates source server worlds. For future replay use a NEW LOG_DIR and generate launch manifests there first; a stale directory is not acceptance.
 
-- [ ] Exact registry and creative entries, not cardinality alone.
-- [ ] Descriptive/hidden tooltip behavior, absent translation, hidden component semantics.
-- [ ] Written/writable book raw/filtered page order and native visible page navigation.
-- [ ] Menu open, server-origin contents, client mutation acknowledgement, close/reopen persistence.
-- [ ] Resource reload and dedicated reconnect preserve relevant content/state.
-- [ ] Both target loaders; explicit deadlines, real screenshots and manifests.
-- [ ] Testiarium client/CCT fresh report evidence; retain expected negative skips.
-- [ ] Local cumulative SHA, exact commands/logs, coverage rows/downstream gates.
+```sh
+export JAVA_HOME=/home/siredvin/.gradle/jdks/eclipse_adoptium-25-amd64-linux.2
+export PATH="$JAVA_HOME/bin:$PATH"
+export LOG_DIR="$PWD/build/verification/interactions-replay-$(date +%s)"
+mkdir -p "$LOG_DIR/launch" "$LOG_DIR/accepted"
+timeout --foreground 300s ./gradlew -I scripts/verification/client-fixture.init.gradle -I scripts/verification/network-launch-info.init.gradle clientFixtureJars networkClientLaunchInfo networkForgeLaunchInfo -Pnetwork.launch-dir="$LOG_DIR/launch" --no-daemon --console=plain > "$LOG_DIR/prepare.log" 2>&1
+bash build/verification/interactions/launch-base.sh fabric > "$LOG_DIR/fabric.log" 2>&1
+bash build/verification/interactions/launch-base.sh forge > "$LOG_DIR/forge.log" 2>&1
+for loader in fabric forge; do
+  python3 scripts/verification/check-interactions.py "$LOG_DIR/accepted/$loader-base"
+  python3 scripts/verification/test-interactions.py "$LOG_DIR/accepted/$loader-base"
+  python3 scripts/verification/check-rendering.py "$LOG_DIR/accepted/$loader-base"
+done
+```
+
+Freshly executed commands/logs for this lane:
+
+```sh
+timeout --foreground 300s ./gradlew -I scripts/verification/client-fixture.init.gradle clientFixtureJars :broccolium:26.1.2:test --tests '*TargetTextTests' :broccolium:fabric:26.1.2:test --tests '*FabricMenuOpeningDataTests' --no-daemon --console=plain
+python3 scripts/verification/run-native-matrix.py --output build/verification/interactions/native --only 21 23 26 28
+python3 scripts/verification/run-native-matrix.py --output build/verification/interactions/native-tooltips-retry --only 19 24
+python3 scripts/verification/test-rendering-evidence.py
+python3 build/verification/interactions/audit.py
+```
+
+- [x] Both target fixture compilers pass: `prepare-accepted.log` (and earlier focused/placement logs).
+- [x] Exact content4 items/2 blocks, visible Peripheralium creative3 and private upgrade creative8 verified: each `accepted/<loader>-base/control/interaction-inventory.json`, `interactions.log`.
+- [x] Server-origin menu contents, native action, independent ACK, close/reopen/fresh id and reconnect verified: `interaction-transfer.ack`, `interactions.log`, three `control/interaction/screenshots/*.png` per loader.
+- [x] Raw/filtered book extraction, metadata, native viewer page navigation and repeated tooltip hooks verified: `junit/*.xml`, native tooltip testcase, book PNGs and logs. Viewer is initialized by the private fixture; this does not establish book right-click/edit/sign/filtering UI.
+- [x] Resource reload, two actual dedicated joins, pocket component identity/state and natural shutdown verified: per-run `commands.json`, `receipt.json`, `process-exits.json`, `client.log`, `server.log`, `control/client.log`.
+- [x] Default Testiarium CCT/client harnesses executed without source changes: `native/commands.json`, copied XML, screenshots and original bounded runner logs.
+- [x] Source/artifact integrity and evidence negatives verified: `audit.py/json/log`, `accepted-inputs/<loader>/sha256.txt`, exact client launch manifests, frozen fixture copies,22 mutation checks, source hashes and main-mod isolation scan.
+- [x] Lint/whitespace verified: `spotless-final.log`, `lint-refresh.log`, `git diff --check`. Linked-worktree JGit failure is preserved in `spotless.log`; authorized standalone retains the unchanged ratchet, not a lint bypass.
+- [ ] Physical Left Shift reveal, alternate locale/advanced tooltip UI, writable-book edit/sign UI, manually driven placement/crafting, arbitrary menus and third-party consumers: UNCHECKED, not inferred from the scoped assertions.
+- [ ] Full optional combinations, legacy replay, changed combined-candidate release gates: DOWNSTREAM; base-only receipts are not the six-case matrix.
+- [ ] Creative Filler visible/material completeness: BLOCKED on intended appearance or explicit approved resource reuse. No appearance invented, no missing-material negative promoted to a pass.
+
+## Failures retained and evidence custody
+
+Initial Java compilation mistakes (`prepare.log`), experimental unregistered tooltip JUnit lifecycle failures (`focused-tests*.log`), and first native extra-test discovery failures (`native-tooltips/`) remain failures. New tooltip assertions were folded into the existing case, preserving the exact shared guard instead of disabling it. The earlier `fabric-base/` run completes interactions but lacks nested PNGs; `final/` runs have menu PNGs but predate the strict visible creative correction. Neither directory is final acceptance. `red-visible/` is the real strict-guard failure; `visible-creative-negative.log` shows supplemental rejection of the old receipt. Only `accepted/` is the final strict workflow.
+
+Runner symlinks are a known integration hotspot: rebuilding its fixture path changes earlier retained inputs. Final `accepted-inputs/` contains immutable task-owned copies of both fixture JARs and all17 main mods; earlier rejected fixture bytes are separately preserved. Server library directories remain read-only source links; installed libraries/worlds/main binaries are not embedded in the delivery ZIP. Exact mods, launch classpaths, commands and hashes remain available in the input manifests/receipts. No claim that file existence or a zero exit alone proves appearance or complete behavior.
+
+## Coverage and downstream gates
+
+Supports R7:1 (UI/content/menus), R7:3 (target client/CCT/joins), R7:4 (focused regressions/replay), and linked PLAN:L107,L109,L111,L113,L116,L119,L159,L161,L162,L164 / DECISION:06,10,12. R7:2 optional matrix and positive-provider correlations remain downstream. Immutable204-row ledger is unchanged; no ownership/disposition rewritten. R6 packet rows PLAN:L114,L115/DECISION:09/R6:4 retain their separate adversarial two-client contract: these UI joins do not replace it.
+
+Pre-created children t_2bef9bbc/t_d3586e8f own four Fabric/two NeoForge current combinations (target JEI29.47.0.111, REI explicitly superseded, config-port conditional N/A). Merge exact cumulative lane SHAs, preserve frozen inputs, run all six current cases with BOTH `check-interactions.py` and `check-rendering.py`, inspect actual screenshots, correlate positive providers, merge legacy1269644 once and replay target22/27 Lua. Final integration t_07f62912 owns combined build/publication/consumer/datagen/isolation/ordinary lifecycle and affected exact-candidate R6 binding; no new main-production source changed here. Original root/F gates remain intact. This card's scoped completion releases those validations; it does not waive Creative Filler design or declare R7/F complete.
