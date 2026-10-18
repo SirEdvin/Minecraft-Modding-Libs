@@ -23,6 +23,7 @@ NS = {"m": "http://maven.apache.org/POM/4.0.0"}
 def check_jar(archive, artifact, minecraft, loader, library, version):
     names = set(archive.namelist())
     assert len(names) == len(archive.namelist()), (artifact, "duplicate ZIP entries")
+    assert not any(".cache/" in name for name in names), (artifact, "datagen cache leaked")
     forbidden = ("/testmod/", "/test/", "/fixture/", "/cct/", "computer/tests/")
     assert not any(any(part in name for part in forbidden) for name in names), (artifact, "private fixture leak")
     assert not any(name.startswith("net/minecraft/") for name in names), (artifact, "Minecraft classes bundled")
@@ -132,6 +133,7 @@ def check_publications(root=ROOT, versions=VERSIONS):
                         for algorithm in ("sha256", "sha512"):
                             assert hashlib.new(algorithm, payload).hexdigest() == file[algorithm], (artifact, "artifact digest", file)
                 with ZipFile(build / "libs" / f"{artifact}-{version}-sources.jar") as archive:
+                    assert not any(".cache/" in name for name in archive.namelist()), (artifact, "source cache leaked")
                     sources = {name for name in archive.namelist() if name.endswith((".kt", ".java"))}
                     assert sources, (artifact, "empty sources")
                     if loader == "common":
@@ -140,6 +142,18 @@ def check_publications(root=ROOT, versions=VERSIONS):
                         assert common_sources <= sources, (artifact, "missing common sources", common_sources - sources)
                 with ZipFile(build / "libs" / f"{artifact}-{version}.jar") as archive:
                     check_jar(archive, artifact, minecraft, loader, library, version)
+                    if loader != "common":
+                        generated = {}
+                        roots = [] if minecraft == "26.1.2" else [branch / "src/generated/resources"]
+                        roots.append(branch / "versions" / minecraft / "src/generated/resources")
+                        for directory in roots:
+                            for resource in directory.rglob("*.json"):
+                                if ".cache" not in resource.parts:
+                                    generated[str(resource.relative_to(directory))] = resource.read_bytes()
+                        for name, payload in generated.items():
+                            assert name in archive.namelist() and archive.read(name) == payload, (artifact, "generated resource missing/drifted", name)
+                        if minecraft == "26.1.2":
+                            assert not any(name.startswith((f"data/{library}/recipes/", f"data/{library}/loot_tables/")) for name in archive.namelist()), (artifact, "legacy generated resources leaked")
                 if loader == "forge" and (minecraft != "1.20.1" or library in ("broccolium", "tweakium")):
                     raw = build / "libs" / f"{artifact}-raw-{version}-raw.jar"
                     assert raw.is_file(), (artifact, "missing raw configuration artifact")

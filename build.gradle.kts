@@ -57,6 +57,11 @@ subprojects {
             source.startsWith(sharedSources) && localSources.resolve(sharedSources.relativize(source).toString()).isFile
         }
         pluginManager.withPlugin("java") {
+            tasks.withType<Jar>().configureEach {
+                exclude("**/.cache/**")
+                dependsOn("stonecutterGenerate")
+            }
+            tasks.named("processResources") { dependsOn("stonecutterGenerate") }
             tasks.withType<ProcessResources>().configureEach {
                 // Published 0.9.0 conventions do not track raw dependency mappings.
                 for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
@@ -69,6 +74,16 @@ subprojects {
                 resources.exclude(overridden)
                 allJava.exclude(overridden)
                 allSource.exclude(overridden)
+            }
+            val mainResources = extensions.getByType<SourceSetContainer>().named("main").get().resources
+            gradle.projectsEvaluated {
+                // Generated JSON has no version comments. Stonecutter redirects the
+                // extra generated root for inactive nodes without generating it;
+                // select the authored resource roots explicitly instead.
+                val ordinaryRoots = mainResources.srcDirs.filterNot { it.parentFile.name == "generated" }
+                val generatedRoots = mutableListOf(localSources.resolve("generated/resources"))
+                if (minecraftVersion != "26.1.2") generatedRoots.add(sharedSources.resolve("generated/resources").toFile())
+                mainResources.setSrcDirs(ordinaryRoots + generatedRoots)
             }
         }
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
@@ -124,6 +139,8 @@ subprojects {
         if (path.contains(":fabric:") || path.contains(":forge:")) {
             val commonProject = project(":${path.split(':')[1]}:$minecraftVersion")
             afterEvaluate {
+                tasks.named("processResources") { dependsOn("${commonProject.path}:stonecutterGenerate") }
+                tasks.withType<Jar>().configureEach { dependsOn("${commonProject.path}:stonecutterGenerate") }
                 tasks.named<Jar>("sourcesJar") {
                     from(commonProject.extensions.getByType<SourceSetContainer>().named("main").map { it.allSource })
                     duplicatesStrategy = DuplicatesStrategy.EXCLUDE

@@ -164,6 +164,20 @@ integrationProject.sourceSets.named("testMod") {
     integrationProject.dependencies.add(compileOnlyConfigurationName, commonProject.sourceSets["testMod"].output)
     runtimeClasspath += commonProject.sourceSets["testMod"].output
 }
+extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyForge") {
+    val dependencies = listOf("broccolium", "tweakium").map { library ->
+        mods.register(library) {
+            sourceSet(project(":$library:forge:${sc.current.project}").sourceSets.main.get())
+            sourceSet(project(":$library:${sc.current.project}").sourceSets.main.get())
+        }
+    }
+    runs.configureEach {
+        if (name in listOf("client", "server", "data")) {
+            loadedMods.add(mods.named("peripheralium"))
+            dependencies.forEach { loadedMods.add(it) }
+        }
+    }
+}
 integrationProject.extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyForge") {
     val peripheralium = mods.register("peripheralium") {
         sourceSet(peripheraliumMain)
