@@ -1,25 +1,24 @@
 package site.siredvin.tweakium.modules.turtle
 
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
+import com.mojang.serialization.Dynamic
 
-/** Recover pre-component CC turtle data before its string upgrade ID is decoded as a default upgrade. */
+/** Restore legacy fields on the full serialized DFU value, not only its untyped remainder. */
 object LegacyTurtleUpgradeData {
-    fun restore(tag: CompoundTag) {
+    fun restore(input: Dynamic<*>): Dynamic<*> {
+        val id = input.get("id").asString("")
+        if (id != "computercraft:turtle_normal" && id != "computercraft:turtle_advanced") return input
+        var result = input
         for (side in listOf("Left", "Right")) {
             val upgradeKey = "${side}Upgrade"
             val dataKey = "${side}UpgradeNbt"
             // Never replace modern patches, including explicit removals, with leftover legacy data.
-            if (!tag.contains(upgradeKey, Tag.TAG_STRING.toInt()) || !tag.contains(dataKey, Tag.TAG_COMPOUND.toInt())) continue
-            val id = tag.getString(upgradeKey)
-            val data = tag.getCompound(dataKey)
-            if (id.isEmpty() || data.isEmpty) continue
-            val components = CompoundTag().apply { put("minecraft:custom_data", data.copy()) }
-            tag.put(upgradeKey, CompoundTag().apply {
-                putString("id", id)
-                put("components", components)
-            })
-            // Keep migration input fields intact. CC's normal save emits the restored component patch.
+            val upgrade = input.get(upgradeKey).asString().result().orElse(null) ?: continue
+            val data = input.get(dataKey).result().orElse(null) ?: continue
+            if (upgrade.isEmpty() || data.mapValues.result().map { it.isEmpty() }.orElse(true)) continue
+            val components = input.emptyMap().set("minecraft:custom_data", data)
+            result = result.set(upgradeKey, input.emptyMap().set("id", input.createString(upgrade)).set("components", components))
         }
+        // Keep legacy input fields intact; normal CC saving emits only the restored patch.
+        return result
     }
 }

@@ -154,3 +154,32 @@ Tweakium publications, re-run actual staged copies from the immutable old
 backups with refreshed artifact hashes on both loaders. Re-run direct and
 same-version routes against the refreshed cumulative candidate. Preserve all
 prior failed receipts; card remains incomplete until the full matrix passes.
+
+### Refined root cause and successful focused repair
+
+The first load-time candidate built and passed its helper tests but remained
+RED in an actual copied-world run. Temporary, task-only instrumentation
+confirmed the legacy fields were already absent at reader entry; that trace
+code is removed. A rejected whole-BE serialization candidate exposed DFU's
+adjacent item-componentization transient type mismatch (Either/Pair); its
+failed world/log remain retained, not rewritten as passing.
+
+The refined repair prepends conversion of just the typed left/right upgrade
+fields to CC's original schema rewrite, preserving native item/overlay work.
+`LegacyTurtleUpgradeFix` does not serialize the whole BE or traverse inventory
+types mid-migration. The generic Dynamic helper handles only the two real CC
+turtle IDs and preserves modern patches, originals and absent/malformed data.
+The original native rewrite remains in the composition. Native schema output
+decoding failures remain fatal; no fallback to a successful empty world.
+
+Actual focused fresh1.20.1→1.21.1 copies now pass expected semantic equality
+and normal ready/console save/stop/natural0 on both Fabric and NeoForge.
+NeoForge additionally required declaring its previously empty Mixin config
+in1.21.1 metadata, confirmed against the pinned CC JAR's real `[[mixins]]`
+contract. Both1.21.1 public loader artifacts contain the new helper/hook;
+no fixture class enters production. Five owning Dynamic helper cases pass,
+including both sides, modern explicit removals, malformed data, idempotence
+and unrelated BE identity. Scoped formatter uses unchanged project rules on
+all five authored Java/Kotlin files and passes. Canonical1.20.1 and all target
+sources remain unchanged. Full candidate matrix/publication refresh is still
+pending; this is not card completion.
