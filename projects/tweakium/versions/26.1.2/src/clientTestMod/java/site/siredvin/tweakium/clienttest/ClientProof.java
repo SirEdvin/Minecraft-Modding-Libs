@@ -150,6 +150,7 @@ public final class ClientProof {
         var right = gallery.get(4).get(dan200.computercraft.shared.ModRegistry.DataComponents.RIGHT_TURTLE_UPGRADE.get());
         var pocket = gallery.get(5).get(dan200.computercraft.shared.ModRegistry.DataComponents.BACK_POCKET_UPGRADE.get());
         if (left == null || right == null || pocket == null || !left.holder().key().identifier().equals(ClientFixture.ID) || !right.holder().key().identifier().equals(ClientFixture.ID)) throw new AssertionError("Equipped upgrade synchronization");
+        RenderProof.verify(mc, gallery, route + ":" + phase);
     }
     private static final class Gallery extends Screen {
         Gallery() { super(Component.literal("R7 content and upgrade models")); frames = 0; }
