@@ -11,7 +11,9 @@ import site.siredvin.broccolium.modules.storage.item.FabricSlottedStorageWrapper
 import site.siredvin.broccolium.modules.storage.item.FabricStorageWrapper
 import site.siredvin.broccolium.test.storage.DummyStorage
 
-internal class TweakedFabricStorageWrapper(private val inventoryStorage: ContainerStorage) : FabricStorageWrapper(inventoryStorage), AccessibleAgnosticStorage<ItemStack, Int> {
+internal class TweakedFabricStorageWrapper(private val inventoryStorage: ContainerStorage) :
+    FabricStorageWrapper(inventoryStorage),
+    AccessibleAgnosticStorage<ItemStack, Int> {
     override fun get(slot: Int): ItemStack {
         val view = inventoryStorage.getSlot(slot)
         return view.resource.toStack(view.amount.toInt())

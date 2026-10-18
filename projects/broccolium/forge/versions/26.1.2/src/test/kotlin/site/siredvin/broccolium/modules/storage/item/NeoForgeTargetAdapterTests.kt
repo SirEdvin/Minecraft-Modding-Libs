@@ -15,13 +15,13 @@ import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler
 import net.neoforged.neoforge.transfer.transaction.Transaction
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyHandlerWrapper
 import site.siredvin.broccolium.modules.storage.energy.AgnosticEnergyStack
 import site.siredvin.broccolium.modules.storage.energy.Energies
 import site.siredvin.broccolium.modules.storage.fluid.AgnosticFluidStack
 import site.siredvin.broccolium.modules.storage.fluid.ForgeAgnosticFluidStorage
 import site.siredvin.broccolium.test.WithNeoForgeRegistries
-import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import java.util.function.Predicate
 
 @WithNeoForgeRegistries

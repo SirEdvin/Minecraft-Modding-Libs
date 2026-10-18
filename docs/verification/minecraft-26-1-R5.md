@@ -1,0 +1,32 @@
+# R5 — artifacts, consumers and CI
+
+Status: INCOMPLETE implementation checkpoint. Task t_f0a99e8c; execution authorized by the card's superseding release. No publication or full-matrix acceptance is claimed.
+
+## Baseline
+
+Merged planner b8fd1ddfd5134c45402040fe2c1ca5be343ac48f, then immediate predecessor cumulative 98f746e52237d73c1ce6042ec7abec5b68104f11. Both ancestry checks pass. Read remaining plan, original brief/source ledger, inherited R0 boundary receipt and R4 handoff. Retain exact 26.1.2 pins, old JVM/Kotlin isolation, canonical 1.20.1, public coordinates and local-only publication policy.
+
+## Initial observation
+
+Java launcher verified: Temurin 25.0.3+9 at /home/siredvin/.gradle/jdks/eclipse_adoptium-25-amd64-linux.2. `timeout --foreground 300s ./gradlew tasks --all --no-daemon` exits 1 after configuration: Spotless cannot find a Git repository from the linked worktree. Log: `$TMPDIR/t_f0a99e8c-validation/tasks.log`. This is not a test pass. Use an exact-source standalone checkout for the unchanged lint rules as explicitly authorized; do not disable lint.
+
+Target convention currently disables Maven task execution and has no Maven publication declaration. Existing checker covers only 24 old publications. Existing target Testiarium features require publication/dependency/source acceptance; target sources merging already has root wiring. Full unit/build/datagen/consumer/CI acceptance remains outstanding.
+
+## Phase 1 checkpoint — publication foundations (acceptance incomplete)
+
+Scratch exact-source standalone checkout: `$TMPDIR/t_f0a99e8c-validation/standalone`, based on R4 SHA above with original `origin/multiversion` ratchet ref restored. No lint was disabled. Initial full build found 12 inherited target Kotlin formatting violations; applied only the formatter's import/whitespace changes. Root `cleanTest build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon --console=plain` then exits0 (2m57s,952 tasks); log `build-active-1.20.1-second.log`. Fresh report counting is still pending; do not infer totals here.
+
+Publication model regression executed red: missing target Maven publication (`publication-model-red.log`,exit1). Minimal target Maven publication and raw configurations added; model probe green for36 public identities (`publication-model-green.log`,exit0). Expanded actual JAR/POM/module checker passes36 publications, checking61/65/69 bytecode, source merging, checksums, fixture exclusions, metadata/entrypoints, AW namespace, AT, Mixins and nested dependency paths.
+
+Owning feature regression then executed red against generated metadata: Testiarium test-mod lacked its core dependency (`feature-dependencies-red.log`,exit1). Added explicit core/test-mod feature dependency edges and all-version feature source publications/merged sources. Build and publication checker now exit0 (`feature-dependencies-green-3.log`). Two script API compile failures and a subsequent formatter finding are retained in logs; neither counts as test execution.
+
+Scratch `file-maven.init.gradle` adds only a file repository and a narrowly named aggregate; `r5Publish -I ... -Pr5.maven=$LOG_DIR/maven --no-daemon` exits0 (`file-maven.log`) for all36 publications. No remote or mavenLocal task invoked. Consumers, reproducibility, incremental metadata, remaining active states/datagen/CI are NOT yet verified. The first background invocation lacked the foreground shell's environment and failed before Gradle; retained process output, retried with explicit launcher/log exports.
+
+## Next phase
+
+Inspect the existing public publishing convention and normalized dependency rules, add owning publication regressions, implement surgical target contracts, verify scratch file-Maven artifacts and consumers. Then run all active-state builds, fresh report reconciliation, owning datagen and canonical source hashes; update CI using actual task maps. Preserve failed runs and evidence.
+
+Hotspot: gradle/minecraft-26-1.gradle.kts — serial target publication/feature wiring.
+Hotspot: gradle/gametest-reports.gradle.kts — retain R1–R4 exact native guard contracts.
+
+No push, primary merge, release, remote Maven publication, companion edit or shared-service/profile change.

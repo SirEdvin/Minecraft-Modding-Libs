@@ -124,6 +124,7 @@ object LuaInterpretation {
                                 property.getPossibleValues().joinToString(", "),
                             ),
                         )
+
                     @Suppress("UNCHECKED_CAST")
                     val trickedProperty = property as Property<Comparable<Any>>
                     @Suppress("UNCHECKED_CAST")

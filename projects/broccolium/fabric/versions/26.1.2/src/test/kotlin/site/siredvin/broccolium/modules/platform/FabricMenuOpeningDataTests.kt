@@ -3,8 +3,8 @@ package site.siredvin.broccolium.modules.platform
 import io.netty.buffer.Unpooled
 import net.minecraft.core.RegistryAccess
 import net.minecraft.network.RegistryFriendlyByteBuf
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 
 class FabricMenuOpeningDataTests {
     private fun buffer(): RegistryFriendlyByteBuf = RegistryFriendlyByteBuf(Unpooled.buffer(), RegistryAccess.EMPTY)

@@ -605,8 +605,18 @@ if (library == "testiarium") {
     }
 }
 
-// Publication and test/run wiring is completed with the subsystem port. Do not
-// expose an unverified target skeleton through a publish task during bootstrap.
-tasks.withType<AbstractPublishToMaven>().configureEach {
-    enabled = false
+if (loader == "forge" && library in listOf("broccolium", "tweakium")) {
+    val rawJar = tasks.register<Jar>("rawJar") {
+        archiveClassifier.set("raw")
+        from(sourceSets.main.get().output)
+    }
+    configurations.create("raw") { isCanBeConsumed = true }
+    artifacts.add("raw", rawJar)
+}
+
+publishing {
+    publications.register<MavenPublication>("maven") {
+        artifactId = base.archivesName.get()
+        from(components["java"])
+    }
 }

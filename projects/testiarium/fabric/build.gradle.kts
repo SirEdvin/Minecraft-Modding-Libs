@@ -52,11 +52,13 @@ net.fabricmc.loom.configuration.RemapConfigurations.setupForSourceSet(project, c
 java.registerFeature("testMod") {
     capability(rootProject.property("projectGroup").toString(), "testiarium-fabric-test-mod", project.version.toString())
     usingSourceSet(testMod)
+    withSourcesJar()
 }
 
 java.registerFeature("cctTestMod") {
     capability(rootProject.property("projectGroup").toString(), "testiarium-fabric-cct-test-mod", project.version.toString())
     usingSourceSet(cctTestMod)
+    withSourcesJar()
 }
 
 tasks.named<Jar>(testMod.jarTaskName) {

@@ -1,13 +1,13 @@
 package site.siredvin.broccolium.modules.platform
 
 import io.netty.buffer.Unpooled
+import net.minecraft.core.RegistryAccess
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import site.siredvin.broccolium.modules.platform.api.MenuBuilder
-import site.siredvin.broccolium.modules.platform.api.SavingFunction
-import net.minecraft.core.RegistryAccess
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.AbstractContainerMenu
+import site.siredvin.broccolium.modules.platform.api.MenuBuilder
+import site.siredvin.broccolium.modules.platform.api.SavingFunction
 
 /** Detached, bounded opening data. Temporary buffers never escape the callback. */
 internal object FabricMenuOpeningData {

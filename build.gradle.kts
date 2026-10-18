@@ -81,6 +81,34 @@ subprojects {
         afterEvaluate {
             // Enable after Kotlin: enabling earlier publishes a competing kotlinSourcesJar.
             extensions.configure<JavaPluginExtension> { withSourcesJar() }
+            if (path.split(':')[1] == "testiarium") {
+                val part = if (path.contains(":fabric:")) {
+                    "fabric"
+                } else if (path.contains(":forge:")) {
+                    "forge"
+                } else {
+                    "core"
+                }
+                for (feature in listOf("testMod", "cctTestMod")) {
+                    // Feature JARs contain only feature output, not the core API.
+                    dependencies.add("${feature}Api", project(path))
+                    if (feature == "cctTestMod") {
+                        val testModDependency = (dependencies.project(mapOf("path" to path)) as ProjectDependency).apply {
+                            capabilities {
+                                requireCapability("$projectGroup:testiarium-$part-test-mod")
+                            }
+                        }
+                        dependencies.add("${feature}Api", testModDependency)
+                    }
+                    if (part != "core") {
+                        val commonProject = project(":testiarium:$minecraftVersion")
+                        tasks.named<Jar>("${feature}SourcesJar") {
+                            from(commonProject.extensions.getByType<SourceSetContainer>().named(feature).map { it.allSource })
+                            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                        }
+                    }
+                }
+            }
         }
         if (path.contains(":fabric:") || path.contains(":forge:")) {
             val commonProject = project(":${path.split(':')[1]}:$minecraftVersion")
