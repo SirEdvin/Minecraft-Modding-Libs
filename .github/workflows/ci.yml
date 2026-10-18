@@ -61,7 +61,9 @@ jobs:
           python3 scripts/check-test-reports.py --since build/verification/unit-start --output build/verification/units.json
 
       - name: Verify publication contracts
-        run: python3 scripts/check-publications.py
+        run: |
+          python3 scripts/test-verification.py
+          python3 scripts/check-publications.py
 
       - name: Verify switching back preserves tracked sources
         if: always()

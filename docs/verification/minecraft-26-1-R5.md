@@ -40,3 +40,13 @@ Hotspot: gradle/minecraft-26-1.gradle.kts — serial target publication/feature 
 Hotspot: gradle/gametest-reports.gradle.kts — retain R1–R4 exact native guard contracts.
 
 No push, primary merge, release, remote Maven publication, companion edit or shared-service/profile change.
+
+## Phase 3 in progress — fresh matrix and reproducibility
+
+Initial fresh matrix attempts retained: owning-unit report guard incorrectly treated duplicate parameterized display names as duplicate invocations. Corrected identity to report/index/class/name and added regression; six guard tests now pass (including stale/missing/empty/error/failure/skip/DOCTYPE/declared-count cases and all three class-major/private-fixture/Mixin rejection paths). Actual Gradle builds for1.20.1 and1.21.1 active exit0; first reconciled state has1734 invocations/108 XML/19 owning nodes, zero failures/errors/skips. These are provisional until the final exact-source matrix.
+
+The expanded raw-artifact check executed red at missing target Broccolium raw adapter artifact. All four target Forge-family raw configurations now follow the existing modern raw archive-name/classifier convention and build during assemble; final matrix must verify their real outputs. Raw configurations are not falsely described as separately published Maven feature variants.
+
+Workflow definition checks: actionlint1.7.11 (publisher release/checksum verified), all extracted shell snippets `bash -n`, exact Java17/21/25 ordering, three active states and28 native/CCT/client task routes against discovered tasks pass. Routing checks are not native execution; no remote CI claim. Repeat12/12 incremental probe after restoring defaults exits0 with no source change, then normal metadata restore exits0.
+
+Next: synchronize final candidate to standalone, execute all three fresh full active-state build/publication campaigns, record every report/invocation and canonical hashes; run all concrete-provider datagen twice on both loaders/versions, explicit TypeScript check, refreshed file-Maven consumers/checksums and archive evidence. Old Tweakium has abstract language/upgrade utilities but no concrete old datagen entrypoint/provider; document that distinction instead of calling an empty generator a substantive pass.

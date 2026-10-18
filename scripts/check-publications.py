@@ -74,6 +74,7 @@ def check_publications(root=ROOT, versions=VERSIONS):
     for library in LIBRARIES:
         for minecraft in versions:
             common_sources = set()
+            common_feature_sources = {}
             for loader in LOADERS:
                 part = "core" if library == "testiarium" and loader == "common" else loader
                 artifact = f"{library}-{part}-{minecraft}"
@@ -139,6 +140,13 @@ def check_publications(root=ROOT, versions=VERSIONS):
                         assert common_sources <= sources, (artifact, "missing common sources", common_sources - sources)
                 with ZipFile(build / "libs" / f"{artifact}-{version}.jar") as archive:
                     check_jar(archive, artifact, minecraft, loader, library, version)
+                if loader == "forge" and (minecraft != "1.20.1" or library in ("broccolium", "tweakium")):
+                    raw = build / "libs" / f"{artifact}-raw-{version}-raw.jar"
+                    assert raw.is_file(), (artifact, "missing raw configuration artifact")
+                    with ZipFile(raw) as archive:
+                        classes = [name for name in archive.namelist() if name.endswith(".class")]
+                        assert classes, (artifact, "empty raw adapter")
+                        assert all(int.from_bytes(archive.read(name)[6:8], "big") == MAJORS[minecraft] for name in classes), artifact
                 if library == "testiarium":
                     for feature, suffix in (("testMod", "test-mod"), ("cctTestMod", "cct-test-mod")):
                         for usage in ("Api", "Runtime"):
@@ -154,6 +162,19 @@ def check_publications(root=ROOT, versions=VERSIONS):
                                                for cap in dep.get("requestedCapabilities", []))
                                            for dep in feature_dependencies), (artifact, feature, "missing test-mod dependency")
                         assert f"{feature}SourcesElements" in variants, (artifact, feature, "missing feature sources")
+                        source_file = variants[f"{feature}SourcesElements"]["files"][0]["url"]
+                        with ZipFile(build / "libs" / source_file) as archive:
+                            sources = {name for name in archive.namelist() if name.endswith((".kt", ".java"))}
+                            assert sources, (artifact, feature, "empty feature sources")
+                            if loader == "common":
+                                common_feature_sources[feature] = sources
+                            else:
+                                assert common_feature_sources[feature] <= sources, (artifact, feature, "missing common feature sources")
+                        binary_file = variants[f"{feature}RuntimeElements"]["files"][0]["url"]
+                        with ZipFile(build / "libs" / binary_file) as archive:
+                            classes = [name for name in archive.namelist() if name.endswith(".class")]
+                            assert classes, (artifact, feature, "empty feature binary")
+                            assert all(int.from_bytes(archive.read(name)[6:8], "big") == MAJORS[minecraft] for name in classes), (artifact, feature)
                 checked += 1
     assert checked == len(LIBRARIES) * len(versions) * len(LOADERS)
     print(f"Verified {checked} publications: dependencies, capabilities, sources, artifacts and loader/JVM identity")

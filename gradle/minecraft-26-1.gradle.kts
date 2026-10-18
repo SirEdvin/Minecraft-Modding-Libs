@@ -609,13 +609,15 @@ if (library == "testiarium") {
     }
 }
 
-if (loader == "forge" && library in listOf("broccolium", "tweakium")) {
+if (loader == "forge") {
     val rawJar = tasks.register<Jar>("rawJar") {
+        archiveBaseName.set("${base.archivesName.get()}-raw")
         archiveClassifier.set("raw")
         from(sourceSets.main.get().output)
     }
     configurations.create("raw") { isCanBeConsumed = true }
     artifacts.add("raw", rawJar)
+    tasks.named("assemble") { dependsOn(rawJar) }
 }
 
 publishing {

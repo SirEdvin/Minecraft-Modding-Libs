@@ -16,7 +16,7 @@ EXPECTED = {
 
 def check_reports(root, since):
     rows = []
-    seen = set()
+    invocations = []
     for library, loader, version in sorted(key.split("/") for key in EXPECTED):
         branch = root / "projects" / library
         if loader != "common":
@@ -35,14 +35,14 @@ def check_reports(root, since):
             for attribute, tag in (("failures", "failure"), ("errors", "error"), ("skipped", "skipped")):
                 actual = len(suite.findall(".//" + tag))
                 assert int(suite.get(attribute, "0")) == actual == 0, (path, attribute, actual)
-            for case in cases:
-                identity = (library, loader, version, case.get("classname"), case.get("name"))
-                assert identity not in seen, (path, "duplicate case", identity)
-                seen.add(identity)
+            for index, case in enumerate(cases):
+                # Parameterized/provider invocations may have identical display names.
+                invocations.append({"report": str(path.relative_to(root)), "index": index,
+                                    "class": case.get("classname"), "name": case.get("name")})
             count += len(cases)
             rows.append({"path": str(path.relative_to(root)), "tests": len(cases), "failures": 0, "errors": 0, "skipped": 0})
         assert count > 0, (directory, "empty owning unit suite")
-    return {"nodes": len(EXPECTED), "reports": len(rows), "tests": len(seen), "failures": 0, "errors": 0, "skipped": 0, "rows": rows}
+    return {"nodes": len(EXPECTED), "reports": len(rows), "tests": len(invocations), "failures": 0, "errors": 0, "skipped": 0, "rows": rows, "invocations": invocations}
 
 
 if __name__ == "__main__":
@@ -54,4 +54,4 @@ if __name__ == "__main__":
     receipt = check_reports(args.root.resolve(), args.since)
     if args.output:
         args.output.write_text(json.dumps(receipt, indent=2) + "\n")
-    print(json.dumps({key: value for key, value in receipt.items() if key != "rows"}))
+    print(json.dumps({key: value for key, value in receipt.items() if key not in ("rows", "invocations")}))
