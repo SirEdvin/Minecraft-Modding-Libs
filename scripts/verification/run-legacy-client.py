@@ -52,12 +52,46 @@ def close_window(window):
     xlib.XCloseDisplay(display)
 
 
+def open_inventory(window):
+    """Press the real E binding in this fixture's GLFW window via XTest."""
+    xlib = ctypes.CDLL(ctypes.util.find_library('X11'))
+    xtest = ctypes.CDLL(ctypes.util.find_library('Xtst'))
+    xlib.XOpenDisplay.argtypes = [ctypes.c_char_p]
+    xlib.XOpenDisplay.restype = ctypes.c_void_p
+    display = xlib.XOpenDisplay(None)
+    if not display:
+        raise RuntimeError('No X display')
+    xlib.XSetInputFocus.argtypes = [ctypes.c_void_p, ctypes.c_ulong, ctypes.c_int, ctypes.c_ulong]
+    xlib.XKeysymToKeycode.argtypes = [ctypes.c_void_p, ctypes.c_ulong]
+    xlib.XKeysymToKeycode.restype = ctypes.c_ubyte
+    xlib.XFlush.argtypes = [ctypes.c_void_p]
+    xlib.XCloseDisplay.argtypes = [ctypes.c_void_p]
+    xtest.XTestFakeKeyEvent.argtypes = [ctypes.c_void_p, ctypes.c_uint, ctypes.c_int, ctypes.c_ulong]
+    try:
+        xlib.XSetInputFocus(display, window, 1, 0)
+        code = xlib.XKeysymToKeycode(display, ord('e'))
+        if not code:
+            raise RuntimeError('No E key binding in X keymap')
+        if not xtest.XTestFakeKeyEvent(display, code, 1, 0) or not xtest.XTestFakeKeyEvent(display, code, 0, 0):
+            raise RuntimeError('Native inventory key event rejected')
+        xlib.XFlush(display)
+    finally:
+        xlib.XCloseDisplay(display)
+
+
+def validate_emi(log):
+    if '[EMI] Initialized plugin from computercraft' not in log or '[EMI] Reloaded EMI in ' not in log:
+        raise ValueError('No actual completed EMI/ComputerCraft plugin reload; a joined world alone is not EMI acceptance')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--server-source', type=Path, required=True)
     parser.add_argument('--client-info', type=Path, required=True)
     parser.add_argument('--java', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--inventory-screenshot', action='store_true', help='Open the native inventory; screenshot requires separate visual inspection')
+    parser.add_argument('--require-emi', action='store_true', help='Require actual EMI and CC plugin reload evidence')
     parser.add_argument('--eula-accepted', action='store_true')
     args = parser.parse_args()
     if not args.eula_accepted:
@@ -140,6 +174,10 @@ def main():
         match = re.search(r'(0x[0-9a-f]+) "Minecraft[^\n]*', windows)
         if not match:
             raise RuntimeError('No actual Minecraft GLFW window')
+        if args.inventory_screenshot:
+            open_inventory(int(match.group(1), 16))
+            time.sleep(5)
+            ImageGrab.grab().save(output / 'inventory.png')
         close_window(int(match.group(1), 16))
         client.wait(timeout=40)
         await_text(output / 'server.log', 'R7Legacy left the game', 40)
@@ -155,7 +193,13 @@ def main():
         assert client.returncode == server_process.returncode == 0
         text = (output / 'server.log').read_text()
         assert 'Saving worlds' in text and 'All dimensions are saved' in text
+        if args.require_emi:
+            validate_emi((output / 'client.log').read_text(errors='replace'))
         receipt = {'route': assembly['route'], 'passed': True, 'mods': mods, 'client_launch_manifest_sha256': hashlib.sha256(args.client_info.read_bytes()).hexdigest(), 'screenshot_sha256': hashlib.sha256((output / 'joined.png').read_bytes()).hexdigest(), 'exits': [server_process.returncode, client.returncode], 'actual_join_leave': True, 'elapsed_seconds': time.monotonic() - started, 'client_model': commands['client_model']}
+        if args.inventory_screenshot:
+            receipt['inventory_screenshot_sha256'] = hashlib.sha256((output / 'inventory.png').read_bytes()).hexdigest()
+            receipt['inventory_visual_acceptance'] = 'Separate inspection required; capture alone is not an assertion'
+        receipt['emi_plugin_reload_verified'] = args.require_emi
         (output / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
         print(json.dumps(receipt, indent=2))
     finally:

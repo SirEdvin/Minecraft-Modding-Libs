@@ -119,6 +119,7 @@ if (modernForge) {
 }
 
 repositories {
+    maven("https://repo.sleeping.town/") { content { includeGroup("dev.emi") } }
     maven("https://thedarkcolour.github.io/KotlinForForge/") { content { includeGroup("thedarkcolour") } }
     // location of the maven that hosts JEI files since January 2023
     maven {
@@ -137,11 +138,18 @@ sourceSets.test.configure {
     runtimeClasspath += project(":peripheralium:${sc.current.project}").sourceSets.main.get().output
 }
 
+// Development mods must be discoverable on the run classpath, not published.
+val localRuntime = configurations.maybeCreate("localRuntime").apply {
+    isCanBeConsumed = false
+    isCanBeResolved = false
+}
+configurations.runtimeClasspath { extendsFrom(localRuntime) }
+
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(if (modernForge) libs.forge.kotlin.neoforge else libs.forge.kotlin)
     add(if (modernForge) "implementation" else "modImplementation", if (modernForge) libs.cc.tweaked.neoforge else libs.cc.tweaked.forge)
-    add(if (modernForge) "runtimeOnly" else "modRuntimeOnly", if (modernForge) libs.jei.neoforge else libs.jei.forge)
+    add(if (modernForge) "localRuntime" else "modRuntimeOnly", if (modernForge) libs.emi.neoforge else libs.emi.forge)
 
     implementation(project.project(":broccolium:forge:${sc.current.project}").sourceSets.main.get().output)
     implementation(project.project(":tweakium:forge:${sc.current.project}").sourceSets.main.get().output)
@@ -199,7 +207,7 @@ publishingShaking {
             named<MavenPublication>("maven") {
                 mavenDependencies {
                     exclude(dependencies.create("site.siredvin:"))
-                    exclude(if (modernForge) libs.jei.neoforge.get() else libs.jei.forge.get())
+                    exclude(if (modernForge) libs.emi.neoforge.get() else libs.emi.forge.get())
                 }
             }
         }

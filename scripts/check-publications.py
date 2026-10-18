@@ -111,6 +111,8 @@ def check_publications(root=ROOT, versions=VERSIONS):
                 }
                 for dep in dependencies | runtime_dependencies:
                     assert dep[0] is not None and not dep[0].startswith("site.siredvin."), (artifact, "internal identity leaked", dep)
+                    assert dep[1] is not None, (artifact, "missing dependency artifact", dep)
+                    assert dep[0] != "dev.emi" and "roughlyenoughitems" not in dep[1].lower(), (artifact, "development recipe viewer leaked", dep)
                 for variant in variants.values():
                     for dep in variant.get("dependencies", []):
                         assert not dep["group"].startswith("site.siredvin."), (artifact, variant["name"], dep)

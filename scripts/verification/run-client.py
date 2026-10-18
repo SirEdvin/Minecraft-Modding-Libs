@@ -111,8 +111,6 @@ def main():
         while not (control / 'result.json').exists():
             if (control / 'failure.txt').exists():
                 raise RuntimeError((control / 'failure.txt').read_text())
-            if 'Could not create REI Plugin' in (output / 'client.log').read_text(errors='replace'):
-                raise RuntimeError('Actual REI initialization failed; inspect client.log and publisher entrypoint/class inventory')
             if client.poll() is not None or server_process.poll() is not None:
                 raise RuntimeError('Process exited before visual acceptance')
             if time.monotonic() - started > 420:

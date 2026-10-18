@@ -1,6 +1,6 @@
 # R7 — client models, interactions and integration variants
 
-Status: INCOMPLETE — REQUIRED REI COMBINATION FAILED, task t_14e20aca, 2026-10-18. Partial client receipts below are verified; full R7 acceptance and final-candidate release are not established.
+Status: INCOMPLETE — REI removed; maintained-node EMI replacement verified; compatible target EMI artifact unavailable, task t_14e20aca, 2026-10-18. The dashboard instruction to remove REI across 1.20/1.21/26.1 and use EMI supersedes the historical required-REI gate below. Historical failures remain evidence, not current requirements. Full R7 acceptance and final-candidate release are not established.
 
 ## Baseline
 
@@ -101,4 +101,53 @@ Durable output is `build/verification/t_14e20aca-R7-partial-evidence.zip`, with 
 
 ## Required next decision and remaining gates
 
-Supply a corrected compatible CC:Tweaked artifact/upstream fix, or explicitly authorize changing the settled dependency policy so the required REI combination can genuinely run. Merely removing the two broken entrypoints or calling REI optional does not satisfy current approval. Creative Filler also still needs a real intended model/resource implementation and owning visual regression; no appearance was invented. Resolve those gates, replay affected artifact/datagen/native/server/client combinations against exact new identities, retain the intermittent shutdown finding, then produce the actual final R7 candidate receipt before releasing F. No push, primary merge, release or remote publication is authorized or performed.
+The original REI decision request is superseded by the dashboard instruction recorded below. Creative Filler still needs a real intended model/resource implementation and owning visual regression; no appearance was invented. Resolve remaining gates, replay affected artifact/datagen/native/server/client combinations against exact new identities, retain the intermittent shutdown finding, then produce the actual final R7 candidate receipt before releasing F. No push, primary merge, release or remote publication is authorized or performed.
+
+## Resume — authorized REI removal / EMI primary
+
+Dashboard instruction: "Remove REI completely, just use EMI as primary mod, remove REI support from 1.20, 1.21 and 26.1". This supersedes the earlier REI requirement and permits the recipe-viewer dependency change; it does not change Minecraft/loader/CC pins or authorize forcing incompatible artifacts. Prior failed REI runs and immutable planning documents are retained as historical evidence rather than rewritten.
+
+At resume HEAD4490efb was clean; planner b8fd1dd and R6 66436bc ancestry checks exit0. Primary-source EMI release inventory is cached under `$TMPDIR/t_14e20aca-validation/emi-policy`: official Modrinth project `emi` version API, Sleeping Town `dev/emi/emi-fabric/maven-metadata.xml`, official repository branches and README. Their retrieval commands and hashes will be retained with this phase's receipt. Official1.1.24 artifacts exist for Fabric/Forge1.20.1 and Fabric/NeoForge1.21.1. Neither publisher inventory advertises a26.1.x artifact, and the official repository has no26.1 branch. Do not force-load a1.21.1 artifact into26.1.2 or invent target EMI acceptance.
+
+Added an owning static policy regression; executed red exit1 (existing REI aliases/defaults), then replaced the catalog aliases/bundles and six old-loader build sections with pinned EMI1.1.24 and its publisher Maven, preserving publication exclusions. All three policy tests now pass; seven preexisting synthetic client-evidence guards still pass. These are policy/validator tests, not Minecraft execution. Target build convention has no REI dependency; removed the obsolete REI-specific failure shortcut from the opt-in driver. There was no project-owned REI source integration or entrypoint to remove. Upstream CC JARs remain byte-for-byte untouched. JEI aliases remain available for the independently required optional NeoForge combination, but are no longer the old-line default.
+
+### Verified maintained-node replacement
+
+Actual wrapper `legacyClientLaunchInfo` resolves and compiles all four old-node client routes. All six adapter build sections and catalog bundles select EMI as primary; no active Gradle/catalog REI dependency remains. Fabric uses Loom `modLocalRuntime` for EMI/ModMenu. NeoForge uses a non-consumable `localRuntime` extended only into `runtimeClasspath`; legacy Forge's existing remapped `modRuntimeOnly` already stays out of published metadata. No incompatible target EMI coordinate was added, and no upstream CC entrypoint or artifact was patched.
+
+Two real failures were caught rather than hidden:
+
+- Merely replacing the POM exclusion still leaked EMI into Gradle Module Metadata on nine of twelve affected publications. `publication-isolation-red.json` retains that failure. Moving the dependency to local development configurations fixes the actual boundary; fresh POM/GMM checks across all twelve publications pass.
+- MDG `clientAdditionalRuntimeClasspath` added the library to its legacy classpath file without making EMI discoverable as a mod on this pinned run. The NeoForge1.21.1 join receipt still passed, but the actual inventory screenshot had no EMI sidebar and its log had no EMI plugin. That run (`smoke-final-1.21.1-forge`) is explicitly rejected as EMI evidence. Added `--require-emi`, exercised its red result against that actual failed log, then changed the dependency boundary to `localRuntime`. A fresh `smoke-accepted-1.21.1-forge` run exits0, completes the actual EMI and CC plugin reload and displays the real EMI overlay. No injected plugin or fabricated compatibility class is used.
+
+Selected real executions:
+
+| Minecraft / loader | Evidence directory under emi-policy | Actual server/client exits | EMI evidence |
+| --- | --- | --- | --- |
+| 1.20.1 Fabric | smoke-final-1.20.1-fabric | 0/0 | CC plugin initialized, EMI reload complete, real native creative inventory/sidebar/search inspected |
+| 1.20.1 Forge | smoke-final-1.20.1-forge | 0/0 | Same actual inventory/plugin proof |
+| 1.21.1 Fabric | smoke-final-1.21.1-fabric | 0/0 | Same actual inventory/plugin proof |
+| 1.21.1 NeoForge | smoke-accepted-1.21.1-forge | 0/0 | Fresh post-fix replay; same actual inventory/plugin proof |
+
+All selected clients join and leave real isolated same-version production dedicated servers, whose save/shutdown completes naturally. For the three retained executions, `retained-execution-audit.json` independently verifies identical final launch manifests, every captured classpath/development-output/argument-file hash, receipt/screenshot hashes and the stricter plugin guard. No rerun of those three after an unchanged-launch audit is invented. The target convention and both target artifact sets remain untouched; earlier target base/ModMenu/JEI client results and R6 network/save proofs are inherited against unchanged production identities, not newly executed EMI target runs.
+
+All four selected native inventory screenshots were inspected. EMI dev mode displays one untranslated upstream `computercraft:turtle_can_place` tag warning on Fabric1.20.1; Forge1.20.1 displays161 warnings (that tag plus upstream synthetic brewing recipe-ID validation). Their logs and screenshots are retained, not filtered or disabled.1.21.1 inventories show EMI dev mode without that warning count. Old Creative Filler purple/black geometry is still visible in the scene, matching its separate inherited missing-resource defect. These runs prove startup/join/plugin reload/inventory overlay, not exhaustive EMI recipe transfer, search interaction or recipe correctness. A missing optional JEI mixin target, headless audio failures and offline-authentication warnings are also retained, not presented as new production defects.
+
+Publisher artifacts (official SHA512 also checked against release metadata); Fabric/legacy Forge remapped runtime digests are separately bound in the command ledger:
+
+| EMI artifact | SHA256 |
+| --- | --- |
+| 1.1.24+1.20.1+fabric | 537b062e0dc6f028cf84cf66a473ed1b8842219a708d17cdb292401441b0f367 |
+| 1.1.24+1.20.1+forge | 92784dcf5222d72983a420c90f2e9240468ee0fece96f757c82d7884b6cbdb72 |
+| 1.1.24+1.21.1+fabric | 56ecd418e988cba23dd653d498309fd7b886265708253d5ca7a8fb621dcc5db4 |
+| 1.1.24+1.21.1+neoforge | b68691f94f0727fc517cac2ab55bd6658d1179cc8cc715fe610b60c37469bc4c |
+
+### Commands, publication boundary and remaining decision
+
+Exact commands/exits are in `publications-v6-command.json`, `smoke-final-commands.json`, `smoke-accepted-commands.json` and raw build logs. All Gradle runs used the checked-in wrapper, --no-daemon, verified Java25 and explicit180/300-second deadlines; real graphical launches used Xvfb/360-second deadlines with Java17/21 selected per old node. Final affected-publication/launch batch exits0 (205 tasks:56 executed,149 up-to-date). Explicit non-consumable/non-resolvable local dependency roles leave all four final launch manifests identical to those already bound above. The full existing publication checker is applied to the affected three libraries, two loaders and two old versions:12 actual publications pass its dependency/capability/source/artifact/JVM/loader guards, including the added recipe-viewer leak guard. An independent audit checks every variant in all twelve POM/GMM pairs. Each of the twelve rebuilt production JARs has exactly the same entry payloads as its inherited real production-server artifact (ZIP byte equality is not asserted); no private fixture or EMI code can have been added to those identical payloads.
+
+Three static recipe-policy tests and ten synthetic evidence-validator tests pass. The latter includes rejecting a mere join without EMI and rejecting incomplete plugin reload; none is counted as Minecraft execution. Scoped KotlinGradle Spotless checks pass in this task's exact-source standalone checkout with the original ratchet intact; no lint setting was weakened. Production Kotlin/Java/resources, both hotspot scripts and canonical1.20.1 state remain unchanged. No new datagen/native-unit campaign is claimed for this development-dependency-only change; inherited native/save/network receipts remain explicitly inherited.
+
+`emi-receipt.json` binds current source hashes, publisher metadata/JAR identities,12 publication/artifact proofs, four selected real executions, rejected runs and explicit remaining gates. Durable phase archive: `build/verification/t_14e20aca-R7-emi-evidence.zip`, with adjacent delivery JSON and per-member SHA256/CRC verification. This supplements, not replaces, the earlier R7 partial archive. F t_16b4e35f was read back: todo, dependency-gated on this unfinished card; Chrono ownership unchanged.
+
+Actionable external requirement: provide an actual compatible EMI26.1.2 artifact/source (and approve its provenance if not official), or explicitly choose a target-only alternative/deferment policy. Official EMI's714-entry release inventory, publisher Maven metadata and official branches do not advertise a26.1.x build. The old1.21.1 JAR must not be force-loaded into26.1.2. REI removal is implemented and the former CC/REI blocker is superseded, not carried forward as a requirement. Creative Filler's intended appearance/resource regression remains a separate all-content gap. R7 is not complete and no final candidate is released; no push, primary merge, remote publication, release, shared-service restart or profile change occurred.

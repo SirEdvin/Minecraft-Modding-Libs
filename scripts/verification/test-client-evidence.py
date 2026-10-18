@@ -12,6 +12,11 @@ assert spec is not None and spec.loader is not None
 runner = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(runner)
 
+legacy_spec = importlib.util.spec_from_file_location('legacy_client_runner', Path(__file__).with_name('run-legacy-client.py'))
+assert legacy_spec is not None and legacy_spec.loader is not None
+legacy_runner = importlib.util.module_from_spec(legacy_spec)
+legacy_spec.loader.exec_module(legacy_runner)
+
 
 class ClientEvidenceGuards(unittest.TestCase):
     def setUp(self):
@@ -67,6 +72,20 @@ class ClientEvidenceGuards(unittest.TestCase):
         (self.root / 'control/failure.txt').write_text('SYNTHETIC GUARD')
         with self.assertRaises(ValueError):
             runner.validate_evidence(self.root, [0, 0])
+
+
+class EmiEvidenceGuards(unittest.TestCase):
+    def test_reject_join_without_emi(self):
+        with self.assertRaises(ValueError):
+            legacy_runner.validate_emi('SYNTHETIC: player joined the game')
+
+    def test_reject_incomplete_plugin_reload(self):
+        for log in ('[EMI] Initialized plugin from computercraft', '[EMI] Reloaded EMI in 100ms'):
+            with self.subTest(log=log), self.assertRaises(ValueError):
+                legacy_runner.validate_emi(log)
+
+    def test_complete_synthetic_plugin_log(self):
+        legacy_runner.validate_emi('SYNTHETIC GUARD ONLY\n[EMI] Initialized plugin from computercraft\n[EMI] Reloaded EMI in 100ms')
 
 
 if __name__ == '__main__':

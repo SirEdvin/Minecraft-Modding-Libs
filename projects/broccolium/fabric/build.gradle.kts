@@ -13,7 +13,7 @@ val fabric = if (is121) libs.bundles.fabric121 else libs.bundles.fabric120
 val fabricApi = if (is121) libs.bundles.fabricApiBundle121 else libs.bundles.fabricApiBundle120
 val fabricTest = if (is121) libs.bundles.fabricTest121 else libs.bundles.fabricTest120
 val runtimeMods = if (is121) libs.bundles.externalModsFabricRuntime121 else libs.bundles.externalModsFabricRuntime120
-val rei = if (is121) libs.reiFabric121 else libs.reiFabric120
+val emi = if (is121) libs.emiFabric121 else libs.emiFabric120
 val commonProject = project(":broccolium:${sc.current.project}")
 
 baseShaking {
@@ -32,6 +32,7 @@ fabricShaking {
 }
 
 repositories {
+    maven("https://repo.sleeping.town/") { content { includeGroup("dev.emi") } }
     // location of the maven that hosts JEI files since January 2023
     maven {
         name = "Jared's maven"
@@ -83,7 +84,7 @@ dependencies {
         exclude("net.fabricmc.fabric-api")
     }
 
-    modRuntimeOnly(runtimeMods) {
+    modLocalRuntime(runtimeMods) {
         exclude("net.fabricmc.fabric-api")
         exclude("net.fabricmc", "fabric-loader")
     }
@@ -128,7 +129,7 @@ publishingShaking {
             named<MavenPublication>("maven") {
                 mavenDependencies {
                     exclude(project.dependencies.create("site.siredvin:"))
-                    exclude(rei.get())
+                    exclude(emi.get())
                 }
             }
         }

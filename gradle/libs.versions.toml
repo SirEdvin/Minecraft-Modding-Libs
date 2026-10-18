@@ -44,8 +44,8 @@ parchmentMc-forge = "1.20.1"
 # Dev mod dependenceis
 jei = "15.1.0.19"
 jei-neoforge = "19.27.0.340"
-rei120 = "12.1.785"
-rei121 = "16.0.799"
+emi120 = "1.1.24+1.20.1"
+emi121 = "1.1.24+1.21.1"
 
 # Testing
 autoService = "1.1.1"
@@ -106,9 +106,10 @@ forge-kotlin-neoforge = {module = "thedarkcolour:kotlinforforge-neoforge", versi
 # Dev mod dependencies
 jei-forge = { module = "mezz.jei:jei-1.20.1-forge", version.ref = "jei" }
 jei-neoforge = { module = "mezz.jei:jei-1.21.1-neoforge", version.ref = "jei-neoforge" }
-reiFabric120 = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei120"}
-reiFabric121 = {module = "me.shedaniel:RoughlyEnoughItems-fabric", version.ref = "rei121"}
-rei-forge = {module = "me.shedaniel:RoughlyEnoughItems-forge", version.ref = "rei120"}
+emiFabric120 = {module = "dev.emi:emi-fabric", version.ref = "emi120"}
+emiFabric121 = {module = "dev.emi:emi-fabric", version.ref = "emi121"}
+emi-forge = {module = "dev.emi:emi-forge", version.ref = "emi120"}
+emi-neoforge = {module = "dev.emi:emi-neoforge", version.ref = "emi121"}
 
 # Testing
 autoService = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
@@ -150,11 +151,11 @@ forge-cc = ["cc-tweaked-forge"]
 # Minecraft
 #externalMods-common = ["jei-api", "nightConfig-core", "nightConfig-toml"]
 #externalMods-forge-compile = ["oculus", "jei-api"]
-externalMods-forge-runtime = ["jei-forge"]
+externalMods-forge-runtime = ["emi-forge"]
 #externalMods-fabric = ["nightConfig-core", "nightConfig-toml"]
-#externalMods-fabric-compile = ["iris", "jei-api", "rei-api", "rei-builtin"]
-externalModsFabricRuntime120 = ["reiFabric120", "modmenu120"]
-externalModsFabricRuntime121 = ["reiFabric121", "modmenu121"]
+#externalMods-fabric-compile = ["iris", "jei-api"]
+externalModsFabricRuntime120 = ["emiFabric120", "modmenu120"]
+externalModsFabricRuntime121 = ["emiFabric121", "modmenu121"]
 #
 ## Testing
 test = ["junit-jupiter-api", "junit-jupiter-params", "hamcrest", "jqwik-api"]

@@ -19,6 +19,7 @@ gradle.projectsEvaluated {
                         args:run.args,
                         main:run.mainClass.get(),
                         runtime:owner.sourceSets.main.runtimeClasspath.files*.absolutePath,
+                        legacyClasspath:loader == 'forge' ? owner.tasks.getByName('writeClientLegacyClasspath').outputs.files.singleFile.readLines() : [],
                         compile:owner.sourceSets.main.compileClasspath.files*.absolutePath,
                         workingDir:run.workingDir.absolutePath,
                         modClasses:run.environment.get('MOD_CLASSES'),
