@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "id": "broccolium_network_testmod",
+  "version": "1.0",
+  "environment": "*",
+  "entrypoints": { "main": ["site.siredvin.broccolium.networktest.NativeMenuChecks"] },
+  "mixins": ["broccolium-network.mixins.json"],
+  "depends": { "fabricloader": ">=0.19.5", "minecraft": "26.1.2", "broccolium": "*" }
+}

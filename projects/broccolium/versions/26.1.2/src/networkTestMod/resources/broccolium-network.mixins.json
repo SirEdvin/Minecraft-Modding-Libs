@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "site.siredvin.broccolium.networktest.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": ["NetworkServerMixin", "NetworkPacketMixin"],
+  "client": ["NetworkClientMixin"],
+  "injectors": { "defaultRequire": 1 }
+}

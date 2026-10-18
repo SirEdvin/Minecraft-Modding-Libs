@@ -1,0 +1,37 @@
+// Opt-in resolved launch manifests for run-network.py; no processes are launched here.
+// Use with -Pnetwork.launch-dir=<scratch evidence directory>.
+import groovy.json.JsonOutput
+
+gradle.beforeProject { owner ->
+    if (owner.path == ':broccolium:forge:26.1.2') owner.plugins.withId('net.neoforged.moddev') {
+        owner.neoForge.runs.create('networkClient') {
+            client()
+            sourceSet.set(owner.sourceSets.main)
+            loadedMods.add(owner.provider { owner.neoForge.mods.getByName('broccolium') })
+            gameDirectory = owner.rootProject.file('build/network-client-probe')
+        }
+    }
+}
+
+gradle.projectsEvaluated {
+    def root = gradle.rootProject
+    ['fabric', 'forge'].each { loader ->
+        def owner = root.project(":broccolium:${loader}:26.1.2")
+        def run = owner.tasks.getByName(loader == 'fabric' ? 'runClient' : 'runNetworkClient')
+        root.tasks.register(loader == 'fabric' ? 'networkClientLaunchInfo' : 'networkForgeLaunchInfo') {
+            dependsOn(run.taskDependencies.getDependencies(run))
+            doLast {
+                def target = root.file(root.providers.gradleProperty('network.launch-dir').get())
+                target.mkdirs()
+                def info = [
+                    classpath:(loader == 'fabric' ? run.classpath : run.classpathProvider).files*.absolutePath,
+                    jvm:run.allJvmArgs,
+                    args:run.args,
+                    main:run.mainClass.get(),
+                    runtime:owner.sourceSets.main.runtimeClasspath.files*.absolutePath,
+                ]
+                new File(target, "${loader}-client-info.json").text = JsonOutput.prettyPrint(JsonOutput.toJson(info)) + '\n'
+            }
+        }
+    }
+}
