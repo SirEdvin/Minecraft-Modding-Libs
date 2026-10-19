@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:968b8aaf7182eb9666e0f2171223ee04fed01953d803896c9b15f838babe4b20",
+  "pageVersion": "sha256:e4ec972cb5d5249ba64bbecad242a08ff0913a4e75ae07b3d8e9a186c28340a8",
   "claims": [
     {
       "id": "claim_4e2e45e0ade54f1e8abffa2a84e1a53b",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://docs/minecraft-26-1-migration-brief.md",
-          "version": "repo-file-v1:sha256:25dde902a29d15b52858c4fbc00dbc3ab09a39d18b4b56f997296101d15dab6f"
+          "version": "repo-file-v1:sha256:69e599efa77c07429abb35d4dfdfdd8b1e923cfc0b17b4e0a12622bda1c670fb"
         },
         {
           "resource": "repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/api/IObservingBlockEntity.kt",
@@ -33,6 +33,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:32:11.388Z"
+    "at": "2026-10-19T13:48:57.965Z"
   }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:cf7ffae64a10c1269059f52b1aefd91549ff47ad06e188e4d7f003ddc8c0eb77",
+  "pageVersion": "sha256:9a9d758f5adf960cc23be63a63564efc5e6711dbb3662bac25d04ee4f484750c",
   "claims": [
     {
       "id": "claim_4723a831f8164b0eba13eab51c30c0f9",
@@ -22,7 +22,7 @@
       "evidence": [
         {
           "resource": "repo://docs/minecraft-26-1-verification.md",
-          "version": "repo-file-v1:sha256:c2bcc8119ec3a2feff0ca04d607e9c17a8bd73cdf3a8e6eff589fee3a2dd3a50"
+          "version": "repo-file-v1:sha256:332bbe02d8c6d6210c367457898f8aeb6658146340cd1184c4b18320ecd8e307"
         },
         {
           "resource": "repo://docs/module-test-coverage.md",
@@ -37,6 +37,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:32:11.388Z"
+    "at": "2026-10-19T13:48:57.965Z"
   }
 }

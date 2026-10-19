@@ -16,10 +16,10 @@ sources:
     resource: repo://gradle/gametest-reports.gradle.kts
   - id: openwiki-source-da50c88d5a96bc12fd7c5e04
     resource: repo://scripts/verification/run-native-matrix.py
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-19T13:48:57.965Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:32:11.388Z
+    at: 2026-10-19T13:48:57.965Z
 ---
 
 # Verification matrix and evidence boundaries
@@ -41,6 +41,8 @@ Mapped GameTests delete the exact old XML before launch and require fresh nonemp
 
 ## Retained limits and failures
 
-Old NeoForge1.21.1 shutdown143 is retained; unchanged retry/restart passes, not a repair. Legacy Filler appearance and two source-ZIP order limits remain. No arbitrary provider/protection/render geometry, online-auth, recipe-transfer, cross-loader conversion, downgrade or cross-version wire/ABI certification. The inherited npm advisory/strict-null limitation remains in existing triage. Local execution is not remote CI/publication/release; local Obsidian save is not proven cross-device sync.
+Old NeoForge1.21.1 shutdown143 is retained; unchanged retry/restart passes, not a repair. Legacy Filler appearance and two source-ZIP order limits remain. No arbitrary provider/protection/render geometry, online-auth, recipe-transfer, cross-loader conversion, downgrade or cross-version wire/ABI certification. The inherited npm advisory/strict-null limitation remains; its triage was dropped, not fixed or revived. Local execution is not remote CI/publication/release; local Obsidian save is not proven cross-device sync.
+
+Final local closure is documented in the [delivery index](../../docs/verification/minecraft-26-1-delivery.md): all204 requirement identities/owners remain, with197 inherited/local evidence dispositions and7 final-documentation dispositions, not204 runnable test passes. Current1128 source hashes and118 exported JAR bytes are independently checked. Historical raw sibling runtime ZIP paths were removed, so original campaign audits are inherited accepted receipts rather than freshly replayable or implicitly bundled evidence. The stable source snapshot is committed before deterministic generated-wiki metadata; only openwiki files may differ afterwards.
 
 See [build](../build/stonecutter-publication.md), [Testiarium](../testiarium/harness.md) and [client/CCT](../testiarium/client-cct.md).

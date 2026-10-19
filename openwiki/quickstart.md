@@ -14,10 +14,10 @@ sources:
     resource: repo://gradle/gametest-reports.gradle.kts
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-19T13:48:57.965Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:32:11.388Z
+    at: 2026-10-19T13:48:57.965Z
 ---
 
 # Minecraft Modding Libs ownership and task map
@@ -38,4 +38,4 @@ Four libraries share Stonecutter common/Fabric/forge trees; typed-peripheral-api
 
 [Final verification](../docs/minecraft-26-1-verification.md) records exact pins, approved observer/JEI/barrel changes, receipts and compatibility limits. [Coverage](../docs/module-test-coverage.md) separates historical full builds, final1,757 units,28 native routes and affected replays without double-counting. [Workflow](testing/verification.md) routes fresh nonempty XML, exact negative sentinels, copied saves, actual-two-client packets and graphical proofs.
 
-Use wrapper --no-daemon, scratch logs/deadlines and canonical restoration. A successful compile/process is not runtime acceptance. F's audits inherit exact-source executions; remote CI/release/publication and cross-device wiki sync were not performed. No cross-version wire/ABI, downgrade or arbitrary third-party certification is implied.
+Use wrapper --no-daemon, scratch logs/deadlines and canonical restoration. A successful compile/process is not runtime acceptance. F's audits inherit exact-source executions; final local closure is owned by t_b9190fc7 after stable-wiki parent t_c54853f2. The [delivery index](../docs/verification/minecraft-26-1-delivery.md) separates197 inherited/local evidence dispositions from7 final-documentation dispositions, not204 test passes, and locates all118 actual artifact hashes. Historical raw sibling ZIP locations were removed; retained accepted receipts are not freshly replayed archives. Remote CI/release/publication and cross-device wiki sync were not performed. No cross-version wire/ABI, downgrade or arbitrary third-party certification is implied.

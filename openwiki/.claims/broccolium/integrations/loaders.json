@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:206a7bf9cea9a76a8577cb76720ccd8db4a8011bae5dac864d299e4d86a7e84e",
+  "pageVersion": "sha256:99fab2872b1cfad86dd3913b5b7e33876032cb30216a3750d0da0d5d6dac6bce",
   "claims": [
     {
       "id": "claim_e333d482bf5140c8872209eb91f68c07",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://docs/minecraft-26-1-verification.md",
-          "version": "repo-file-v1:sha256:c2bcc8119ec3a2feff0ca04d607e9c17a8bd73cdf3a8e6eff589fee3a2dd3a50"
+          "version": "repo-file-v1:sha256:332bbe02d8c6d6210c367457898f8aeb6658146340cd1184c4b18320ecd8e307"
         },
         {
           "resource": "repo://settings.gradle.kts",
@@ -47,6 +47,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:32:11.388Z"
+    "at": "2026-10-19T13:48:57.965Z"
   }
 }
