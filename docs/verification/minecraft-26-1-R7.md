@@ -1,6 +1,6 @@
 # R7 — client models, interactions and integration variants
 
-Status: INCOMPLETE — REI removed; maintained-node EMI replacement verified; compatible target EMI artifact unavailable, task t_14e20aca, 2026-10-18. The dashboard instruction to remove REI across 1.20/1.21/26.1 and use EMI supersedes the historical required-REI gate below. Historical failures remain evidence, not current requirements. Full R7 acceptance and final-candidate release are not established.
+Status: VERIFIED R7 MILESTONE, task t_14e20aca, 2026-10-19. Exact completed cumulative integration1379ddd5a373848a5601f483b66340f7f4b8658a is fast-forward merged and independently reconciled in this root. Target JEI and the toxic-purple Creative Filler barrel were subsequently explicitly approved and verified by their owning lanes; the historical EMI/design blockers below are superseded, not remaining requests. The final receipt at the end of this report is authoritative. Earlier sections are preserved historical checkpoints, not the current matrix. This closes R7 only, not the final migration campaign.
 
 ## Baseline
 
@@ -151,3 +151,65 @@ Three static recipe-policy tests and ten synthetic evidence-validator tests pass
 `emi-receipt.json` binds current source hashes, publisher metadata/JAR identities,12 publication/artifact proofs, four selected real executions, rejected runs and explicit remaining gates. Durable phase archive: `build/verification/t_14e20aca-R7-emi-evidence.zip`, with adjacent delivery JSON and per-member SHA256/CRC verification. This supplements, not replaces, the earlier R7 partial archive. F t_16b4e35f was read back: todo, dependency-gated on this unfinished card; Chrono ownership unchanged.
 
 Actionable external requirement: provide an actual compatible EMI26.1.2 artifact/source (and approve its provenance if not official), or explicitly choose a target-only alternative/deferment policy. Official EMI's714-entry release inventory, publisher Maven metadata and official branches do not advertise a26.1.x build. The old1.21.1 JAR must not be force-loaded into26.1.2. REI removal is implemented and the former CC/REI blocker is superseded, not carried forward as a requirement. Creative Filler's intended appearance/resource regression remains a separate all-content gap. R7 is not complete and no final candidate is released; no push, primary merge, remote publication, release, shared-service restart or profile change occurred.
+
+## Final root receipt — supersedes the incomplete checkpoints above
+
+### Candidate, decisions and ownership
+
+Final R7 runtime/build source is `d0111d78edfb2f9b97b6412e7c09c85ff987d71e`; final graphical runtime is `293098d81f654ec979db0853ab54fcc88a002736`. Exact integrated delivery `1379ddd5a373848a5601f483b66340f7f4b8658a` was fast-forwarded into this assigned worktree from550443b. This root changes only this report. Its documentation-only cumulative SHA is recorded in the adjacent final delivery JSON and Kanban completion, not self-referentially embedded here.
+
+Seven explicit ancestor checks include planner b8fd1dd, R6 cumulative66436bc, R7 baseline0783e34, legacy1269644, graphical runtime293098d, target aggregate d0111d7 and integration1379ddd. All1128 tracked production/build/helper source hashes match the actual tested candidate. All four controllers retain canonical1.20.1; old Java17/21 and target Java25 contracts are preserved.
+
+Dashboard approvals on the owning cards resolved both external choices: JEI29.47.0.111 on both26.1.2 loaders when EMI is unavailable, and the toxic-purple barrel design for target Creative Filler. Legacy EMI1.1.24 remains primary on all four old nodes. REI is removed from active development dependencies on every maintained line; historical REI failures and upstream CC declarations are retained, not suppressed or relabeled passed. Config-port26.1.5 is conditional N/A based on actual absence of project API usage, with required Night Config retained. No new dependency-availability claim or pin refresh is made by this root.
+
+Production work inherited from the owning lanes includes generated target Filler block/item models and textures through the owning data provider and NeoForge client registration/event-bus ownership, with focused red/green regressions. Added target registry-aware text serialization regressions, test-only material submission, book/menu/modifier/tooltips, native Lua and TypeScript contract proofs travel in the same ancestry. See [rendering](minecraft-26-1-R7-rendering.md), [interactions](minecraft-26-1-R7-interactions.md), [target](minecraft-26-1-R7-target.md), [legacy](minecraft-26-1-R7-legacy.md) and [combined acceptance](minecraft-26-1-R7-final-integration.md). No extra root production repair or speculative renderer rewrite was necessary.
+
+### Final accepted client matrix
+
+| Minecraft / loader | Optional UI | Accepted evidence |
+| --- | --- | --- |
+|26.1.2 Fabric | none | final strict title/integrated world/content/book/menu/pocket/reload/two dedicated joins |
+|26.1.2 Fabric | ModMenu18.0.2 + Placeholder3.0.0+26.1 | same full workflow |
+|26.1.2 Fabric | JEI29.47.0.111 | same full workflow |
+|26.1.2 Fabric | JEI + ModMenu + Placeholder, exact pins above | same full workflow |
+|26.1.2 NeoForge | none | same full workflow |
+|26.1.2 NeoForge | JEI29.47.0.111 | same full workflow |
+|1.20.1 Fabric / Forge | EMI1.1.24 | both actual same-version graphical joins, native inventory/search; six-node harness below |
+|1.21.1 Fabric / NeoForge | EMI1.1.24 | both actual same-version graphical joins, inventory/search/crafting views |
+
+The six target cases comprise90 original PNGs,192 positive material submissions,24 positive target Filler checkpoints and12 dedicated joins. Each actual main target JAR is exact-byte bound to the eight freshly rebuilt target publications. Root reruns strict rendering/interaction validators, receipt/source/classpath/installed-mod/PNG checks and both matrix archive inventories; it does NOT invent six new launches. Target galleries, tabs and equipped CraftOS pocket/reconnect contact sheets were visually reinspected in this root: real models/UI and conditional JEI sidebars are visible without obvious target checkerboards. The legacy1.21.1 contact sheet visibly retains actual Crafting panels and the pre-existing Filler checkerboard; screenshots do not certify recipe transfer or exhaustive appearance.
+
+Required CC/Kotlin identities and positive native energy providers are source/artifact-bound to owning target/R6 evidence. They are not falsely claimed separate production energy-machine mods in the UI world or new root provider executions. Exact dependency manifests, loader pins and optional hashes are in the target prerequisite/matrix receipts; JEI Fabric SHA256 `cc5f75892fb9055fe7efcfb8dc1daccb94b12a51a4a930f01b90d7608c509098`, NeoForge `06365155a29b06199aa2160489349948cb44072d335125e5f0a5003dcb76c386`.
+
+### Executed acceptance versus reconciliation
+
+The completed combined integration actually executed the following checks against this candidate; root independently re-parses the immutable results rather than rerunning an accepted unchanged campaign:
+
+- 1757 unit cases in110 fresh versioned XML across19 nodes; zero failures/errors/skips. Root reconciles declared and actual testcase counts, preserving invocation multiplicity.
+- 78 native cases across routes5/9/14/18/22/23/27/28; zero failures/errors/skips. Includes all six client harnesses and stronger target peripheral/Lua36+36 cases, with exact report digests and testcase identities retained.
+- 36 publication contracts,72 complete POM/GMM viewer-isolation files,118 exact artifacts and36 fixture-free main publications; nine actual external Java/Kotlin consumer routes; forced TypeScript check. Positive legacy Lua/native97 cases remain explicitly inherited from the completed legacy lane.
+- Two deterministic target datagen passes/24 selected tasks; old generated resources unchanged. Old all-active-state/full28-native/R5/R6 evidence remains inherited, not another fresh root campaign.
+- 12 accepted ordinary no-fixture dedicated-server open/restart executions on all six nodes;12 copied-save open/restart executions with preserved source-world hashes and semantic comparisons. One actual old NeoForge1.21.1 shutdown143 failure remains retained; unchanged retry and restart exit0, not a claimed root-cause repair.
+- Both affected target loaders newly replayed all12 original R6 adversarial phases with two actual graphical clients each and24 receives per loader; native server/Alice/Bob exits0/0/0. Original R6 ownership,17 unchanged network sources and original receipt/fixture identities are preserved. See combined report for exact old/new SHA256 receipts; ordinary reconnects do not substitute for these adversarial checks.
+- Four actual old graphical joins/EMI native searches and clicks with natural client/server exits0;16 new PNGs plus six harness PNGs.1.20 click results are tooltip-only, not invented opened recipes;1.21 actual Crafting panels are visible.
+
+Root-owned verification newly executed `build/verification/verify-r7-root.py`: exit0, current1128-source and118-artifact hashes, seven ancestor checks, archive CRC/every manifest payload including nested archive, exact XML counts, native receipts, process/save/network ledgers, metadata isolation, datagen inventories and original coverage ownership. Reused hash-pinned `target-final-audit.py` from the target archive with THIS worktree as cwd: exit0, strict six-case acceptance,192 models/90 PNGs/24 Filler checkpoints. Six checked-in guard commands freshly pass50 tests. A first guard launcher failed before execution because LOG_DIR was absent; explicit re-export fixed setup, and that failed setup is not runtime evidence. No new Gradle/Minecraft execution is claimed in this root-only report update.
+
+All14 R7-owned rows in the original204-row ledger are reconciled;27 supporting dispositions preserve original text and owners. Affected R6 rows retain R6 ownership. Final CARD/FINAL source/campaign rows remain F's acceptance, not closed by an R7 support receipt. Machine-readable root audit, full source/artifact/changed-path identities, original coverage dispositions and guard commands are in the root delivery. Exact build/runtime commands and exits remain [combined report lines73–94](minecraft-26-1-R7-final-integration.md) and its immutable command ledgers, rather than reconstructed or shortened substitute invocations.
+
+### Durable evidence and downstream boundary
+
+Root evidence directory: `/home/siredvin/projects/Minecraft-Modding-Libs/.worktrees/t_14e20aca/build/verification`. Root reconciliation archive `t_14e20aca-R7-final-reconciliation.zip` and adjacent `t_14e20aca-R7-final-delivery.json` bind this report, executable read-only audit, guard logs, target strict audit, current source hashes, exact source-candidate changed-path hashes and parent delivery/archive identities. CRC/every-payload readback and exact final commit are recorded in that delivery JSON. Do not substitute the earlier explicitly partial R7/EMI archives for this accepted candidate.
+
+Required immutable parent evidence stays at:
+
+- Integration: `../t_49598f9c/build/verification/t_49598f9c-R7-integration-evidence-v2.zip`, SHA256 `96b56ef8c3aa5e3e5aac096fdecfca7fefe159ef34aa7f8d857703d49dc27ab5` (22,666,876 bytes;3128 members/3127 manifest payloads).
+- Target: `../t_9c4d988f/build/verification/t_9c4d988f-R7-target-final.zip`, SHA256 `4cc40e9777dd5ad17c7a569031fea3991d10aea906daac037c1872304a0e34a8`, plus its explicitly hashed Fabric/NeoForge matrix archives (original90 target PNGs and optional JARs).
+- Legacy: `../t_85706b6f/build/verification/t_85706b6f-R7-legacy-evidence.zip`, SHA256 `c0b14b9e3ddcf109ed0b05a032937125e45773f118de8ad2d5a2386ed5d665b8`.
+- Original R6 network: `../t_72f16ae4/build/verification/t_72f16ae4-R6-network-evidence.zip`, SHA256 `eab0de96e057d0e15ef6345a519673a4f21dc1847a0669fe2f710131debdb647`.
+
+Those `../` paths resolve from THIS worktree root, not from the report directory. Exact absolute paths appear in machine-readable receipts. Compact integration omits only108 duplicate Maven JAR aliases, with actual118 JAR identities retained and an executed/hash-verified restoration helper; no required runtime evidence is silently dropped. Third-party/Mojang distributions remain explicitly hash-referenced, not falsely advertised bundled.
+
+R7 has no remaining card-local external decision or unperformed required process. Completing this milestone releases the already-linked final owner t_16b4e35f; that owner alone performs final campaign/WIP/source/coverage/OpenWiki/companion-skill/Obsidian reconciliation and decides final migration acceptance. Chrono t_878aa68c remains downstream. No additional tasks, final-owner edits, push, primary merge, public Maven publication, release, service restart or profile/model/approval change occurred.
+
+Carry honest limits: old NeoForge shutdown flakiness not repaired; old Filler appearance unchanged; two inherited source-JAR ZIP-order differences; target Fabric launcher added46 explicitly inventoried disposable dependency files without changing previously inventoried bytes; failed schema/distribution audits retained. No online authentication, arbitrary third-party geometry/protection, exhaustive locale/physical-input/book-edit/search/recipe-transfer, cross-loader-save/downgrade/cross-version-wire/JVM-ABI certification. Existing npm advisory/strict-null limitation and t_470a1973 are not security-cleared. Hotspots carried into F: `gradle/minecraft-26-1.gradle.kts` (target viewer wiring inherited), `gradle/gametest-reports.gradle.kts` (unchanged guard), `gradle/libs.versions.toml` (viewer pins inherited), `build.gradle.kts` (legacy feature edges inherited). None changed in root reconciliation.
