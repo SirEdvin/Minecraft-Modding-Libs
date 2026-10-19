@@ -1,6 +1,6 @@
 # Additive Minecraft 26.1 migration brief
 
-Status: original planning complete, 2026-10-17 (Europe/Kyiv), task t_bd56f66a; implementation R0–R7 verified and reconciled by t_16b4e35f on 2026-10-19. Read the [implementation verification](minecraft-26-1-verification.md) for current results/limits and [final audit](verification/minecraft-26-1-F.md) for campaign delivery status. Original planning questions, availability snapshots and risks below remain historical provenance, not current failed gates.
+Status: original planning complete, 2026-10-17 (Europe/Kyiv), task t_bd56f66a; implementation R0–R7 verified, final local closure reconciled by t_b9190fc7 after t_c54853f2 on 2026-10-19. Read the [implementation verification](minecraft-26-1-verification.md) for current results/limits and [cumulative local delivery](verification/minecraft-26-1-delivery.md) for final acceptance, artifacts and source-snapshot semantics. Original planning questions, availability snapshots and risks below remain historical provenance, not current failed gates. Archived implementation/triage cards remain archived; no remote publication is implied.
 
 ## Implemented decision amendments (2026-10-19)
 

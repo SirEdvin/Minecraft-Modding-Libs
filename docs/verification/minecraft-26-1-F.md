@@ -1,6 +1,16 @@
 # Final campaign reconciliation — t_16b4e35f
 
-Status: INCOMPLETE final audit, 2026-10-19. R0–R7 implementation/runtime milestones are complete and exact-candidate evidence is independently reconciled below. Protected generated AGENTS.md cleanup and stable-source OpenWiki closure prevent campaign completion. The vault report remains explicitly incomplete; Chrono must not release. No new approval is needed for the already approved observer/JEI/barrel decisions.
+Status: COMPLETE local final reconciliation, 2026-10-19, closure owner t_b9190fc7. R0–R7 implementation/runtime milestones remain inherited exact-candidate acceptance. Parent t_c54853f2 completed the authorized normal managed-AGENTS retention and stable OpenWiki lifecycle at source792029a/wiki c39df5c; that supersedes the protected-file blocker below, not the archived card history. The seven final documentation dispositions are reconciled in the final ledger; the sole vault report is completed. See [cumulative local delivery](minecraft-26-1-delivery.md) for commands, artifact/checksum receipts and limits. No new Minecraft campaign, push, primary merge or publication.
+
+## Final closure receipt — t_b9190fc7
+
+Fresh parent audit passes1128 source/118 actual JAR hashes,20 pages,44 Claims/111 evidence hashes and208 links before final documentation edits. Production/build/resource source remains exactly R7, with four canonical1.20.1 controllers. Original blocked checkpoint ZIP's165 payloads/CRC/hash are independently verified; archived R0–R7 audit receipts remain inherited, not fresh runtime execution. Historical sibling ZIP paths are gone, so verify-inherited-r7.py cannot freshly replay; its prior pass below is historical and its retained later failure is explicit. No synthetic replacement evidence is introduced.
+
+Final ledger preserves204 immutable requirement identities/text/owners:197 inherited/local evidence dispositions plus7 verified final-documentation dispositions, NOT204 test passes. Closure audit checks each named final gate, original source/custody/artifact/evidence bindings, companion tree/examples, vault report/schema/links/index/log and stable wiki metadata; source and generated metadata commits use the parent's supported stable-snapshot semantics. Exact final commits and archive hashes live in the non-self-referential delivery receipt.
+
+The existing200–400-word Obsidian report/overview/index/log are finalized in place. Chrono t_878aa68c is notified that its report requirement is satisfied; personal tasks/statuses are untouched. Archived t_16b4e35f/t_470a1973 remain archived; npm/strict-null triage is dropped, not fixed. Standard managed AGENTS scheduled-refresh prose remains inaccurate because no scheduled workflow exists; retention was explicitly authorized, automation was not. Parent report: [scoped lifecycle](t_c54853f2-openwiki.md).
+
+## Historical F audit checkpoint (superseded status, retained evidence)
 
 ## Source custody
 
@@ -21,7 +31,7 @@ Evidence: build/verification/F-wip-custody.json and reconcile-wip.py (41 hashes,
 - OpenWiki run `0fdf6112-3254-4ba6-9022-61f2c6c3ade7` completed begin/20-page plan/all20 submissions/finish. Finish returned `complete, sourceChanged=true`; `.last-update.json` remains `interrupted` at old327f845, correctly not accepted as a stable-source lifecycle. Independent `verify-documentation.py` exits0:20 page/sidecar/manifest hashes,44 unique Claims,111 current evidence-resource hashes,206 relative Markdown links and no source/runtime drift. Useful old detail is explicitly historical where retained.
 - Vault interim report updated in place at `/home/siredvin/vault/Knowledge/LLM-Wiki/minecraft-modding-libs-progress/minecraft-26-1-implementation.md`,296 words, correct type/project tag/created date and tool-derived2026-10-19 Kyiv update. Overview/index/log preserved;32 pages recounted and8 report/overview links resolve. Local save only, no reading checkboxes/deadlines/sync claim. Existing Chrono t_878aa68c retains default owner, original four parents and personal task semantics.
 
-## Genuine protected-file blocker and exact resume
+## Historical protected-file blocker and resume (superseded by authorized parent)
 
 OpenWiki begin automatically added17 lines to AGENTS.md: a managed block with an inaccurate scheduled-workflow assertion. An explicit patch removing ONLY that generated block was denied by protected-agent-instruction approval policy in unattended mode. No alternate terminal/tool write, guard-setting change or retry was attempted. The block remains uncommitted and is the only tracked non-documentation difference from tested281cee3. No workflow/settings/service changes were introduced.
 

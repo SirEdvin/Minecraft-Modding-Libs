@@ -1,6 +1,10 @@
 {
   "schema": "F-final-reconciliation-v1",
-  "status": "INCOMPLETE protected AGENTS cleanup and stable OpenWiki/report delivery pending",
+  "status": "COMPLETE local acceptance reconciliation; inherited execution and final documentation are distinct dispositions",
+  "closure_owner": "t_b9190fc7",
+  "closure_parent": "t_c54853f2",
+  "delivery_index": "docs/verification/minecraft-26-1-delivery.md",
+  "closure_receipt": "build/verification/t_b9190fc7-final-delivery.json",
   "original_coverage_sha256": "e76a5a2e2061e283576babd582a53b630ed2a189eb83cd4a7bdb82dcc6ed6b66",
   "candidate": "281cee3ed4958bd845e6911321f9a24eaee9eae8",
   "merge_commit": "60049c0",
@@ -19,7 +23,7 @@
   },
   "statuses": {
     "VERIFIED_INHERITED_OR_LOCAL_RECEIPT": 197,
-    "PENDING_FINAL_DOCUMENTATION": 7
+    "VERIFIED_FINAL_DOCUMENTATION": 7
   },
   "rows": [
     {
@@ -3370,7 +3374,8 @@
         "t_14e20aca"
       ],
       "final_reconciliation": {
-        "status": "PENDING_FINAL_DOCUMENTATION",
+        "status": "VERIFIED_FINAL_DOCUMENTATION",
+        "closure_evidence": "docs/verification/minecraft-26-1-delivery.md#acceptance-and-commands",
         "report": "docs/verification/minecraft-26-1-F.md",
         "evidence": [
           "F-wip-custody.json",
@@ -3403,7 +3408,8 @@
         "t_14e20aca"
       ],
       "final_reconciliation": {
-        "status": "PENDING_FINAL_DOCUMENTATION",
+        "status": "VERIFIED_FINAL_DOCUMENTATION",
+        "closure_evidence": "build/verification/t_b9190fc7-final-delivery.json",
         "report": "docs/verification/minecraft-26-1-F.md",
         "evidence": [
           "F-wip-custody.json",
@@ -3535,7 +3541,8 @@
         "t_14e20aca"
       ],
       "final_reconciliation": {
-        "status": "PENDING_FINAL_DOCUMENTATION",
+        "status": "VERIFIED_FINAL_DOCUMENTATION",
+        "closure_evidence": "/home/siredvin/vault/Knowledge/LLM-Wiki/minecraft-modding-libs-progress/minecraft-26-1-implementation.md",
         "report": "docs/verification/minecraft-26-1-F.md",
         "evidence": [
           "F-wip-custody.json",
@@ -4953,7 +4960,8 @@
       "verification": "Plan section F; exact-source command/report receipt, then final aggregate reconciliation",
       "evidence_providers": [],
       "final_reconciliation": {
-        "status": "PENDING_FINAL_DOCUMENTATION",
+        "status": "VERIFIED_FINAL_DOCUMENTATION",
+        "closure_evidence": "openwiki/.last-update.json",
         "report": "docs/verification/minecraft-26-1-F.md",
         "evidence": [
           "F-wip-custody.json",
@@ -5001,7 +5009,8 @@
       "verification": "Plan section F; exact-source command/report receipt, then final aggregate reconciliation",
       "evidence_providers": [],
       "final_reconciliation": {
-        "status": "PENDING_FINAL_DOCUMENTATION",
+        "status": "VERIFIED_FINAL_DOCUMENTATION",
+        "closure_evidence": "/home/siredvin/vault/Knowledge/LLM-Wiki/minecraft-modding-libs-progress/minecraft-26-1-implementation.md",
         "report": "docs/verification/minecraft-26-1-F.md",
         "evidence": [
           "F-wip-custody.json",
@@ -5049,7 +5058,8 @@
       "verification": "Plan section F; exact-source command/report receipt, then final aggregate reconciliation",
       "evidence_providers": [],
       "final_reconciliation": {
-        "status": "PENDING_FINAL_DOCUMENTATION",
+        "status": "VERIFIED_FINAL_DOCUMENTATION",
+        "closure_evidence": "build/verification/t_b9190fc7-final-delivery.json",
         "report": "docs/verification/minecraft-26-1-F.md",
         "evidence": [
           "F-wip-custody.json",
@@ -5073,7 +5083,8 @@
       "verification": "Plan section F; exact-source command/report receipt, then final aggregate reconciliation",
       "evidence_providers": [],
       "final_reconciliation": {
-        "status": "PENDING_FINAL_DOCUMENTATION",
+        "status": "VERIFIED_FINAL_DOCUMENTATION",
+        "closure_evidence": "docs/verification/minecraft-26-1-delivery.md#report-and-limits",
         "report": "docs/verification/minecraft-26-1-F.md",
         "evidence": [
           "F-wip-custody.json",
