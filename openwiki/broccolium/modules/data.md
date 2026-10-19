@@ -3,9 +3,6 @@ type: module
 title: Broccolium data generation
 description: Provider ownership, selected source roots and target deterministic resource proof.
 tags: [broccolium, datagen, resources]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-2a9daaac1604f238ef4c63fb
     resource: repo://build.gradle.kts
@@ -20,6 +17,9 @@ sources:
   - id: openwiki-source-90c8b318fc2f5139061b7577
     resource: repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/lang/LanguageProvider.kt
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Broccolium data generation

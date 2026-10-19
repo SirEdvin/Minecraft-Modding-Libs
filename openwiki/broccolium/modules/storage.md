@@ -3,9 +3,6 @@ type: module
 title: Broccolium storage transfers
 description: Runtime storage contracts, transactional target adapters and explicit limits.
 tags: [broccolium, storage, transactions]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-8e194b0e3daa57910d9a7fd0
     resource: repo://docs/verification/minecraft-26-1-R2.md
@@ -20,6 +17,9 @@ sources:
   - id: openwiki-source-f932a1242f67f177056d6452
     resource: repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/ReplaceableItemStorage.kt
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Broccolium storage transfers

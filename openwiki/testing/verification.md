@@ -3,9 +3,6 @@ type: workflow
 title: Verification matrix and evidence boundaries
 description: Actual full-build/native/runtime receipts, affected replays and honest residual limits.
 tags: [testing, verification, gametest]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-d0f34221b5d3b91db6e90b7f
     resource: repo://docs/minecraft-26-1-verification.md
@@ -20,6 +17,9 @@ sources:
   - id: openwiki-source-da50c88d5a96bc12fd7c5e04
     resource: repo://scripts/verification/run-native-matrix.py
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Verification matrix and evidence boundaries

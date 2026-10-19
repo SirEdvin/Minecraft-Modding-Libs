@@ -17,7 +17,7 @@ sources:
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Tweakium Lua representations and RML transforms

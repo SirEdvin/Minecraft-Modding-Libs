@@ -3,9 +3,6 @@ type: quickstart
 title: Minecraft Modding Libs ownership and task map
 description: Current three-version graph, module ownership and final evidence routes.
 tags: [quickstart, ownership, minecraft]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-2a9daaac1604f238ef4c63fb
     resource: repo://build.gradle.kts
@@ -18,6 +15,9 @@ sources:
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Minecraft Modding Libs ownership and task map

@@ -3,9 +3,6 @@ type: module
 title: Broccolium platform and block lifecycle
 description: Keyed registration, approved target observer API and native lifecycle/persistence.
 tags: [broccolium, platform, persistence]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-9323aa17bbac93f47b38d4cb
     resource: repo://docs/minecraft-26-1-migration-brief.md
@@ -16,6 +13,9 @@ sources:
   - id: openwiki-source-2bc8acf85ceeaeeeced01c19
     resource: repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/blockentity/MutableNBTBlockEntity.kt
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Broccolium platform and block lifecycle

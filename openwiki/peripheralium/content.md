@@ -3,9 +3,6 @@ type: subproject
 title: Peripheralium content and resources
 description: Material identities, keyed registration and native/data/client evidence.
 tags: [peripheralium, content, datagen]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-46cc0af9773fbef0cab9dc18
     resource: repo://docs/verification/minecraft-26-1-R4.md
@@ -14,6 +11,9 @@ sources:
   - id: openwiki-source-a20cada7dd4dd8789477a256
     resource: repo://projects/peripheralium/versions/26.1.2/src/main/kotlin/site/siredvin/peripheralium/Items.kt
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Peripheralium content and resources

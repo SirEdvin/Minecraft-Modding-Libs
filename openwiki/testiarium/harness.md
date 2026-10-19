@@ -3,9 +3,6 @@ type: subproject
 title: Testiarium registration and reporting harness
 description: Target function/instance/environment registry, old adapters and strict fresh-report gates.
 tags: [testiarium, gametest, reports]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-d7335994858335a909e6674b
     resource: repo://docs/verification/minecraft-26-1-R1.md
@@ -16,6 +13,9 @@ sources:
   - id: openwiki-source-d2f388e2bcce994d6d2afe5e
     resource: repo://projects/testiarium/versions/26.1.2/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Testiarium registration and reporting harness

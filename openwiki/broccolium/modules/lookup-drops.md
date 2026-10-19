@@ -3,9 +3,6 @@ type: module
 title: Broccolium lookup and drop capture
 description: Ordered provider discovery, complete modern entity inventories and bounded global capture.
 tags: [broccolium, lookup, drops]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-8e194b0e3daa57910d9a7fd0
     resource: repo://docs/verification/minecraft-26-1-R2.md
@@ -20,6 +17,9 @@ sources:
   - id: openwiki-source-bb09eb55658a45f09e5b9944
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Broccolium lookup and drop capture

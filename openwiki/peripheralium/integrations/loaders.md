@@ -3,9 +3,6 @@ type: integration
 title: Peripheralium loader integration
 description: Platform-first registration, correct metadata and test-only fixture ownership.
 tags: [peripheralium, loaders, publication]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-19T00:45:42.798Z
 sources:
   - id: openwiki-source-46cc0af9773fbef0cab9dc18
     resource: repo://docs/verification/minecraft-26-1-R4.md
@@ -18,6 +15,9 @@ sources:
   - id: openwiki-source-eae6966e6bd879d2f745efae
     resource: repo://projects/peripheralium/forge/versions/26.1.2/src/main/resources/META-INF/neoforge.mods.toml
 generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T13:32:11.388Z
 ---
 
 # Peripheralium loader integration
