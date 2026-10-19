@@ -1,6 +1,6 @@
 # Files
 
-- [Peripheralium material content and data](content.md) - Actual material registrations, creative inventory, generated recipes and resources, including the version-specific smelting difference.
+- [Peripheralium content and resources](content.md) - Material identities, keyed registration and native/data/client evidence.
 
 # Directories
 

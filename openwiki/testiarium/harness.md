@@ -1,69 +1,37 @@
 ---
 type: subproject
 title: Testiarium registration and reporting harness
-description: Cross-loader GameTest discovery, API/fixture feature separation, tag precedence, reflective invocation, report generation and fresh-report validation.
-tags: [testiarium, gametest, reports, testing, lifecycle]
-sources:
-  - id: openwiki-source-8e467af86822c4e36a35b699
-    resource: repo://gradle/gametest-reports.gradle.kts
-  - id: openwiki-source-4ddbd0907e10e62bd7b67a8b
-    resource: repo://projects/testiarium/build.gradle.kts
-  - id: openwiki-source-9970ed5ede1bafad13dad351
-    resource: repo://projects/testiarium/fabric/src/main/kotlin/site/siredvin/testiarium/FabricTestiarium.kt
-  - id: openwiki-source-6e53d6dcf2154ff9280575b9
-    resource: repo://projects/testiarium/forge/src/main/kotlin/site/siredvin/testiarium/ForgeTestiarium.kt
-  - id: openwiki-source-81f14455e23f9569fede8484
-    resource: repo://projects/testiarium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/ForgeTestiarium.kt
-  - id: openwiki-source-70bc640127f0fb448b708e0a
-    resource: repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt
-  - id: openwiki-source-df90949cf5ecd5abd8750b11
-    resource: repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/api/GameTests.kt
-  - id: openwiki-source-f0a8151a4d37d83aff26b3ca
-    resource: repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/report/TestReporters.kt
-  - id: openwiki-source-5c995101f4d15764e6e6bad1
-    resource: repo://projects/testiarium/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt
-  - id: openwiki-source-92e059d623663e35e7119566
-    resource: repo://projects/testiarium/src/test/kotlin/site/siredvin/testiarium/RegistrationTests.kt
-  - id: openwiki-source-58839584b723383a5a3f8fea
-    resource: repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/StandaloneGameTests.kt
-  - id: openwiki-source-e6f1dfcc133174a9f3e0dafb
-    resource: repo://projects/testiarium/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/api/Assertions.kt
-  - id: openwiki-source-ad69366c415d4ac2663d3100
-    resource: repo://projects/testiarium/versions/1.21.1/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt
-generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+description: Target function/instance/environment registry, old adapters and strict fresh-report gates.
+tags: [testiarium, gametest, reports]
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T19:56:35.545Z
+    at: 2026-10-19T00:45:42.798Z
+sources:
+  - id: openwiki-source-d7335994858335a909e6674b
+    resource: repo://docs/verification/minecraft-26-1-R1.md
+  - id: openwiki-source-f6b3458a12876dad0171a34e
+    resource: repo://docs/verification/minecraft-26-1-R6.md
+  - id: openwiki-source-8e467af86822c4e36a35b699
+    resource: repo://gradle/gametest-reports.gradle.kts
+  - id: openwiki-source-d2f388e2bcce994d6d2afe5e
+    resource: repo://projects/testiarium/versions/26.1.2/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 ---
 
 # Testiarium registration and reporting harness
 
-## Responsibility and feature boundaries
+## Main API versus fixture features
 
-Testiarium main owns registration, lightweight test annotations/assertions and reporters. testMod owns executable standalone fixtures, commands and client helpers. cctTestMod adds optional ComputerCraft fixtures and depends on testMod output. Common feature capabilities are testiarium-core-test-mod and testiarium-core-cct-test-mod; loaders publish corresponding loader-named features. A consumer needs the matching fixture feature and loaded-mod wiring as well as a compilation dependency.
+Main owns explicit registration, annotations/assertions and reporters. testMod owns standalone/client fixtures; cctTestMod adds optional CC tooling and depends on testMod. Common uses testiarium-core feature identities; matching loader capabilities/sources stay separate. A compile dependency does not ensure loaded mods, structures or client Mixins are present.
 
-## Registration flow
+## Registration across versions
 
-Testiarium.register adds classes to a linked set. loadTests traverses their declared methods; it does not scan the classpath. Group selection is method TestGroup, then class TestGroup, then client for ClientGameTest or common otherwise. TestTags reads comma-separated testiarium.tags once, defaulting to common; changing it after object initialization is not a dynamic filter.
+Old1.20.1/1.21.1 keep their native annotation/loader registration paths. Target26.1.2 uses `site.siredvin.testiarium.api.GameTest` and translates explicit classes to function/instance/environment registries. Collect before the static function registry freezes; instances/environments register per world reload. Methods and batch IDs are normalized and collision-checked. Tags retain method/class/default precedence; unknown enabled methods use loader fallback. Static methods or public no-argument constructors are required; reflection failures are not silent skips.
 
-For an enabled method, GameTest is handled first and converted to TestFunction with name <simpleClass>.<method>, template defaulting to that name and native settings forwarded. ClientGameTest has a shorter required-test construction path. Other methods are delegated to the supplied loader fallback. Invocation accepts static methods or constructs a new public no-argument instance per call. InvocationTargetException causes are unwrapped/wrapped into runtime failures; bad reflective construction fails rather than silently skipping a class.
+## Failure/report contract
 
-Fabric's adapter initializes lifecycle hooks and has a guarded registerTests call into GameTestRegistry. Legacy Forge's guarded call installs a RegisterGameTestsEvent listener. NeoForge 1.21.1 instead uses a mod class with injected IEventBus and installs its register listener in construction. Consumers must register classes in time for the loader event; “the jar compiles” does not prove tests were discovered.
+sequence appends terminal success; raw sequences need their own. Native required outer observers prove fail-fast assertion/exception/assertion-error behavior, one action, blocked later callbacks and competing delayed success. Container assertions reject nonempty expectations beyond capacity, allowing empty padding. Registry test cleanup restores native and private state.
 
-## World and assertion lifecycle
+Mapped runs delete old XML, require fresh nonempty non-skip evidence, reconcile testcase counts and reject failures/errors/DOCTYPE. Storage permits no skips. Optional negative fixtures must match exact unique identities and failure sentinels; optional failures are skips, not passes. Reporter finish emits XML/HTML idempotently.
 
-init optionally installs a structure directory and replaces the global reporter with JUnit plus native log reporters. onServerStarted fixes time/daylight and clears old test space. 1.20.1 uses the fixed origin (0,-60,0); 1.21.1 derives x/z from shared spawn, uses y=-59 and clears located structure bounds. onServerStopped finalizes reporting.
-
-sequence appends thenSucceed; immediate runs an action and succeeds. Legacy thenExecuteFailFast preserves GameTestAssertException and converts other Throwables using their message/type, then rethrows through native thenExecute before the wait barrier. That immediate parent failure prevents delayed competing success; merely throwing later from the wait barrier could leave the parent error unset until timeout. The 1.21.1 override observes the native parent's error after thenExecute and relies on the testmod sequence mixin. Required native outer observers cover assertions, ordinary exceptions and assertion errors, one action execution and blocked later callbacks.
-
-assertContainer compares the larger actual/expected range, treating missing entries as empty: extra empty padding is allowed, but a nonempty expected stack beyond capacity fails. Helpers do not bootstrap missing fixtures or dependency mods. RegistrationTests restore both native function/name registries and Testiarium's private registered-class set in finally, checking isolation after success and failure rather than leaving global discovery state polluted.
-
-## XML/HTML reports and false success prevention
-
-JunitTestReporter records required failures as failure elements and optional failures as skipped. finish is idempotent, emits counted XML plus a sibling HTML report, and prints locations. Optional failures therefore are not passes. StandaloneGameTests even has a method named requiredFailure marked required=false: inspect the annotation, not the test name.
-
-Root gradle/gametest-reports.gradle.kts guards specific loader runs. Before launch it deletes the exact prior XML or fails; afterwards it requires a report, disables DOCTYPE parsing, requires more cases than skips and no failure/error elements, and compares the declared tests count to actual testcase elements. This does not compare every possible declared XML attribute. The guard catches startup paths that exit zero without running tests, but it only applies to the task/report map it configures.
-
-The standalone server guard additionally requires exactly one of each intentional negative fixture, skipped with its exact expected sentinel; an unrelated failure or accidental pass cannot satisfy that check. Both Fabric storage runners are mapped separately and allow no skips. Reporter fixtures check escaped text, success/failure/skip counts and idempotent finish. The final four-target Testiarium run contains 12 cases per target, including three intentional negative skips, with no failures/errors.
-
-See [client and CCT protocols](client-cct.md) for asynchronous completion and [verification workflows](../testing/verification.md) for executed task routes and limits. The coverage task ran server fixtures; it did not establish the optional client/CCT matrix.
+[R1](../../docs/verification/minecraft-26-1-R1.md) verifies target registry/CCT/client capability; [R6](../../docs/verification/minecraft-26-1-R6.md) verifies the full28 native routes,434 cases including38 intended skips and zero storage skips. Final affected replays are separate, not extra unique tests. See [client/CCT](client-cct.md), [verification](../testing/verification.md) and [publication](../build/stonecutter-publication.md).

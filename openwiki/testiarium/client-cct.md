@@ -3,36 +3,32 @@ type: testing
 title: Testiarium client and ComputerCraft fixtures
 description: Optional client-world automation, client-thread sequences, labeled Lua fixtures, completion markers and version-sensitive ComputerCraft scheduler integration.
 tags: [testiarium, gametest, client, computercraft, fixtures]
+sources:
+  - id: openwiki-source-d7335994858335a909e6674b
+    resource: repo://docs/verification/minecraft-26-1-R1.md
+  - id: openwiki-source-851986a2438c3c75fd1c9bb7
+    resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
+  - id: openwiki-source-d58fdb154260d30c430b8820
+    resource: repo://docs/verification/minecraft-26-1-R7.md
+  - id: openwiki-source-d7497543e084877c0f613811
+    resource: repo://gradle/minecraft-26-1.gradle.kts
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
-sources:
-  - id: openwiki-source-78d9e651c014808cce53de96
-    resource: repo://projects/testiarium/fabric/build.gradle.kts
-  - id: openwiki-source-c90c70cd177bf12be0ce4597
-    resource: repo://projects/testiarium/fabric/versions/1.21.1/src/cctTestMod/resources/fabric.mod.json
-  - id: openwiki-source-63f684453deb4104f6ffc9fc
-    resource: repo://projects/testiarium/forge/build.gradle.kts
-  - id: openwiki-source-34b4e3cb76e8cae775da11b2
-    resource: repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt
-  - id: openwiki-source-19d1f3f8dd3972e2f153394d
-    resource: repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctFixtureCommands.kt
-  - id: openwiki-source-9e87a609d2c3b2b0a152f8a6
-    resource: repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctGameTestExtensions.kt
-  - id: openwiki-source-0eb02588b82775d215e085dd
-    resource: repo://projects/testiarium/src/cctTestMod/resources/computer/startup.lua
-  - id: openwiki-source-e7848ec809fb31dd0ccd80d4
-    resource: repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestExtensions.kt
-  - id: openwiki-source-0b20698912892a5b2798f009
-    resource: repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestHooks.kt
-  - id: openwiki-source-97bcc7f7dc56fb2fb2928e51
-    resource: repo://projects/testiarium/versions/1.21.1/src/cctTestMod/java/site/siredvin/testiarium/cct/mixin/GameTestServerMixin.java
-  - id: openwiki-source-98b1c36bf216af716fbf7281
-    resource: repo://projects/testiarium/versions/1.21.1/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Testiarium client and ComputerCraft fixtures
+
+## Current executed capability (2026-10-19)
+
+[R1](../../docs/verification/minecraft-26-1-R1.md) ports target registry/environment/sequence/CCT scheduler hooks and verifies both loaders with real Lua, client harness XML and screenshots. [R6](../../docs/verification/minecraft-26-1-R6.md) retains full28 native routes; [R7](../../docs/verification/minecraft-26-1-R7.md) adds all six target optional graphical workflows and four old graphical joins. Main/testMod/cctTestMod feature separation remains mandatory. Ordinary Fabric production readiness uses runProductionServer, not Testiarium's standalone runServer.
+
+Use target Testiarium GameTest annotation/registry adapters rather than removed vanilla registration. Headless clients require Xvfb/deadlines and real rendering readiness; title/world/reload/menu/book/equipped-upgrade/real dedicated reconnect receipts are distinct from one harness test. CCT completion/error markers and scheduler-private hooks need real execution after pin changes; avoid one-shot signals that can be discarded while Lua awaits task_complete. No remote CI, online-auth or every UI path is implied by [final acceptance](../../docs/minecraft-26-1-verification.md).
+
+## Historical source notes — October16 baseline
+
+The detailed327f845/e69b721 protocol notes below are retained as background; their unperformed client/CCT statements are historical and superseded within the exact current evidence above.
 
 ## Separate optional surfaces
 

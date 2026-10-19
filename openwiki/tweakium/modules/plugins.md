@@ -4,29 +4,33 @@ title: Tweakium storage plugins and operations
 description: Lua transfer dispatch, target adaptation, slot/query validation differences, observable units and operation fuel/cooldown partial-update semantics.
 tags: [tweakium, plugins, storage, lua, fuel, operations]
 sources:
-  - id: openwiki-source-4233540ba9ca00ff82292190
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/FuelBoon.kt
+  - id: openwiki-source-433a5a8f61ef03e88c1fd1ae
+    resource: repo://docs/verification/minecraft-26-1-R3.md
+  - id: openwiki-source-851986a2438c3c75fd1c9bb7
+    resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
   - id: openwiki-source-7cc6f1ec3710d00eb2a24718
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/OperationBoon.kt
-  - id: openwiki-source-4b1926bfe0f2356c44c4c5c0
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractFluidStoragePlugin.kt
-  - id: openwiki-source-7d4e57126298126480ce6a5a
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractInventoryPlugin.kt
-  - id: openwiki-source-c6f244c08db93d9925fc7095
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractItemStoragePlugin.kt
-  - id: openwiki-source-990ed430c39ce271623c8161
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/EnergyPlugin.kt
-  - id: openwiki-source-99b16004e0f26c4853d6024b
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/FullEnergyPlugin.kt
-  - id: openwiki-source-2e03eec861dfd4943498974e
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/PeripheralPluginUtils.kt
-generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+  - id: openwiki-source-74cdde65deff47bb8a9b9c9c
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractFluidStoragePlugin.kt
+  - id: openwiki-source-610b78cac168816f5717144c
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/plugins/PeripheralPluginUtils.kt
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T19:56:35.545Z
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Tweakium storage plugins and operations
+
+## Current validation and runtime proof (2026-10-19)
+
+Maintained query repairs reject unknown/null operations and malformed/empty logical tables rather than silently broadening filters. Target fluid limits reject negative/nonfinite amounts before mutation and use validated registry IDs. Inventory numeric/query destination conversion and conservation remain owning contracts, not evidence of one global validator. Lua/TypeScript number does not erase Long/Double narrowing or fractional-unit limits.
+
+[R3](../../../docs/verification/minecraft-26-1-R3.md) retains behavioral reds/greens and actual native item/fluid/energy/plugin Lua transfer/refusal/payment cases. [R7 integration](../../../docs/verification/minecraft-26-1-R7-final-integration.md) strengthens real Lua fill/error correlation and refreshes final sources/artifacts. OperationBoon still sequences context/cooldown, fuel payment, action/callback and final cooldown write; callback failure does not automatically refund fuel or undo world state. Reverse storage requires native/exact-replacement support; arbitrary external providers are not transactional by inference. See [final limits](../../../docs/minecraft-26-1-verification.md).
+
+## Historical source notes — October16 baseline
+
+The following327f845/e69b721 snapshot retains prior inspection findings; unknown-field ignoring and empty-reducer observations were inputs to later regression fixes, not current query contracts. Current effective source and evidence above take precedence.
 
 ## Lua request to storage transfer
 

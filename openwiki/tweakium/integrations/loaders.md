@@ -3,38 +3,34 @@ type: integration
 title: Tweakium ComputerCraft loader boundaries
 description: Peripheral lookup registration, bootstrap services, upgrade registry changes, fake-player implementations and legacy Forge energy integration.
 tags: [tweakium, computercraft, loaders, capabilities, upgrades]
+sources:
+  - id: openwiki-source-433a5a8f61ef03e88c1fd1ae
+    resource: repo://docs/verification/minecraft-26-1-R3.md
+  - id: openwiki-source-851986a2438c3c75fd1c9bb7
+    resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
+  - id: openwiki-source-ab3d46da7bb0829a5a9e2b0d
+    resource: repo://docs/verification/minecraft-26-1-R7-target.md
+  - id: openwiki-source-81d5f1627e19148569f46f81
+    resource: repo://gradle/libs.versions.toml
+  - id: openwiki-source-249bae99297439c63fae6a69
+    resource: repo://projects/tweakium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/ForgeTweakium.kt
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
-sources:
-  - id: openwiki-source-5c06591034e05f2277e4a0fe
-    resource: repo://projects/tweakium/fabric/src/main/kotlin/site/siredvin/tweakium/modules/FabricTweakium.kt
-  - id: openwiki-source-222c729101aa1dcdb47d1ef9
-    resource: repo://projects/tweakium/fabric/src/main/kotlin/site/siredvin/tweakium/modules/platform/FabricComputerPlatformToolkit.kt
-  - id: openwiki-source-d08cd914b0e68a4e0379d742
-    resource: repo://projects/tweakium/fabric/src/main/kotlin/site/siredvin/tweakium/modules/platform/FabricInnerComputerBasePlatform.kt
-  - id: openwiki-source-c6ef953493afc478eed66114
-    resource: repo://projects/tweakium/fabric/src/main/kotlin/site/siredvin/tweakium/modules/player/FabricFakePlayer.kt
-  - id: openwiki-source-571e17c4d974e19000a55d13
-    resource: repo://projects/tweakium/fabric/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/platform/FabricInnerComputerBasePlatform.kt
-  - id: openwiki-source-6fff2fde55cecc07217fd623
-    resource: repo://projects/tweakium/forge/src/main/kotlin/site/siredvin/tweakium/ForgeTweakium.kt
-  - id: openwiki-source-bdf80effa3e88ebf06ffdcea
-    resource: repo://projects/tweakium/forge/src/main/kotlin/site/siredvin/tweakium/modules/platform/ForgeComputerPlatformToolkit.kt
-  - id: openwiki-source-b49a4e46ae5dd607ef6feeee
-    resource: repo://projects/tweakium/forge/src/main/kotlin/site/siredvin/tweakium/modules/player/ForgeFakePlayer.kt
-  - id: openwiki-source-d8463538c6bc5ef5dba6fda3
-    resource: repo://projects/tweakium/forge/src/main/kotlin/site/siredvin/tweakium/modules/plugins/ForgeEnergyPlugin.kt
-  - id: openwiki-source-ce710907239f04fecb9e4f3e
-    resource: repo://projects/tweakium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/ForgeTweakium.kt
-  - id: openwiki-source-77b5d1abaadb4600d8caa3e1
-    resource: repo://projects/tweakium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/platform/ForgeComputerPlatformToolkit.kt
-  - id: openwiki-source-2bb4b650a7733af7fb0948e5
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/TweakiumCore.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Tweakium ComputerCraft loader boundaries
+
+## Current target adapters and integration policy (2026-10-19)
+
+Exact26.1.2 Fabric/NeoForge adapters preserve common service ownership, UpgradeType/template factories and physically isolated client codecs/models. NeoForge capability listeners attach to the owning mod bus; actual final native/Lua/dedicated/client executions prove discovery, not mere compilation. Old1.20.1 Forge/Fabric and1.21.1 NeoForge/Fabric APIs stay version-specific. [R3](../../../docs/verification/minecraft-26-1-R3.md) and [R7 target](../../../docs/verification/minecraft-26-1-R7-target.md) own the implementation evidence.
+
+The approved viewer policy removes active REI dependencies on all lines: EMI1.1.24 on old versions; JEI29.47.0.111 on both target loaders; optional target Fabric ModMenu18.0.2. No incompatible old EMI or missing upstream REI entrypoint was force-loaded/suppressed. Config-port26.1.5 is conditional N/A because actual source has no consumer; Night Config transitives remain. Viewers/private client fixtures are excluded from all main/public runtime metadata. [Final integration](../../../docs/verification/minecraft-26-1-R7-final-integration.md) binds production/source/consumer/packet evidence after the owning-event-bus fix.
+
+## Historical source notes — October16 baseline
+
+The details below describe327f845/e69b721 old loader behavior; current26.1.2 overrides, target lifecycle and runtime acceptance above take precedence. Do not import legacy capability APIs into the target.
 
 ## Bootstrap and service ownership
 

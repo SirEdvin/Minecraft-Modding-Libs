@@ -1,3 +1,3 @@
 # Files
 
-- [Broccolium loader and energy integrations](loaders.md) - Bootstrap and discovery boundaries for Fabric Transfer API, Forge capabilities, NeoForge capabilities, and optional Team Reborn energy.
+- [Broccolium loader integration](loaders.md) - Maintained loader pairs, native lookup and transactional provider boundaries.

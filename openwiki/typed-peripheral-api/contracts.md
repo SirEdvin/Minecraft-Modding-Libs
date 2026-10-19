@@ -4,37 +4,39 @@ title: Typed peripheral API contracts and packaging
 description: Independently maintained TypeScript-to-Lua contracts, provider identities, extension patterns and runtime mismatch risks outside the Stonecutter loader graph.
 tags: [typescript, lua, contracts, packaging, peripherals]
 sources:
-  - id: openwiki-source-4233540ba9ca00ff82292190
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/FuelBoon.kt
-  - id: openwiki-source-9aeb9eac8d5e3e2a63464e0f
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/representation/LuaRepresentation.kt
+  - id: openwiki-source-cc02d3f8883805a8e9de0ccf
+    resource: repo://docs/module-test-coverage.md
+  - id: openwiki-source-433a5a8f61ef03e88c1fd1ae
+    resource: repo://docs/verification/minecraft-26-1-R3.md
+  - id: openwiki-source-851986a2438c3c75fd1c9bb7
+    resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
+  - id: openwiki-source-ffeb994ab0f25d59b017758e
+    resource: repo://docs/verification/minecraft-26-1-R7-legacy.md
   - id: openwiki-source-18505126b4fc17c6fe763eea
     resource: repo://projects/typed-peripheral-api/build.gradle.kts
-  - id: openwiki-source-e7802c54ff499c482ed3a941
-    resource: repo://projects/typed-peripheral-api/fuel.ts
-  - id: openwiki-source-9ed7ed554b4207918ddae467
-    resource: repo://projects/typed-peripheral-api/inventory_extended.ts
-  - id: openwiki-source-d4e317478c09b223e18d7dd6
-    resource: repo://projects/typed-peripheral-api/item_storage.ts
-  - id: openwiki-source-c2f29cd02016f121c3def0cf
-    resource: repo://projects/typed-peripheral-api/package.json
-  - id: openwiki-source-4e770d7aa46adca7decc7ee6
-    resource: repo://projects/typed-peripheral-api/scan.ts
   - id: openwiki-source-b2992bb4316ae5243156d682
     resource: repo://projects/typed-peripheral-api/tests/contracts.ts
-  - id: openwiki-source-71740f0c246eb7ba5071f1f1
-    resource: repo://projects/typed-peripheral-api/tests/tsconfig.json
-  - id: openwiki-source-4f62992ed54861aafcd9fce3
-    resource: repo://projects/typed-peripheral-api/tsconfig.json
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T19:56:35.545Z
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Typed peripheral API contracts and packaging
+
+## Current compiler/runtime correlation (2026-10-19)
+
+This package remains independent of Stonecutter and library2.0.0 versions. Gradle check runs the no-emission compiler contracts, ordered after emission only when both tasks are selected. Runtime Lua names, schemas, error results and numeric/unit limits remain separate obligations: TypeScript number is not a conservation or precision guarantee.
+
+[R3](../../docs/verification/minecraft-26-1-R3.md) and [R7 legacy](../../docs/verification/minecraft-26-1-R7-legacy.md) correlate native CC/Lua behavior with declarations; final integration replays the stronger Creative Filler fixture on both target loaders and forced TypeScript contracts. Maintained predicates now reject malformed/unknown/empty operations; the historical parser-ignore finding below is not current behavior. [Final R7](../../docs/verification/minecraft-26-1-R7-final-integration.md) binds actual source/artifacts, not just matching method names.
+
+Inherited strict-null dependency errors and npm advisory remain explicit in existing triage t_470a1973. Compiler mutation evidence is not a clean dependency audit or universal emitted-Lua conformance. No npm release was performed.
+
+## Historical source notes — October16 baseline
+
+The following327f845/e69b721 package/type inventory and mutation results remain historical provenance; later real Lua correlation above supersedes its then-unperformed-runtime statement without inventing complete schema certification.
 
 ## Separate consumer-facing boundary
 

@@ -4,31 +4,31 @@ title: Tweakium fake players and world interactions
 description: Host-specific fake-player caches and inventory preparation, main-hand attributes, proxy hit/dig flow, and exception-sensitive cleanup boundaries.
 tags: [tweakium, player, interactions, inventory, drops]
 sources:
-  - id: openwiki-source-a63c6161858a70520940fad4
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderBlockEntity.kt
-  - id: openwiki-source-aaa308efb2dee25311f3bc2b
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderEntity.kt
-  - id: openwiki-source-d48dd7400e6e37861b1ac53b
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderPocket.kt
-  - id: openwiki-source-c2fece5eec6823937c3048f0
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt
-  - id: openwiki-source-0d11a825da3bbc1368988a47
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt
-  - id: openwiki-source-9c424ad9c5f875bb2f8d5dff
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderBlockEntity.kt
-  - id: openwiki-source-d3b211fe60f1f817d6765f5c
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderEntity.kt
-  - id: openwiki-source-a0104039806642ed4b9ad74f
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderPocket.kt
-  - id: openwiki-source-d859105f4ce84b0fb0d4bfc6
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt
-generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+  - id: openwiki-source-433a5a8f61ef03e88c1fd1ae
+    resource: repo://docs/verification/minecraft-26-1-R3.md
+  - id: openwiki-source-805224ca8622b6a9abf34e78
+    resource: repo://docs/verification/minecraft-26-1-R6-integration.md
+  - id: openwiki-source-d266ff18e680c312b56ad9c7
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt
+  - id: openwiki-source-bb09eb55658a45f09e5b9944
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T19:56:35.545Z
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Tweakium fake players and world interactions
+
+## Current native session contract (2026-10-19)
+
+Target sessions have scoped tool/attribute cleanup and load/action/unload reconciliation in finally, native storage loans and owner-cache refresh. Turtle slots9/15 are not hotbar selections: swap into native slot0, retain the original selected slot across callbacks and restore it. Never clamp/drop contents. R6 also repairs the1.21.1 selection path without importing target APIs. Target block use dispatches native game mode once; a preliminary manual pass can duplicate interaction or retry a loader veto.
+
+[R3](../../../docs/verification/minecraft-26-1-R3.md) verifies actual host/player sessions at slots0/8/9/15, replaced tools, permanent attributes, loan/remainder/owner cleanup and exceptional paths. [R6 integration](../../../docs/verification/minecraft-26-1-R6-integration.md) refreshes assembled/old selection proof; [R7](../../../docs/verification/minecraft-26-1-R7-final-integration.md) binds final source/artifacts. Drop capture remains separately finally-released, process-global and not nested/concurrent isolation. No blanket certification of all legacy provider paths or arbitrary protection/combat mods.
+
+## Historical source notes — October16 baseline
+
+The details below describe327f845/e69b721, before target sessions and the later selection repair. In particular the old no-finally/additive-reconciliation observations are not claims about current26.1.2 source. Use the effective version override and current evidence above.
 
 ## Host providers own state preparation
 

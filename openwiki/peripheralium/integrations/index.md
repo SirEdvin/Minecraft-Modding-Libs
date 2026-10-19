@@ -1,3 +1,3 @@
 # Files
 
-- [Peripheralium loader bootstrap](loaders.md) - Fabric immediate registration versus Forge/NeoForge deferred registries, bootstrap ordering, loader metadata and version-local content boundaries.
+- [Peripheralium loader integration](loaders.md) - Platform-first registration, correct metadata and test-only fixture ownership.

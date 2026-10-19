@@ -4,33 +4,33 @@ title: Tweakium pocket and turtle upgrade persistence
 description: Peripheral construction, stateful upgrade item transport, and version-specific storage adapters with component-removal and encoding failure boundaries.
 tags: [tweakium, pocket, turtle, persistence, components]
 sources:
-  - id: openwiki-source-d237f85d7c193303ade52120
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt
-  - id: openwiki-source-3cb56346ea1c03a2323cc986
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/pocket/BasePocketUpgrade.kt
-  - id: openwiki-source-67278f47cee863a33439ce17
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt
-  - id: openwiki-source-67c4a0c7bc4ce4a8e4fce026
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/turtle/BaseTurtleUpgrade.kt
-  - id: openwiki-source-d948762c7e87899d0011e085
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/turtle/StatefulTurtleUpgrade.kt
-  - id: openwiki-source-af4c55ea0cd37358f1755d92
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt
-  - id: openwiki-source-8f533dc820521dd8d1a4cd4a
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt
-  - id: openwiki-source-b80399758032f5afdc373e78
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/turtle/StatefulTurtleUpgrade.kt
-  - id: openwiki-source-9bd2e62953be55b4341193eb
-    resource: repo://projects/tweakium/versions/1.21.1/src/test/kotlin/site/siredvin/tweakium/DataStorageTests.kt
-  - id: openwiki-source-0484d02f58a681318a0a683e
-    resource: repo://projects/tweakium/versions/1.21.1/src/test/kotlin/site/siredvin/tweakium/UpgradeDataStorageTests.kt
-generated: { by: "hermes", at: "2026-10-16T19:56:35.545Z" }
+  - id: openwiki-source-433a5a8f61ef03e88c1fd1ae
+    resource: repo://docs/verification/minecraft-26-1-R3.md
+  - id: openwiki-source-805224ca8622b6a9abf34e78
+    resource: repo://docs/verification/minecraft-26-1-R6-integration.md
+  - id: openwiki-source-8baf1147a53cafceec55d056
+    resource: repo://docs/verification/minecraft-26-1-R6-saves.md
+  - id: openwiki-source-851986a2438c3c75fd1c9bb7
+    resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
+  - id: openwiki-source-19d334151b9cbf920f37889d
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-16T19:56:35.545Z
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Tweakium pocket and turtle upgrade persistence
+
+## Current template and persistence acceptance (2026-10-19)
+
+On26.1.2 upgrade definitions/crafting items use immutable ItemStackTemplate resolved with registry/world context; runtime inventories stay ItemStack. Important-component whitelists distinguish absent values from explicit removals relative to the crafting template. Preserve CUSTOM_DATA, __patch_storage__, unrelated patches, peripheralData/ownerProfile and legacy storedData. Encoding failure must not write or notify. Public PockerUpgradePeripheralBuilder spelling is retained.
+
+[R3](../../../docs/verification/minecraft-26-1-R3.md) includes target modern storage suites and actual registered pocket/turtle install/remove/reinstall, chunk availability/unload/reload and disk serialization checks. [R6 saves](../../../docs/verification/minecraft-26-1-R6-saves.md) and [integration](../../../docs/verification/minecraft-26-1-R6-integration.md) add copied/staged world upgrades with immutable originals/backups, semantic state and process restart. [Final R7](../../../docs/verification/minecraft-26-1-R7-final-integration.md) refreshes affected candidate save opens/restarts. These probes do not invent concrete persistent production upgrades/tanks absent from the library, promise downgrade, or certify arbitrary saves/cross-loader conversion.
+
+## Historical source notes — October16 baseline
+
+The detailed327f845/e69b721 item/proxy tests below remain historical provenance, not a claim that later live install/process/save checks were unperformed. Current target API and bounded compatibility above supersede them.
 
 ## Construction and ownership
 

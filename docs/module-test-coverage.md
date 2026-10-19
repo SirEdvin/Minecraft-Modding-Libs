@@ -1,5 +1,24 @@
 # Behavioral coverage expansion
 
+## Additive26.1.2 campaign update — 2026-10-19
+
+The October16 old-version coverage below remains historical evidence, not the final three-version result. [Final verification](minecraft-26-1-verification.md) and [F reconciliation](verification/minecraft-26-1-F.md) supersede its unperformed26.1/runtime statements within their explicitly tested scope. Four libraries now retain1.20.1/1.21.1 and add26.1.2 common/Fabric/NeoForge; TypeScript stays independent.
+
+| Area | Added real coverage | Owning evidence |
+| --- | --- | --- |
+| Broccolium | Native nullable observer/removal/drop/unload/horse cargo, keyed/supplier codecs and flags, root ValueIO, book/text/model collectors; positive transactional item/fluid/energy providers, nested rollback/origin replacement/refusal | [R2](verification/minecraft-26-1-R2.md), final unit/native/source bindings |
+| Tweakium | Modern storage parity/removals/no-write failure; native live pockets/turtles, slots0/8/9/15, owner/tool/attribute/storage-loan/finally paths, native single protection dispatch, malformed predicates/transfers, real Lua | [R3](verification/minecraft-26-1-R3.md), [R6](verification/minecraft-26-1-R6.md), [R7](verification/minecraft-26-1-R7.md) |
+| Peripheralium/data | Modern keyed IDs/recipe absence of blend/loot, EN/UA and item/model resources; deterministic generation on both loaders; actual creative/content interactions | [R4](verification/minecraft-26-1-R4.md), [R5](verification/minecraft-26-1-R5.md), R7 client receipts |
+| Testiarium | Target function/instance/environment registration, constructor/tag/discovery isolation, fail-fast required observers, CCT scheduler/Lua, all-version client/server/CCT routes and exact negative sentinels | [R1](verification/minecraft-26-1-R1.md), R6 assembled28-route matrix |
+| Build/public API | Three active-state full builds, old compiler/runtime isolation,36 publications/118 artifacts, feature/raw/source fixtures isolated,9 external Java/Kotlin routes and real Lua/type correlation | R5 baseline and final R7 affected replay |
+| Process/UI/network/saves | Six ordinary production routes/restarts, copied/staged upgrade worlds and unchanged backups, both target actual-two-client12-phase adversarial replays,6 optional target graphical workflows/4 old joins | [R6 integration](verification/minecraft-26-1-R6-integration.md), [R7 final integration](verification/minecraft-26-1-R7-final-integration.md) |
+
+Counting: R5 full build baseline is1,734 JUnit cases/108 XML/19 nodes per active state (three states, not one combined unique-test count). Final candidate R7 replay is1,757 cases/110 XML/19 nodes with0 failures/errors/skips. R6 full native baseline is434 cases/28 routes:396 passes and38 exact intentional negative skips;99 storage cases and no storage/Tweakium skips. R7 affected8 native routes replay78 cases without skips; these overlap the baseline and must not be added as unique coverage. F reparses immutable exact reports and matches final1,128 source/118 artifact hashes; documentation audits are not new gameplay runs.
+
+Residual limits remain explicit: no exhaustive line/path coverage, arbitrary third-party transactions/protection/render geometry, cross-loader conversion/downgrade/cross-version wire/ABI, online-auth or recipe-transfer certification. Legacy Filler missing-model appearance is unchanged; approved target barrel is verified. Retained old NeoForge1.21.1 shutdown timeout has an unchanged successful retry, not a root-cause repair. Source-ZIP ordering and inherited npm/strict-null limitations remain. See final verification for exact commands/artifact/checksum/evidence locations and unperformed remote/manual checks.
+
+## Historical October16 coverage baseline
+
 Task: `t_df5ead41`. Existing-version follow-up to [the migration audit](stonecutter-migration-audit.md), based on OpenWiki commit `327f845797e24a3447f4f248f334dc77ebdd35dd`. This is representative behavioral coverage, not a measured line-coverage percentage or a claim that every gameplay path is verified.
 
 ## Inventory and risk

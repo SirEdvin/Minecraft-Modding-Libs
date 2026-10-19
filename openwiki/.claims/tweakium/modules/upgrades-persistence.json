@@ -1,100 +1,46 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:3c51b949406d107eb157ae9812472562be16bceb943afc1791d26712d5629046",
+  "pageVersion": "sha256:37b01847b212ab21f1bf3cdf40352f642b8b44e8f0c7dc345636df2c60185252",
   "claims": [
     {
-      "id": "claim_5b14e2b6be7d4788a60f7396234bb5f5",
-      "statement": "Pocket and turtle upgrade bases construct owned peripherals but substitute DisabledPeripheral when the result is disabled.",
+      "id": "claim_c5ef88ae47e640519dda0c2aab683210",
+      "statement": "Target definition templates resolve with valid registry/world context while runtime ItemStacks, stable settings keys, unrelated patches, important-component removals and encode-failure no-write/no-notify are preserved.",
       "evidence": [
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/pocket/BasePocketUpgrade.kt#L25-L29",
-          "version": "repo-lines-v1:sha256:fdc89ff84d947e3925a31ed0245f3ce6bb9d6eb2493c1049c1927867a482ae54:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmNlODQyYmJjODRjN2YxNDEwYmZlM2VlYjdkZmMwNWZmMzkzNDE4NWFlYTFlYWM0NzQwMzc2YzI0NzAxNTI4YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWFkMTk5OTc0NjM4NTk1MTMyMDYyOWRlNDZiYzc1ZDg5ZDg0NDkyNTIxMmZkNzFhM2Y3OTA4MGMxZTFkMmEzMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+          "resource": "repo://docs/verification/minecraft-26-1-R3.md",
+          "version": "repo-file-v1:sha256:5e4af6756c403af7dfd284b632e4958130a4c65af3c5f9cf422ed73dfa14bd70"
         },
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/turtle/BaseTurtleUpgrade.kt#L30-L37",
-          "version": "repo-lines-v1:sha256:0f25607adb934fab83523c709b36bbab30497892bc591ed65e423532f7d652c3:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzgzY2E2MWE1YjRiZTk5OGY4YWZkNWMyYjU1Yjk2ODQ5NDM3YmE4ZTRhOTJlNGM3N2I2MzE3NDcxMTE5MGIwNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWFkMTk5OTc0NjM4NTk1MTMyMDYyOWRlNDZiYzc1ZDg5ZDg0NDkyNTIxMmZkNzFhM2Y3OTA4MGMxZTFkMmEzMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt",
+          "version": "repo-file-v1:sha256:1d1ea534167a244af4065640f2a8640cf89d148671331bc69c8e78aaec7703d9"
         }
       ]
     },
     {
-      "id": "claim_1bf6d036e81e4b5fa55e55758c720b93",
-      "statement": "Stateful 1.20.1 pocket/turtle upgrades transport a storedData NBT child on item conversion and strip it from a copy for suitability checks.",
+      "id": "claim_5d5b4d4c63ed417daa2a18fb24e911f0",
+      "statement": "Native live upgrades and copied/staged semantic save/restart probes extend historical item/proxy evidence without inventing absent production tanks/upgrades or guaranteeing arbitrary saves, downgrade or cross-loader conversion.",
       "evidence": [
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt#L15-L41",
-          "version": "repo-lines-v1:sha256:6a655e48d6e4d00b763f1d3953b47db4a191df8885981d4182594fa526e2c214:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMzMwMjdiYzIwYjViY2M0YjEzOTBiNjM2YjJhY2E4YjA4NTNiZjUwMjA0YjAyMDlhMTdiOGY0ODQwN2M3OGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MTg5ODZlYmJiYWRhODEyMWE5ZDBiOTA1ZGQ4OGUzMWQ0NjM3NmJmN2NmM2UyOWM1NGM2MGRmNmJlZWNlMzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R3.md",
+          "version": "repo-file-v1:sha256:5e4af6756c403af7dfd284b632e4958130a4c65af3c5f9cf422ed73dfa14bd70"
         },
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/turtle/StatefulTurtleUpgrade.kt#L17-L44",
-          "version": "repo-lines-v1:sha256:35b7d07d72e0f5529255390165cdc95b494f361e9dcaad65fcbb3eff66fcd7d3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmMzMwMjdiYzIwYjViY2M0YjEzOTBiNjM2YjJhY2E4YjA4NTNiZjUwMjA0YjAyMDlhMTdiOGY0ODQwN2M3OGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkNzUyMjc2NGRjMmIxOTgwZDhlZjRmMDU0NzgzOTg3ZWJiZDE3NmIyZjM3MzUxNzY5NGI5OGE2NWRiODliZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_4effe856222a4ca59fafcd7e2d41e77e",
-      "statement": "Modern stateful item transport whitelists important components, preserves defaults for absent entries and applies explicit removals to a copy; extraction reconstructs removals relative to the crafting template after native item serialization.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt#L18-L61",
-          "version": "repo-lines-v1:sha256:0cd0955bed37558297581bea01a1083b81d8f447cfa3b4c722bc229acfaa2635:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5OWJmOGIwMDNkNGE5ODRjNTgxYjM1MzQxODU1NDJhODkzMmFmOTdlZDJkNmRkOTYyZjY4NjI5NGFiMzI3YTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZTUyODkwNTkzM2EzY2I3MDNmMTNiN2U5MDhiYWIwZmE2NmNhZWM3ODE1MzNlOTU3ZTQ5ZWY0OTZkMTk0NjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyNmVkZTUyZjAwZGQ5ZDg5ZDRjNDVkNzI3M2YxZWIyMjgxMGM1ZGUxNTNmYjY2OTA0MGY4NjA5YjEzMTgyYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R6-integration.md",
+          "version": "repo-file-v1:sha256:c4e217bfb686c6d5a2794836643402317de895721f7a55b965d506a89b2b10bd"
         },
         {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/turtle/StatefulTurtleUpgrade.kt#L19-L63",
-          "version": "repo-lines-v1:sha256:55772e98b9dd84a0c14025a27d782f47b6edb5dfa6eca53c4343041defa806f0:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5OWJmOGIwMDNkNGE5ODRjNTgxYjM1MzQxODU1NDJhODkzMmFmOTdlZDJkNmRkOTYyZjY4NjI5NGFiMzI3YTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0ZTUyODkwNTkzM2EzY2I3MDNmMTNiN2U5MDhiYWIwZmE2NmNhZWM3ODE1MzNlOTU3ZTQ5ZWY0OTZkMTk0NjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlNzFmZjY3N2NjNjg3ZGNmNzdjNjI1MmRkNGJiN2M4NTMyNmI0MzliODAzMjA5YjAwZmViZmUyMGYzZDI4MWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_8ef6fb2c79a14d6b92675c23766d0cb5",
-      "statement": "Legacy DataStorageUtil wraps CC upgrade NBT with update callbacks, block settings with markSettingsChanged, and a standalone CompoundTag with no notification.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt#L76-L94",
-          "version": "repo-lines-v1:sha256:46d7840fe9069296490870e00ec5e387b3a65e502cbaec946fe0b86d510d88e2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1MmIyYzMwM2JkN2NlZGQyOTM2OWM2ZTg0NzkwMTBmMmE0NzcwOWY1ZjRlNTUwYjkxZjdhZjUwYWRhZDQ5ZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0ZjhmMjYwMThiODU1YWY0ZTlhMTM3M2M5ZTc0NWNjMGEwNWQ3ZDc1OTIyYzg3MDhhZTc4NjNkMzMwYjVhNjUifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_90285b10e59c48f3aac1e33199c72fcc",
-      "statement": "The 1.21.1 pocket and turtle custom-data setters rebuild patches preserving both present and removed entries for other components while replacing CUSTOM_DATA.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt#L216-L276",
-          "version": "repo-lines-v1:sha256:ea61fef918ab49809900068f864ea3db2a2f9a0eddb5ba13320900a60a0fbfa8:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU0OTFkNWI4ZDk1OTQxY2UxYmQxMjg5YmEzZjdiNmJiYTQ2NWQ3NmY0YTgxYWZjMjFjYmExOWM3M2U0MzY5ZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzMjg1MzAwZjlhOTdlZTI3MTE2MzQ1OGY3OTdlZmM4ZGRhNmQ5NzljMWMwNTk2NjNmNmQ4MzQ4ZmI5YjRiZWEifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_e9b57fd923d0478ba2e691382a5a7bd7",
-      "statement": "Existing 1.21.1 storage tests check real adapters through API proxies for removal preservation and check CompoundTag patch notification and encoding-failure preservation; they are not live computer persistence tests.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/test/kotlin/site/siredvin/tweakium/DataStorageTests.kt#L25-L49",
-          "version": "repo-lines-v1:sha256:bf2cd9b8e17aebdcb8c9073d3a019ade9408fa437c1bfd3edc7b5b1dbd33e671:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZjA5ZWIwYzU3NDRmYjk3MzMxYjk4ZmYzZmJmMDVhNjAyYmEzZjdmNjdlNWRhNWJlOTA5NTAzM2Y2MjU4MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R6-saves.md",
+          "version": "repo-file-v1:sha256:311c45f7796a1c38f462fdde70ce4cb0720662db3ea4b49fd5e36d425a95a159"
         },
         {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/test/kotlin/site/siredvin/tweakium/UpgradeDataStorageTests.kt#L31-L68",
-          "version": "repo-lines-v1:sha256:678106c4d9ed41fdf115c37e42ea26fd2945dc5154255ac805db76475c5d3ff8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZWUzYzZkYzYyMmM2MjAzYjc4ZDQzMWY0YmU2MDc4ZmJjNWI1ODI3OGZmOTlmNmJjNDk0Y2QzNWE5NGIxZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_42a8b90a66cc4172a4bb79d537a1b22a",
-      "statement": "CompoundTag patch assignment encodes before mutation and notification; nullable data-object reads remove invalid values and failed/null writes remove stored keys.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt#L22-L33",
-          "version": "repo-lines-v1:sha256:34022c741dc1e4b5b9ea632850116de167bc74687f8569e877867a1185f0934b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMjM3ODBlYjkxODNjMDg2YWRiMTBmZmUzYWUzNDgxMjM5MzUyNDRkY2JlMjAzMTQxMzMxNjdjYTk3NTliNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyYjI5NzQ2ZmNhZWRiYTUxZmM4NmJkY2MwZmZlNjA2MmM3NzRlZWRhYWI4ZDRkMTZjZDY1Zjk0NjIzZTlmODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlZWJhMjk2NzRiODgwMTcxZDBlNDZmZTc5MmY2NWRkZDk3MGZhNjMxMWI2N2ZiM2E1ZDc0NDNmY2NmMWRhZDUifQ"
-        },
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt#L290-L323",
-          "version": "repo-lines-v1:sha256:2970e1ee9b40102ca2b84a2253c084473c51e811c40df447a4415eff1d2c8a69:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5ZmQ4YzM2NjQ2YWU0NWJkYzkwYTczMTgzZDUwNmUyODE0MzY0ZjdjY2Y0OWY0ZjJlNjg4M2QxNjZlYmQyZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyZmM4MmNjYjFhNmI0ODcyNTk2ZjBkZGY2NjcxOWU4ZjQwMjE3YmMzNjdmOWFiOTkwMDJlMDYyMmEyOGJmNWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZlODQxZjkzYmM4MDE2YzAwY2UxMzlmZGI5MGMyY2U1YmQwN2ViMjU5MTkxOTMwMGZmNjc5YjZjNjMzZjk3N2YifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R7-final-integration.md",
+          "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T19:56:35.545Z"
+    "at": "2026-10-19T00:45:42.798Z"
   }
 }

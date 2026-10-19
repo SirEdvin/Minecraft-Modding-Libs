@@ -1,92 +1,42 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:9ffd85c7b3549e0b16632e2f3396abeae1695e8114f911464a55deb6f03713ac",
+  "pageVersion": "sha256:2ddf16606ccec5d6548cf7d89cf11a7498e0d8b3fe94f2c175fc955a878ac7e1",
   "claims": [
     {
-      "id": "claim_8f2e9cfde3934b3982a8ff8052e45df8",
-      "statement": "Computer registration tracks 1.20.1 serializer suppliers but 1.21.1 keyed UpgradeType entries; language validation derives expected upgrade keys from the matching tracker representation.",
+      "id": "claim_27583d893b384e70800425f44a6cda69",
+      "statement": "Target keyed UpgradeType registration uses immutable definition templates and registry-aware upgrade data generation, distinct from runtime ItemStack inventories and native loader registration.",
       "evidence": [
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/data/ComputerLanguageProvider.kt#L18-L24",
-          "version": "repo-lines-v1:sha256:7ba7803c70d277461fba51570752362c15ea0579dc8b1c77eab1f8ec0e560ea4:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjAyNzdkZjM1ZDRjZWIwOWU5ZWI5N2MwNjFkNjBkNDU0OWJmODMzOWU5ZmNjYzVhMTY2ODQ0NjExYzlkYTM4OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjMWYxODhmMTQyZWQ3YTgyNDY4MGIyMDcxNzJjNTUxOWJjNjE0YTQ4ZmRhN2NmMTY3ZWRiOGRkZjc5OTU2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGFkNzUyOGIyN2M2MWJhODIwYmQ2YTc5NWM1OTRiZjkwN2UxMTk4ZmJjMDJiMjg2ODI4MDA2OGE0Zjk1Y2ZmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGY2YmJlMjM0NGQyMjIxYTU1NDM4NWM3ZjZiM2Q0MjFkZjY5NTliMzMyM2Q5YmMwZWNhYTg2N2ExNjcwNmM4MiJ9"
+          "resource": "repo://docs/verification/minecraft-26-1-R3.md",
+          "version": "repo-file-v1:sha256:5e4af6756c403af7dfd284b632e4958130a4c65af3c5f9cf422ed73dfa14bd70"
         },
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/platform/ComputerBasePlatform.kt#L13-L48",
-          "version": "repo-lines-v1:sha256:90f231b2d750cc5eaefc61467a68058a5be145b2f3fcf88aa659f4b1a5ba3bc7:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjZTU2YzU2YTE5NzhjYWE1MTcyMGFlMjZiMmQ5ZjQwZWQ1YTZkY2RkMmNlYjVjYjliZmM2ZTAxYzRkMGZmZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzNzNkZGVmYmRhNWNkYjI4MDMyYjhkZDM5OGYzMzMyZDdjMmFiNzEyODA2ZDBiZGIwMGMwZDU1YTRiYmQ0Y2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYwZmNiMzUzYjQ0YWI4NmE2Y2RlOTcyZGQ5OTYzN2VlZGJkNzg5ZDExOTczYjU0ZTZiMzgxN2M1MzcxMWE5ZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        },
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/data/ComputerLanguageProvider.kt#L17-L23",
-          "version": "repo-lines-v1:sha256:1edc0594c508c007f7af34232bbfdf9c37822fee7940a957b3a25a94580b47c8:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjAyNzdkZjM1ZDRjZWIwOWU5ZWI5N2MwNjFkNjBkNDU0OWJmODMzOWU5ZmNjYzVhMTY2ODQ0NjExYzlkYTM4OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjMWYxODhmMTQyZWQ3YTgyNDY4MGIyMDcxNzJjNTUxOWJjNjE0YTQ4ZmRhN2NmMTY3ZWRiOGRkZjc5OTU2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGFkNzUyOGIyN2M2MWJhODIwYmQ2YTc5NWM1OTRiZjkwN2UxMTk4ZmJjMDJiMjg2ODI4MDA2OGE0Zjk1Y2ZmMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGY2YmJlMjM0NGQyMjIxYTU1NDM4NWM3ZjZiM2Q0MjFkZjY5NTliMzMyM2Q5YmMwZWNhYTg2N2ExNjcwNmM4MiJ9"
-        },
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/platform/ComputerBasePlatform.kt#L25-L62",
-          "version": "repo-lines-v1:sha256:b57ccd3557054b96989d2a0145a50cc3a45f66a51f84741c6b7d9914b0c31af5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmYzgyNTI3M2E4ODJjYzRkMmZlOTM0MTA1N2Y1Nzc5MWJhNGM3NzNiYWU3MGZlZTYxNWY3OTE2ZDJlODIyN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3OTcwMjY2ZDFmNzc0MzJmMzE2MGQyOTcxMTEwZTVhYTk0MjE4NmMxZTU5NDQyZjk1YWNiODdlNDczYWM5YjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0MWU4ODk4ZmMwMjZmMTZiZmFkN2E0NTJlZjg0YzUyNzM4NWFkMzY3YjM2YTZiM2VkYmY1ODJkYjFlZDNmYjgifQ"
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/UpgradeDataProviders.kt",
+          "version": "repo-file-v1:sha256:b5cb935e15a6242b9c01c44b78e7066bb52bf1e69b1d2a98d65595ba3856483e"
         }
       ]
     },
     {
-      "id": "claim_6922dc8156c54a23b00316c0523c5b62",
-      "statement": "Legacy pocket datagen rejects serializers without default definitions, while 1.21.1 generates pocket/turtle upgrade registry patches through supplied bootstrap functions.",
+      "id": "claim_032287ba212e4e11b6c29dad2fa932f3",
+      "statement": "The approved target-only toxic-purple barrel is generator-owned, with stronger real Lua and24 positive graphical checkpoints; legacy appearance remains unchanged and creative void sinks are not persistent tanks or permission systems.",
       "evidence": [
         {
-          "resource": "repo://projects/tweakium/versions/1.20.1/src/main/kotlin/site/siredvin/tweakium/modules/data/LibPocketUpgradeDataProvider.kt#L13-L35",
-          "version": "repo-lines-v1:sha256:efaa2d8f1cf1f3f0ce5daf3f70a3425c863913c7c2d6a59af2d6c7a3db581007:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjYWFmOWRjNjA1ZWMzY2Q5OWQ2NDQzOGEyNDljZTJmZGZjZDdiMDQwZTMzYWNmODZjMjdmYmM2MGE3ZTdiODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiZmM2YmI2YWM1MWIyMzEwMTI3OTQ5NjIwYjM3NzgyMTZjYzgyYjdmODA5MmVjMmI1OWU5NTcyNGUyZmI3MDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY1MDhhNmM4YmE2YjkxNjNhZGM4M2ZjMjMzOTk2NzA0ZjEyYTQ1YWVjMTYyZTVkMWMzMzdkMjBhMmIwZjBjYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R7-final-integration.md",
+          "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         },
         {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/data/UpgradeDataProviders.kt#L9-L21",
-          "version": "repo-lines-v1:sha256:cee7fe6b1f81745dc06204cbeec0d3ce0c5d5e8b6868d674a9b3e79a087ba95b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiYjUwMzVhYzdjNzk2ZjhlMjljODEyNDAzYzk3Y2E1MGQ4Njk2MzJkOGIwNWU2Zjk0ODBhOGNmZGM0MjVmODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczOGI0NzQ1MDY0Y2JlYjgxOGEzNzAzODk1OTI3ODFlMDhkMzk3MTk3ZDIyNDU4ZGMwYzZmOTQwMDY2ZWNhNTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_88840b8f1b544c009b45a1e87264334b",
-      "statement": "Common registration creates a nonticking creative-filler block whose entity supplies a block-owned peripheral and destructive item/fluid/energy void sinks.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/blockentity/CreativeFillerBlockEntity.kt#L22-L41",
-          "version": "repo-lines-v1:sha256:74cd5e2a18af5a2facdf28fa9c08bf94ec493a2f0256e0fdb626a108f6f2eb32:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkYWJlYzdjNjk5ZDhkZWJkMzE0NWMzN2NjMjBiMjE3ZmM1NGMzZjNiMGIxNzA1MmM2NGI0Y2I4NzMxOGFjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0MzNlM2IwM2YzMTc1ZTZkYmVkMjA0NGQ4MjYwZWY5ZGEzYWVjNzdmM2RjZjcwYzE0NTQwZWE3ZTU0MmE0NDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R7-target.md",
+          "version": "repo-file-v1:sha256:a8709e6406c06d901148bf8ad7a14f2adcb6c20ae687f008094344e1d9a82a92"
         },
         {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/setup/TweakiumBlocks.kt#L6-L11",
-          "version": "repo-lines-v1:sha256:371aae4bb1171b02f1c723632a6d39cc1053f138e91b9385eedc43505772fd66:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2JhNjU5NTVjZWFhNzEzMDdiMmYzYTFlZTI2NGM4ZDMwMjBhOTlhYzgwYWM1ZDNhNGZlMDE0Y2Y3M2I3NmVkMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDY4YmZlZDQzN2QzNzY0M2NlODk4MTI1YWVkODAzNmNjOWUzZDhhMTEzYzM3NTQ3YWM2Mzk5MmI3OWZiNGYxYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODY3MGU0MTljNjZkMmI1ZDc3Y2E4ZGEzNGY3MmNhZTk5OGUzMDQ5NDIyMjhmMDdjY2QzOWM3ZmRiYWRhMjg4YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/xplat/TweakiumCommonHooks.kt#L6-L11",
-          "version": "repo-lines-v1:sha256:8eb443684e39bc20da4d3e593def141d46fbad884aa1c2c84d95a1c9a3ed375c:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGM2MDBmMmJlMTRkMmQ5NTQ3ODM3ZmVkNzg4MWFmODI2NDc5OTI1YTViNTVkNzBmYWIyZmI5MTI2ODgzZWZiMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGRmYTI2Zjg0YjhlMjMwNmVjYWIxMDVjMmI4MmVkNjk5YjhjNDg3ZTAxOTk4ZWJlNjkxZjJlOTQ0NmFmNmZlYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        }
-      ]
-    },
-    {
-      "id": "claim_dbef48ced15a4c9daf3e5ae2acc3b4ed",
-      "statement": "Creative filler resolves a named target and resource then stores created item/fluid/energy directly, defaulting limit to 64 and upper-clamping item stacks without the general plugin nonnegative validator or an accepted-amount return.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/computercraft/CreativeFillerPeripheral.kt#L20-L98",
-          "version": "repo-lines-v1:sha256:530de435570cecd076c6e8f766b507985ec36da0099e6dc3d37b8ff495228ee7:eyJzZWxlY3RlZExpbmVDb3VudCI6NzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhZjUzODFmZDA1OWU3NmU5NjFiYmZiN2I2NTE1ZDEyNzc3OTAyZDZiZGM1YTFkNTU4MzI2NDU0YzQ5NDVhMzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxYTc0YjcyZDAwMjk5OTU0ZmZiMWFiZmNmMzYyNThlNTljNjMxNjE5OGY3YzhiMGU5MjZhMDAwNDhiOWZjOGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhMWUwNTE3ODk0NWZmY2M0OTkxYmJiZjVmNDkzY2NhNTZlOWY2NmRhMjU3YTc0MTQ2ZjgwNjE3ZjBiMjVhNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        },
-        {
-          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/computercraft/CreativeFillerPeripheral.kt#L38-L55",
-          "version": "repo-lines-v1:sha256:b3ade8a4b934bbf21db1f1ff17c4a8f845f280fb5d4fa1ff0a30a4ae7ed6cde3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwZWFhOTA2MDg5MDU3ZDNkYTQyZWZkNGRhYjkxOTZiZDU4OWUwNTRmNDU1YWMyY2Y5NjVjOWQ1ZGYyMDFjZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4YWIwZDE4NGRkMTE0YTQ0N2MzNGI4NTEwMThiNDY1ZTNmNDhjN2UxNTI4MjdjMjBmYjI1MTEwMmFkODJkNzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzOWYxYzBiMGFiNDhlMjg3NTQ2NDIxOThiZjA3ZWE2N2FmMmY3MzgxNTdhMDVkYmM0ZWQyZTc3YTI1NzQ0NmMifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_0fcebbc9ca0c40de8dcbd1eae8704968",
-      "statement": "Creative filler runtime fixture verifies one stone in exactly the first barrel slot and invalid-input failures, with GameTest waiting for the Lua fixture result.",
-      "evidence": [
-        {
-          "resource": "repo://projects/tweakium/src/testMod/kotlin/site/siredvin/tweakium/testmod/CreativeFillerGameTests.kt#L8-L11",
-          "version": "repo-lines-v1:sha256:3fc1f686ff0979ff7aab2f27972e5006b55680b554c1f9829dce0cf1c6436930:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmIxNTdiYjNmY2VkOWNjMTRkMzQ3NmJjZTExN2ZkOGRjNjE5ZjA0NDU5ZmI0MDZjNDRkNTdiZWM0MDAxYTNkZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGRhNWM5ZDc2N2JjZTE3NWQyNTJmMGUwZTU0NWIwZTNkYTA3MWRiYzMwODBkYTVjNDUxZjE1NjQ5ZTdkYWYwMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjVkMzc3NjM1ZjA1ZDYzY2QyMWI5ZDRkNDAwZGIyYjA0MDYyNjM3N2Q3NTIyY2VlYzZhMWVmOTkzZDIxOGQ5YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/tweakium/src/testMod/resources/computer/tests/creativefillergametests.fillsinventory.lua#L1-L16",
-          "version": "repo-lines-v1:sha256:4896a67731af3caa7e86d1e4794b4231c559c47196d324f16c66de56eb3342c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4OTc2NTBhMmVhY2U2NTJkNmFmZGM0OTc5NTc5NGMwY2Y2ZDUzYWU4NTU2YWZmZjg3MGI4Y2Y5Y2QwOWQ1MjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyYjhiOTdkYWRkYjJmMzkwYzcyMDQ1ZTk0ZDg0MWVmNWM0YmE0YmQ4YmYyZjY5ZTE4ZGIxNThlY2Y5ODQxNDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/TweakiumDataProviders.kt",
+          "version": "repo-file-v1:sha256:c9ff5ee4f86eab289592b35620fe416ba161fcefd73a4c3cc2078f4f5b1bcc59"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-19T00:45:42.798Z"
   }
 }

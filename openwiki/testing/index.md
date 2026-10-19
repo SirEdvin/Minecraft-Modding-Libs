@@ -1,3 +1,3 @@
 # Files
 
-- [Verification workflows and coverage boundaries](verification.md) - Focused JVM/compiler contracts, the ten-target native server matrix, publication checks, fresh-report guards and measured coverage boundaries.
+- [Verification matrix and evidence boundaries](verification.md) - Actual full-build/native/runtime receipts, affected replays and honest residual limits.

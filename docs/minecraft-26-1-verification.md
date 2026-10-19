@@ -1,6 +1,47 @@
-# Minecraft 26.1.2 implementation checkpoint
+# Minecraft 26.1.2 implementation and verification
 
-Status: INCOMPLETE. Task `t_16b4e35f`. This document is a resumable checkpoint, not a support announcement or acceptance report.
+Status: production implementation and R0–R7 acceptance verified; final campaign documentation/delivery audit IN PROGRESS, 2026-10-19 (Europe/Kyiv), task `t_16b4e35f`. The final reconciliation below supersedes the historical incomplete checkpoints retained afterwards. Local-only: no push, primary merge, release or public Maven publication.
+
+## Final cumulative implementation
+
+Integrated exact completed R7 `281cee3ed4958bd845e6911321f9a24eaee9eae8` as local merge `60049c0`. All 41 original authored dirty paths match R0's immutable `d46bab9` byte-for-byte and are preserved in original-owner checkpoint `aef78f0`; 16 runtime files were excluded and preserved. The merged tracked tree equals R7 exactly. Original audit, OpenWiki, coverage, plan, execution planner and every subsystem/lane head are ancestors. See [final reconciliation](verification/minecraft-26-1-F.md), [R0 custody](verification/minecraft-26-1-R0.md), [R7 final integration](verification/minecraft-26-1-R7-final-integration.md) and [R7 root](verification/minecraft-26-1-R7.md).
+
+Shipping source matrix: common/Fabric/Forge 1.20.1 (JVM17), common/Fabric/NeoForge 1.21.1 (JVM21), common/Fabric/NeoForge **26.1.2** (JVM25), for Broccolium, Tweakium, Peripheralium and Testiarium. The historical `forge` project/artifact suffix remains for NeoForge. TypeScript stays independent. Canonical/VCS version remains 1.20.1; library versions remain 2.0.0 and public group `site.siredvin`.
+
+Selected and actually resolved target pins: Stonecutter0.9.8, Gradle9.5.0, Loom1.17.11 non-remapping, ModDevGradle2.0.142, Kotlin compiler2.4.0, NeoForge26.1.2.122, Fabric Loader0.19.5/API0.155.3+26.1.2, CC:Tweaked1.120.0 (`-forge`, not `-neoforge`), FLK1.13.12+kotlin.2.4.0, KFF6.4.0 and energy5.0.0. Old runtime/language/API2.0 and JVM17/21 remain isolated; inherited NeoForge1.21.1 stdlib2.1.0 is not relabelled2.0.0. Launcher Temurin25.0.3+9. No floating latest-version update or release bump.
+
+### Implemented behavior and approved differences
+
+- Broccolium: keyed registrations, official AW/AT and native removal hook; target observer forwards actual `Block` and nullable `Orientation`, never a fabricated causal position. Old consumers keep `onNeighbourChange(neighbour: BlockPos)` unchanged. Target consumers implement `onNeighbourChange(neighbourBlock: Block, orientation: Orientation?)` and recompile. ValueInput/ValueOutput retains settings keys; model/book/codec, horse cargo/equipment and positive item/fluid/energy providers have owning regressions ([R2](verification/minecraft-26-1-R2.md)).
+- Storage: runtime values remain ItemStack. Native transactions preserve variants/counts and ItemAccess replaces the origin container slot; unsupported reverse backings reject before mutation. Exact replacement requires stable/restorable backings. Callback effects and arbitrary cross-adapter peers are not universally transactional.
+- Tweakium: immutable definition-time ItemStackTemplate with registry-aware resolution; CUSTOM_DATA, `__patch_storage__`, legacy storedData, peripheralData, ownerProfile and explicit component removals retained. Encode failure does not write/notify. Native fake-player sessions cover slots0/8/9/15, tool attributes, storage loans, ownership and finally cleanup; protected interaction dispatch is single native dispatch. Lua predicates/transfers, live install/reinstall/chunk transitions, models and datagen are exercised ([R3](verification/minecraft-26-1-R3.md)).
+- Peripheralium: modern keyed dust/template/block registration, recipes/loot and EN/UA/model/item generation; legacy blend intentionally remains legacy-only ([R4](verification/minecraft-26-1-R4.md)). Testiarium translates its annotation facade to target function/instance/environment registries, retaining fail-fast and separate main/testMod/cctTestMod capabilities ([R1](verification/minecraft-26-1-R1.md)).
+- User-approved policy supersedes the original REI matrix: REI removed from active development dependencies on every maintained line; EMI1.1.24 on both old lines; JEI29.47.0.111 on both target loaders, with/without ModMenu18.0.2 on Fabric. No compatible target EMI was fabricated or old JAR forced into26.1.2. Target Creative Filler uses the approved generated toxic-purple barrel; legacy checkerboard is unchanged. Config API Port26.1.5 is conditional N/A: no production consumer/import requires it; actual Night Config transitives remain. See [target decisions](verification/minecraft-26-1-R7-target.md).
+
+### Acceptance evidence and counting
+
+These are real completed-lane executions, independently re-audited by F, NOT new Minecraft executions performed while editing this documentation. Do not sum overlapping campaigns as unique tests. Exact commands, deadlines, fresh report identities, hashes and retained failures are in the linked receipts and immutable evidence ZIPs.
+
+| Gate | Verified evidence and current-source disposition |
+| --- | --- |
+| Three full active-state builds | R5: each1,734 cases/108 fresh XML/19 nodes; all36 publications and118 JARs; all three active states byte-identical at that baseline, canonical restored. R6/R7 refresh affected artifacts/tests below; no blanket final118-byte reproducibility claim. |
+| Final candidate units | R7 integration:1,757 cases/110 XML/19 nodes, zero failures/errors/skips;1,128 current source hashes and118 exact artifacts independently matched by F. |
+| Full native matrix | R6:28 routes,434 cases =396 passes +38 exact intended negative-fixture skips; zero failures/errors;99 storage cases, zero storage or Tweakium skips. Final R7 affected8 routes freshly replay78 cases, zero failure/error/skip; old stronger Lua native lane97 cases retained separately, not added to overlapping baseline totals. |
+| Datagen | R5:40 actual tasks/12 commands over both loaders and all versions,96 selected production JSON resources, two identical passes. R7:24 target tasks/two passes after generated barrel fix, exact selected inventories equal; no hand-edited generated resources. |
+| Ordinary production + saves | Six no-fixture loader/version routes,12 accepted ready/stop/save/restart executions; R6 additionally20 semantic copied-save executions including staged/cross-version upgrade copies, originals/backups unchanged. Final candidate12 copied-save opens/restarts refresh affected artifacts. |
+| Networking | Both target loaders, two actual graphical clients each, all12 adversarial phases/24 receives per loader, natural server/client exits0/0/0. Original R6 fixtures/schema receipts retained; final candidate replays both complete protocols. |
+| Clients/integrations | All six final target combinations: title/world/reload/menu/book/creative/equipped-upgrade/dedicated reconnect;90 original raw PNGs,192 positive material submissions,24 Filler checkpoints. Four old same-version graphical joins/EMI overlays; six client harness routes retained with affected reruns. |
+| Consumers/publication | Nine external Java/Kotlin file-Maven routes, old Kotlin2.0 consumers and target Kotlin2.4;36 publication contracts,72 all-variant viewer-isolation metadata files,36 fixture-exclusion main-JAR scans; Testiarium feature sources/capabilities and10 raw outgoing consumers in R5. TypeScript forced contracts and real Lua correlation retained. |
+
+F re-executed archive/source/artifact/XML audits and small evidence guards only; no redundant full build for documentation changes. Usable final118 JARs are retained under `build/verification/artifacts/` with original relative project paths and `F-artifacts-sha256.json`. Final source/archive/coverage audits and companion/report identities are recorded in [F](verification/minecraft-26-1-F.md). Parent ZIPs are explicit immutable prerequisites, not implied embedded payloads.
+
+### Compatibility and residual limits
+
+Copied worlds/backups are the supported verification method, not a downgrade guarantee. No new project-owned SavedData/attachment ownership or automatic custom file moves. Persistence probes do not invent concrete persistent tanks/energy or production upgrades absent from this library. Cross-loader world conversion, arbitrary saves/add-ons, cross-Minecraft wire/JVM ABI, online authentication, third-party protection/geometry and recipe-transfer automation are not certified. NeoForge outer menu framing remains loader-owned; consumer payload schema is bounded/validated. Universal JARs legitimately contain gated client classes.
+
+Retain the actual old NeoForge1.21.1 shutdown143 followed by unchanged successful retry/restart: intermittent shutdown is not fixed. Two source-JAR ZIP-order limitations remain. Target Fabric disposable launcher materialized46 explicitly inventoried library files; prior files were unchanged, not the entire directory immutable. Inherited npm advisory/strict-null typing limitation and existing triage `t_470a1973` remain. Remote CI, public release/Maven publication, cross-device Obsidian sync and unlisted manual checks were not performed.
+
+## Historical incomplete checkpoints (superseded, retained for provenance)
 
 ## Inheritance and scope
 

@@ -1,102 +1,38 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:efd1e4b3b918e9f41736fa7065d2d6b5f0fe2134d33a38981b84ac72d7505a10",
+  "pageVersion": "sha256:4c078f5cdaeb4a0068f84869cb6f9b97cab992387005687d3f204a76b2f39ef5",
   "claims": [
     {
-      "id": "claim_508f87d4cc9d46e1ab0cf0f99a39158e",
-      "statement": "Testiarium separates base, testMod/client and optional CCT feature outputs and runs; Forge/NeoForge selects the CCT loaded mod/report with the testiarium.cct property while Fabric defines a distinct CCT run.",
+      "id": "claim_63d150d7dd5841f2acfda7e5fca3e251",
+      "statement": "Target Testiarium registry/CCT scheduler and client helpers are verified with real Lua and both loaders, while main/testMod/cctTestMod and ordinary production runs remain distinct.",
       "evidence": [
         {
-          "resource": "repo://projects/testiarium/fabric/build.gradle.kts#L29-L84",
-          "version": "repo-lines-v1:sha256:91dfa8e4ac07b0d97e883bd0737ff938eb242fa2306c0a842eac14b1c5c173e1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjliYmYwODNkMDU5MGY1ZTU4MzZjYWEyMmQyOWNlZWU5ZTU0M2Q4M2I2NmFkYzMxMWIwMTU2NGM4YjczYTFmMDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4ZmVkNTcwNjE5NmQ5MGY1M2I4NmI3YjFkYzFmNzQ1N2FmNTE2MGNkYWVkOTViZjI3NjIxY2JmMmU0ODdiMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YzkzNzZmNDcxYzE4Njc5NTliZWFhOGEwZjA4YzQyYTJhOTFiOTI4YWNhYTBjMDA2NjBhNDQ1MTBkYTkzMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMyNDRkMDcyNWVlMzk5MDA1MTdlYzZkNDk4ZDY1N2UzZDZiYWUxYjY2MTdmOGZhNjQ3OWE4NmE2MjdmNjc4MWQifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R1.md",
+          "version": "repo-file-v1:sha256:56d4b8e07cc90cd4700a8a2350a9eb3fd23b0f7d58db031e6d07f3f4b92704f7"
         },
         {
-          "resource": "repo://projects/testiarium/fabric/build.gradle.kts#L98-L135",
-          "version": "repo-lines-v1:sha256:367b8df14d8091875fc73c8067c637a9cf5631a949231f699a74d81c1581debc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3NmEwMjY2MGEzMTFiYzZlNzZhZTYwZWYxNzBhZDU2MWE3NDIxODY3ODczYWEzMzc3ZWU1NWM2MTAwZTRhOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkY2Q1M2E4NGZjNTA3NDFkMGM0ZDY5MWQwZjNkOWY4NmIxMTRiZmZmNWRmMzNkMGU1OGYyMDYyMzA3ZjIzYTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUifQ"
-        },
-        {
-          "resource": "repo://projects/testiarium/forge/build.gradle.kts#L181-L218",
-          "version": "repo-lines-v1:sha256:4443697cf14e31895eaf7e1acf643c59634b75f72cd144632496075ef1adb5a1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlMjY5Njk5NDhjOWExYjk4ZjYwZDNjYTViNjQxY2QxZWYyY2Y4NTc5YWU0N2VkMDNmNTM4OWNkZDAwOTIwMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUifQ"
+          "resource": "repo://gradle/minecraft-26-1.gradle.kts",
+          "version": "repo-file-v1:sha256:e8d42bb853e015d403b29db9f2daf441e2839f491f2dbec770afd93c29004cf9"
         }
       ]
     },
     {
-      "id": "claim_aab62cab605b49fea218563f99aa8bf6",
-      "statement": "Client hooks load or create a named world, wait for player/render readiness and delay, run batches and exit distinctly for zero tests/required failures; client actions and screenshots explicitly wait for asynchronous completion.",
+      "id": "claim_1e53924ed1b7421e98c714776a3210f5",
+      "statement": "Final graphical workflows prove title/world/reload/equipped/menu/real-server interaction separately from client harness XML; headless checks require rendering readiness, Xvfb and deadlines, not online-auth or universal UI certification.",
       "evidence": [
         {
-          "resource": "repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestExtensions.kt#L29-L65",
-          "version": "repo-lines-v1:sha256:8cf719615548eefd6993a11b9e4a1abd6c3bce70cedcd75bc6d3f63703233775:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2ODBhZTc5NDRjMjNmODI4ZGM1MjA0ZTVhYTI5ZWNjYzgzMDYwZGYwOGUyYTYyN2FkZTkxMTlhMTMxNmY0M2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4MWEwMmVhNzZhODIzYTRjYWEzNTg5NmQzNDdhZDUwYWUwNDAxODcwNDU5OTFkMDlmNWQzNmMwNGYxZGJlN2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1YzRiZmU2Y2RjMmFhMjFmZGIxY2JjMGVjZDkwMmQxM2RjZmI3MzI2ODM4ZDljMzBjMmI4ZGNhN2Y1NDk2NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ3NmUzZGVkMWVlOGZjYjYyNWZjY2I3Yjc1NmZlNTlkMWZhYzZiODM0MmViMjEyOTQ2N2U4MDdhZjk3MzliNjUifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R7-final-integration.md",
+          "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         },
         {
-          "resource": "repo://projects/testiarium/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestHooks.kt#L40-L138",
-          "version": "repo-lines-v1:sha256:db59ec3ead75215e12be3adfb585b111d14c3e47bda2af0b03a26f4be2f5cae4:eyJzZWxlY3RlZExpbmVDb3VudCI6OTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjZWQ5NzBiNmFjNWZlYzRkMGExNzc0MGRkYTNjZWZmNDMxMGQwZTk4ZGZhY2JjYzBjNGFiZjFkNjA4Y2QxYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI3ZTdiOTE2ZDRmZDk5NDlhYmUzZjIwYjI2ZDdhMDEzYzY3MzczZDdhMjUzNTM2ZDRlNjcxNWRiZDFmZTMzNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_1cf49d0c1a084a119026df0d2c3fc6df",
-      "statement": "CCT initialization replaces the Lua machine factory before server context creation and registers a label-based test API with queued actions, monitors and completion/error markers.",
-      "evidence": [
-        {
-          "resource": "repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt#L29-L75",
-          "version": "repo-lines-v1:sha256:673ce802be0232becc51980e962ef4ae3b50be23cdd4896de925716d8c937fe0:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1NTIyNzZjY2NlNDAxZTJjYTQ1NjEzMTdkZmU5YzJkZjE3OWNkMTJkYzM3MjQxMmUxN2ExYTVhNTRhMmIxMjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmNDZiOGE5Yjk5OGMxNmQyNWRiZTU5YTE4NjU0ZjIxZTIxZGY4YWYxYjQwZjBmOTY5ZjRjNTIwMDZmZDcwYzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI2MGY4N2NkNDI2ZDNmZDQ4YzA3MmNjNzZhY2FhNTVhZDMxMzIyMGJkZDFmMzA3MTc5NjBiYTI0NDNlZjQ3NDUifQ"
-        },
-        {
-          "resource": "repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt#L94-L149",
-          "version": "repo-lines-v1:sha256:ed26e211b007615524d13915bdfb8bcff8a69fa65d6d621b38ee4b820e337ef3:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkMjk4NWVjMDYzNDg5N2NiNTM5M2E4ZDNhNGJhYWYwZTk5MDZlNGEyZWQ4NDY1M2Y0NTRhYWZhMDQ3NTYyY2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyNDM4ODlmYzUxODQ4MjY2YWNmZWQzMDUyZDkwZGI4MmJjMTNiODY1ODhhZjI2ZjM3Y2EyOTAzZGM1MDk1NWYifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_e45d9a5865124f579673d52ee33debec",
-      "statement": "Lua fixtures load tests/<label>.lua and report pcall errors or completion; thenLua waits/checks marker state, thenOnComputer waits/checks an action monitor, while thenStartComputer only enqueues.",
-      "evidence": [
-        {
-          "resource": "repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt#L83-L91",
-          "version": "repo-lines-v1:sha256:9e4c5b5328a16d6a2405c886aae1f0d58a400be0f22049d2d084764973981a9a:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjRiNjc4OTRiMTc4NjlmNjZhMDlmOTk3Mjk2ZjBhYmUwMzAwYjRiZGM2NDlhODUzMWJmZjg4NTU2MjI4ZmI3OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjU1ZTdhNTc4NDc2YmRlOWRkZTk2ZWM0MGU2MGEzZGMwNDI2NWM3OWM1MTQ5MmQ2OGE3N2QxZTFjZDIyZmFkZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODlhMzZmOWUzYjdiM2QxYTU0MTA5ZjMwMzU2MTMyMTM3ZGY4MzIwN2IwMTU4NjNmZWY3ZjhmZGQ1OTUyYjc2MiJ9"
-        },
-        {
-          "resource": "repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctGameTestExtensions.kt#L14-L49",
-          "version": "repo-lines-v1:sha256:8d6c1337b4bfceef9f14b0f097d90b67a39870856dcfa8dfbf81aed6eba81014:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3OTRkMDNhY2ZkOGE4MTg2MTQyNGFlMGJlNmJjYjgxNDdlZTA2ZGVlZTUyZTE2Nzg4OTZhNTFmZDZjNzkwNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhMzhhNmYxMmQ0ZDkwYjNiZjY0ODdjMjc1ZWRhYTRhNmQyNzA3MzMwZjk0YzM1YWVjOGU1MzVhMzliYWNjYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlYmExZWQzYzQ0NGFkYTE2OTJlY2FiZTc0NTc5MjRlYzk0ZDFkYmI1YjhlOTlmZGI5N2IyYThlMGJjYzYxYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4Y2ZkYTk1ZTkzYjI3NmJiM2RkOWEyYWM1ZGMwZjY0NmMxNmMwNzYzZWUwN2QzOGEwMjhmMTk4OGM0ZWM5NGEifQ"
-        },
-        {
-          "resource": "repo://projects/testiarium/src/cctTestMod/resources/computer/startup.lua#L6-L14",
-          "version": "repo-lines-v1:sha256:636de1518d95aef6abbb0fe894891715e5d9b7bb4c858b0312f1442fbecc66b4:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDRiZmVjMTQxMDgyODRkYTQ4MGM0NTZiNmI5OTQ1NjQ0NzE2YjMyODg4MjZiMDlhOWY3NjNlNDY2NGU4NmNjNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTk3Y2E4Y2FhZTU2ZDk5ZDkwNGMzMmU1YTlmZWMwYTM1YTRhYjRmNDNmODYyMjUzYWQxNGY0NzcxOTEyMzNmZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTc4OWMyOTc3ZDdlZTQ2OTgwMWQ4NTUxZTEwNDdkYTkyMjI0OWUwOWVlMTEzMDNjNTRhNTE2ODVlNWM5MDQ4MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
-        }
-      ]
-    },
-    {
-      "id": "claim_9351226d16d345e49479abf2b5e65327",
-      "statement": "CCT import/export copies between configured fixtures and computer/1 with replacement but does not delete extra destination files.",
-      "evidence": [
-        {
-          "resource": "repo://projects/testiarium/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctFixtureCommands.kt#L54-L74",
-          "version": "repo-lines-v1:sha256:58e2e3378ddd035c93427ed365ebb2e2dc4de70f6adbeb1bcf50159ca7e5dce5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYWRkYjgyMzI2YzFjOGNiNjBhYTY2ZmYwNDYzYTJmZTI2ZDNjNDc5NWZhZGI1YjRjYzc3ODhiZGNkYjEwZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmMGQ3NTk1MGRmMGZmOWEzZWU5NjYzOWRjYzhmZjVlYWVkYjQwZDY4MmJlYTkyNjIyYjUyMGRkODg3ZDkzZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_5340aaffa7de4de79e146817035e33bd",
-      "statement": "The 1.21.1 CCT harness reflects private computer scheduler idle state and replaces GameTestServer tick waiting to pump tasks until idle; Fabric CCT metadata connects the required mixin.",
-      "evidence": [
-        {
-          "resource": "repo://projects/testiarium/fabric/versions/1.21.1/src/cctTestMod/resources/fabric.mod.json#L15-L21",
-          "version": "repo-lines-v1:sha256:15dae25719a5a5c23a1682052cb68f9cba8b59bc5b0febce422262fb06b53e10:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWY4M2M4YzJhNTJmMjI0ODUyMTUwYzFlZTYzNmJlZjFmMzc5MjQ3NDRhYzI5MjUwN2FkZDhiNDg4MjZiN2U3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGZhYmVlZTk4ZjMzMjI3NDhjMDg5NTc4OTViNDk2ODdiOWM5MTE2NzZhZDRiOTIwODc3Y2JjNGY1MmJjYzVmZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTg2MDY4N2JjN2VkY2FjNzlhNWMzZTYzMzBjNDdkOGQxYTBkY2ZkMjcwYThhNGE4YzliZTY2ODM4NTlmNjhhZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGY3MzlhMDZjMWNiYjEyNDRlMzM2M2QzOGJjZjlmYTUwY2U4NGZlZDM5OWMyMTkzYTNjN2YwOGQ1OTkxOGIyYSJ9"
-        },
-        {
-          "resource": "repo://projects/testiarium/versions/1.21.1/src/cctTestMod/java/site/siredvin/testiarium/cct/mixin/GameTestServerMixin.java#L23-L42",
-          "version": "repo-lines-v1:sha256:c17d0ff0608e2c1ef086afbd2003b2fc03be37b21795b7ecc580a306fed25f3b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxYmYwMzgzZTE1ZDM1NjJmZjU1MDI3MWU1MDlmYTk3ZWUzZDg5NDQ3OGY3MDcwNTM0Y2VmMzAxNjkzZTQyNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkZmQ4MjcyNDhkMDQ5ZGQwMGY2NDBmYTcyNDAxOGUxMDA3NTg4ZWYyZGMyN2NkOTcyMzNmYzliMjM5ZGQ3YTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        },
-        {
-          "resource": "repo://projects/testiarium/versions/1.21.1/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt#L85-L107",
-          "version": "repo-lines-v1:sha256:200a4f85e95da605597b5e478bb5a1556199b58450160723226f22d0d54c6d87:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjNWNiYzhkMmM1M2U5ZDg4ZGI0ZWVkNmU2OTAwNDI1OTA2YmQ0ZTczMDZjZGQzZTliNTIyYWY0NzUwOTE2Y2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI2MGY4N2NkNDI2ZDNmZDQ4YzA3MmNjNzZhY2FhNTVhZDMxMzIyMGJkZDFmMzA3MTc5NjBiYTI0NDNlZjQ3NDUifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R7.md",
+          "version": "repo-file-v1:sha256:ec8b91c7f14a123787945d9ad184f76932b5ca40aca165f8114e6190c9b5c306"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-19T00:45:42.798Z"
   }
 }

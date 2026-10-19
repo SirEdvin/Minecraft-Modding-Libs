@@ -3,26 +3,34 @@ type: module
 title: Tweakium Lua representations and RML transforms
 description: Lua table conversion/enrichment and version-sensitive item/enchantment output, contrasted with the separate Render Markup Language parser and item-query filters.
 tags: [tweakium, lua, representation, rml, rendering]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
-  - id: openwiki-source-9c7b583db5b127dca59a604a
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/representation/LuaInterpretation.kt
-  - id: openwiki-source-9aeb9eac8d5e3e2a63464e0f
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/representation/LuaRepresentation.kt
-  - id: openwiki-source-184e8fb5258f7d156666dc89
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/rml1/Operations.kt
+  - id: openwiki-source-433a5a8f61ef03e88c1fd1ae
+    resource: repo://docs/verification/minecraft-26-1-R3.md
+  - id: openwiki-source-851986a2438c3c75fd1c9bb7
+    resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
+  - id: openwiki-source-3e43e3d811046ad6cc4504b3
+    resource: repo://docs/verification/minecraft-26-1-R7-rendering.md
   - id: openwiki-source-e0b17fde9ce9ac9863c411f7
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/rml1/Toolkit.kt
-  - id: openwiki-source-c88f2188f9c0d1c679eb080c
-    resource: repo://projects/tweakium/src/test/kotlin/site/siredvin/tweakium/RMLTests.kt
-  - id: openwiki-source-b2c83e414b4a5832e44d9898
-    resource: repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/representation/LuaRepresentation.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+  - id: openwiki-source-f7ba39413002c6f9b1dcc87a
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/representation/LuaRepresentation.kt
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Tweakium Lua representations and RML transforms
+
+## Current target rendering and schema boundary (2026-10-19)
+
+Lua representation, map predicates and RML remain separate languages; output maps are not universally reversible input schemas. Target registry-aware item/enchantment/component adapters retain public Lua field identities while native Kotlin/CC signatures require target consumer recompilation. Runtime values remain ItemStack, definition templates resolve only with valid context.
+
+FacingBlockTurtleModeller and RML target adapters use native extracted/model/material submission paths, not a permanent compatibility rewrite or live mutable world reads during submission. [R7 rendering](../../../docs/verification/minecraft-26-1-R7-rendering.md) and [final integration](../../../docs/verification/minecraft-26-1-R7-final-integration.md) retain six actual workflows,90 original PNGs,192 positive material submissions and equipped upgrade views across reload/reconnect. Parser unit tests alone are not this proof. No arbitrary third-party geometry, all numeric parser edges or hardened untrusted-RML grammar certification is implied; see [final limits](../../../docs/minecraft-26-1-verification.md).
+
+## Historical source notes — October16 baseline
+
+The following327f845/e69b721 notes remain useful grammar/schema background, but their unperformed-rendering statement is historical. Current target overrides and explicit rendering evidence above take precedence.
 
 ## Representation is a boundary, not a universal schema
 

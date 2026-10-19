@@ -1,100 +1,38 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:123a5675006176b77608759e39df0a7d990e003c148d4062f4c6a6b44a4d4193",
+  "pageVersion": "sha256:449aef062a61a6b4312fc6fa9e7c3951701e6aa257df184f074a99be505ae2f3",
   "claims": [
     {
-      "id": "claim_5539f6530e0e42bcb89a1c80cce88228",
-      "statement": "Peripheralium's material block, dust and upgrade template exist on both versions, while blend is legacy-only; the library depends on matching-version Broccolium/Tweakium rather than owning generic peripheral dispatch.",
+      "id": "claim_64b77021676149118ea855806a3a0329",
+      "statement": "Target Peripheralium preserves modern dust/template/block identities and legacy-only blend absence, with keyed registration and deterministic native recipe/loot/language/model proof.",
       "evidence": [
         {
-          "resource": "repo://projects/peripheralium/build.gradle.kts#L37-L48",
-          "version": "repo-lines-v1:sha256:b7c0c32d2cbaa5ed6e3c9ad4382d757e8b334b5e629f9903d49c8d3413be42e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiYTMxNDVhZWUwZGEwNTkyNGQzYWQwYjFlZWI0YWRlNzc2MWI2NjdkOGE5NjE0NmRlZWYzOWFiZDFjZTQ4Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMDg0ZjAzZTc4OGRiNjI5MmQyYjk5Y2M2ZGI2MjhjMjA5ZjZmM2VkMDFkY2M2ZWE2Njg2ZTViM2I4MjVjMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5NzdkNzY4ZDFmOTc1ZTA0ODY2MzYwOGVmMTJhNzk3NDVhYzliNDE1YmY0NjY4YmVkOTQ1NWMzMzlmZTdkM2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxNThiNTRhNWM5Yjc1NDlkYTVhMTM3NDEwZWU4MDE5ZDkzMDNiOTIwYWE5YTExODM1OWM1Mzk1OTgzMDA1ZTcifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R4.md",
+          "version": "repo-file-v1:sha256:29f739f347fb0719e87fa66536bd3860c6574fe0873b2d3fe9dbafb511eeb246"
         },
         {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/Blocks.kt#L6-L10",
-          "version": "repo-lines-v1:sha256:2ac0391a67ea3615d6e344a3d6c005abde537fa448c0e8d6b916932e7c70bd03:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2Q5MGNkMjNmODZmZDY2MDk2MDVkOTVhYzk2NjA2ZTdjMGUwZDM4NWQwNjMzZTAyN2IzZDI0YmZiYWQ0ZjRlOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWUxMWEzNTk0MDg1MWRiNmM2YWQxYjA3MGNkY2M3MGJjMjc3M2JkYzk1MzgyZWMyOGM3MjA2NDcxYzE1MjY5OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/Items.kt#L6-L14",
-          "version": "repo-lines-v1:sha256:e388f783ec1325a2292ee15b8c9d88e1620c3530a7074ff23b1a4899a2432ad6:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMDk0MzBkODA3ODgxY2I2MTI2MTExYmZjNzM5MDU3ODAwMzM0NDc3MzJkMzdlZWM1MDYzOGIwNGJmY2M4ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDdlYWYzMjY1NzYxZTcwM2FhMjZlMmViYTQxMTllNDQ0ODE1MGY3NjAxM2IwZjIxYWM0MGFjMGQ3M2I1Mjg4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/peripheralium/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/Items.kt#L6-L14",
-          "version": "repo-lines-v1:sha256:271606b39b574076bca6eaa370ee007efef5e54e07abbc3dfc9414ebbdc8483c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVjMDk0MzBkODA3ODgxY2I2MTI2MTExYmZjNzM5MDU3ODAwMzM0NDc3MzJkMzdlZWM1MDYzOGIwNGJmY2M4ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDdlYWYzMjY1NzYxZTcwM2FhMjZlMmViYTQxMTllNDQ0ODE1MGY3NjAxM2IwZjIxYWM0MGFjMGQ3M2I1Mjg4ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+          "resource": "repo://projects/peripheralium/versions/26.1.2/src/main/kotlin/site/siredvin/peripheralium/Items.kt",
+          "version": "repo-file-v1:sha256:6df59b0cbbd41333494bf4a31dcf2b25884d1c1f7a2d9aa859f4870f93194215"
         }
       ]
     },
     {
-      "id": "claim_d9075c3ba4374f3b97345073fa5a9225",
-      "statement": "Peripheralium must configure its platform before CommonHooks forces content registration and creates a holder-enumerating dust-icon creative tab.",
+      "id": "claim_e4f9f80d00e34f8a80608ff4143976c0",
+      "statement": "Peripheralium owns fixtures in test-only Tweakium runners; final candidate refreshes actual creative/content interactions and affected data/publication/runtime evidence without certifying external datapacks or recipe transfers.",
       "evidence": [
         {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/PeripheraliumCommonHooks.kt#L8-L14",
-          "version": "repo-lines-v1:sha256:a6a1bc85d63c5f396c0ded67423240adee5fce975edffc0fc3d4f7fc4f58c041:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmRjODIyNjE1YTVkODUwMDQ4NWRkMzU3NDUwMGMyYThlYjMyN2E2YTBlZjZhZDEyYmFjOWQ4YjZjYjJmZjkyMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTI3ZmEyNTI0NDlmMTMyYjg3Y2YxZTM0MTcxNDM4ZjEwNTVmNzJlZGM3ZWUxNDFkZjc5NDVhMzQ3YzQ0YzBjZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzc5NGQwMmE4MTIxOTQ0ZDE3NmQyNjVlOWJiOWNjNTlmNmFiODkwYmNhZGY4YWVmZGViZGJiYjRmMmVhODQ0NCJ9"
+          "resource": "repo://docs/verification/minecraft-26-1-R4.md",
+          "version": "repo-file-v1:sha256:29f739f347fb0719e87fa66536bd3860c6574fe0873b2d3fe9dbafb511eeb246"
         },
         {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/PeripheraliumCore.kt#L14-L26",
-          "version": "repo-lines-v1:sha256:1046c2b373581119e96aec54d97a88f87a408e21f6758eb63c8f93079bd0a498:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljZDU1NzA2ODYwYmZlNGJjOTgzMzA1NjA4OTEyNDczMzUyZjAxYjk0YjQ1ZDVjYjhlNWJhMTczNDYxOTg5NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0OGE1OTBjZjkyODUzMzAwNTQ0MzBhNjI1NmFkMTU3YjViMDRlNWY4MzQ4NjNjN2UzZmZiM2RhY2ViYThmMzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc1ZDc3N2JhMzVlNDZiZmRlMWFkMDdjZDI2ZDE5NDlkY2YwYjUyYTViYmZkYjNiZTY5MDc4NjRjZGJlMWUzNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        },
-        {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/PeripheraliumPlatform.kt#L7-L17",
-          "version": "repo-lines-v1:sha256:90152f942961fee66fe6172bc8aed61976224e1ff127caaa5d9be096bfb1d893:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1NDZhYTAzYmM0YmYxYjk2NzNhNDQ4ODAwYTNlZjEwZTdmZDk3ZTlkYTM5MTc2YTJiODRiNjVkZjE0ZWEzODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZTMxNzliMGMwNTNmYjBiYTJjYTMxN2VlNDE4MjA2YzAxOWIwODdkYTJmMzQyMmE0YWFhOTY4ZjFjMmNhOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_ee20f6a9486c46e98e2c9acb103bdb63",
-      "statement": "Peripheralium composes recipes, self-drop loot with validation, cube/delegated block models, flat item models and two language providers through Broccolium's generator sink.",
-      "evidence": [
-        {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumBlockModelProvider.kt#L13-L28",
-          "version": "repo-lines-v1:sha256:aac383f5c85de740e951fc4ddd3c55d049a8d7b96fdc4445e159bb7894d0a911:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4OGM0MDFlMzdkMTNhMWVmNDczOGMyZTBhNmEzNzY2NjhhNjNiNGQyMWE1YzIwY2U2YTg1MGI0NjY4YWJmYjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlY2Y2MTA4ZThlZWVlZjU0MjQwZjE5MjZiNDU1NmEwZjY0NDM1MGU0ZWQ4YjJlZGU3OWQ2YjI3NzY1OWU1MDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMwOWU2MTA0YmUyM2JmMTk1N2UwYjZkNjY3NmJhNWVhYjc2YWY5NmZlOWMzOWFmNjJkNDNmZjg3Zjc0ZTk5OWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        },
-        {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumDataProviders.kt#L5-L12",
-          "version": "repo-lines-v1:sha256:afeda07780c8099ba571d75d40bc90b321b4f7f20c998497f38adfb5359edaa5:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzExNzlmYzNjOGFmZmJkMGRkMmZlODg1ZDQ4OWJjZDIzNGQ4NDhiOTk1NzdhN2JmMmMzN2NmMTFiNDA2NTc5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWMzY2U4YWVkM2RiZDFkZWZlZjVkNjcwODc0NDFkZDZmNDU5ODc4MzRhYTcxOTA3YzhhMmU4YWFiZjIyY2ZjNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumItemModelProvider.kt#L7-L15",
-          "version": "repo-lines-v1:sha256:cdad20ce68140d57fd42cd1940990c7d8d7d8a9a28a3e58ce4a0267a31abef95:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmE2OGYxM2E3OWFmZjE2YzY3ZTNlNzQ1MzIzZmUyNDEzNDgxNzdjYjEyNmVkOTczNzI2ODM0Yzk4ZjBiMjM0MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWYxMGU4M2I2MjFiZmQ4YjZjNjdlM2NhNTM0YmYxZDczMGQ1ZDYzZjQ3N2EzZWZjYWQ3OWVjNzJjM2RmNmNlMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumLootTableProvider.kt#L22-L25",
-          "version": "repo-lines-v1:sha256:782d6abed84abe6498632bbb310b6fc64046161faa2ce1d1864511518940d232:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjU1MTM0NDM0ODU5OTE3N2U3YzVlNWM2MmM2MDY3OGExOWMyNmRlNDEyMzFmOGM0OTIyYTg2ZjU4YmFhOGZkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODE5OTViZDFiYjczY2JhNTliNGRiOWFkZTMxZTc5NTlkZTk4YmVhMmI0YmEzMWM4ZTg1YjQ0N2U0ODQ4YWNiYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmM1MDUxOGM2ZTJmYTVhZGM4NjQ3ZGMzZWZmYWM0NjNiMGNiMDdiOTU1ZDcwOGUxOWFhMTVhNDBiNzY0ODIwNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzc5NGQwMmE4MTIxOTQ0ZDE3NmQyNjVlOWJiOWNjNTlmNmFiODkwYmNhZGY4YWVmZGViZGJiYjRmMmVhODQ0NCJ9"
-        }
-      ]
-    },
-    {
-      "id": "claim_7281d203dab64c93b2e46a023a97860a",
-      "statement": "Both recipe providers define dust crafting, block compression/decompression and four-template crafting, but only the shared 1.20.1 provider defines blend-to-dust smelting; the inspected 1.21.1 override omits it.",
-      "evidence": [
-        {
-          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumRecipeProvider.kt#L16-L43",
-          "version": "repo-lines-v1:sha256:5b6244c4456101321858469145b59e87a65beacd9055db39ea7143fe47f3c4a8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxZGZhZmUwZWE2YjQ5ZTJiN2RmZjQ1ZjU4ZWY2ZTE5ZGM3Y2EwNmJiODgzNzgwYjAwOTNlOTE3OTNhYzdjNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzZWY1OTg1MzkwNjFhMTI3Yzg5NTkyYjE4YzhjNTk1ODUwMGMxOTUzNTZkMTQ4OTNjYTU5OTBkMzdmY2ZjNGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        },
-        {
-          "resource": "repo://projects/peripheralium/versions/1.21.1/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumRecipeProvider.kt#L16-L41",
-          "version": "repo-lines-v1:sha256:f032c186fd6545874a6309720adf5aeeb49b9bddc49f558625507b8f6c0ca4e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0ZWZiMzE1MjFiZWNiNGUxYjc3ZGE1MGExYzFmZjg5NWQ5MjMzNDI2NTQyMGQ4Y2JjOGEyYjk4ZDAxYjcyYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjNzUwYTgwMGYyMDYwNTNhMzA1MTlhMmJhYjgwN2Q1YjMzMTlmOTY0MTMwYzc0NmQyYWMwZTE1ODRlOTdlMzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_6b3bb175f55b492c88a299b0e96037be",
-      "statement": "Peripheralium-owned native tests cover registration identity, emitted recipes, loaded crafting including rejected wrong inputs, both language outputs and block loot, not creative rendering or arbitrary datapacks.",
-      "evidence": [
-        {
-          "resource": "repo://projects/peripheralium/src/testMod/kotlin/site/siredvin/peripheralium/testmod/PeripheraliumBehaviorGameTests.kt#L28-L103",
-          "version": "repo-lines-v1:sha256:43274037c8d343ce79a4dd91901ad59ed19031ff8109ef1db69353305b8b1594:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiMTU3YmIzZmNlZDljYzE0ZDM0NzZiY2UxMTdmZDhkYzYxOWYwNDQ1OWZiNDA2YzQ0ZDU3YmVjNDAwMWEzZGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkzZTU3MDdmMzNmZjFlNjk4Y2NhMGVmNjNhZDc3NTdjNTQzZTA4ZGJhNGJjMDk4ZDE1ZTQxNmIyMWQ2NjQzNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
-        },
-        {
-          "resource": "repo://projects/peripheralium/src/testMod/kotlin/site/siredvin/peripheralium/testmod/RecipeContractAssertions.kt#L5-L38",
-          "version": "repo-lines-v1:sha256:4f6608c825f9b5b2385a56c51f4b72542b64844065eb74fe18144619e123f0aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0ZmRlODI5YTRlYmM5MDkwNmRhZGI2ZjMxYjA3MzdkYWIxODdjOGM5ODQxOGM4Y2NlYmU3NDA0MTgwOTE4MjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwOTEyMTU2MmVmNjk4OTU0N2U4NjQyZmMyMjNhMmEyMDA0MTE0MjVmNmU1MDk1NzdlNDBjM2VhODc1M2I0MDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R7-final-integration.md",
+          "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T19:56:35.545Z"
+    "at": "2026-10-19T00:45:42.798Z"
   }
 }

@@ -3,30 +3,32 @@ type: module
 title: Tweakium peripheral dispatch and ownership
 description: Dynamic Lua method construction, plugins and owner boons, connection lifecycle, block-entity persistence and explicit extension ordering limits.
 tags: [tweakium, peripheral, lua, ownership, lifecycle]
-verified:
-  - by: openwiki/0.7.1
-    at: 2026-10-16T16:31:45.808Z
 sources:
-  - id: openwiki-source-3ab457fee23030984c1749fb
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/api/IPeripheralOwner.kt
-  - id: openwiki-source-bb2af4b7845c5d78247a0e82
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/api/IPeripheralPlugin.kt
-  - id: openwiki-source-1662faab93f320b6f1097916
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/blockentity/MutablePeripheralBlockEntity.kt
-  - id: openwiki-source-ec508e68b002fe32ec92adce
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/blockentity/PeripheralBlockEntity.kt
-  - id: openwiki-source-da9e576afc282112338976d1
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/blockentity/StatefulPeripheralBlockEntity.kt
-  - id: openwiki-source-8c620042078de5ce5560fdf2
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/BoundMethod.kt
+  - id: openwiki-source-433a5a8f61ef03e88c1fd1ae
+    resource: repo://docs/verification/minecraft-26-1-R3.md
+  - id: openwiki-source-f6b3458a12876dad0171a34e
+    resource: repo://docs/verification/minecraft-26-1-R6.md
+  - id: openwiki-source-851986a2438c3c75fd1c9bb7
+    resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
   - id: openwiki-source-394cd985b01a2c855f6e0e2e
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt
-  - id: openwiki-source-f9e92cc8bd4594eeb8afee8a
-    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/owner/BasePeripheralOwner.kt
-generated: { by: "hermes", at: "2026-10-16T16:31:45.808Z" }
+generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+verified:
+  - by: openwiki/0.7.1
+    at: 2026-10-19T00:45:42.798Z
 ---
 
 # Tweakium peripheral dispatch and ownership
+
+## Current maintained-version contract (2026-10-19)
+
+The owner/plugin/boon separation remains: a fake player or owner object is not permission by itself. Install plugins before lazy CC method collection; late additions do not automatically rebuild dispatch. Settings retain peripheralData/ownerProfile and target ValueInput/ValueOutput adapts world hooks without changing ownership. Item transport, world data and client sync remain separate.
+
+[R3](../../../docs/verification/minecraft-26-1-R3.md) now supplies actual Lua binding/query/transfer/refusal and live owner/session/upgrade proof, modern storage parity and deterministic data. [R6](../../../docs/verification/minecraft-26-1-R6.md) adds copied-save/process/network scenarios; [R7 final integration](../../../docs/verification/minecraft-26-1-R7-final-integration.md) refreshes affected Lua/consumer/artifact evidence. Encode failure does not write/notify, explicit component removals survive reconstruction, and operations do not promise callback rollback. See [final limits](../../../docs/minecraft-26-1-verification.md).
+
+## Historical source notes — October16 baseline
+
+The detailed notes below preserve the earlier327f845/e69b721 source snapshot and its then-unperformed tests. They are historical, not a current statement that the later R0–R7 runtime work is unperformed. Current full-file26.1.2 overrides and acceptance above take precedence.
 
 ## Composition model
 

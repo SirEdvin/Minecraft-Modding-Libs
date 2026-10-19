@@ -1,98 +1,38 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:e9c9535f4130aee70cdeabcfcb36b90cea6181858c7a6704c8f1db4a894850f6",
+  "pageVersion": "sha256:caab611f09e59363c62cf5c75ed85671fe3ef509fba6c7094ae1a4807cb8f81b",
   "claims": [
     {
-      "id": "claim_5e652b2389de4d118dcaedf59a44da4e",
-      "statement": "Broccolium explicitly installs its global toolkit/tag/ingredient implementations; toolkit access before configuration throws and lazy registry wrappers depend on the configured toolkit.",
+      "id": "claim_4e2e45e0ade54f1e8abffa2a84e1a53b",
+      "statement": "The approved26.1.2-only observer callback forwards actual Block and nullable Orientation; old1.20.1/1.21.1 retain causal BlockPos and target consumers recompile.",
       "evidence": [
         {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/BroccoliumCore.kt#L17-L21",
-          "version": "repo-lines-v1:sha256:ceef14292b60bc483beebf86fd8e6d0c966f68d23b3f9e479ab6b27a33e5aaa2:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWVmODgxNzAyODJhNmJkNzQ2YzVjNDkxNmRhZDA5OWE4MDk1NGZlMjIzZmYyNGIxMjg2OGZhNjJmNjE1ZmEzMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzVkNzc3YmEzNWU0NmJmZGUxYWQwN2NkMjZkMTk0OWRjZjBiNTJhNWJiZmRiM2JlNjkwNzg2NGNkYmUxZTM2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+          "resource": "repo://docs/minecraft-26-1-migration-brief.md",
+          "version": "repo-file-v1:sha256:25dde902a29d15b52858c4fbc00dbc3ab09a39d18b4b56f997296101d15dab6f"
         },
         {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/platform/PlatformRegistries.kt#L5-L12",
-          "version": "repo-lines-v1:sha256:1caeade4f78015d2dbe731bee9ad5619d5d51140ed0718d67601aed3ce6d266a:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjBmMGY3OTY4MGFmM2M3ZDhhNDY4OGRlODgyMDhkOGRhNTdiZjc5ZjFkNjhjMTkyMGEyOTlkNGNjOWIwNmUwMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmNmODU5YTRlMWI5NWY5MjAxYTNiZDI1ZTM5YzgxYmY0YTQyZGVlZjY0MmIxZTQwNGRmNjYzZDc3YmE2NmM0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjFlM2NlYWNkNmJjMjM1NDVmYTdkNmIzMTFhNjRkMmQyZmU5ZGNjNjhiYzBmMTU3ZGQ5OTA2N2Q4NzBkZDkwOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/platform/PlatformToolkit.kt#L5-L17",
-          "version": "repo-lines-v1:sha256:1d8e361c7bc2c6eed4433aa95420408a483a373e03db1e223b810ee6f3d4da95:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNiNGI2YzdiMzBlMDFiMTM1YzI4ZGIzMjJmODQyYmY4ZGU2YzY0YTBhNzhjMWJmYzE2MjMzYmFkMGEwMmJlODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwOTYzYTg5N2U5NzEzNGE1NWQyMDg5OGIwYzg4NWZjYjU0NzQwMzg2MzY5MjlhY2I4YmNiNTY2Zjg3NGVmNzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+          "resource": "repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/api/IObservingBlockEntity.kt",
+          "version": "repo-file-v1:sha256:99622e334852171b25a39d5af906de196cb3a657cd459ea59f9bb41dab136ef8"
         }
       ]
     },
     {
-      "id": "claim_26d01728b9bc461c98bf6af2a55b00a6",
-      "statement": "BasePlatform tracks item, name-based block and custom-stat registrations for its holder, while the ResourceLocation block overload delegates without tracking.",
+      "id": "claim_7d88a4e19b0043f2b02c31b34b0469b1",
+      "statement": "Native lifecycle/access and supplier-codec regressions cover target removal/drop/unload distinctions and ValueInput/ValueOutput preserving root settings keys, without introducing SavedData file ownership.",
       "evidence": [
         {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/platform/BasePlatform.kt#L24-L69",
-          "version": "repo-lines-v1:sha256:880dd7258f0ab519ec3db57aa6a0afe472112633c9f59d0d0b6322e6c0841bea:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiY2Y3NjFlZmFhMzQ2MzQyZDYxOTVjNmJhZWNjZTBjYTdjOTBmOTdlYzcwNzU1YTczNzY4NDYyNDgzMzgyYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzNzNkZGVmYmRhNWNkYjI4MDMyYjhkZDM5OGYzMzMyZDdjMmFiNzEyODA2ZDBiZGIwMGMwZDU1YTRiYmQ0Y2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmYmRiMzZjYzQ2MzFjYWVhNWMwMTczZjQzODZiMWUwNzU3YTY4NTYyYjQzM2ZmOWUxMTJjMDkxNzFjMDc0YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3N2Q2N2NiZGZiMmVmZDQ1ZWI2MDNjMTA5ZDc0ODY3NzM3MWJiOWViMGMyOGY4NGRmZTE5ZDNlYjk0ZmEzOGIifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_11f4371baea945c8ab810ceeec3a2d5f",
-      "statement": "Fabric registration is immediate whereas NeoForge registration uses deferred suppliers and requires consuming adapters to provide the relevant non-null deferred registries.",
-      "evidence": [
-        {
-          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/platform/FabricInnerBasePlatform.kt#L26-L47",
-          "version": "repo-lines-v1:sha256:d2e6e32ab387071065712c29117684cc42567cae379eddc578efa09364c9837d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZTg5OWM2ZDZjMTExZDNiNjcyODFkZWU0N2YwMmU3NmU1YzIyYmVlMThjYTM1YWYwMzI1MTRlYWI0ZmVmZmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkNjQ5OGUzNGU0ZTVjNTBiYzA1NThhM2IxM2EyMDlmN2IxMjgxMDUxZmEwYWVhMDY3NDM2NzY3NDUwNGY3MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmYmRiMzZjYzQ2MzFjYWVhNWMwMTczZjQzODZiMWUwNzU3YTY4NTYyYjQzM2ZmOWUxMTJjMDkxNzFjMDc0YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2MzA2YzU0MThlYjA3ZmQ1MjVhMWI3Y2QyOTlhODNhODU4NzA4MzVmODFlMzkzNzcwZWI5NGY1NTAyNjVlODEifQ"
+          "resource": "repo://docs/verification/minecraft-26-1-R2.md",
+          "version": "repo-file-v1:sha256:b8fca458e11edb96cb51dd5f5856a37b675ac516c062a5fab5b6d81681e18642"
         },
         {
-          "resource": "repo://projects/broccolium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/platform/ForgeInnerBasePlatform.kt#L27-L67",
-          "version": "repo-lines-v1:sha256:93a614d5c2d639ceeac8f1f7643bdceee36faca2e53ba2304b21b0e18a8096e7:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2Njc2MTlhNTJiNTJjNmQ0Njg2NjM5OTc4NDVmYzAwYTJiYTI0ZTBkMmY5NmNmMTc2NDE0NjYxZjA0OGJjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNWVlMWQ5YWE4NWYyNjNkNDM0YjMzZTJmZWRlMDA0MzNhYmMwYjhmNGJmOTljNGNiZDczMjFhYmJlNTdjOTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmYmRiMzZjYzQ2MzFjYWVhNWMwMTczZjQzODZiMWUwNzU3YTY4NTYyYjQzM2ZmOWUxMTJjMDkxNzFjMDc0YzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkZWNkNjlmMzljMmFiNzY0NDIyNmJlY2Q0ZDUzNzk5MzI3Mzg2NmRmZGUzODY1ZjhhNzEyNWU4YjJlNTkyZmUifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_8c55500ecf294df4a8cd570612260c75",
-      "statement": "Base blocks gate ticking to server-side enabled entities, forward observing lifecycle callbacks, assign player ownership on server placement, and skip destroy when only state of the same block changes.",
-      "evidence": [
-        {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/base/api/IOwnedBlockEntity.kt#L6-L9",
-          "version": "repo-lines-v1:sha256:d437cca9f32dd3b7b6899d01032099540824fba92069ce20ee28876929a69948:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTE3ZGUxOGEwZTMzNWFmNTVmOTlhZjkzYjdkOWM4MjU0YzcyODhiMDAxZGFhNTI2YjRmMTNiNDY3OTFmMDk2NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTNhYzAwZTczYzc5NWUwMDdlMWQ1YWYyYmI0YmViYWJkYjFjMzE4ZjAzMTM4YzBiZmJlMjJmMzViYWM5ZmViOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
-        },
-        {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/base/block/BaseBlockEntityBlock.kt#L30-L118",
-          "version": "repo-lines-v1:sha256:a366bf7ab2ad4ccedda00fb72cd9795d19537f0f19a42b508a01bc1c1094c2bc:eyJzZWxlY3RlZExpbmVDb3VudCI6ODksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNGRiZTVlZmU1Y2UzYmFjMjg1MWViNjUxNmQzMGM4NzY5MmYzNTkxMTQwMjM5OTQwNDI4MmFhMDQ3NjkxMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ5NjQ1NzlkMmEwY2UwODU1ZWYxYTFhNmRhMThlNzcxODg5ODllZTIzYTg2MDdmYmZiOWRiOTFhNzExNzRlOTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_99b3e7fcd2e44243b93829b0fbb78f70",
-      "statement": "MutableNBTBlockEntity bridges internal persistence into world save/load/update tags and separately marks dirty and sends server block updates; 1.21.1 uses registry-provider-aware persistence signatures.",
-      "evidence": [
-        {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/base/api/ISyncingBlockEntity.kt#L6-L13",
-          "version": "repo-lines-v1:sha256:770b9a88d26685f1bb72f6ae08bd2a5750bb71ee61c092ca241868678d6f3eb3:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTNhMzRiMTdiZjRhYjBiZWYzM2I3Yjc2Y2YxNmI5Y2VjMjRjYTY4NTI5ZjQ0YzRlOTk5YzhiN2VjODFmZWE2ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjRlNzgzZmI3MmY5NjJkNGYxNWM1YzhkNmZmZGI5ODA2NzRlNzRmZjBjOGM3MjE1YzdkZjM0MmI1Nzc2NzI4YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQxYmQ5NTg0NTE0NTg2NzBmOGU2MTgzY2E3OTNjZGE5ZTgwZWFkMTMzZmJlMzlkZGY0ZjczNWIwOGVkODc4OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
-        },
-        {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/base/blockentity/MutableNBTBlockEntity.kt#L24-L64",
-          "version": "repo-lines-v1:sha256:8499337dd8cad8d7745354bf9bead46491d6efce37fec160e9ce8419ac5032f2:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1YjhlMGFmMWI1Zjg4YmFhYjMyN2Q1MTdjNDNhMWViZGFhNWFhYTEwYWFiN2NmNGFkM2MwMDI0MzliYzZlZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0ZWIwNjU3MWExZDU0MzY2ZjNjMDYxYjJjZDAwNzk1MWEzZDg5YmExNWZjMmQ5YmFiZTM5MTg0ZGQxYjFlNzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
-        },
-        {
-          "resource": "repo://projects/broccolium/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/base/blockentity/MutableNBTBlockEntity.kt#L28-L65",
-          "version": "repo-lines-v1:sha256:be55e7aca3c4dd8c7833763508dd7808e0f78eada54153ad052148c05ec64c17:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkYjJiOTJiNzc2ZmUxNTQ2NDAyMjAzZTFlZjQ2NmE1ODQ4MjEyMmRkOGViNmFmMzVhMzIwN2ZlZGU0NWMwNzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllYmVhNjBiMTM5NDI3MjY4OGRkYjg3OGQ1YjAzZWY0NzE2YzFhZmYyYWFjMzI0OWYxZDI4MGYxNjhhNDY0ZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMwZDQyNWZlZWU2NmJjN2UwNjkzMjViZmY3MTMyMDI3ODUwNmY4YmVkMTMxMWM3Y2Q0MjZkZWVjYmI3MDQ2NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
-        }
-      ]
-    },
-    {
-      "id": "claim_3e3dfac82ae54995a4d2509c466e5171",
-      "statement": "BaseNBTBlock emits prepared stateful items for noncreative server player destruction and restores selected properties/internal data on placement, using NBT in 1.20.1 and data components in 1.21.1.",
-      "evidence": [
-        {
-          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/base/block/BaseNBTBlock.kt#L30-L89",
-          "version": "repo-lines-v1:sha256:5a67030e232c42d47bd96533b6c971fc6cc594e9feff765a2a787834b1eab0a1:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4NWQ1ZDEyOThkMzllNjU1YzUxMTUxMTAzOWQ2ZTFmM2M2ZmUwZjQ3MDNiMmQ1MjgwNTcwMmRiNWFlMGVjOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYjMzOWMxN2Q0Y2M1NGU3MGM0ZmNmZWNiNjExYmI5ZTdkMzYzZjI1YjE4ZTA5MjNhMWQzMDZjYzk1OTI0ZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZhMDNiMDk2YmY5OTkwMDQxYTM3NzE2N2I1YTI3MzFkZjdlMmNhZDhlMmI0MzYxODNhMGM1Yjg0OGQ2NjAwZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjZThkMTM3ZmE0NGFjNjY0OGIzYTRhNmY1NmY1MGJhYmE2NzczNDE0NWQwNDc0YTRlNTU1Njk3ZmQyNmJlYzgifQ"
-        },
-        {
-          "resource": "repo://projects/broccolium/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/base/block/BaseNBTBlock.kt#L28-L88",
-          "version": "repo-lines-v1:sha256:4e26327636916893454aded75e9626095ee23a82ddce4f8136b1671f9ab35a46:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4NWQ1ZDEyOThkMzllNjU1YzUxMTUxMTAzOWQ2ZTFmM2M2ZmUwZjQ3MDNiMmQ1MjgwNTcwMmRiNWFlMGVjOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYjMzOWMxN2Q0Y2M1NGU3MGM0ZmNmZWNiNjExYmI5ZTdkMzYzZjI1YjE4ZTA5MjNhMWQzMDZjYzk1OTI0ZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3NDExNWRiNjljYjEwODZhZWRiYTY1OTY3ZjU3MGJiMmViYzkwYmY2YTdiODVmMzQ2ZjQyOTY2MDc3ZTFlNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjZThkMTM3ZmE0NGFjNjY0OGIzYTRhNmY1NmY1MGJhYmE2NzczNDE0NWQwNDc0YTRlNTU1Njk3ZmQyNmJlYzgifQ"
+          "resource": "repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/blockentity/MutableNBTBlockEntity.kt",
+          "version": "repo-file-v1:sha256:2fc077ecc0388a7fad6957245fdfd68134152d11dca544d090c23ce0ad64b8d7"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-16T16:31:45.808Z"
+    "at": "2026-10-19T00:45:42.798Z"
   }
 }
