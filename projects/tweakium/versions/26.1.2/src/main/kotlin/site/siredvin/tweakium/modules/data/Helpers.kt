@@ -27,12 +27,12 @@ fun turtleUpgrades(generators: ItemModelGenerators, block: Block, textureSuffix:
     val realBaseID = baseID ?: PlatformRegistries.BLOCKS.getKey(block).withPrefix("turtle/")
     TURTLE_RIGHT_UPGRADE.create(
         realBaseID.withSuffix("_right"),
-        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getBlockTexture(block).withSuffix(textureSuffix)),
+        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getBlockTexture(block, textureSuffix)),
         generators.modelOutput,
     )
     TURTLE_LEFT_UPGRADE.create(
         realBaseID.withSuffix("_left"),
-        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getBlockTexture(block).withSuffix(textureSuffix)),
+        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getBlockTexture(block, textureSuffix)),
         generators.modelOutput,
     )
 }
@@ -41,12 +41,12 @@ fun turtleUpgrades(generators: ItemModelGenerators, item: Item, textureSuffix: S
     val realBaseID = baseID ?: PlatformRegistries.ITEMS.getKey(item).withPrefix("turtle/")
     TURTLE_RIGHT_UPGRADE.create(
         realBaseID.withSuffix("_right"),
-        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getItemTexture(item).withSuffix(textureSuffix)),
+        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getItemTexture(item, textureSuffix)),
         generators.modelOutput,
     )
     TURTLE_LEFT_UPGRADE.create(
         realBaseID.withSuffix("_left"),
-        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getItemTexture(item).withSuffix(textureSuffix)),
+        TextureMapping().put(TextureSlot.TEXTURE, TextureMapping.getItemTexture(item, textureSuffix)),
         generators.modelOutput,
     )
 }

@@ -15,7 +15,7 @@ object TweakiumBlocks {
             GenericBlockEntityBlock(
                 { TweakiumBlockEntityTypes.CREATIVE_FILLER },
                 false,
-                BlockUtil.defaultProperties().setId(
+                properties = BlockUtil.defaultProperties().setId(
                     ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(TweakiumCore.MOD_ID, "creative_filler")),
                 ),
             )

@@ -23,7 +23,7 @@ object NBTUtil {
         } else if (`object` is Number) {
             DoubleTag.valueOf(`object`.toDouble())
         } else if (`object` is String) {
-            StringTag.valueOf(`object`.toString())
+            StringTag.valueOf(`object`)
         } else if (`object` is Map<*, *>) {
             val nbt = CompoundTag()
             for ((key, value1) in `object`) {

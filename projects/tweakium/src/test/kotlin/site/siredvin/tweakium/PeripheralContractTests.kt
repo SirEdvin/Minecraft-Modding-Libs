@@ -5,6 +5,7 @@ import dan200.computercraft.api.peripheral.IComputerAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.LongTag
 import org.junit.jupiter.api.Test
 import site.siredvin.tweakium.modules.peripheral.OwnedPeripheral
 import site.siredvin.tweakium.modules.peripheral.api.IPeripheralPlugin
@@ -115,7 +116,7 @@ class PeripheralContractTests {
         assertEquals(3, restored.getInt("count"))
         assertEquals(1.25, restored.getDouble("rate"))
         assertTrue(restored.getBoolean("enabled"))
-        assertEquals(9L, tag.getLong("time"))
+        assertEquals(LongTag.valueOf(9L), tag.get("time"))
         assertEquals(5, changes)
         storage.remove("name")
         assertFalse(storage.has("name"))

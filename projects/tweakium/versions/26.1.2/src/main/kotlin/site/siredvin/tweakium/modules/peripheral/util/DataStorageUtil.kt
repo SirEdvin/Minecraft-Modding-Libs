@@ -106,7 +106,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
     override fun has(key: String): Boolean {
         val customData = extractCustomData()
         if (customData.isEmpty) return false
-        return customData.get().contains(key)
+        return customData.get().copyTag().contains(key)
     }
 
     override fun putString(key: String, value: String) {
