@@ -3,8 +3,8 @@ package site.siredvin.broccolium.modules.platform
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import site.siredvin.broccolium.modules.platform.api.RegistryWrapper
 import java.util.Optional

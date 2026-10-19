@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "site.siredvin.testiarium.cct.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "GameTestServerMixin",
+    "BlockableEventLoopInvoker"
+  ]
+}

@@ -1,12 +1,12 @@
 package site.siredvin.tweakium.modules.plugins
 
 import dan200.computercraft.api.lua.LuaException
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import site.siredvin.broccolium.modules.platform.PlatformRegistries
+import site.siredvin.tweakium.modules.peripheral.representation.LuaInterpretation
 import site.siredvin.tweakium.modules.platform.ComputerPlatformToolkit
 import java.util.function.Function
 import java.util.function.Predicate
@@ -86,11 +86,21 @@ object PeripheralPluginUtils {
     private val ALWAYS_ITEM_STACK_TRUE: Predicate<ItemStack> = Predicate { true }
     private val ALWAYS_BLOCK_STATE_TRUE: Predicate<BlockState> = Predicate { true }
 
+    private fun queryMaps(something: Any?): Collection<Map<*, *>> {
+        if (something !is Map<*, *> || something.isEmpty() || something.values.any { it !is Map<*, *> }) throw LuaException("Logical predicate requires a nonempty table of predicate maps")
+        return something.values.map { it as Map<*, *> }
+    }
+
+    private fun queryStrings(something: Any?): Set<String> {
+        if (something !is Map<*, *> || something.isEmpty() || something.values.any { it !is String }) throw LuaException("in or not_in requires a nonempty table of strings")
+        return something.values.map { it as String }.toSet()
+    }
+
     private fun <T> buildOrPredicate(something: Any?, predicateBuilder: Function<Map<*, *>, Predicate<T>>): Predicate<T> {
         if (something !is Map<*, *>) {
             throw LuaException("Or predicate should contain table with another predicate maps")
         }
-        val predicates = something.values.filter { it is Map<*, *> }.map { predicateBuilder.apply(it as Map<*, *>) }
+        val predicates = queryMaps(something).map { predicateBuilder.apply(it) }
         return predicates.reduce(Predicate<T>::or)
     }
 
@@ -98,14 +108,14 @@ object PeripheralPluginUtils {
         if (something !is Map<*, *>) {
             throw LuaException("And predicate should contain table with another predicate maps")
         }
-        return something.values.filter { it is Map<*, *> }.map { predicateBuilder.apply(it as Map<*, *>) }.reduce(Predicate<T>::and)
+        return queryMaps(something).map { predicateBuilder.apply(it) }.reduce(Predicate<T>::and)
     }
 
     private fun <T> buildNonePredicate(something: Any?, predicateBuilder: Function<Map<*, *>, Predicate<T>>): Predicate<T> {
         if (something !is Map<*, *>) {
             throw LuaException("And predicate should contain table with another predicate maps")
         }
-        return something.values.filter { it is Map<*, *> }.map { predicateBuilder.apply(it as Map<*, *>).negate() }.reduce(Predicate<T>::and)
+        return queryMaps(something).map { predicateBuilder.apply(it).negate() }.reduce(Predicate<T>::and)
     }
 
     private fun <T> buildNotPredicate(something: Any?, predicateBuilder: Function<Map<*, *>, Predicate<T>>): Predicate<T> {
@@ -124,9 +134,9 @@ object PeripheralPluginUtils {
             is Map<*, *> -> {
                 for (entry in value.entries) {
                     if (StringQueryField.IN.contains(entry.key)) {
-                        return listPredicate((entry.value as Map<*, *>).values.map { it.toString() }.toSet())
+                        return listPredicate(queryStrings(entry.value))
                     } else if (StringQueryField.NOT_IN.contains(entry.key)) {
-                        return listPredicate((entry.value as Map<*, *>).values.map { it.toString() }.toSet()).negate()
+                        return listPredicate(queryStrings(entry.value)).negate()
                     }
                 }
                 throw LuaException("in or not_in instructions should be in the table")
@@ -139,15 +149,15 @@ object PeripheralPluginUtils {
     }
 
     private fun buildItemNamePredicate(name: String): Predicate<ItemStack> {
-        val item = PlatformRegistries.ITEMS.get(ResourceLocation.parse(name))
-        if (item == Items.AIR) {
+        val item = PlatformRegistries.ITEMS.tryGet(LuaInterpretation.asID(name))
+        if (item == null || item == Items.AIR) {
             throw LuaException("There is no item $name")
         }
         return Predicate { it.`is`(item) }
     }
 
     private fun buildItemNameInPredicate(names: Set<String>): Predicate<ItemStack> {
-        val items = names.map { PlatformRegistries.ITEMS.get(ResourceLocation.parse(it)) }.filter { it != Items.AIR }.toSet()
+        val items = names.mapNotNull { PlatformRegistries.ITEMS.tryGet(LuaInterpretation.asID(it)) }.filter { it != Items.AIR }.toSet()
         if (items.isEmpty()) {
             throw LuaException("Zero valid items for filtering by name")
         }
@@ -184,6 +194,7 @@ object PeripheralPluginUtils {
         } else if (something is Map<*, *>) {
             var aggregatedPredicate = ALWAYS_ITEM_STACK_TRUE
             for (entry in something.entries) {
+                if (entry.value == null || ITEM_OPERATION_CONFIGURATION.none { entry.key in it.first }) throw LuaException("Unknown or empty item predicate: ${entry.key}")
                 for (instruction in ITEM_OPERATION_CONFIGURATION) {
                     if (instruction.first.contains(entry.key) && entry.value != null) {
                         aggregatedPredicate = aggregatedPredicate.and(
@@ -198,15 +209,15 @@ object PeripheralPluginUtils {
     }
 
     private fun buildBlockNamePredicate(name: String): Predicate<BlockState> {
-        val block = PlatformRegistries.BLOCKS.get(ResourceLocation.parse(name))
-        if (block == Blocks.AIR) {
+        val block = PlatformRegistries.BLOCKS.tryGet(LuaInterpretation.asID(name))
+        if (block == null || block == Blocks.AIR) {
             throw LuaException("There is no item $name")
         }
         return Predicate { it.`is`(block) }
     }
 
     private fun buildBlockNameInPredicate(names: Set<String>): Predicate<BlockState> {
-        val items = names.map { PlatformRegistries.BLOCKS.get(ResourceLocation.parse(it)) }.filter { it != Blocks.AIR }.toSet()
+        val items = names.mapNotNull { PlatformRegistries.BLOCKS.tryGet(LuaInterpretation.asID(it)) }.filter { it != Blocks.AIR }.toSet()
         if (items.isEmpty()) {
             throw LuaException("Zero valid items for filtering by name")
         }
@@ -238,6 +249,7 @@ object PeripheralPluginUtils {
         } else if (something is Map<*, *>) {
             var aggregatedPredicate = ALWAYS_BLOCK_STATE_TRUE
             for (entry in something.entries) {
+                if (entry.value == null || BLOCK_OPERATION_CONFIGURATION.none { entry.key in it.first }) throw LuaException("Unknown or empty block predicate: ${entry.key}")
                 for (instruction in BLOCK_OPERATION_CONFIGURATION) {
                     if (instruction.first.contains(entry.key) && entry.value != null) {
                         aggregatedPredicate = aggregatedPredicate.and(

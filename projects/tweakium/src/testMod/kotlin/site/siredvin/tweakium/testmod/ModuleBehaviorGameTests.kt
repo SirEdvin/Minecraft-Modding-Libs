@@ -5,7 +5,6 @@ import dan200.computercraft.api.peripheral.IComputerAccess
 import dan200.computercraft.api.peripheral.IPeripheral
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.item.ItemEntity
@@ -85,6 +84,25 @@ class ModuleBehaviorGameTests {
         } catch (_: LuaException) { }
     }
 
+    @GameTest(template = "modulebehavior.empty")
+    fun malformedQueriesAreRejectedBeforeNativeTransfer(helper: GameTestHelper) = helper.immediate {
+        val queries = listOf<Any>(
+            "Invalid Identifier!",
+            mapOf("or" to emptyMap<Int, Any>()),
+            mapOf("and" to mapOf(1 to "not a predicate")),
+            mapOf("name" to mapOf("in" to 3)),
+            mapOf("unknown_instruction" to "minecraft:diamond"),
+        )
+        for (query in queries) {
+            for (block in listOf(false, true)) {
+                try {
+                    if (block) PeripheralPluginUtils.blockQueryToPredicate(query) else PeripheralPluginUtils.itemQueryToPredicate(query)
+                    error("Malformed query was accepted: $query")
+                } catch (_: LuaException) { }
+            }
+        }
+    }
+
     private fun computerFor(target: ChestBlockEntity): IComputerAccess {
         val peripheral = object : IPeripheral {
             override fun getType() = "inventory"
@@ -101,7 +119,7 @@ class ModuleBehaviorGameTests {
     fun inventoryQueryPullHonorsDestinationAndConservesItems(helper: GameTestHelper) = helper.immediate {
         val pos = BlockPos(1, 1, 1)
         helper.setBlock(pos, Blocks.CHEST)
-        val source = helper.getBlockEntity(pos) as ChestBlockEntity
+        val source = helper.level.getBlockEntity(helper.absolutePos(pos)) as ChestBlockEntity
         source.setItem(0, ItemStack(Items.DIAMOND, 12))
         val destination = SimpleContainer(3)
         val plugin = SuppliedInventoryPlugin({ helper.level }, { ContainerWrapper(destination) }, 4)
@@ -117,7 +135,7 @@ class ModuleBehaviorGameTests {
     fun numericPullRejectsOutOfRangeDestinationBeforeMutation(helper: GameTestHelper) = helper.immediate {
         val pos = BlockPos(1, 1, 1)
         helper.setBlock(pos, Blocks.CHEST)
-        val source = helper.getBlockEntity(pos) as ChestBlockEntity
+        val source = helper.level.getBlockEntity(helper.absolutePos(pos)) as ChestBlockEntity
         source.setItem(0, ItemStack(Items.DIAMOND, 12))
         val destination = SimpleContainer(3)
         val plugin = SuppliedInventoryPlugin({ helper.level }, { ContainerWrapper(destination) }, 4)
@@ -135,7 +153,9 @@ class ModuleBehaviorGameTests {
     fun fakePlayerMissAndUnbreakableBlockDoNotMutateWorld(helper: GameTestHelper) = helper.immediate {
         val player = ComputerPlatformToolkit.get().createFakePlayer(helper.level, FakePlayerProxy.DUMMY_PROFILE)
         val origin = helper.absolutePos(BlockPos(1, 2, 1))
-        player.moveTo(origin.x + 0.5, origin.y.toDouble(), origin.z + 0.5, 0f, 0f)
+        player.setPos(origin.x + 0.5, origin.y.toDouble(), origin.z + 0.5)
+        player.yRot = 0f
+        player.xRot = 0f
         val proxy = FakePlayerProxy(player)
         check(proxy.findHit(skipEntity = true, skipBlock = true).type == HitResult.Type.MISS)
         check(!proxy.swing(true, true, null).first)
@@ -150,7 +170,7 @@ class ModuleBehaviorGameTests {
     fun failedPlayerActionAlwaysReleasesGlobalDropCapture(helper: GameTestHelper) = helper.immediate {
         val player = ComputerPlatformToolkit.get().createFakePlayer(helper.level, FakePlayerProxy.DUMMY_PROFILE)
         val position = helper.absolutePos(BlockPos(1, 2, 1))
-        player.moveTo(position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
+        player.setPos(position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
         val proxy = FakePlayerProxy(player)
         val sentinel = IllegalStateException("action failed")
         // Exercise both overloads: neither may leak process-global capture after an exception.

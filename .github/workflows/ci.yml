@@ -18,59 +18,122 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        active: ["1.20.1", "1.21.1", "26.1.2"]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Java 21
+      - name: Install Java 17 toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install Java 21 toolchain
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "21"
 
+      - name: Set up Java 25 launcher and toolchain
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build all Stonecutter nodes
-        run: ./gradlew cleanTest build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon
+      - name: Build all 36 nodes in the selected active state
+        env:
+          ACTIVE: ${{ matrix.active }}
+        run: |
+          mkdir -p build/verification
+          timeout --foreground 300s ./gradlew "Set active project to $ACTIVE" --no-daemon > build/verification/switch.log 2>&1
+          touch build/verification/unit-start
+          timeout --foreground 1800s ./gradlew cleanTest build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon --console=plain > build/verification/build.log 2>&1
+          python3 scripts/check-test-reports.py --since build/verification/unit-start --output build/verification/units.json
 
       - name: Verify publication contracts
-        run: python3 scripts/check-publications.py
-
-      - name: Run server GameTests on all loaders and versions
-        run: >-
-          timeout --foreground 600s ./gradlew
-          :broccolium:fabric:1.20.1:runStorageGameTest
-          :broccolium:fabric:1.21.1:runStorageGameTest
-          :testiarium:forge:1.20.1:runGameTestServer
-          :testiarium:forge:1.21.1:runGameTestServer
-          :testiarium:fabric:1.20.1:runServer
-          :testiarium:fabric:1.21.1:runServer
-          :tweakium:forge:1.20.1:runGameTestServer
-          :tweakium:forge:1.21.1:runGameTestServer
-          :tweakium:fabric:1.20.1:runPeripheralGameTest
-          :tweakium:fabric:1.21.1:runPeripheralGameTest
-          --no-daemon
-
-      - name: Build with 1.21.1 active
         run: |
-          ./gradlew 'Set active project to 1.21.1' --no-daemon
-          ./gradlew build generatePomFileForMavenPublication generateMetadataFileForMavenPublication --no-daemon
+          python3 scripts/test-verification.py
           python3 scripts/check-publications.py
 
       - name: Verify switching back preserves tracked sources
+        if: always()
         run: |
-          ./gradlew 'Set active project to 1.20.1' --no-daemon
+          timeout --foreground 300s ./gradlew 'Set active project to 1.20.1' --no-daemon > build/verification/restore.log 2>&1
           git diff --exit-code
 
       - name: Upload test reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-reports
+          name: build-reports-active-${{ matrix.active }}
           path: |
+            build/verification/**
             projects/**/build/test-results/**
             projects/**/build/reports/tests/**
+
+  native:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        minecraft: ["1.20.1", "1.21.1", "26.1.2"]
+        loader: [fabric, forge]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install virtual display
+        run: sudo apt-get update && sudo apt-get install --yes xvfb
+      - name: Native and client harnesses with exact fresh-report guards
+        env:
+          MC: ${{ matrix.minecraft }}
+          LOADER: ${{ matrix.loader }}
+          LOG_DIR: ${{ github.workspace }}/build/verification
+        run: |
+          mkdir -p "$LOG_DIR"
+          run=scripts/verification/run-gametest.sh
+          if [ "$LOADER" = fabric ]; then
+            "$run" ":broccolium:fabric:$MC:runStorageGameTest"
+            "$run" ":testiarium:fabric:$MC:runServer"
+            "$run" ":testiarium:fabric:$MC:runCctGameTest"
+            "$run" ":tweakium:fabric:$MC:runPeripheralGameTest"
+          else
+            if [ "$MC" = 26.1.2 ]; then "$run" ":broccolium:forge:$MC:runStorageGameTest"; fi
+            "$run" ":testiarium:forge:$MC:runGameTestServer"
+            "$run" ":testiarium:forge:$MC:runGameTestServer" -Ptestiarium.cct
+            "$run" ":tweakium:forge:$MC:runGameTestServer"
+          fi
+          "$run" ":testiarium:$LOADER:$MC:runClientGameTest"
+      - name: Upload native failure and report evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.loader }}-${{ matrix.minecraft }}
+          path: |
+            build/verification/**
+            projects/**/build/test-results/**
+            projects/**/run/**/logs/**

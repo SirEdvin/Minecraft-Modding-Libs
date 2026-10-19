@@ -119,6 +119,7 @@ if (modernForge) {
 }
 
 repositories {
+    maven("https://repo.sleeping.town/") { content { includeGroup("dev.emi") } }
     maven("https://thedarkcolour.github.io/KotlinForForge/") { content { includeGroup("thedarkcolour") } }
     // location of the maven that hosts JEI files since January 2023
     maven {
@@ -137,11 +138,18 @@ sourceSets.test.configure {
     runtimeClasspath += project(":peripheralium:${sc.current.project}").sourceSets.main.get().output
 }
 
+// Development mods must be discoverable on the run classpath, not published.
+val localRuntime = configurations.maybeCreate("localRuntime").apply {
+    isCanBeConsumed = false
+    isCanBeResolved = false
+}
+configurations.runtimeClasspath { extendsFrom(localRuntime) }
+
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(if (modernForge) libs.forge.kotlin.neoforge else libs.forge.kotlin)
     add(if (modernForge) "implementation" else "modImplementation", if (modernForge) libs.cc.tweaked.neoforge else libs.cc.tweaked.forge)
-    add(if (modernForge) "runtimeOnly" else "modRuntimeOnly", if (modernForge) libs.jei.neoforge else libs.jei.forge)
+    add(if (modernForge) "localRuntime" else "modRuntimeOnly", if (modernForge) libs.emi.neoforge else libs.emi.forge)
 
     implementation(project.project(":broccolium:forge:${sc.current.project}").sourceSets.main.get().output)
     implementation(project.project(":tweakium:forge:${sc.current.project}").sourceSets.main.get().output)
@@ -164,6 +172,20 @@ integrationProject.sourceSets.named("testMod") {
     integrationProject.dependencies.add(compileOnlyConfigurationName, commonProject.sourceSets["testMod"].output)
     runtimeClasspath += commonProject.sourceSets["testMod"].output
 }
+extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyForge") {
+    val dependencies = listOf("broccolium", "tweakium").map { library ->
+        mods.register(library) {
+            sourceSet(project(":$library:forge:${sc.current.project}").sourceSets.main.get())
+            sourceSet(project(":$library:${sc.current.project}").sourceSets.main.get())
+        }
+    }
+    runs.configureEach {
+        if (name in listOf("client", "server", "data")) {
+            loadedMods.add(mods.named("peripheralium"))
+            dependencies.forEach { loadedMods.add(it) }
+        }
+    }
+}
 integrationProject.extensions.configure<ModDevExtension>(if (modernForge) "neoForge" else "legacyForge") {
     val peripheralium = mods.register("peripheralium") {
         sourceSet(peripheraliumMain)
@@ -185,7 +207,7 @@ publishingShaking {
             named<MavenPublication>("maven") {
                 mavenDependencies {
                     exclude(dependencies.create("site.siredvin:"))
-                    exclude(if (modernForge) libs.jei.neoforge.get() else libs.jei.forge.get())
+                    exclude(if (modernForge) libs.emi.neoforge.get() else libs.emi.forge.get())
                 }
             }
         }

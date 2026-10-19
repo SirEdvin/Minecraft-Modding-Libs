@@ -30,6 +30,7 @@ object FakePlayerProviderBlockEntity {
             throw IllegalArgumentException("Cannot use fake player logic without owned block entity")
         }
         val realPlayer = blockEntity.player ?: throw LuaException("Cannot init player for this block entity computer for some reason")
+        if (registeredPlayers.getIfPresent(blockEntity)?.fakePlayer?.gameProfile?.let { it != realPlayer.gameProfile } == true) registeredPlayers.invalidate(blockEntity)
         val player: FakePlayerProxy = registeredPlayers.get(blockEntity)
         val storage = AgnosticItemStorageLookup.extractFromBlock(blockEntity.level!!, blockEntity.blockPos, blockEntity, null) as? SlottedAgnosticStorage<ItemStack, Int>
         if (!skipInventory && storage == null) {

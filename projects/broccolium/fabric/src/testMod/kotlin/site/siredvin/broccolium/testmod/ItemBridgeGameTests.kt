@@ -1,11 +1,8 @@
 package site.siredvin.broccolium.testmod
 
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest
-import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction
-import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.item.ItemStack

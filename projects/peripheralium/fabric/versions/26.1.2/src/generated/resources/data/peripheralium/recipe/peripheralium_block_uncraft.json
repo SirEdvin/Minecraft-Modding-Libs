@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "peripheralium:peripheralium_block"
+  ],
+  "result": {
+    "count": 9,
+    "id": "peripheralium:peripheralium_dust"
+  }
+}

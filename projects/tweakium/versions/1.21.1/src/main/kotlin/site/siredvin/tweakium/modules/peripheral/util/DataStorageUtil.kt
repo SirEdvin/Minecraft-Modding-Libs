@@ -9,7 +9,6 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.TypedDataComponent
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
-import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.item.component.CustomData
 import site.siredvin.broccolium.modules.base.util.DataComponentUtil
 import site.siredvin.tweakium.modules.peripheral.api.IDataStorage
@@ -179,8 +178,7 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
 
     override fun getUUID(key: String): UUID {
         val customData = extractCustomData()
-        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-        if (customData.isEmpty) return NbtUtils.loadUUID(null)
+        if (customData.isEmpty) return CompoundTag().getUUID(key)
         return customData.get().copyTag().getUUID(key)
     }
 

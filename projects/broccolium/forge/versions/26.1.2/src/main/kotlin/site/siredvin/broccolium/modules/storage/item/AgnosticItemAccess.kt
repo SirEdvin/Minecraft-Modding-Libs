@@ -13,7 +13,8 @@ import java.lang.ref.WeakReference
 internal class AgnosticItemAccess private constructor(
     private val storage: ReplaceableItemStorage,
     private val slot: Int,
-) : SnapshotJournal<ItemStack>(), ItemAccess {
+) : SnapshotJournal<ItemStack>(),
+    ItemAccess {
     companion object {
         private val wrappers: MutableMap<SlottedAgnosticStorage<ItemStack, Int>, MutableMap<Int, WeakReference<AgnosticItemAccess>>> =
             MapMaker().weakKeys().makeMap()

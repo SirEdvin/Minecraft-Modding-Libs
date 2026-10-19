@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+[[mods]]
+modId="tweakium_client_testmod"
+version="1.0.0"
+# Deliberately exercise early Java-consumer initialization under a foreign mod context.
+[[dependencies.tweakium_client_testmod]]
+modId="tweakium"
+type="required"
+versionRange="[2.0.0,)"
+ordering="BEFORE"
+side="BOTH"
+[[dependencies.tweakium_client_testmod]]
+modId="peripheralium"
+type="required"
+versionRange="[2.0.0,)"
+ordering="BEFORE"
+side="BOTH"
+[[mixins]]
+config="tweakium-client.mixins.json"

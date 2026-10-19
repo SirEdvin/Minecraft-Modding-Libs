@@ -1,10 +1,10 @@
 package site.siredvin.tweakium.test
 
 import net.minecraft.world.item.Items
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Test
 import site.siredvin.broccolium.test.WithMinecraft
 import site.siredvin.tweakium.modules.plugins.PeripheralPluginUtils
-import kotlin.test.Test
-import kotlin.test.assertFalse
 
 @WithMinecraft
 @WithTweakium

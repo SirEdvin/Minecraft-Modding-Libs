@@ -100,6 +100,7 @@ if (modernForge) {
 }
 
 repositories {
+    maven("https://repo.sleeping.town/") { content { includeGroup("dev.emi") } }
     maven("https://thedarkcolour.github.io/KotlinForForge/") { content { includeGroup("thedarkcolour") } }
     // location of the maven that hosts JEI files since January 2023
     maven {
@@ -154,14 +155,21 @@ artifacts {
     }
 }
 
+// Development mods must be discoverable on the run classpath, not published.
+val localRuntime = configurations.maybeCreate("localRuntime").apply {
+    isCanBeConsumed = false
+    isCanBeResolved = false
+}
+configurations.runtimeClasspath { extendsFrom(localRuntime) }
+
 dependencies {
     implementation(libs.bundles.kotlin)
     if (modernForge) {
         implementation(libs.forge.kotlin.neoforge)
-        runtimeOnly(libs.jei.neoforge)
+        add("localRuntime", libs.emi.neoforge)
     } else {
         implementation(libs.forge.kotlin)
-        add("modRuntimeOnly", libs.jei.forge)
+        add("modRuntimeOnly", libs.emi.forge)
     }
 
     testImplementation(kotlin("test"))
@@ -184,7 +192,7 @@ publishingShaking {
             named<MavenPublication>("maven") {
                 mavenDependencies {
                     exclude(dependencies.create("site.siredvin:"))
-                    exclude(if (modernForge) libs.jei.neoforge.get() else libs.jei.forge.get())
+                    exclude(if (modernForge) libs.emi.neoforge.get() else libs.emi.forge.get())
                 }
             }
         }

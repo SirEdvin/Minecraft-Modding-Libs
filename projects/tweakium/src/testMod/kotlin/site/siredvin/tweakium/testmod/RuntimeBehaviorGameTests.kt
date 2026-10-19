@@ -8,7 +8,6 @@ import dan200.computercraft.api.lua.ObjectArguments
 import dan200.computercraft.api.peripheral.IComputerAccess
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestHelper
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.item.ItemEntity
@@ -110,13 +109,13 @@ class RuntimeBehaviorGameTests {
         val position = helper.absolutePos(BlockPos(1, 1, 1))
         helper.level.setBlockAndUpdate(position, Blocks.DIRT.defaultBlockState())
         val player = ComputerPlatformToolkit.get().createFakePlayer(helper.level, GameProfile(UUID.randomUUID(), "BreakFixture"))
-        player.moveTo(position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
+        player.setPos(position.x.toDouble(), position.y.toDouble(), position.z.toDouble())
         val proxy = FakePlayerProxy(player)
         try {
             val hit = BlockHitResult(Vec3.atLowerCornerOf(position), Direction.UP, position, false)
             repeat(3) { if (!helper.level.isEmptyBlock(position)) check(proxy.swingBlock(hit).first) }
             check(helper.level.isEmptyBlock(position)) { "Fake player did not destroy the block" }
-            check(player.inventory.items.filter { it.`is`(Items.DIRT) }.sumOf { it.count } == 1) { "Block drop was lost or duplicated" }
+            check((0 until player.inventory.containerSize).map { player.inventory.getItem(it) }.filter { it.`is`(Items.DIRT) }.sumOf { it.count } == 1) { "Block drop was lost or duplicated" }
         } finally {
             player.inventory.clearContent()
         }

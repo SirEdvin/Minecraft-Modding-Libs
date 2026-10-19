@@ -38,48 +38,56 @@ class ForgeGeneratorSink(private val generator: DataGenerator, private val event
         add(DataProvider.Factory { output -> LootTableProvider(output, setOf(), tables, registries) })
     }
 
-    override fun blockTags(modID: String, tags: Consumer<TagConsumer<Block>>): TagsProvider<Block> = add(DataProvider.Factory { output ->
-        object : BlockTagsProvider(output, registries, modID) {
-            override fun addTags(registries: HolderLookup.Provider) {
-                tags.accept { tag -> LibTagAppender(PlatformRegistries.BLOCKS, getOrCreateRawBuilder(tag)) }
+    override fun blockTags(modID: String, tags: Consumer<TagConsumer<Block>>): TagsProvider<Block> = add(
+        DataProvider.Factory { output ->
+            object : BlockTagsProvider(output, registries, modID) {
+                override fun addTags(registries: HolderLookup.Provider) {
+                    tags.accept { tag -> LibTagAppender(PlatformRegistries.BLOCKS, getOrCreateRawBuilder(tag)) }
+                }
             }
-        }
-    })
+        },
+    )
 
-    override fun entityTags(modID: String, tags: Consumer<TagConsumer<EntityType<*>>>): TagsProvider<EntityType<*>> = add(DataProvider.Factory { output ->
-        object : EntityTypeTagsProvider(output, registries, modID) {
-            override fun addTags(registries: HolderLookup.Provider) {
-                tags.accept { tag -> LibTagAppender(PlatformRegistries.ENTITY_TYPES, getOrCreateRawBuilder(tag)) }
+    override fun entityTags(modID: String, tags: Consumer<TagConsumer<EntityType<*>>>): TagsProvider<EntityType<*>> = add(
+        DataProvider.Factory { output ->
+            object : EntityTypeTagsProvider(output, registries, modID) {
+                override fun addTags(registries: HolderLookup.Provider) {
+                    tags.accept { tag -> LibTagAppender(PlatformRegistries.ENTITY_TYPES, getOrCreateRawBuilder(tag)) }
+                }
             }
-        }
-    })
+        },
+    )
 
-    override fun itemTags(modID: String, tags: Consumer<ItemTagConsumer>, blocks: TagsProvider<Block>): TagsProvider<Item> = add(DataProvider.Factory { output ->
-        object : ItemTagsProvider(output, registries, modID) {
-            private lateinit var blockTags: TagsProvider.TagLookup<Block>
+    override fun itemTags(modID: String, tags: Consumer<ItemTagConsumer>, blocks: TagsProvider<Block>): TagsProvider<Item> = add(
+        DataProvider.Factory { output ->
+            object : ItemTagsProvider(output, registries, modID) {
+                private lateinit var blockTags: TagsProvider.TagLookup<Block>
 
-            override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = registries.thenCombine(blocks.contentsGetter()) { lookup, blockLookup ->
-                blockTags = blockLookup
-                builders.clear()
-                addTags(lookup)
-                lookup
+                override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = registries.thenCombine(blocks.contentsGetter()) { lookup, blockLookup ->
+                    blockTags = blockLookup
+                    builders.clear()
+                    addTags(lookup)
+                    lookup
+                }
+
+                override fun addTags(registries: HolderLookup.Provider) {
+                    tags.accept(object : ItemTagConsumer {
+                        override fun tag(tag: TagKey<Item>): LibTagAppender<Item> = LibTagAppender(PlatformRegistries.ITEMS, getOrCreateRawBuilder(tag))
+
+                        override fun copy(block: TagKey<Block>, item: TagKey<Item>) {
+                            val source = blockTags.apply(block).orElseThrow { IllegalArgumentException("Cannot copy missing block tag $block") }
+                            val destination = getOrCreateRawBuilder(item)
+                            source.build().forEach(destination::add)
+                        }
+                    })
+                }
             }
-
-            override fun addTags(registries: HolderLookup.Provider) {
-                tags.accept(object : ItemTagConsumer {
-                    override fun tag(tag: TagKey<Item>): LibTagAppender<Item> = LibTagAppender(PlatformRegistries.ITEMS, getOrCreateRawBuilder(tag))
-
-                    override fun copy(block: TagKey<Block>, item: TagKey<Item>) {
-                        val source = blockTags.apply(block).orElseThrow { IllegalArgumentException("Cannot copy missing block tag $block") }
-                        val destination = getOrCreateRawBuilder(item)
-                        source.build().forEach(destination::add)
-                    }
-                })
-            }
-        }
-    })
+        },
+    )
 
     override fun models(blocks: Consumer<BlockModelGenerators>, items: Consumer<ItemModelGenerators>) {
-        if (event is GatherDataEvent.Client) add(DataProvider.Factory { ModelProvider(it, blocks, items) })
+        // Register skipped providers too: their cache must survive the server
+        // pass, otherwise its stale-file purge deletes the client models.
+        generator.addProvider(event is GatherDataEvent.Client, DataProvider.Factory { ModelProvider(it, blocks, items) })
     }
 }

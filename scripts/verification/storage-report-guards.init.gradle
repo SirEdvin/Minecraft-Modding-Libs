@@ -1,0 +1,57 @@
+// Guard-only mutation probes, NOT Minecraft execution evidence. Restores exact native XML.
+// ./gradlew r2StorageGuardProbe -I scripts/verification/storage-report-guards.init.gradle --no-daemon
+import groovy.xml.XmlParser
+import groovy.xml.XmlUtil
+
+gradle.projectsEvaluated {
+    gradle.rootProject.tasks.register('r2StorageGuardProbe') {
+        doLast {
+            int checked = 0
+            for (String path : [':broccolium:fabric:1.20.1', ':broccolium:fabric:1.21.1', ':broccolium:fabric:26.1.2', ':broccolium:forge:26.1.2']) {
+                def owner = gradle.rootProject.project(path)
+                def run = owner.tasks.named('runStorageGameTest').get()
+                def report = owner.layout.buildDirectory.file('test-results/storage-gametest.xml').get().asFile
+                assert report.isFile(): "Run actual native tests first: $report"
+                byte[] saved = report.bytes
+                def guards = run.actions.findAll { action ->
+                    def field = action.class.declaredFields.find { it.name == 'action' }
+                    if (field == null) return false
+                    field.accessible = true
+                    field.get(action).class.name.contains('Gametest_reports_gradle')
+                }
+                assert guards.size() == 2: 'Refuse to execute unrelated task actions'
+                def valid = new String(saved, 'UTF-8')
+                def mutate = { change ->
+                    def root = new XmlParser().parseText(valid)
+                    change(root)
+                    root.attributes().put('tests', root.testcase.size().toString())
+                    XmlUtil.serialize(root)
+                }
+                def scenarios = [
+                    [name: 'exact-native-inventory', accepted: true, text: valid],
+                    [name: 'always-pass-only', accepted: false, text: '<testsuite tests="1" failures="0" skipped="0"><testcase name="minecraft:always_pass"/></testsuite>'],
+                    [name: 'missing-fixture', accepted: false, text: mutate { root -> root.remove(root.testcase.find { it.@name != 'minecraft:always_pass' }) }],
+                    [name: 'duplicate-fixture', accepted: false, text: mutate { root -> root.append(root.testcase.find { it.@name != 'minecraft:always_pass' }.clone()) }],
+                    [name: 'unknown-fixture', accepted: false, text: mutate { root -> root.appendNode('testcase', [name: 'Unknown.fixture']) }],
+                    [name: 'missing-report', accepted: false, text: null],
+                ]
+                try {
+                    for (def scenario : scenarios) {
+                        report.text = 'stale sentinel'
+                        guards.first().execute(run)
+                        assert !report.exists(): 'Stale report was not deleted'
+                        if (scenario.text != null) report.text = scenario.text
+                        boolean accepted = true
+                        try { guards.last().execute(run) } catch (Exception expected) { accepted = false }
+                        assert accepted == scenario.accepted: "$path ${scenario.name}: accepted=$accepted"
+                        println "STORAGE GUARD $path ${scenario.name}: accepted=$accepted (expected)"
+                        checked++
+                    }
+                } finally {
+                    report.bytes = saved
+                }
+            }
+            println "Verified $checked storage guard scenarios; not native execution evidence."
+        }
+    }
+}

@@ -134,11 +134,13 @@ sourceSets.test.configure {
 java.registerFeature("testMod") {
     capability(rootProject.property("projectGroup").toString(), "testiarium-forge-test-mod", project.version.toString())
     usingSourceSet(sourceSets["testMod"])
+    withSourcesJar()
 }
 
 java.registerFeature("cctTestMod") {
     capability(rootProject.property("projectGroup").toString(), "testiarium-forge-cct-test-mod", project.version.toString())
     usingSourceSet(cctTestMod)
+    withSourcesJar()
 }
 
 tasks.named<Jar>(sourceSets["testMod"].jarTaskName) {

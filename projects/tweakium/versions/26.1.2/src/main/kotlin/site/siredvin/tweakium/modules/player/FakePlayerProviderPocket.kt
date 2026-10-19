@@ -7,7 +7,6 @@ import dan200.computercraft.api.pocket.IPocketAccess
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -54,14 +53,14 @@ object FakePlayerProviderPocket {
         }
     }
 
-    private fun unload(player: ServerPlayer, realPlayer: Player, skipInventory: Boolean = false) {
+    private fun unload(player: ServerPlayer, realPlayer: Player, selectedSlot: Int, skipInventory: Boolean = false) {
         val playerInventory: Inventory = player.inventory
         playerInventory.selectedSlot = 0
 
         if (!skipInventory) {
             val realPlayerInventory = realPlayer.inventory
             val size = realPlayerInventory.containerSize
-            FakePlayerSessionUtil.swapSelected(playerInventory, realPlayerInventory.selectedSlot)
+            FakePlayerSessionUtil.swapSelected(playerInventory, selectedSlot)
             for (i in 0 until size) {
                 realPlayerInventory.setItem(i, playerInventory.getItem(i))
                 playerInventory.setItem(i, ItemStack.EMPTY)
@@ -71,27 +70,23 @@ object FakePlayerProviderPocket {
 
     fun <T> withPlayer(pocket: IPocketAccess, function: Function<FakePlayerProxy, T>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
         val realPlayer = pocket.entity as? Player ?: throw LuaException("Cannot init player for this pocket computer for some reason")
+        val profile = (realPlayer as? ServerPlayer)?.gameProfile ?: FakePlayerProxy.DUMMY_PROFILE
+        if (registeredPlayers.getIfPresent(pocket)?.fakePlayer?.gameProfile?.let { it != profile } == true) registeredPlayers.invalidate(pocket)
         val player: FakePlayerProxy = registeredPlayers.get(pocket)
-        load(player.fakePlayer, realPlayer, overwrittenDirection, skipInventory)
-        try {
-            return FakePlayerSessionUtil.applyToolAttributes(if (skipInventory) ItemStack.EMPTY else player.fakePlayer.mainHandItem, player.fakePlayer.attributes).use {
-                function.apply(player)
-            }
-        } finally {
-            unload(player.fakePlayer, realPlayer, skipInventory)
-        }
+        return withPlayerTweaked(pocket, function, Supplier { player }, overwrittenDirection, skipInventory)
     }
 
     fun <T> withPlayerTweaked(pocket: IPocketAccess, function: Function<FakePlayerProxy, T>, playerProvider: Supplier<FakePlayerProxy>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
         val realPlayer = pocket.entity as? Player ?: throw LuaException("Cannot init player for this pocket computer for some reason")
         val player = playerProvider.get()
+        val selectedSlot = realPlayer.inventory.selectedSlot
         load(player.fakePlayer, realPlayer, overwrittenDirection, skipInventory)
         try {
             return FakePlayerSessionUtil.applyToolAttributes(if (skipInventory) ItemStack.EMPTY else player.fakePlayer.mainHandItem, player.fakePlayer.attributes).use {
                 function.apply(player)
             }
         } finally {
-            unload(player.fakePlayer, realPlayer, skipInventory)
+            unload(player.fakePlayer, realPlayer, selectedSlot, skipInventory)
         }
     }
 }

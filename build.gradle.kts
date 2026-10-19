@@ -57,11 +57,33 @@ subprojects {
             source.startsWith(sharedSources) && localSources.resolve(sharedSources.relativize(source).toString()).isFile
         }
         pluginManager.withPlugin("java") {
+            tasks.withType<Jar>().configureEach {
+                exclude("**/.cache/**")
+                dependsOn("stonecutterGenerate")
+            }
+            tasks.named("processResources") { dependsOn("stonecutterGenerate") }
+            tasks.withType<ProcessResources>().configureEach {
+                // Published 0.9.0 conventions do not track raw dependency mappings.
+                for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
+                    inputs.property("${library}Version", providers.gradleProperty("${library}Version"))
+                }
+                inputs.file(project.buildFile)
+            }
             extensions.getByType<SourceSetContainer>().configureEach {
                 java.exclude(overridden)
                 resources.exclude(overridden)
                 allJava.exclude(overridden)
                 allSource.exclude(overridden)
+            }
+            val mainResources = extensions.getByType<SourceSetContainer>().named("main").get().resources
+            gradle.projectsEvaluated {
+                // Generated JSON has no version comments. Stonecutter redirects the
+                // extra generated root for inactive nodes without generating it;
+                // select the authored resource roots explicitly instead.
+                val ordinaryRoots = mainResources.srcDirs.filterNot { it.parentFile.name == "generated" }
+                val generatedRoots = mutableListOf(localSources.resolve("generated/resources"))
+                if (minecraftVersion != "26.1.2") generatedRoots.add(sharedSources.resolve("generated/resources").toFile())
+                mainResources.setSrcDirs(ordinaryRoots + generatedRoots)
             }
         }
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
@@ -81,10 +103,51 @@ subprojects {
         afterEvaluate {
             // Enable after Kotlin: enabling earlier publishes a competing kotlinSourcesJar.
             extensions.configure<JavaPluginExtension> { withSourcesJar() }
+            if (path.split(':')[1] == "testiarium") {
+                val part = if (path.contains(":fabric:")) {
+                    "fabric"
+                } else if (path.contains(":forge:")) {
+                    "forge"
+                } else {
+                    "core"
+                }
+                for (feature in listOf("testMod", "cctTestMod")) {
+                    if (minecraftVersion != "26.1.2") {
+                        // KGP's new compiler must not choose the feature runtime floor.
+                        dependencies.add("${feature}Api", "org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
+                    }
+                    // Feature JARs contain only feature output, not the core API.
+                    // Old Loom runtimeElements carries intermediary mod dependencies.
+                    // Local feature runs already inherit the named main classpath.
+                    val coreDependency = if (part == "fabric" && minecraftVersion != "26.1.2") {
+                        dependencies.project(mapOf("path" to path, "configuration" to "namedElements"))
+                    } else {
+                        project(path)
+                    }
+                    dependencies.add("${feature}Api", coreDependency)
+                    if (feature == "cctTestMod") {
+                        val testModDependency = (dependencies.project(mapOf("path" to path)) as ProjectDependency).apply {
+                            capabilities {
+                                requireCapability("$projectGroup:testiarium-$part-test-mod")
+                            }
+                        }
+                        dependencies.add("${feature}Api", testModDependency)
+                    }
+                    if (part != "core") {
+                        val commonProject = project(":testiarium:$minecraftVersion")
+                        tasks.named<Jar>("${feature}SourcesJar") {
+                            from(commonProject.extensions.getByType<SourceSetContainer>().named(feature).map { it.allSource })
+                            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                        }
+                    }
+                }
+            }
         }
         if (path.contains(":fabric:") || path.contains(":forge:")) {
             val commonProject = project(":${path.split(':')[1]}:$minecraftVersion")
             afterEvaluate {
+                tasks.named("processResources") { dependsOn("${commonProject.path}:stonecutterGenerate") }
+                tasks.withType<Jar>().configureEach { dependsOn("${commonProject.path}:stonecutterGenerate") }
                 tasks.named<Jar>("sourcesJar") {
                     from(commonProject.extensions.getByType<SourceSetContainer>().named("main").map { it.allSource })
                     duplicatesStrategy = DuplicatesStrategy.EXCLUDE

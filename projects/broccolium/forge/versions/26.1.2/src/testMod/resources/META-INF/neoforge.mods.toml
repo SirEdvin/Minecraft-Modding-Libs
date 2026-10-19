@@ -1,0 +1,19 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+[[mods]]
+modId="broccolium_testmod"
+version="1.0"
+displayName="Broccolium Native Storage Fixtures"
+[[dependencies.broccolium_testmod]]
+modId="broccolium"
+type="required"
+versionRange="[2.0.0,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.broccolium_testmod]]
+modId="testiarium"
+type="required"
+versionRange="[2.0.0,)"
+ordering="AFTER"
+side="BOTH"

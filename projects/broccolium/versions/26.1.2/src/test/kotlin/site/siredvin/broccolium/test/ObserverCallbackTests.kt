@@ -71,7 +71,9 @@ class ObserverCallbackTests {
         block.notify(level(entity), BlockPos.ZERO, Blocks.STONE, null, false)
     }
 
-    private class Observer : BlockEntity(BlockEntityType.CHEST, BlockPos.ZERO, Blocks.CHEST.defaultBlockState()), IObservingBlockEntity {
+    private class Observer :
+        BlockEntity(BlockEntityType.CHEST, BlockPos.ZERO, Blocks.CHEST.defaultBlockState()),
+        IObservingBlockEntity {
         var notifications = 0
         var neighbourBlock: Block? = null
         var orientation: Orientation? = null

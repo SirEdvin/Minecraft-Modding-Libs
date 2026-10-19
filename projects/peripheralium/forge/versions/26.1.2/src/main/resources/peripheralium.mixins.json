@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "package": "site.siredvin.peripheralium.mixins",
+  "compatibilityLevel": "JAVA_25",
+  "injectors": {"defaultRequire": 1},
+  "mixins": [],
+  "client": []
+}

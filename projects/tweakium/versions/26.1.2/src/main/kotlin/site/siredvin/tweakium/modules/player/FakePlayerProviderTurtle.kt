@@ -6,7 +6,6 @@ import dan200.computercraft.api.turtle.ITurtleAccess
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
-
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.ItemStack
 import site.siredvin.broccolium.modules.storage.item.ContainerUtils
@@ -53,7 +52,7 @@ object FakePlayerProviderTurtle {
         }
     }
 
-    private fun unload(player: ServerPlayer, turtle: ITurtleAccess, skipInventory: Boolean = false) {
+    private fun unload(player: ServerPlayer, turtle: ITurtleAccess, selectedSlot: Int, skipInventory: Boolean = false) {
         val playerInventory: Inventory = player.inventory
         playerInventory.selectedSlot = 0
 
@@ -61,7 +60,7 @@ object FakePlayerProviderTurtle {
             val turtleInventory = turtle.inventory
             val size = turtleInventory.containerSize
             val largerSize = playerInventory.containerSize
-            FakePlayerSessionUtil.swapSelected(playerInventory, turtle.selectedSlot)
+            FakePlayerSessionUtil.swapSelected(playerInventory, selectedSlot)
             for (i in 0 until size) {
                 turtleInventory.setItem(i, playerInventory.getItem(i))
                 playerInventory.setItem(i, ItemStack.EMPTY)
@@ -75,14 +74,17 @@ object FakePlayerProviderTurtle {
     }
 
     fun <T> withPlayer(turtle: ITurtleAccess, function: Function<FakePlayerProxy, T>, overwrittenDirection: Direction? = null, skipInventory: Boolean = false): T {
+        val profile = turtle.owningPlayer ?: FakePlayerProxy.DUMMY_PROFILE
+        if (registeredPlayers.getIfPresent(turtle)?.fakePlayer?.gameProfile?.let { it != profile } == true) registeredPlayers.invalidate(turtle)
         val player: FakePlayerProxy = registeredPlayers.get(turtle)
+        val selectedSlot = turtle.selectedSlot
         load(player.fakePlayer, turtle, overwrittenDirection, skipInventory)
         try {
             return FakePlayerSessionUtil.applyToolAttributes(if (skipInventory) ItemStack.EMPTY else player.fakePlayer.mainHandItem, player.fakePlayer.attributes).use {
                 function.apply(player)
             }
         } finally {
-            unload(player.fakePlayer, turtle, skipInventory)
+            unload(player.fakePlayer, turtle, selectedSlot, skipInventory)
         }
     }
 }
