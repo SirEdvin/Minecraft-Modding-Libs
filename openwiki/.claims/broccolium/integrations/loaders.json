@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:99fab2872b1cfad86dd3913b5b7e33876032cb30216a3750d0da0d5d6dac6bce",
+  "pageVersion": "sha256:977edf97a94b9970c1a0db5069d63717ae5fb9e5f5e4bf80d394273cb0623bd4",
   "claims": [
     {
       "id": "claim_e333d482bf5140c8872209eb91f68c07",
@@ -43,10 +43,40 @@
           "version": "repo-file-v1:sha256:e8d42bb853e015d403b29db9f2daf441e2839f491f2dbec770afd93c29004cf9"
         }
       ]
+    },
+    {
+      "id": "claim_eb1ccb4503024c488afd8d76f6e173c6",
+      "statement": "Fabric item wrapper peers route through StorageUtil.move while mixed peers use explicit extract/store/remainder bridges; target NeoForge item/fluid/energy wrappers commit only real per-call root transactions, unlike old Forge-family simulated handler calls.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/FabricStorageUtils.kt#L48-L109",
+          "version": "repo-lines-v1:sha256:276ed2f019db24cf6f4b770070bba0f1032fa9ac53261033e911250da923f7bf:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmOTIxYThjYzM5MDg2MTQ3ZmQ5OTg2MjFkNDQ5ODY1MTM5OTg5NTRjZjgxZDMyZmU2ZTQ0ZWUyNGMzNzA0YzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc3NGI0NGY2NjhhMWIxNDA5YjZmYTMwZDY5MDE2NTgwZGNmOGRkYmNhMzJmOTFiOGQ4OTE5ZmI1ZTQxNjZkZjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyNGM5N2VlODE3OTBkOGJmYWQyZTRkODhiOGI3M2E3Y2FmMTc5YmE3MDhlZWNlMTFhODFhYjFkMzc4MzhkNDgifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/fabric/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/FabricStorageWrapper.kt#L24-L103",
+          "version": "repo-lines-v1:sha256:b5673940e82c42abe6f59369139cb4cc6453e50bfbe44180c743a6f616f1eb9e:eyJzZWxlY3RlZExpbmVDb3VudCI6ODAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMGFiMWE4MzNlMTA1NDFlMTFlMmNhNzUyZGFmZmY5MWQ3OTNiNDBlYmViZjE2NTk5MjkzYWZjNTNlMGRlMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk2NWE5N2NhODRmMDVmNjZmOTUxMDc4YTFiNmIwZTM1ZDU3MjNiMjMxYjdlMzE0OWQ5MjUxN2E0NTY2MWQ3MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlMDQ4ZGZhYWRmOGM2N2Q4MzdmM2ZlYjQwMjU1MjRmYmMzMDAxZGY3YTA5MWQ5OGM5Yjc3NDMxYTg1YjQwMTYifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/versions/1.21.1/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/AgnosticItemHandlerWrapper.kt#L10-L60",
+          "version": "repo-lines-v1:sha256:a7bff7a422f280be9e644bf834828294b26e7a68e8640e8dc46ed3465ba0f452:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4ZWQ5ZDQzMzljNGIxMDdjMzM3YWE5MTkzM2Y2MmRiNjU1ODYzZjkzZTU4MzdmMTY0YTQ4OTVjYzM4YzVkMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwZWUyZWFkNDcwZTk0ZGY3YWE5MzE1YjQzYWRlMWEyNTE2Zjg3N2I2MDE5MmVjYjc5MDczYTg2MWMzNGVmODkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyYmQ0MzY3MWEzMTFmOWZjMDVjOGNmZWVlMTJmOTk1ODNhOTk2NzQzNTA5OWRmMjEzZDk5MzFhZjYyMDQ5YjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyNGFmZjQ3OTkzYWU2MDJiMzdjNmQwMDI3NWZkMTM4NGQ5NWYyODcxOTIwNGEzMjRmMjFmZGY5ZDE3Y2MyN2IifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/storage/energy/AgnosticEnergyHandlerWrapper.kt#L14-L38",
+          "version": "repo-lines-v1:sha256:25505e885d48ec2b5d29a535f292df8cbf3508258d220c1123ff557c3f26e966:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjM2U0MWI1ZjI3OGMzYzExMzE1ZWVkNGI5YmE3MzEwNTgzNTFmMTA5OGVhMGZiNmZjODdhZjdkZDM4OWJmMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkODI3NmY2ZTE2M2FiNmRhNzZmYjMyMjM0OWM5YjI4OGMzMTllYjAxYjQ2ZjVlNWNkYWZiMGJkOTZiMTA1YTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY3ZDBjM2EwMGU2Zjk5MGQ3Nzg2MmU5OTkwODk3MDI0MDE2MTMyMjJjYzAwMTdiZWMzMWEzOWE4MjU1NDljZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/storage/fluid/ForgeAgnosticFluidStorage.kt#L18-L50",
+          "version": "repo-lines-v1:sha256:3279e2fb8caadb4141f730dbbd0717fcff3d33c4525d100b940fce702f55471e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0N2IyZTRhNzU0NGU0ZTI0OGZiNjE2OTBmNzI2ZWRkNDY4ZDU3NDZjOGRmZGEzNmJkYjNjZmQ4MTA0ZDYxMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhODhlOTRiMjlmZTFjODdmODlmNjA3OTg2MTFkZDMwNzUzOGJhMDM2ZjA2MzQ3ZTNhNDIyYmNkNGEyNzhkY2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzMmY5ODhiNGE2MzRlMTllNTg4ZDgxZmU4MTBhYzY2OGM4OGUwZjlmZTVkYzgwYjljMmNmMmVjZDQ4Y2RlNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/AgnosticItemHandlerWrapper.kt#L11-L53",
+          "version": "repo-lines-v1:sha256:991596e791361b1b6750296d79a1f8713248e04c21bd715a0d4132bfa14d125f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlNzI3MDNlMDVhYjllMTM5ZDE0NjViMTNmMjI0ODc0MGIxZWU0MWJmZTExOWQ5OWRkNTFmM2ExMWNkZTA1YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1YWI5ZjkxOTE5OWY1NTQzYzg1ZmQ2MzM4MjA1MzMyNDUzOTljMThmMWY1MGVhYzQ0ODA2NDU5OWQzZWM0NzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyNGFmZjQ3OTkzYWU2MDJiMzdjNmQwMDI3NWZkMTM4NGQ5NWYyODcxOTIwNGEzMjRmMjFmZGY5ZDE3Y2MyN2IifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T16:59:46.460Z"
   }
 }

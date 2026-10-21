@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:ea6ca91c70555d90af80a28a21b8695a78ec9be8c2f4c6c62f37f7d8ec565f08",
+  "pageVersion": "sha256:f3d1e7128f5d822809739160a3517c8ffe815ee7f993765d1025eccb16c81ff3",
   "claims": [
     {
       "id": "claim_db32ca39a23f4df08aee511b42275d2f",
@@ -37,10 +37,28 @@
           "version": "repo-file-v1:sha256:6aed9239150ec95dc19752bf7098a29624a0813ff2038f9d696c229d6c3e0ff4"
         }
       ]
+    },
+    {
+      "id": "claim_6bcbf114aaad4f4bbd0a64121c790086",
+      "statement": "Target facing-block model codec registration is physically client-gated through a Fabric client entrypoint and NeoForge Dist.CLIENT subscriber, separate from server peripheral discovery.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/fabric/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/client/FabricTweakiumClient.kt#L7-L10",
+          "version": "repo-lines-v1:sha256:49077a185423fbadb3966280918cec8f9a9138b56e4b45db6b866d54cadb4fef:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWY2YzNmYjg0ZTVlY2UxOGZhYTgwMGFlZmFhMTM3ZWMyYmE4ZDNiMDEwYWEwM2QxZTM1ZTQ4ZmM0OWJhYzA1NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzQ4YjU1MDEyYmM5ZmJjMmJlZmY3NzhmOGIyMzZiN2FkZWEwNmJmZGM3MDdiZjU4NWU3NDljNDUyOGMxMTdiNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://projects/tweakium/fabric/versions/26.1.2/src/main/resources/fabric.mod.json#L12-L16",
+          "version": "repo-lines-v1:sha256:a932d4860fa0c8ce7d86108b09e1bdcf8a249503db238c05f84018ac4d8e4cc5:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjM2MWIyNmEzNzA5MmE5OTA4M2JlNTRlZDMzZWU5MjgxMTgzN2VkZDU5NGRiNGFmZGExN2UxMzg5ZDAxMjljNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGQ1Y2QyZmI0ZjNkZjg4NDUxNTI1NWIzOTUyM2YyZjhiNTQ3MmJlZWE5ZjU2NmZmY2EyMDRkYjgwMjU2MTA0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmQ2OGM1ZjEzMDdlMDIyYzliZDI2OGJmYWQ5YmRlMjc3NDcxNjhiODAyZThiYjdiNWQyNmJmZjJkZDM1YzAzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODg0MmQxYTFiNzk5OWVlMmRkM2IxMDliNTg3NWM1MTM2MGE2NWZiMDk1MWE0ZjM0YTk5NzUwZTNjYmQ0MzdiZSJ9"
+        },
+        {
+          "resource": "repo://projects/tweakium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/client/ForgeTweakiumClient.kt#L10-L15",
+          "version": "repo-lines-v1:sha256:121e5c6f1f8bfb2788eee656404e4d5ce72831d37dd472a576dbefc3e1566ad5:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmM2MDhlODBjYzcyOTE1Y2YwMjQyY2RmOGViYzcwMjk4NmNlZGE1Y2Y2OWU5MDJiMzE1NWIwNTQ1MmM5MjYxMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmExN2Y2MDNiM2VjNTljZjQ3NzM2ZTVlM2JlNDBiYjNmYTQxYWE2ZjdiYTAxNGNmMzFiMTA1YjVhMjUzZTczOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T16:59:46.460Z"
   }
 }

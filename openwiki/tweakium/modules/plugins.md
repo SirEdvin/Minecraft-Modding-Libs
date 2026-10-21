@@ -14,13 +14,57 @@ sources:
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractFluidStoragePlugin.kt
   - id: openwiki-source-610b78cac168816f5717144c
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/plugins/PeripheralPluginUtils.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T16:59:46.460Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:59:46.460Z
 ---
 
 # Tweakium storage plugins and operations
+
+[Architecture overview](../../architecture/overview.md) · [Peripheral composition](peripheral.md) · [Broccolium transfer sequence](../../broccolium/modules/storage.md#generic-transfer-sequence)
+
+## Small plugin family model
+
+```mermaid
+classDiagram
+    accTitle: Storage plugin extension families
+    accDescr: Inventory views and transferable inventories share one branch; unslotted item and fluid plugins are separate branches. FullEnergyPlugin extends the energy reader. All expose the common plugin interface and delegate storage rather than owning native containers.
+    IPeripheralPlugin <|.. AbstractRudimentInventoryPlugin
+    AbstractRudimentInventoryPlugin <|-- AbstractInventoryPlugin
+    IPeripheralPlugin <|.. AbstractItemStoragePlugin
+    IPeripheralPlugin <|.. AbstractFluidStoragePlugin
+    IPeripheralPlugin <|.. EnergyPlugin
+    EnergyPlugin <|-- FullEnergyPlugin
+    AbstractRudimentInventoryPlugin o-- SlottedAgnosticStorage
+    AbstractItemStoragePlugin o-- AgnosticStorage
+    AbstractFluidStoragePlugin o-- AgnosticFluidStorage
+    EnergyPlugin o-- AgnosticEnergyStorage
+```
+
+Triangles mean implementation/extension; diamonds mean storage references, not native-container ownership. In particular `AbstractInventoryPlugin` does not inherit from the unslotted item plugin. [Inventory view](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractRudimentInventoryPlugin.kt#L14-L36), [transfer extension](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractInventoryPlugin.kt#L17-L89), [item plugin](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/AbstractItemStoragePlugin.kt#L22-L39) and [energy extension](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/plugins/FullEnergyPlugin.kt#L14-L44) show composition and main-thread Lua annotations. A named peripheral's target/optional side goes through Broccolium lookup before movement. Missing/incompatible peers raise Lua errors; numeric versus predicate slots follow different validation paths, not a single universal coercion.
+
+## Boons and operation policy
+
+```mermaid
+flowchart TB
+    accTitle: Operation policy and partial-update ordering
+    accDescr: The owner requires an OperationBoon. It rejects cooldown or context failures before payment, then optionally consumes fuel, performs action and success callback, and only then writes cooldown. Exceptions after payment are not compensated.
+    O[Owner.withOperation] --> B{OperationBoon installed?}
+    B -- no --> X[Throw missing ability]
+    B -- yes --> C{Cooldown active?}
+    C -- yes --> F[Fail callback and error result]
+    C -- no --> Q{Context check passes?}
+    Q -- no --> F
+    Q -- yes --> K[Compute cost / cooldown]
+    K --> P{Zero cost or fuel payment succeeds?}
+    P -- no --> F
+    P -- yes --> A[Action then success callback]
+    A -- normal return --> S[Persist cooldown if above threshold]
+    A -. throws .-> E[Propagate - no refund or world rollback]
+```
+
+The owner holds keyed boons; `OperationBoon` retains the owner and an allowed-operation map, and consults the separately installed `FuelBoon`. That map supplies public configuration; duplicate settings names replace earlier entries, not a second execution-policy registry. [Owner entry](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/api/IPeripheralOwner.kt#L43-L54), [canonical operation ordering](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/OperationBoon.kt#L39-L96) and [target equivalent](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/boon/OperationBoon.kt#L39-L91) ground the flow. Checks/payment/action run synchronously on the calling path: the concrete Lua method, not the policy object, owns any main-thread declaration. [Operation tests](../../../projects/tweakium/src/test/kotlin/site/siredvin/tweakium/OperationBoonTests.kt#L47-L159) exercise refusal/payment/cooldown order, inspected but not rerun here. See [dispatch](peripheral.md#lua-dispatch-lifecycle) and [persistence](upgrades-persistence.md) for the surrounding lifecycle.
 
 ## Current validation and runtime proof (2026-10-19)
 

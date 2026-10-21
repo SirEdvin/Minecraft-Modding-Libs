@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:0ddcd6d16634af6b2dc9365d8af9102e3f2cca6d47e4a56250eea20f090ea17f",
+  "pageVersion": "sha256:4269b13cf8fc03b369b3aa1cf74a4ca8a0bfe47b189847eaf6cc8e1696b60106",
   "claims": [
     {
       "id": "claim_b764e8596af04bdfac9b5fc287e4ad94",
@@ -33,10 +33,20 @@
           "version": "repo-file-v1:sha256:4b003b462e9a1283251eb1fb433538b6b1d9f504ad56071326400fdc99face9a"
         }
       ]
+    },
+    {
+      "id": "claim_592f6472c8f54b29aab414a91b0c1f97",
+      "statement": "MultiTestReporter fans native callbacks out to child reporters; JunitTestReporter accumulates results, records optional failures as skips and required failures as failures, then writes XML and HTML once at finish.",
+      "evidence": [
+        {
+          "resource": "repo://projects/testiarium/versions/26.1.2/src/main/kotlin/site/siredvin/testiarium/report/TestReporters.kt#L21-L79",
+          "version": "repo-lines-v1:sha256:f800a3c7a4924b1b3ba492406f1cb3d77b9a0a389543b0a1d5e69222b8341818:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmNTk2ODdmZWMwZTc2NTlhODVlY2EyMjE0NTcwMDMxNTE2OGJkOGM3N2Q3YjkwYmFhZmMxNGFiMWRiZWEyOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNhM2M3YTQ5MTdhNGUzMTlkNDNiOGI5MjllZDA0OWE4NjRiODNkNmFjN2NhNGM0OGQwMTdiZjFlODAyODc0ZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5ODNhZGE4NzM1NDM5MjFhMDViNWE3OTVkNDJiOGUyYzBiNDE4YmE2ZDUyNjBlYzA1YzRiMDViYjdiZTBhYjIifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:56:43.998Z"
   }
 }

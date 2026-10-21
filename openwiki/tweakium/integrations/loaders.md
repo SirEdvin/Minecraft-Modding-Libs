@@ -12,15 +12,62 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7-target.md
   - id: openwiki-source-81d5f1627e19148569f46f81
     resource: repo://gradle/libs.versions.toml
+  - id: openwiki-source-33d724bfbf599a4255be972d
+    resource: repo://projects/tweakium/fabric/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/client/FabricTweakiumClient.kt
+  - id: openwiki-source-70d2e4ffb5b3f3c2bbb9dab7
+    resource: repo://projects/tweakium/fabric/versions/26.1.2/src/main/resources/fabric.mod.json
   - id: openwiki-source-249bae99297439c63fae6a69
     resource: repo://projects/tweakium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/ForgeTweakium.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+  - id: openwiki-source-73c5817f21e34d90630ed0fd
+    resource: repo://projects/tweakium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/client/ForgeTweakiumClient.kt
+generated: { by: "hermes", at: "2026-10-21T16:59:46.460Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:59:46.460Z
 ---
 
 # Tweakium ComputerCraft loader boundaries
+
+[Architecture overview](../../architecture/overview.md) · [Peripheral composition/dispatch](../modules/peripheral.md) · [Version/loader topology](../../architecture/loaders.md)
+
+## Logical discovery adapters
+
+Arrows below mean registration or delegation, not inheritance. Every branch ends at the common provider interface; none grants player permissions. One-time guards prevent duplicate registration, not late-registration repair.
+
+```mermaid
+flowchart TB
+    accTitle: ComputerCraft peripheral discovery routes
+    accDescr: Common configuration asks the installed toolkit to register discovery. Fabric uses a fallback, legacy Forge a provider and modern NeoForge a capability event. Only the modern branch refuses null sides explicitly.
+    C[TweakiumCore.configure] --> T[ComputerPlatformToolkit]
+    T --> F[Fabric PeripheralLookup fallback]
+    T --> O[Forge 1.20.1 provider / LazyOptional]
+    T --> N[NeoForge 1.21.1 / 26.1.2 capability listener]
+    N --> B[Owning mod bus capability event]
+    B --> S{Side non-null?}
+    S -- no --> Z[No provider peripheral]
+    S -- yes --> P[IPeripheralProvider.getPeripheral]
+    F -- context side --> P
+    O -- native side --> P
+    P --> H[Host peripheral / cached owner]
+```
+
+Source: [common configuration](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/TweakiumCore.kt#L17-L27), [target Fabric fallback](../../../projects/tweakium/fabric/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/platform/FabricComputerPlatformToolkit.kt#L49-L54), [target NeoForge bus/type/side boundary](../../../projects/tweakium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/platform/ForgeComputerPlatformToolkit.kt#L56-L66). The modern direct lookup first checks the native capability then generic CC fallback ([lines 39–40](../../../projects/tweakium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/platform/ForgeComputerPlatformToolkit.kt#L39-L40)); the diagram is the registered provider path, not every CC fallback. Old loader details remain below.
+
+## Physically client-only model registration
+
+```mermaid
+flowchart TB
+    accTitle: Target client codec registration separate from domain ownership
+    accDescr: Fabric's client entrypoint and NeoForge's client-only subscriber register the facing-block model codec. Native model baking and render-state submission follow later, independently of server peripheral discovery.
+    F[Fabric client entrypoint] --> C[FacingBlockTurtleModeller ID / CODEC]
+    N[NeoForge Dist.CLIENT subscriber] --> C
+    C --> B[Native Unbaked bake]
+    B --> E[Extract child item render state]
+    E --> S[Submit transformed child state]
+    P[Server peripheral discovery] -. separate responsibility .-> D[Owner / plugin logical model]
+```
+
+The [Fabric client initializer](../../../projects/tweakium/fabric/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/client/FabricTweakiumClient.kt#L7-L10) is declared in the [client entrypoint field](../../../projects/tweakium/fabric/versions/26.1.2/src/main/resources/fabric.mod.json#L12-L16); [NeoForge's subscriber](../../../projects/tweakium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/client/ForgeTweakiumClient.kt#L10-L15) is client gated. The [render-state pipeline](../modules/representation-rml.md) is not a server class-ownership diagram. Do not transplant these 26.1.2 codecs into the older modeller APIs.
 
 ## Current target adapters and integration policy (2026-10-19)
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:3174f0aa3541dd09436974921e626e5f8c689069f3e0df1dc92fb5b714c84c67",
+  "pageVersion": "sha256:3bb8e5739f5797e4d1ba9b76308764a6532ee047093411ec2cbc0697c3668b59",
   "claims": [
     {
       "id": "claim_873bf54f44c34c35a3e7f6bba06252fa",
@@ -43,10 +43,24 @@
           "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
+    },
+    {
+      "id": "claim_4d1d0ea246ea423bb42c308365f9cae5",
+      "statement": "The default generic movement dispatch uses movableType to select specialized adapters; its ordinary StorageUtils path repeatedly simulates take/store/restoration then executes the potential amount, stopping when potential or real progress is zero and logging rejected real restoration rather than rolling back arbitrary peers.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/base/StorageUtils.kt#L13-L71",
+          "version": "repo-lines-v1:sha256:41f6efd3fc82e3f428fafda50c64ea4fc3b9de4e9377e79ba22a84063953f175:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5ZjYzMDI0NDc5ZTkxNjQwYWU5YTVmODBlMTFkNjY0MmE2YTc0NjhmYTA4Y2U1ZDBkMmVjZjNkMWM4ZDdhN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NzBjMDIxMGIzOGQ4ZjdhNWQ2NWM1ZDllMDJmYzNhMWVhNWI1ZGQxN2RjMzkxNDYyMzYyZTVjZmQ2ZDZhMjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ZjY2MmY0YWZiZDE3YWFhZGY5YTUyZjg0MDU3NmEwMTRhYTk2YWQ3MTlmYzA4OWNhMjkyN2NlODg3ZTRiZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/base/api/AgnosticStorage.kt#L11-L25",
+          "version": "repo-lines-v1:sha256:42c74fa4877e76738cc06c63c630263cc66b4c2cf38d31369a6d424e8e522686:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwYjI3MWU3MDliZjEzNDJiMWM0ODFhMmFiYzc5YjhmYjhmMGQ1Mjg5ZmU3YmMzNTJmZjExOTI1Y2JhYjBiNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1NTRjZDg5OWEwZDY1YTgyMzMyMjQxNTZjMTM0OWFmNmRkNDcwM2QyODNkNzJlNWU3NTM3ZGU5YThmOTBhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxMmY5NWVjYTZlM2FlOGNkYWJkY2VjZDdiMDJiNTcyYmFhYjZjMjg2ZGQ4YWIzYmEwYjEwOGYzYjUzZTY0ZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T16:59:46.460Z"
   }
 }

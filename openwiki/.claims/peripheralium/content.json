@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:a58e0c2ef903c9007d5fd93a7dd2ace16ba57b3529192b38abb09033f45b6275",
+  "pageVersion": "sha256:55173ee43b30f740b01b1807488f02ac1d1b7a91a5b5b7b6a4eef9cf578d5d03",
   "claims": [
     {
       "id": "claim_64b77021676149118ea855806a3a0329",
@@ -29,10 +29,42 @@
           "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
+    },
+    {
+      "id": "claim_c23c6f7252d24d34a57c239e0a013d5f",
+      "statement": "PeripheraliumPlatform extends the reusable BasePlatform, owns a ModInformationTracker, requires a configured InnerBasePlatform delegate, and supplies holder-backed creative entries through PeripheraliumCore.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/PeripheraliumCore.kt#L14-L27",
+          "version": "repo-lines-v1:sha256:5aee2d079e7583a30c2809baa386c189ab2be28c0e3eb8c9906c1979dd1e6576:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljZDU1NzA2ODYwYmZlNGJjOTgzMzA1NjA4OTEyNDczMzUyZjAxYjk0YjQ1ZDVjYjhlNWJhMTczNDYxOTg5NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc1ZDc3N2JhMzVlNDZiZmRlMWFkMDdjZDI2ZDE5NDlkY2YwYjUyYTViYmZkYjNiZTY5MDc4NjRjZGJlMWUzNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/src/main/kotlin/site/siredvin/peripheralium/PeripheraliumPlatform.kt#L7-L17",
+          "version": "repo-lines-v1:sha256:90152f942961fee66fe6172bc8aed61976224e1ff127caaa5d9be096bfb1d893:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1NDZhYTAzYmM0YmYxYjk2NzNhNDQ4ODAwYTNlZjEwZTdmZDk3ZTlkYTM5MTc2YTJiODRiNjVkZjE0ZWEzODYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZTMxNzliMGMwNTNmYjBiYTJjYTMxN2VlNDE4MjA2YzAxOWIwODdkYTJmMzQyMmE0YWFhOTY4ZjFjMmNhOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_94f026084d4a4132b02b931ee01ca9e9",
+      "statement": "Target Peripheralium loader datagen adapters pass Broccolium generator sinks to one provider composition for recipes, loot, models and EN/UA languages, separately from runtime content registration.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/fabric/versions/26.1.2/src/main/kotlin/site/siredvin/peripheralium/PeripheraliumDataGenerator.kt#L8-L11",
+          "version": "repo-lines-v1:sha256:8c15701c456c814f42f6ad6f1b5f0f7a3c6f5d9c4a98c4402bd87e5df4fb9e49:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTE3NmViZDVlNDk4NjZjZDQyODIyZTQ2ODZhNTkzNWQ3YjFiODQyMzQ4ZmQxYmFlNzFmNjc5MDhkNTFmODYxZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzMyN2I0MGFiMGNjNjE5ZjllMmY5MzFlZjIyZWMyYzQ5NGIzYjI0NmYyNTEwNDgyMzQ4ZTBhOTkyN2E4YTNiZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheraliumDataGenerators.kt#L9-L19",
+          "version": "repo-lines-v1:sha256:163615fcf6f618fcab5c3dc206d11f4716552bd34167041454799df7f8bc8232:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViOTllM2M0MWEyMmYxNGEyZDIxYjI5NmQwZTI3OGI5MmUxOWIyYWNlOGZlOTAzOTc4Zjg5ZmZhNjVmZDYzMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0YWZmMTdmYWRjOGE1MDY2NWExOTZjMzk5NWZiYmUzYWE2ZDUwN2U1NTFlMTE1NDc0NzA1ZWI2MjJhZGFkMWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/versions/26.1.2/src/main/kotlin/site/siredvin/peripheralium/data/PeripheraliumDataProviders.kt#L5-L12",
+          "version": "repo-lines-v1:sha256:7fbe5c37b6de33114df7e430ccf6973b5506fece82c62161dcbb1217b5544ab1:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzExNzlmYzNjOGFmZmJkMGRkMmZlODg1ZDQ4OWJjZDIzNGQ4NDhiOTk1NzdhN2JmMmMzN2NmMTFiNDA2NTc5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWMzY2U4YWVkM2RiZDFkZWZlZjVkNjcwODc0NDFkZDZmNDU5ODc4MzRhYTcxOTA3YzhhMmU4YWFiZjIyY2ZjNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:43:06.090Z"
   }
 }

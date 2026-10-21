@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4323ac9079f31ab19c44af66664c81a3c5c9061397ebcbf02daf7d1592cb9ffc",
+  "claims": [
+    {
+      "id": "claim_5b8a0be4d8924afeb1ef7c7f053f05e9",
+      "statement": "Four Minecraft libraries have common/Fabric/forge leaves at 1.20.1, 1.21.1 and 26.1.2 with canonical 1.20.1; typed-peripheral-api is a separate Node/TypeScript project outside that graph.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L8-L50",
+          "version": "repo-lines-v1:sha256:5e251bd5b1a2812dc69865c2c385b3f43c6d9438515d4e07522a5c9f5445464d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZjYzZDE4ZTYwNjQ0MzM1Y2Y5ZDcyMGE5YTNiYzM4OTMyMzY5MDNiNTZjOWUxYTFiOTM4YzA4MzI5OTk4ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkZmI3OTU5NDdkOTFjOTY4MDFiZGRmMmMyZWU4YTdiOTliNTEwOTZlODZmYjdiM2RkYmFhY2M2OWFlZjVmNjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3OThkNTBjOGZmYjNkNDU2NDQyMzg5MzgxMzYzOGQ0OGQ3MzI2MjkwNzdjN2M1NTBlM2RlNDRhYWUxMGU4NGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM2M2I5YmY1YjFmMzI0NzliMTIyMzA2MzU5NTliNWExNmVmYzYxZDY1YzNkM2UyN2EzMjgxODA1ZjA4NmM1ZmQifQ"
+        },
+        {
+          "resource": "repo://settings.gradle.kts#L44-L75",
+          "version": "repo-lines-v1:sha256:5fe04909b24da2e9ececee0de34c9ccac6dc33737ddfb33f8f25528fef3b1c39:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmYzFlNTY1NTczZmE4MWYwYmQ4YjM3Mzk4MDgwZGJmZGEwYzVhMmFhYTA2NDBmMDA0ZGM0NDQyNDg2ZmUyN2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQwMmMwZmFhMWY2MDExNDIyMmE0NmU4NmJjY2I2MmJmMzM3MzBlYTMxMjBhNzdlNDVjNzY3NjUwNjc4YmE1ZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7f865e9e2d7f48d99af8c36af61f998b",
+      "statement": "Adapters consume matching-version common output, while authored full-file version overrides suppress matching shared sources/resources even on the active node and generated resource roots are selected explicitly.",
+      "evidence": [
+        {
+          "resource": "repo://build.gradle.kts#L152-L169",
+          "version": "repo-lines-v1:sha256:490666e7215d4bcae455ec50f61d84cb9458f2b39d05d519319f9db4af6856ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzZDc5YmY1MDNhYzhjMDAyMTYwMjNkYmRhZGYxN2RlZjcxNWYzNzE1MDc2OGQ2YzdlNTBlYmY1NTc3ZGViMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZjZThkMTM3ZmE0NGFjNjY0OGIzYTRhNmY1NmY1MGJhYmE2NzczNDE0NWQwNDc0YTRlNTU1Njk3ZmQyNmJlYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3OTNjMWRjYzEzMTlhOTBiZDE3ZjNmOGVmM2Q4ZTE1MWEyZjQzOWYzMzc4MzI2OWQ3N2UxNWQyNDIyYmNlMGIifQ"
+        },
+        {
+          "resource": "repo://build.gradle.kts#L52-L107",
+          "version": "repo-lines-v1:sha256:5674738092b881f231096e3e214a903cdb551240b7052302f3b8e83ade8ebc92:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlZTM5YWRjMmY2MDUxYjhlMzRlYzE2ODdjMTRmZTQzOThhNDI5NTQzOGVlODEwN2EwYTIxNDliMDYxMzJiYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVlM2Q3MWNlNGNkM2ZiMmQ0Mjc0YjE4MTQyMmI0N2MyYTNjZDQyYTU3NmE3YzcxM2FmYjQ3ZjBkMWU0YTZiYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyNDcwNjY3NDgyMzllNzEyMzI2ODM1ODE4NWE4YmJiNzY0MmU0ZGY1OWY4ODNkNmMzZTkyOTYwNGI2MjM3ZWQifQ"
+        },
+        {
+          "resource": "repo://gradle/minecraft-26-1.gradle.kts#L185-L213",
+          "version": "repo-lines-v1:sha256:838bf0b2c688abc02f81268a4acfb1ba91d58d4ffdb02f81d6f0bdedbbe49f77:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOTM4ODE4MGZkZDhhNWQ4MTRlNjRmNTNmZTA1MTQ5NjQxMTQyZDIzOTVlNjViMWI5YzgxNjMzNTVkMGM5NDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY1NWRhZDdiNjAzODM2MTMyMDc3NDcxNWNkMzc2Y2ZlMzQxNzBkMmQ5ZmIxNTM4MTBlYmJmZTVmZmMyZGEyYzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4ZGRiYTM3YjA2ZmFiODJkNWQzZDZmY2JjNDJlNmIyZmIzMDI3NmFlNjRmYzU4ZGE1OGFiMDhhMmY1ZmY4OTkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-21T16:30:44.003Z"
+  }
+}

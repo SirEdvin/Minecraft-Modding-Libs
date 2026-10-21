@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:0940ba3c1871938879bbf3b399cc084ec297c5ec6b8baf8fc443e0a7d8760742",
+  "pageVersion": "sha256:4745c7618863e085888ae2aa4738d37e2623fab1d397cd9bffb2894757d2f28f",
   "claims": [
     {
       "id": "claim_27583d893b384e70800425f44a6cda69",
@@ -33,10 +33,32 @@
           "version": "repo-file-v1:sha256:c9ff5ee4f86eab289592b35620fe416ba161fcefd73a4c3cc2078f4f5b1bcc59"
         }
       ]
+    },
+    {
+      "id": "claim_00985cdd745f4ddab4e14cef5479891d",
+      "statement": "Target upgrade registry-patch datagen and concrete Filler asset generation are separate from the live Filler entity, whose void sinks destroy inputs and whose main-thread put strategy creates a resource directly in a named adapted sink without using a source inventory or retaining its remainder.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/blockentity/CreativeFillerBlockEntity.kt#L22-L40",
+          "version": "repo-lines-v1:sha256:acf770247b4c38c18c8cf4b97dd14076b71b8b5abb35290f9b05344727a8ab19:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkYWJlYzdjNjk5ZDhkZWJkMzE0NWMzN2NjMjBiMjE3ZmM1NGMzZjNiMGIxNzA1MmM2NGI0Y2I4NzMxOGFjMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3ZDVjNWI1YzRmYmQ1MjhkZjM1YmYxNGFiNWUxN2ZkYTJiMGI2ZjM2MjgyYzczZmU2YTMxMzc0MmQ5NWFiY2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc0MzNlM2IwM2YzMTc1ZTZkYmVkMjA0NGQ4MjYwZWY5ZGEzYWVjNzdmM2RjZjcwYzE0NTQwZWE3ZTU0MmE0NDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/TweakiumDataProviders.kt#L20-L40",
+          "version": "repo-lines-v1:sha256:7d35a532575618bcd76abe18fbfb9a4d993280a1bfe06125b5d4c743b18b45a0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2NGM2NjU0MTRjNTYyM2U1OWVhOWY0N2FhNDQwMDAxNjc2MmNkNzM0YjljNjgzN2JjMTY4YzE0ODczMzA0ZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjM2UxNjdkOGUzYWRiMDVmY2RmMDkyMDI1N2E1YWViODRjMzYzOWJmMjRlODQ0ZTZkZmU1NmJiZGViMTczMDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/UpgradeDataProviders.kt#L9-L21",
+          "version": "repo-lines-v1:sha256:cee7fe6b1f81745dc06204cbeec0d3ce0c5d5e8b6868d674a9b3e79a087ba95b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiYjUwMzVhYzdjNzk2ZjhlMjljODEyNDAzYzk3Y2E1MGQ4Njk2MzJkOGIwNWU2Zjk0ODBhOGNmZGM0MjVmODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczOGI0NzQ1MDY0Y2JlYjgxOGEzNzAzODk1OTI3ODFlMDhkMzk3MTk3ZDIyNDU4ZGMwYzZmOTQwMDY2ZWNhNTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/computercraft/CreativeFillerPeripheral.kt#L38-L79",
+          "version": "repo-lines-v1:sha256:4a9795de35a8e74b33ae19ce11eaa444f9ff8b97bffdbf677b6129e0d7e86516:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwZWFhOTA2MDg5MDU3ZDNkYTQyZWZkNGRhYjkxOTZiZDU4OWUwNTRmNDU1YWMyY2Y5NjVjOWQ1ZGYyMDFjZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxYTc0YjcyZDAwMjk5OTU0ZmZiMWFiZmNmMzYyNThlNTljNjMxNjE5OGY3YzhiMGU5MjZhMDAwNDhiOWZjOGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4YWIwZDE4NGRkMTE0YTQ0N2MzNGI4NTEwMThiNDY1ZTNmNDhjN2UxNTI4MjdjMjBmYjI1MTEwMmFkODJkNzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T16:59:46.460Z"
   }
 }

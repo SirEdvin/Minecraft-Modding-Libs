@@ -16,13 +16,53 @@ sources:
     resource: repo://gradle/gametest-reports.gradle.kts
   - id: openwiki-source-da50c88d5a96bc12fd7c5e04
     resource: repo://scripts/verification/run-native-matrix.py
-generated: { by: "hermes", at: "2026-10-19T13:48:57.965Z" }
+generated: { by: "hermes", at: "2026-10-21T17:43:06.090Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T17:43:06.090Z
 ---
 
 # Verification matrix and evidence boundaries
+
+[Architecture overview](../architecture/overview.md) · [Build/artifact flow](../build/stonecutter-publication.md#source-to-artifact-flow)
+
+## Verification route map
+
+```mermaid
+flowchart TB
+  accTitle: Different verification gates prove different boundaries
+  accDescr: Select owning checks by change boundary. Unit/compiler checks, native GameTests, datagen/publication audits and ordinary production/client lifecycle checks provide different evidence and cannot replace one another. Bind retained evidence to exact source and artifacts before interpreting acceptance.
+  C["Changed responsibility and exact version/loader"] --> U["Unit tests or TypeScript compiler contracts"]
+  C --> N["Native storage / peripheral / standalone / CCT / client routes"]
+  C --> D["Datagen and publication isolation checks"]
+  C --> P["Ordinary production startup, saves, network and UI"]
+  N --> F["Fresh XML and identity gate"]
+  U --> E["Source/artifact-bound evidence ledger"]
+  F --> E
+  D --> E
+  P --> E
+  E --> A["Acceptance with explicit inherited evidence and limits"]
+```
+
+Arrows mean selection and evidence flow, not that every documentation edit launches every gate. [Native matrix routes](../../scripts/verification/run-native-matrix.py#L18-L30) are separate owning tasks, including CCT/client. [Publication checks](../../scripts/check-publications.py#L23-L70) inspect archive properties rather than gameplay; [final acceptance](../../docs/minecraft-26-1-verification.md) records ordinary production/save/network/UI evidence and its limits. This diagram adds no new runtime result. Follow [harness composition](../testiarium/harness.md#harness-and-feature-model) into [client/CCT](../testiarium/client-cct.md#target-client-sequence) when debugging native execution.
+
+## Fresh-report acceptance
+
+```mermaid
+flowchart TB
+  accTitle: A zero exit is insufficient native test acceptance
+  accDescr: Delete the exact previous XML, launch the owning route with deadline and required display, require successful process exit plus a fresh nonempty report, reject unsafe XML and count mismatches, then validate exact fixtures and allowed negative sentinels. Storage allows no skips. Any failed gate retains diagnostics and rejects acceptance.
+  S["Delete exact old XML"] --> R["Run owning task with deadline and display if needed"]
+  R --> X{"Process exit and fresh report valid?"}
+  X -->|no| NO["Reject acceptance and retain diagnostics"]
+  X -->|yes| XML{"Safe XML, counts agree, no errors/failures, non-skip case?"}
+  XML -->|no| NO
+  XML -->|yes| I{"Expected identities and permitted skips?"}
+  I -->|no| NO
+  I -->|yes| OK["Accept this route and archive report/hash"]
+```
+
+The [Gradle guard](../../gradle/gametest-reports.gradle.kts#L20-L48) deletes old XML and rejects DOCTYPE, empty/all-skip results and mismatched counts. The [storage identity gate](../../gradle/gametest-reports.gradle.kts#L47-L87), [negative-fixture sentinel gate](../../gradle/gametest-reports.gradle.kts#L134-L173) and [single client fixture gate](../../gradle/gametest-reports.gradle.kts#L175-L179) are route-specific, not interchangeable. The [matrix runner](../../scripts/verification/run-native-matrix.py#L33-L62) additionally checks report modification time, duplicate names and byte hashes; [process acceptance](../../scripts/verification/run-native-matrix.py#L79-L109) requires zero exit and fresh client screenshot where applicable. The diagram combines these real layers, not a claim that one parser alone performs every check. Optional negative fixtures remain skips and must fail for their exact intended reason; an interrupted process never becomes a pass by leaving XML behind.
 
 ## Choose exact owning checks
 

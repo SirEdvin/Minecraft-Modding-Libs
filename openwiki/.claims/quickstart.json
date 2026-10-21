@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:9a9d758f5adf960cc23be63a63564efc5e6711dbb3662bac25d04ee4f484750c",
+  "pageVersion": "sha256:ab937e61f87c8375661389bf64d4410475c4aaab4a8d2ad4a3fe9b7157684aff",
   "claims": [
     {
       "id": "claim_4723a831f8164b0eba13eab51c30c0f9",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://build.gradle.kts",
-          "version": "repo-file-v1:sha256:11be4bd4d5ea2c94102d36b9fa48ae3a9de30998e2dabbb44a2d1e35353b234a"
+          "version": "repo-file-v1:sha256:3f437edd06ecda599fd18903f77567fb0a3d246fb4dec29e75812a778721aa3b"
         },
         {
           "resource": "repo://settings.gradle.kts",
@@ -37,6 +37,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:43:06.090Z"
   }
 }

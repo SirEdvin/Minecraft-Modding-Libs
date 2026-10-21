@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:78418994f8228121bd8c2d7904864f02be76128b080d2ef020da52347e55e4fa",
+  "pageVersion": "sha256:99d1435760492759c4ee8e30cf30d8cd0b44fbc940eed6606bea2ac631887bdc",
   "claims": [
     {
       "id": "claim_276c6444b0504e2784308450ac51d052",
@@ -33,10 +33,28 @@
           "version": "repo-file-v1:sha256:9f719af9dd12987f871bece0bad41130aee4e4cb7fbe71ba7d7f4aab4c5b15b3"
         }
       ]
+    },
+    {
+      "id": "claim_7c06a2f0ad0f4ac0ab49f37bf2b2a477",
+      "statement": "The target facing-block modeller resolves a child crafting-item render state during extraction, installs a side-matrix special layer, and submits that extracted state with finally-balanced poses; older modellers return TransformedModel and none of these paths invokes RMLParser.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/turtle/client/FacingBlockTurtleModeller.kt#L12-L24",
+          "version": "repo-lines-v1:sha256:fe80cc85dd1bbbcce74a5200f111c5d04e30fc5d46079c5132ba8eb8d4fed4ee:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczNTViODU4MjI3NTdkZDE1MDRjZDAxY2Q3MTRiZTM2YjI5NmE2M2MzYjFlNTdkNDk1NjgyM2QyYTFhZGMyZGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhY2Y0YzVlNTlhYjkyNTcxYTBmOTE3Nzc3NDZkNjI3ZjAzOTgwYjhjY2Q4ZTU1ZDRiNzBlMzRjNGUwOTFjZDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkZWJmNTRmZThiYjY2MGQ5NDU0MTQyMjYwNmY5OWI0NjA1M2ZmYjViMmIxNGVlNzE5NDA4NzRmNDlhNzNhODIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/turtle/client/FacingBlockTurtleModeller.kt#L13-L25",
+          "version": "repo-lines-v1:sha256:2ef9bc569238b3e8be7c4f67994d89be15378b61ca4dca885aa93a9cdea76673:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczNTViODU4MjI3NTdkZDE1MDRjZDAxY2Q3MTRiZTM2YjI5NmE2M2MzYjFlNTdkNDk1NjgyM2QyYTFhZGMyZGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhY2Y0YzVlNTlhYjkyNTcxYTBmOTE3Nzc3NDZkNjI3ZjAzOTgwYjhjY2Q4ZTU1ZDRiNzBlMzRjNGUwOTFjZDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ2MDU1YjlhODlkYjliYTE5NThhYzU2YmRhNDBkMDAxN2JhOTY0OGQ1NDMwNWIwYmM3MGVmMDZiYWI2MTkyOTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/turtle/client/FacingBlockTurtleModeller.kt#L26-L73",
+          "version": "repo-lines-v1:sha256:447fa321ecc5652a2cf9b89ce8944d45e028e3917308f0b53e6c7b2736ca78da:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZGVlYjE4YjMyZjU4YjUyMzk4OWIxOTU3ZjAzYWZlZTFjMzZkN2M3M2I3ZWJmYWZmYTEzMTQ5NTI3MjNkN2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1YjYzN2IzY2UyMmEyZmYzZTJlMmIxNTQxMzIzYzE3OTgwNTZjNzgwMjFiZTFlODMxYTliMjU4M2I2MjVlOGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5MDNiMGFkMjViMWEwMDk2YzM4YWMyODQ2YzIxYzdjNWY1MzI3MGNmOGJhNTQ0YTc3YjFlYWQzNzE4YmJmMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:25:53.459Z"
   }
 }

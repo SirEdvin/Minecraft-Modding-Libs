@@ -10,17 +10,56 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
   - id: openwiki-source-ab3d46da7bb0829a5a9e2b0d
     resource: repo://docs/verification/minecraft-26-1-R7-target.md
+  - id: openwiki-source-3e0634914368c5bb807943fa
+    resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/blockentity/CreativeFillerBlockEntity.kt
   - id: openwiki-source-6f87780afc0c93a392f49947
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/TweakiumDataProviders.kt
   - id: openwiki-source-7a28f0759134e180a3204560
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/UpgradeDataProviders.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+  - id: openwiki-source-b343a646be7e4973123d9fff
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/computercraft/CreativeFillerPeripheral.kt
+generated: { by: "hermes", at: "2026-10-21T16:59:46.460Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:59:46.460Z
 ---
 
 # Tweakium registration, data and creative filler
+
+[Architecture overview](../../architecture/overview.md) · [Peripheral module map](peripheral.md) · [Broccolium data boundary](../../broccolium/modules/data.md)
+
+## Platform and definition composition
+
+```mermaid
+classDiagram
+    accTitle: Computer registration extends the base platform
+    accDescr: ComputerBasePlatform extends BasePlatform and holds a computer-specific inner adapter and tracker. The tracker exposes a holder to language generation; type registration is separate from generated upgrade definitions.
+    BasePlatform <|-- ComputerBasePlatform
+    InnerBasePlatform <|-- InnerComputerBasePlatform
+    ModInformationTracker <|-- ComputerModInformationTracker
+    ComputerBasePlatform o-- InnerComputerBasePlatform : loader delegate
+    ComputerBasePlatform o-- ComputerModInformationTracker : tracked entries
+    ComputerModInformationTracker ..|> ComputerModInformationHolder
+    ComputerLanguageProvider --> ComputerModInformationHolder : expected upgrade keys
+```
+
+Triangles mean extension/implementation, diamonds held references, and arrows data consumption. [26.1.2 registration](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/platform/ComputerBasePlatform.kt#L17-L49) tracks keyed UpgradeType entries and delegates native registration. Target custom-item factories operate on `ItemStackTemplate`; the old serializer and 1.21.1 type differences are spelled out below. The holder/tracker is a datagen input, not the player's settings store.
+
+```mermaid
+flowchart TB
+    accTitle: Target generated resources versus runtime filler
+    accDescr: Upgrade bootstrap functions feed registry-patch datagen, while target TweakiumDataProviders generate filler resources. The live filler entity owns a peripheral and void sinks; its put strategy creates resources directly in a resolved remote sink.
+    U[Consumer upgrade bootstraps] --> G[GeneratorSink.upgrades registry patch]
+    G --> J[Generated upgrade definitions]
+    D[TweakiumDataProviders] --> R[Textures / block and item models / languages]
+    H[CreativeFillerBlockEntity] --> P[CreativeFillerPeripheral + block owner]
+    H --> V[Item / fluid / energy void sinks]
+    P -- main-thread put --> S[Strategy + named peripheral + side]
+    S --> L[Broccolium sink lookup]
+    L --> O[Create resource and store directly]
+```
+
+Solid arrows are production/data flow; disconnected build and runtime branches are deliberate. [UpgradeDataProviders](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/UpgradeDataProviders.kt#L9-L21) installs registry patches, whereas [TweakiumDataProviders](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/data/TweakiumDataProviders.kt#L20-L40) generates the shipped Filler assets. Old versions have abstract utilities but no corresponding concrete Tweakium production generator. The common [Filler entity](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/blockentity/CreativeFillerBlockEntity.kt#L22-L40) supplies destructive sinks, not buffers. The target [put implementation](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/minecraft/computercraft/CreativeFillerPeripheral.kt#L38-L79) throws on missing target/type/id, does not transfer from inventory, and discards the store remainder. It is not an operation-fuel or permission check. See [operations](plugins.md) and [upgrade transport](upgrades-persistence.md) for those distinct seams.
 
 ## Target registration and generated content (2026-10-19)
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:22d0315ea230d695760475740e769325aa13f163eb5daa616fd5bd9cdc843564",
+  "pageVersion": "sha256:3187742193dd81f39f9ebcec73d31038a740997bc25c110d217099adba3b0375",
   "claims": [
     {
       "id": "claim_e3617974ad9e4bb09badc97fbefcba8f",
@@ -33,10 +33,28 @@
           "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
+    },
+    {
+      "id": "claim_5e2c5634d5364d4db90ba995677ee91c",
+      "statement": "Fabric configures Peripheralium during singleton initialization before dependency initialization and common registration; Forge-family initializes Tweakium, configures Peripheralium, calls common registration and attaches deferred registers, with criterion-trigger attachment present in the modern entrypoint but not the legacy one.",
+      "evidence": [
+        {
+          "resource": "repo://projects/peripheralium/fabric/src/main/kotlin/site/siredvin/peripheralium/FabricPeripheralium.kt#L6-L19",
+          "version": "repo-lines-v1:sha256:f658444e365b3f286c42f1ebb3c7bec47e73a7f30cfaa1ae86e6f522c0a33193:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzMjgyODFmOGE1ODY3MjcwN2U4NmY2NjBlNzhlY2MwYjIzZWI4MzYyYzMyZDQzZmI5ODIxN2I5YWUyY2JiYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxMTAzNzY5MTgyYjRmODY2ZDQxMjI3ZTAyMTFlMjIyMzYzNTFhMDlhMWJiYTU2ZjE1MTY4NzIyMWU3MjU2Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheralium.kt#L18-L37",
+          "version": "repo-lines-v1:sha256:893067f4d9bfe8a6cd09dca2423e339636ac889e0fecf0a93295c5ef9a15fad3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4ZmE2ZTI5ZjZkYTZjZjliMTFiZjRhMzAwNGQ1MzJhMjliODEyODQzOWM0YWRiYjNlNjJiMWNhYjQzZmQxZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0NjJjNjJjODYzMDE0Mzc1YjQzMjJlOThmZGUyZDhjYWE4N2VkZTg4YmZmMjQyMjlhYzhhMzYxN2RlYjFlYmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyNjYzOTE4ZDQ0ZjRkN2EzY2I4MmI3OGQ2YzlkNzA3NDk5MTdmMmVhMDYwZmQ4ZGEzYzVlNjY0NWRiM2U5MTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/peripheralium/ForgePeripheralium.kt#L15-L33",
+          "version": "repo-lines-v1:sha256:64b0bc9553fc8167c7c167766f3ab6d8869681406f6a14a68382b537f65bceb9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZjIwZWVlNmQxNTYwNjBiY2NhMzQxNzJiNjNlYTlhNTBmMzI4MmY4MzIxMTRkMzQ5MzU1ZmFmN2Y5M2FmZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRhZTE4OTMxODQ5YzBmNjJhNTk3OTNiZTYwZjZjN2ZlOTgxNDEwYTU5ZDdiNDc4YWNlOGI0Zjk3YWQ2NDU0ZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:56:43.998Z"
   }
 }

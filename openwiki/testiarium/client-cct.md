@@ -12,15 +12,87 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7.md
   - id: openwiki-source-d7497543e084877c0f613811
     resource: repo://gradle/minecraft-26-1.gradle.kts
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+  - id: openwiki-source-fac7e754e8ba5f381d02ab0f
+    resource: repo://projects/testiarium/versions/26.1.2/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt
+  - id: openwiki-source-2ea996407b1a17dc7589d4d2
+    resource: repo://projects/testiarium/versions/26.1.2/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctGameTestExtensions.kt
+  - id: openwiki-source-5f0490f1d5251082687eb418
+    resource: repo://projects/testiarium/versions/26.1.2/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestExtensions.kt
+  - id: openwiki-source-89a8dfa3a151015c64397f3a
+    resource: repo://projects/testiarium/versions/26.1.2/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestHooks.kt
+generated: { by: "hermes", at: "2026-10-21T17:56:43.998Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T17:56:43.998Z
 ---
 
 # Testiarium client and ComputerCraft fixtures
 
+[Architecture overview](../architecture/overview.md) · [Harness/features](harness.md#harness-and-feature-model) · [Fresh-report gate](../testing/verification.md#fresh-report-acceptance)
+
+## Target client sequence
+
+```mermaid
+sequenceDiagram
+  accTitle: Target client fixture startup and client-thread action
+  accDescr: Enabled client ticks open or reuse the named world once no overlay blocks startup. Server ticks wait for player, stable rendering and startup delay, then run tests. Client actions submit futures, wait, and propagate causes. Completion finishes reporting before scheduling shutdown.
+  participant C as Client tick
+  participant W as Named world
+  participant S as Server test sequence
+  participant A as Client action
+  participant R as Reporter
+  C->>W: Open or create once at title/accessibility screen
+  S->>W: Wait for player and stable rendering
+  S->>S: Count down startup delay and start batches
+  S->>A: submit action
+  A-->>S: Future completion
+  S->>S: get future, unwrap failure cause
+  opt Screenshot helper
+    S->>A: Wait render idle, hide GUI, capture
+    A-->>S: Capture callback
+    S->>A: Reset GUI visibility
+  end
+  S->>R: finish when tracker is done
+  S->>C: Schedule disconnect, stop and exit
+```
+
+This is the [26.1.2 hook](../../projects/testiarium/versions/26.1.2/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestHooks.kt#L49-L83), not a universal rendering engine protocol: `onOpenScreen` does not start the world on this target; `onClientTick` waits for the overlay to disappear. [World reuse and start gates](../../projects/testiarium/versions/26.1.2/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestHooks.kt#L86-L145) retain an existing named world and count down only once rendering is stable. Exit codes distinguish no tests (1), required failure (2), and completion (0); fresh XML remains mandatory. [thenOnClient and screenshot helpers](../../projects/testiarium/versions/26.1.2/src/testMod/kotlin/site/siredvin/testiarium/fixture/client/ClientTestExtensions.kt#L31-L67) wait for futures/callbacks, not pixel correctness. GUI visibility is reset to false, not restored to an arbitrary previous setting. Old full-file hooks remain version-owned; do not copy private engine descriptors across versions.
+
+## Labeled CCT action and Lua completion
+
+```mermaid
+sequenceDiagram
+  accTitle: Target CCT separates queued Java action from Lua marker completion
+  accDescr: Initialization installs the Lua machine and API factory before the server context. Queued actions run during API startup or update, recording their own result. Lua markers are separate state; fail publishes the error before DONE. Test sequence waits and checks the appropriate channel.
+  participant G as GameTest sequence
+  participant Q as CctComputers
+  participant A as Test Lua API
+  participant L as Lua fixture
+  participant M as Marker state
+  Note over Q,A: initialize before CC server context
+  G->>Q: enqueue(label, action)
+  Q->>A: Wake known computer
+  A->>Q: startup or update polls action
+  Q-->>G: Monitor result: success or Throwable
+  opt thenOnComputer
+    G->>Q: Wait monitor and check result
+  end
+  L->>A: test.ok or test.fail
+  alt ok
+    A->>M: Add marker, reject duplicate
+  else fail
+    A->>M: Store error before DONE
+    A-->>L: Throw LuaException
+  end
+  G->>M: Wait marker then check stored error
+  M-->>G: Success or assertion failure
+```
+
+Two completion channels are intentional: [queued action monitor](../../projects/testiarium/versions/26.1.2/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt#L37-L82) proves Java action completion; [marker state and API](../../projects/testiarium/versions/26.1.2/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt#L126-L185) prove Lua marker/error observation. [thenStartComputer](../../projects/testiarium/versions/26.1.2/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctGameTestExtensions.kt#L14-L50) only enqueues; thenOnComputer waits/checks its monitor, while thenLua waits/checks marker state after optional fixture-file validation. Neither enqueue nor DONE alone certifies success. The target API's update polling handles actions queued after startup; the [idle detector](../../projects/testiarium/versions/26.1.2/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctComputers.kt#L85-L107) still depends on private ComputerCraft scheduler members. These source diagrams are not newly executed CCT/client tests.
+
 ## Current executed capability (2026-10-19)
+
+Focused source checks are in [CctHarnessGameTests](../../projects/testiarium/versions/26.1.2/src/cctTestMod/kotlin/site/siredvin/testiarium/cct/CctHarnessGameTests.kt#L13-L87): queued-after-startup and once-only execution, real Lua completion, and a required outer observer of the optional failure sentinel. Inspected here, not rerun; inherited execution receipts below retain their exact source/date boundary.
 
 [R1](../../docs/verification/minecraft-26-1-R1.md) ports target registry/environment/sequence/CCT scheduler hooks and verifies both loaders with real Lua, client harness XML and screenshots. [R6](../../docs/verification/minecraft-26-1-R6.md) retains full28 native routes; [R7](../../docs/verification/minecraft-26-1-R7.md) adds all six target optional graphical workflows and four old graphical joins. Main/testMod/cctTestMod feature separation remains mandatory. Ordinary Fabric production readiness uses runProductionServer, not Testiarium's standalone runServer.
 

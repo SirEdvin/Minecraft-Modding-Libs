@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:e4ec972cb5d5249ba64bbecad242a08ff0913a4e75ae07b3d8e9a186c28340a8",
+  "pageVersion": "sha256:f853d5c974c61c00c35654087df0348f4450b3e3ee19bf2ed428fb71fe98c1e1",
   "claims": [
     {
       "id": "claim_4e2e45e0ade54f1e8abffa2a84e1a53b",
@@ -29,10 +29,28 @@
           "version": "repo-file-v1:sha256:2fc077ecc0388a7fad6957245fdfd68134152d11dca544d090c23ce0ad64b8d7"
         }
       ]
+    },
+    {
+      "id": "claim_ceec3fbe4623431e903d9d4c384e9d94",
+      "statement": "Target BaseBlockEntityBlock ticks only on server when enabled; its replacement mixin invokes observer destroy after native removal, while MutableNBTBlockEntity's explicit data push marks dirty and sends block updates only on server.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/versions/26.1.2/src/main/java/site/siredvin/broccolium/modules/base/mixin/LevelChunkMixin.java#L14-L29",
+          "version": "repo-lines-v1:sha256:9868710b171922a0a80d58d4b7d02bcba9ff21f75e2476c4d7d2075c299d751c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2ODk2ZTc1N2E4ZDRiNTQwNmYzYzdmNzEyOGE2YzdjMjc3NTEyNTliZjFjYmVhYjg4NWZiMDdlNjlkYTJlZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjNzNlNjA0MDc1YmVmODM2OWYxNDEzMWMyY2MxNTY3NGY3YjUxZGRkZGIyNjE1OGVlNDlmOTM1OWFiYjUzODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/block/BaseBlockEntityBlock.kt#L30-L42",
+          "version": "repo-lines-v1:sha256:2803dcb42b6fd50577015808d22c1696d3f3167facced7f35303dff41d69ec03:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNGRiZTVlZmU1Y2UzYmFjMjg1MWViNjUxNmQzMGM4NzY5MmYzNTkxMTQwMjM5OTQwNDI4MmFhMDQ3NjkxMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM3OTIxNzY1N2YxMDRmZTAzYjNlNjkyNTAxODk3MWI3ZTg5YzBlODcxZWIwOWFiYWUxNTM5ZmJlYjk4ZmM4NGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0NDcyNjA1MzE5NWUxYWZmZmNmMjAzMDEwYWY0YzdmZTJmMDNlZTExN2JiMjM5MmFmYzJlZjk2NTA5ZTM1MTgifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/blockentity/MutableNBTBlockEntity.kt#L51-L62",
+          "version": "repo-lines-v1:sha256:4afeaf3643f97291be3c6b8c47437dc2458426d502f8dd0c268ee4747ae72f94:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZmMxNDNkOTViZDRjMTE3OGNkYTA2M2IyYjcyMjBiNTA5MzcyMWYxOGVhZTM5NjI0MjI4MmMxOWQxNGJmYzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllYmVhNjBiMTM5NDI3MjY4OGRkYjg3OGQ1YjAzZWY0NzE2YzFhZmYyYWFjMzI0OWYxZDI4MGYxNjhhNDY0ZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmM2RkYmU3MWVjYzQ1MGFiN2RmZTY3YmRkNDU0MWU0OGU1YTZkNzA3OGUxNTA0ZWE3ZmYyMDlkM2RkYmVhNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T16:59:46.460Z"
   }
 }

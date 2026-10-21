@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:c1fb6494eb0606898c2fb7b53e428538ba62f407161956deedc9bdb7bcc76ca5",
+  "pageVersion": "sha256:dbdefb3d65c09a84db66b6686d0b9f00bb8ab34b52e6b0ba616d66850636de32",
   "claims": [
     {
       "id": "claim_d273f40e6130479e97dc688adbb7e33b",
@@ -33,10 +33,24 @@
           "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
+    },
+    {
+      "id": "claim_69e3a47fe80c43f6a09d08636c02cdf4",
+      "statement": "OwnedPeripheral connection callbacks visit only explicit plugins under the connection lock, use resulting list size rather than successful removal/unique connection transitions, and do not undo mutations when callbacks throw; the returned connectedComputers list is not a snapshot.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt#L103-L134",
+          "version": "repo-lines-v1:sha256:c719114afe36494f338eee1efedfb7a6d6a15cfaf0ca3369924f796240117719:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjYjQ2MmZhMWU0NmJmZmM0YWE4OGRhZjhlNmM2M2MyYTFhMjYxNTUwMDczZWFiZjU0ZGY3NDIzNzkzYzMyN2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwNGE2ZWZjNmRjZWI1YmMyNGRhNDJiYTExODRkZDZlMTY3ZDZjMzk5YmJhOTliN2M2NTE3MDlhYTQ2NTkzYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBmY2VhZWIwZDE5NGE3YmNhNzYwYWY0MmQ4ZWRiOGNjYTYyMjRlMWZmZDFmNTgzZWIzMmU1OWU5MDFhNmIwMzkifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt#L44-L52",
+          "version": "repo-lines-v1:sha256:b74fd61b7efe5fd3530e88412d89bd33567f8a366d8fbadc936940837c16f09c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODcwZTJhNmI2ZWIzYTI3NDhhZGQyYjg0NTExNjQwMTYzYjRiNzljZjYxNmU1YTgzNzdiYjM2YWM0MzU0ZGI2MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTBmM2Q1YmJiOGMyN2UyNDdjMDA5MTIzY2JjM2Y2Yjc3ZDZiYTkxMzFlYjRjYzZhY2IyMDc4YTk1OGEwNWJkZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDRmYzZiNjY5ZWZlZmY5YjMzYTkxMDU0ZDU5NmM0NTFmYmZmM2I0M2QyZDBhZDBhMzlkZTY0M2E1YmE4NDY0YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTM2MDY3M2UyNWM1OTgwMWQ0NzlhNzIxOWJiYTc2ZDY5ODY0NDJmNmE3ZmMzYmMwMWY1MjRkYWI3ZWNmZDdjOCJ9"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:25:53.459Z"
   }
 }
