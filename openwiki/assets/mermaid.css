@@ -1,0 +1,16 @@
+/* Preserve legibility on phones: scroll the chart, not the entire page. */
+.mermaid-diagram {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  padding: 0.5em;
+  background: #fff;
+  border: 1px solid #d8d8d8;
+}
+.mermaid-diagram > svg {
+  max-width: none !important;
+}
+.mermaid-diagram:focus-visible {
+  outline: 2px solid #2674a8;
+  outline-offset: 2px;
+}

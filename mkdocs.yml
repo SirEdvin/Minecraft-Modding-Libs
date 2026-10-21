@@ -5,6 +5,12 @@ edit_uri: edit/multiversion/openwiki/
 docs_dir: openwiki
 theme:
   name: readthedocs
+markdown_extensions:
+  - fenced_code
+extra_javascript:
+  - assets/mermaid.js
+extra_css:
+  - assets/mermaid.css
 hooks:
   - scripts/openwiki-pages.py
 exclude_docs: |
