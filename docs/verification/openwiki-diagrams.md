@@ -1,5 +1,29 @@
 # OpenWiki diagram campaign
 
+## Milestone 2 — t_9cf32b07
+
+Imported exact parent commit 0e9f0681bf70032e4a9e94c1b7423994c270d9b1 by fast-forward and verified ancestry in the assigned worktree. Completed the twelve existing Broccolium/Tweakium factual pages with 27 new diagrams; cumulative total is 31, including the four parent overview/topology charts. All are accessible, source-grounded and linked through ordinary Markdown. Existing accurate prose and historical/current evidence distinctions remain. No application, dependency, renderer, MkDocs config, AGENTS or workflow changes were made on milestone 2. The verification script only gains immediate renderer-error reporting instead of waiting for a timeout.
+
+Important source-grounded distinctions: generic transfers simulate/execute/restore remainders, not universal atomicity; Fabric native-peer movement differs from mixed-peer bridges; old Forge-family handler simulation differs from target native per-call transactions. Peripheral explicit plugins precede owner boons in collection, but connection callbacks visit only explicit plugins and run under the lock on the caller's thread. Repeated empty detach can repeat last-detach callbacks. Fake-player load precedes the action try/finally; scoped attribute/loan cleanup is not arbitrary-backend rollback. Stateful item transport differs across storedData, mutable components and immutable templates. Client model extraction/submission is separate from logical owner composition and from RML parsing.
+
+### Milestone-2 checks and evidence
+
+Actual commands (reused parent-pinned MkDocs 1.6.1, Playwright 1.56.0/Chromium1194 and Mermaid 12.2.0):
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 "$TMPDIR/openwiki-diagrams-venv/bin/python" -m mkdocs build --strict --site-dir "$TMPDIR/t_9cf32b07-diagrams-evidence/pages/openwiki"
+PYTHONDONTWRITEBYTECODE=1 "$TMPDIR/openwiki-diagrams-venv/bin/python" scripts/verification/check-openwiki-diagrams.py --site "$TMPDIR/t_9cf32b07-diagrams-evidence/pages" --output "$TMPDIR/t_9cf32b07-diagrams-evidence"
+git diff --check
+```
+
+Strict build and cumulative audit exit 0: 22 factual pages, 61 Claims, 155 evidence references, manifest/sidecar version agreement, existing bounded repository paths/spans and 2,034 built internal links/anchors pass. All 31 Mermaid blocks parse/render at both 1440×1000 and 390×1000 (28 page/viewport runs, 62 SVG render observations), with titles/descriptions, viewBox containment, natural font/pixel sizing and full keyboard-scroll-region reach. Zero console/page errors in normal runs; deliberate CDN failure keeps readable source and navigation. No hosted CI/deployment or GitHub-native Mermaid execution is claimed.
+
+Actual rendered storage/peripheral class diagrams and transfer, dispatch, attach/detach, upgrade transport/settings and client sequences have wide/narrow screenshot evidence outside tracked source. Visual review shortened the dispatch, connection, client and upgrade labels; full adjacent explanations retain exact API/ordering details. Long figures intentionally scroll horizontally even in the theme's fixed-width desktop content column (694px; phone 336px), rather than shrink labels into unreadability. SVG-internal bounds and left/right reach pass; a single viewport screenshot is not a claim that all lifelines fit simultaneously. Text and edge shapes convey semantics without color.
+
+The first audit found real sequence parse failures: literal semicolons in message labels terminate Mermaid statements. Corrected the affected four pages through supported sequential jobs, retained the failure logs, and reran the full suite successfully. Retrieval smoke tests found and read back the exact generic-transfer, connection and stateful-transport sections. Source/test fixtures were inspected, not executed: no Minecraft matrices were rerun for documentation.
+
+Lifecycle: initial 1a924228-c12d-4b0f-8e54-8b2b7dbfcced completed all twelve jobs but sourceChanged=true persisted interrupted (report changed during authoring). Supported correction run 4a69a192-ea0c-4b0e-b920-bdcca24d8a5d and visual-polish run 54663bc4-efae-4786-85ef-d19f6a939115 both finished complete. Current issue-free Claims were retained; new material propositions cite bounded source. A compound datagen Claim was deliberately split via inspect/submit, preserving its original ID for the retained proposition. Final stable-source run, local cumulative commit/ref/SHA and durable evidence archive are recorded in the task handoff, avoiding a self-referential report hash. Publication/review/remaining ecosystem scopes stay downstream.
+
 ## Milestone 1 — t_90d65a9c
 
 Card-local scope: top-down logical architecture, matching version/loader source topology, navigable project entry points and Mermaid rendering. Class/runtime drill-downs remain explicitly owned below. This report is not whole-campaign acceptance or publication.
@@ -23,18 +47,18 @@ Baseline: fetched origin/multiversion at f71be14b6b98de2d95b1d3c4a36fefcec0e5030
 | Complete — 1/4 | architecture/overview.md | Production and test/contract module graphs; build declarations cited above |
 | Complete — 1/4 | architecture/loaders.md | Matching-version and effective-source flowcharts; source selection cited above |
 | Complete entry — 1/4; final navigation 3/4 | quickstart.md | Routes to overview, topology and all five projects; settings.gradle.kts |
-| Pending — 2/4 t_9cf32b07 | broccolium/modules/platform-base.md | Platform/lifecycle composition; modules/platform and modules/base source families |
-| Pending — 2/4 t_9cf32b07 | broccolium/modules/storage.md | Storage item/fluid/energy abstractions and transfer/commit/rollback flows; modules/storage and adapter implementations |
-| Pending — 2/4 t_9cf32b07 | broccolium/modules/lookup-drops.md | Lookup/drop resolution composition and selection; matching module source families |
-| Pending — 2/4 t_9cf32b07 | broccolium/modules/data.md | Provider composition/data flow; modules/data and loader datagen routes |
-| Pending — 2/4 t_9cf32b07 | broccolium/integrations/loaders.md | Native platform/storage delegation; fabric/forge and version overrides |
-| Pending — 2/4 t_9cf32b07 | tweakium/modules/peripheral.md | Owner/plugin composition, Lua dispatch and attach/detach sequences; modules/peripheral |
-| Pending — 2/4 t_9cf32b07 | tweakium/modules/plugins.md | Plugin/boon/operation composition and failure/ordering flows; modules/peripheral source neighbors |
-| Pending — 2/4 t_9cf32b07 | tweakium/modules/player.md | Fake-player ownership/context; player implementations and their callers |
-| Pending — 2/4 t_9cf32b07 | tweakium/modules/platform-data.md | Platform/provider composition and data flow; loader registration and generators |
-| Pending — 2/4 t_9cf32b07 | tweakium/modules/representation-rml.md | Lua representation versus client rendering/model pipeline; matching-version implementations |
-| Pending — 2/4 t_9cf32b07 | tweakium/modules/upgrades-persistence.md | Upgrade composition and save/load lifecycle; upgrades, settings and native hooks |
-| Pending — 2/4 t_9cf32b07 | tweakium/integrations/loaders.md | Adapter integration/lookup and client boundaries; loader sources and metadata |
+| Complete — 2/4 | [Broccolium platform/base](../../openwiki/broccolium/modules/platform-base.md#service-and-module-map) | 2 composition/lifecycle flows; BasePlatform:24–46, target BaseBlockEntityBlock:30–92 and MutableNBTBlockEntity:24–62. Render/link/Claims pass. |
+| Complete — 2/4 | [Storage classes/families/transfer](../../openwiki/broccolium/modules/storage.md#focused-storage-class-model) | Class model, resource-family flow, generic sequence; AgnosticSink:7–30, SlottedAgnosticStorage:8–39, StorageUtils:13–71, ReplaceableItemStorage:6–31. Render/link/Claims pass. |
+| Complete — 2/4 | [Lookup/drop capture](../../openwiki/broccolium/modules/lookup-drops.md#resolution-drill-down) | Priority flow and capture sequence; BaseLookup:28–71, ChainedBaseLookup:11–41, DropConsumer:18–73, target FakePlayerProxy:60–75. Render/link/Claims pass. |
+| Complete — 2/4 | [Broccolium data](../../openwiki/broccolium/modules/data.md#provider-composition-and-build-time-flow) | Provider composition/data flow; LibDataProviders:5–9, LanguageProvider:14–50, target ForgeGeneratorSink:88–91. World-save sequence N/A: build-time JSON generation, not game persistence. Render/link/Claims pass. |
+| Complete — 2/4 | [Broccolium native delegation](../../openwiki/broccolium/integrations/loaders.md#native-delegation-map) | Adapter-family flow and target commit sequence; FabricStorageWrapper:24–103, mixed FabricStorageUtils:48–109, modern AgnosticItemHandlerWrapper:11–53, old 1.21.1 handler:10–60. Render/link/Claims pass. |
+| Complete — 2/4 | [Peripheral ownership/dispatch/connections](../../openwiki/tweakium/modules/peripheral.md#composition-model) | Class model and 2 sequences; OwnedPeripheral:19–160, BasePeripheralOwner:10–33, BoundMethod:11–18. Render/link/Claims pass. |
+| Complete — 2/4 | [Plugins/boons/operations](../../openwiki/tweakium/modules/plugins.md#small-plugin-family-model) | Plugin class model and policy/failure flow; AbstractInventoryPlugin:17–89, AbstractRudimentInventoryPlugin:14–36, OperationBoon:39–96 (target:39–91). Render/link/Claims pass. |
+| Complete — 2/4 | [Fake-player responsibilities](../../openwiki/tweakium/modules/player.md#host-and-actor-responsibility-map) | Host/proxy composition and target session sequence; target FakePlayerProviderTurtle:43–88, FakePlayerStorageSession:12–62, FakePlayerSessionUtil:9–74. No blanket legacy-session parity. Render/link/Claims pass. |
+| Complete — 2/4 | [Computer platform/data/Filler](../../openwiki/tweakium/modules/platform-data.md#platform-and-definition-composition) | Class/composition and separate datagen/runtime flow; target ComputerBasePlatform:17–49, UpgradeDataProviders:9–21, TweakiumDataProviders:20–40, CreativeFillerPeripheral:38–79. Render/link/Claims pass. |
+| Complete — 2/4 | [Representation/RML/client rendering](../../openwiki/tweakium/modules/representation-rml.md#logical-representation-boundary) | 2 separate language/transform flows and target client sequence; LuaRepresentation:101–135, rml1/Toolkit:29–55, Operations:7–101, target FacingBlockTurtleModeller:26–73. Render/link/Claims pass. |
+| Complete — 2/4 | [Upgrade persistence](../../openwiki/tweakium/modules/upgrades-persistence.md#pocket-construction-class-view) | Construction class model, versioned item transport and settings-write sequences; StatefulPocketUpgrade (1.20.1:25–40, 1.21.1:27–60), target UpgradeTemplateUtil:7–45, DataStorageUtil:29–40/215–275. Turtle sibling seam explained without duplicated exhaustive UML. Render/link/Claims pass. |
+| Complete — 2/4 | [Tweakium loader/client boundaries](../../openwiki/tweakium/integrations/loaders.md#logical-discovery-adapters) | Discovery and isolated client registration flows; target ForgeComputerPlatformToolkit:56–66, FabricComputerPlatformToolkit:49–54, client initializers and Fabric metadata:12–16. No redundant loader class diagram: actual common composition/sequence pages linked. Render/link/Claims pass. |
 | Pending — 3/4 t_6fb747f5 | peripheralium/content.md | Content/registration/provider composition and lifecycle; content holders and generators |
 | Pending — 3/4 t_6fb747f5 | peripheralium/integrations/loaders.md | Loader entrypoint/registry flow and version-limited integrations |
 | Pending — 3/4 t_6fb747f5 | testiarium/harness.md | Harness composition, registration/execution/report flows; main API versus fixture features |

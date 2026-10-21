@@ -139,7 +139,8 @@ def browser_audit(site, output, diagrams):
                     page.on("pageerror", lambda error: errors.append(str(error)))
                     page.on("console", lambda msg: errors.append(msg.text) if msg.type == "error" else None)
                     page.goto(origin + "/openwiki/" + name[:-3] + "/", wait_until="networkidle")
-                    page.wait_for_function("document.documentElement.dataset.mermaid === 'ready'", timeout=60000)
+                    page.wait_for_function("['ready', 'error'].includes(document.documentElement.dataset.mermaid)", timeout=60000)
+                    assert page.evaluate("document.documentElement.dataset.mermaid") == "ready", (name, errors)
                     assert page.locator(".mermaid-diagram svg").count() == count, name
                     metrics = page.locator(".mermaid-diagram svg").evaluate_all("""svgs => svgs.map(svg => {
                         const v = svg.viewBox.baseVal, b = svg.getBBox();
