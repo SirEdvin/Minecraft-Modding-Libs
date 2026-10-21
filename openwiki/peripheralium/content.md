@@ -10,13 +10,15 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
   - id: openwiki-source-a20cada7dd4dd8789477a256
     resource: repo://projects/peripheralium/versions/26.1.2/src/main/kotlin/site/siredvin/peripheralium/Items.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:30:44.003Z
 ---
 
 # Peripheralium content and resources
+
+[Architecture overview](../architecture/overview.md) · [Version/loader topology](../architecture/loaders.md)
 
 ## Ownership
 

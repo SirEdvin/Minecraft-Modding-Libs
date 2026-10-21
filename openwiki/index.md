@@ -8,6 +8,8 @@ okf_version: "0.2"
 
 # Directories
 
+- [architecture](architecture/)
+- [assets](assets/)
 - [broccolium](broccolium/)
 - [build](build/)
 - [peripheralium](peripheralium/)

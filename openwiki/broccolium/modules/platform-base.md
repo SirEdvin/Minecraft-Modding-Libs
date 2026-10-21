@@ -12,13 +12,15 @@ sources:
     resource: repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/api/IObservingBlockEntity.kt
   - id: openwiki-source-2bc8acf85ceeaeeeced01c19
     resource: repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/base/blockentity/MutableNBTBlockEntity.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:30:44.003Z
 ---
 
 # Broccolium platform and block lifecycle
+
+[Architecture overview](../../architecture/overview.md) · [Version/loader topology](../../architecture/loaders.md)
 
 ## Platform and registration
 

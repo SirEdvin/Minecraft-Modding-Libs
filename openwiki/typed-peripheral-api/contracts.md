@@ -18,13 +18,15 @@ sources:
     resource: repo://projects/typed-peripheral-api/tests/contracts.ts
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:30:44.003Z
 ---
 
 # Typed peripheral API contracts and packaging
+
+[Architecture overview](../architecture/overview.md) · [Version/loader topology](../architecture/loaders.md)
 
 ## Current compiler/runtime correlation (2026-10-19)
 

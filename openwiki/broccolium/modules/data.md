@@ -16,13 +16,15 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
   - id: openwiki-source-90c8b318fc2f5139061b7577
     resource: repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/lang/LanguageProvider.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:30:44.003Z
 ---
 
 # Broccolium data generation
+
+[Architecture overview](../../architecture/overview.md) · [Version/loader topology](../../architecture/loaders.md)
 
 ## Ownership and validation
 

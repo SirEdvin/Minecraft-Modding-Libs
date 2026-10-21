@@ -18,13 +18,15 @@ sources:
     resource: repo://scripts/check-publications.py
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:30:44.003Z
 ---
 
 # Stonecutter source ownership and publications
+
+[Architecture overview](../architecture/overview.md) · [Version/loader topology](../architecture/loaders.md)
 
 ## Effective graph
 
@@ -36,8 +38,10 @@ Four libraries have common/Fabric/forge nodes at1.20.1,1.21.1 and26.1.2; TypeScr
 
 ## Artifacts and evidence
 
-Public group stays site.siredvin and library version2.0.0; historical forge suffix stays, Testiarium common is core. Separate main/testMod/cctTestMod capabilities and sources remain. Check exact compiled fixture identities and all POM/GMM variants; viewers/private fixtures must not leak into production metadata.
+Public group stays site.siredvin; read current library versions from gradle.properties rather than treating the historical R5 version2.0.0 as a permanent pin. Historical forge suffix stays, Testiarium common is core. Separate main/testMod/cctTestMod capabilities and sources remain. Check exact compiled fixture identities and all POM/GMM variants; viewers/private fixtures must not leak into production metadata.
 
 [R5](../../docs/verification/minecraft-26-1-R5.md) proves36 publications,118 JARs,9 external Java/Kotlin routes,10 raw outgoing consumers, three active-state full builds and canonical restoration. [Final R7 integration](../../docs/verification/minecraft-26-1-R7-final-integration.md) refreshes affected final artifacts/consumers/publications. Two source-ZIP order limits remain: no blanket final118-byte reproducibility claim.
 
-Use wrapper --no-daemon, deadlines and fresh reports. Switching/datagen/builds mutate state and are not documentation linters. No public publish/push/release ran. See [verification](../testing/verification.md), [harness](../testiarium/harness.md) and [quickstart](../quickstart.md).
+The current [aggregate release wiring](../../build.gradle.kts#L210-L245) selects every version leaf, using remapJar for old Fabric, reobfJar for Forge1.20.1 and jar otherwise, plus sourcesJar. Configuration is not proof of an executed remote release. R5/R7 evidence above describes local validation at those historical source revisions, not current remote publication state.
+
+Use wrapper --no-daemon, deadlines and fresh reports. Switching/datagen/builds mutate state and are not documentation linters. No public publish/push/release was performed during this documentation update. See [verification](../testing/verification.md), [harness](../testiarium/harness.md) and [quickstart](../quickstart.md).

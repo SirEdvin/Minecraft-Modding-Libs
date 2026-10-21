@@ -12,13 +12,15 @@ sources:
     resource: repo://gradle/gametest-reports.gradle.kts
   - id: openwiki-source-d2f388e2bcce994d6d2afe5e
     resource: repo://projects/testiarium/versions/26.1.2/src/main/kotlin/site/siredvin/testiarium/Testiarium.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:30:44.003Z
 ---
 
 # Testiarium registration and reporting harness
+
+[Architecture overview](../architecture/overview.md) · [Version/loader topology](../architecture/loaders.md)
 
 ## Main API versus fixture features
 

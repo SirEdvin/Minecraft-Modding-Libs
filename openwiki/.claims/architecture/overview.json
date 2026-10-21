@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:50c235939bddc7b33b84d90ccb7f247265c4b4dcc77145b7fe2def15d79714ce",
+  "claims": [
+    {
+      "id": "claim_4f4ce2e840764b438005a8b44b71cf5b",
+      "statement": "The production dependency graph has Peripheralium consuming both Tweakium and Broccolium directly, and Tweakium consuming Broccolium; logical directions persist despite differing legacy and target Gradle configurations.",
+      "evidence": [
+        {
+          "resource": "repo://gradle/minecraft-26-1.gradle.kts#L107-L128",
+          "version": "repo-lines-v1:sha256:e871393bc2d29862a9d10ba3cb851d730f5cc812c731a26ffa3970b5a4a2b17e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNzhiZDAzMzVhMDM2ZjUxZDcyNzhjMDQwOTFhMWRiMjRhOTBmMThhNGY0ZDU3MGE1MGQ2NGM3YmIyZDRmMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIyYjRiYzY5ZGQyODY3Njg3ZDk1Y2ZjMGE3MDg1NzcyZWJmYzQzMDYwYmU2MWM4MWM4NGQyNjAxMGQ5ZjM0OWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjMjZlZTAwMzUzMjQwNjZiMTBjNDZhMTNmNTVhNzEwNmFhYjA3MmM5NDhlZDg1MmY3MzhkYTM2YzI2NmM2OWMifQ"
+        },
+        {
+          "resource": "repo://projects/peripheralium/build.gradle.kts#L40-L45",
+          "version": "repo-lines-v1:sha256:3c3858b243fffaf7580cb060cdc111c2120ebb031a1ba350d50ec0d0924d85c7:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDM5NzYwMTA1Yzk1NDY5OTlmYWU3YTU3MjFlZGZiNDc4YTg1MjQ4YzM1MTdlMDkwZTBkYzRlNjA3ZGJmY2YwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTcwZjc4ODMyYmE2MDJiYTFmOGIxMTViYzM5NjI5YjY4NTZhYjJkZTk3MDg4MTIyMjJmNWE1ZDdjYzY4MjMyOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTAwOTkzNzEzMjhmYWE4MzQ0YmZiNDBkYzk3ZDAwMGIwMjE3YTNkMDhmZmFmODI5OTY1OWNkNWNjNGEzNmZmMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTNjODcxY2NmMGUzODgwOTgyMjRlYWY3YmY2MDAwZDVkMjFhNDIwYjVmNWJjNmJkMDRkYzliMzAxNGY0ZWUzZSJ9"
+        },
+        {
+          "resource": "repo://projects/tweakium/build.gradle.kts#L51-L60",
+          "version": "repo-lines-v1:sha256:82223dd126963ab9e3e3af75c8e71b904b4fbe49f2a3517ea1aa37a381dc50b5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjNTk3YTEyZGNkNjA0YWJiZjIzN2VjMTEyOGUyZDVlYTFkYTY3MjQ4YmM0ZTBlZjdhODFmYWJhMGEyNTZjMjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwMzAzMDY0ZDY0MTAyZGEzNzhiNWNjODk0NWU5NWNmODQ0Zjk3YmNmZmNiM2E5YzdiZTJkOWIzZGFiY2JiYjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmMDcwNTNhN2FmOTliZmQxZjEzZWU4YTdmZDY5NDU5MGJmOGEwMjE5MzhiYjA4NmY3YjU4NTQwZmQ5NTdiOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZlZmU2NDZjYmE4Y2U2ZTgyYzExYmRlYzY2MWQ0Y2M0MTkwZmRmOGU5NmJlN2JiMmYyMjM2ZGM1YjhkY2MzNmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a9ad87878c834d91a8cc69c9866a774d",
+      "statement": "Broccolium and Tweakium test surfaces consume Testiarium separately from production dependencies, and Tweakium tests consume Broccolium fixtures; Testiarium main/testMod/cctTestMod are separate outputs.",
+      "evidence": [
+        {
+          "resource": "repo://gradle/minecraft-26-1.gradle.kts#L136-L165",
+          "version": "repo-lines-v1:sha256:075f6437eba5a1081a2bb8ac74ec453a6f5d30f79a181dbfe22685a251191879:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1ZjQ2N2FlZmIzZjllZmE2YmI4NjU3NjZhMmFjOThjYmQzZmE1ODkyMjJlZTlkMzY5ODlmNzVkMzI2ZDgzMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjZWEzYTk2MTg5NmM3MTI5YzYwY2Y1ODJhY2VkZjI0YTI1NDhiNTUwZDZmYmE3ODg1MDJjNjc4MzI2MDdhNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmYzVkOGVjN2Q1M2E5MTkzMzI1NjYzZGMwZTdjYmZiZDgzZTg3ZGY3N2UxYzk2NmI2NjU3ZmU2NTc4NDBlMGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/fabric/build.gradle.kts#L54-L67",
+          "version": "repo-lines-v1:sha256:e164fccba188e837b4a8ec676782101c0152fbdf8257724b8947b127a48f065b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTlhMDcwOTM5NDgxNTc3ZjljMzhiYmJlNGE5MDJmNDQ5ODU2OTZjZjdjODI3ZmU2ZTVmNDhlOWFiYjNlZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmODVhNjE2NmRkZDQzZTM1ZmRiMGE2ZDZmODFiNTYzODVkMmRjZDI1N2I4NmEzZDdiNDdiNWQ5ZDE3N2UxNDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3OTJkZTYzNGRlMjQ1ODFjNmVjZjU0NGRlYWFkNWI2ZjBhODFiNmM3NGVlM2Q4ZTY0NjliZmJiYzEzOGRkNjgifQ"
+        },
+        {
+          "resource": "repo://projects/testiarium/build.gradle.kts#L21-L54",
+          "version": "repo-lines-v1:sha256:c7b0dba368da9859221c022f324079aa4d167b488dc21ad296aa780c5816a982:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNDY3OGFjYTE4NDdjZjU1ZTM1NTBmY2E2Y2FjNGI4NDQzZWM4MDc3ZWI0OTNjYTA4MDNmZTYyMjMyOWFiYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YzkzNzZmNDcxYzE4Njc5NTliZWFhOGEwZjA4YzQyYTJhOTFiOTI4YWNhYTBjMDA2NjBhNDQ1MTBkYTkzMDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExYjIxZWU2MzMzNzM5ZjkxM2ZkMzNiNzU1YTAxMTYyMThjNTQ3OThhMDk2MmUzMmU3ZmIwOWVkMDQ5MTk2MmQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/fabric/build.gradle.kts#L43-L69",
+          "version": "repo-lines-v1:sha256:aba468dfe2068e1412d0373d047144fb45e5cb2e79e1cb00209c2430f15f90f9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhZWVkNmQ4YmUyMTk1MDQ2YTY5YTE3NTc4NDM4N2RiMTFjNTk3ZDA0M2FiMDM1NTc5MTYwM2E4NWQ4M2RjOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmNjE0MzE5M2ZkOGI2NTU2ZjRlMDFhZTcwYzczZDBhYzhkNGUzOTNkMWFlNzhlYzczM2RmMTI4NTJjODQxYTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmZmQ1ZjhlZTc2Y2M0ZjY2OTc1MDFmMmU3YjdhYjAyZDg3NTE2Mzk3MDI5MjdkNDVhZTAxOWFlMjhhZWQ1NzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE5ZTc2MzU1Y2YxMTk5NDgwYzNmOTk4MzZiMTQ4NmM4NDFkODkxZmFhZDkwNGM2MDhlMDkzMDIyZDM3NTdhZWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2cfdb7b3a15b403e847d457f6c689d9b",
+      "statement": "typed-peripheral-api independently builds TypeScript/Lua and checks consumer contracts, including Creative Filler correlation, rather than being a Kotlin production library dependency or declarations generated from Kotlin.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/build.gradle.kts#L8-L50",
+          "version": "repo-lines-v1:sha256:5e251bd5b1a2812dc69865c2c385b3f43c6d9438515d4e07522a5c9f5445464d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzZjYzZDE4ZTYwNjQ0MzM1Y2Y5ZDcyMGE5YTNiYzM4OTMyMzY5MDNiNTZjOWUxYTFiOTM4YzA4MzI5OTk4ZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkZmI3OTU5NDdkOTFjOTY4MDFiZGRmMmMyZWU4YTdiOTliNTEwOTZlODZmYjdiM2RkYmFhY2M2OWFlZjVmNjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3OThkNTBjOGZmYjNkNDU2NDQyMzg5MzgxMzYzOGQ0OGQ3MzI2MjkwNzdjN2M1NTBlM2RlNDRhYWUxMGU4NGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM2M2I5YmY1YjFmMzI0NzliMTIyMzA2MzU5NTliNWExNmVmYzYxZDY1YzNkM2UyN2EzMjgxODA1ZjA4NmM1ZmQifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/tests/contracts.ts#L60-L99",
+          "version": "repo-lines-v1:sha256:d9a55ce26ad7622c1fee2ff171a8240bc6d1634266e0404690e3ba5729170b9f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0M2IzOTU3NGVjM2EyYzE3YmFlZjU0ZGQ0MTA0MGYwNjE2OTg3MjkzNjc2OWUzMjUyNjRkYzliODNkMDZmMjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1ZTYwMjZhNGNmZWJlOTk4YTI3NWQ1YzNkYTllZWZhZjYyMjgzODRjN2IxM2Q4N2U5MTNjMWJkMzhhODQzMGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY2M2M0YTk4MTUwZjY1OWJlZDhhZDM5ZTE5YTVjMGI5ZWVkNGI0M2Y1Zjg1ZGUyZjAwZjNlMDZmMzVhMzA5NGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFlYzNmMzk0MWIzMjY4NGRlYmVhMzBkYTUwOGYzOWRhZWNiN2JiYTlhMjA0ZDRkYWQ2YzU3NzM2MGMwZDliZmUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.1",
+    "at": "2026-10-21T16:53:49.649Z"
+  }
+}

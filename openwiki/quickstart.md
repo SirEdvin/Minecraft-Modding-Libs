@@ -14,13 +14,17 @@ sources:
     resource: repo://gradle/gametest-reports.gradle.kts
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-19T13:48:57.965Z" }
+generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T16:30:44.003Z
 ---
 
 # Minecraft Modding Libs ownership and task map
+
+## Visual entry points
+
+Start with the [architecture overview](architecture/overview.md) for all five projects, production arrows, separate fixture/contract relationships and module drill-downs. Continue with [version and loader topology](architecture/loaders.md) for matching common/adapter leaves and canonical versus overridden sources. These logical diagrams are not Minecraft client render models; those belong to [representation/RML](tweakium/modules/representation-rml.md). Normal links and prose remain usable without diagram rendering.
 
 ## Effective source first
 
