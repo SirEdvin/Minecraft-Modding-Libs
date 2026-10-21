@@ -65,11 +65,11 @@
       "completedRunId": "dd239424-469b-43d7-8b34-d7ac02139e69"
     },
     "/openwiki/peripheralium/integrations/loaders.md": {
+      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
+      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e",
       "pageVersion": "sha256:3187742193dd81f39f9ebcec73d31038a740997bc25c110d217099adba3b0375",
       "completedBy": "hermes",
-      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad",
-      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
-      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e"
+      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad"
     },
     "/openwiki/quickstart.md": {
       "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
@@ -79,18 +79,18 @@
       "completedRunId": "dd239424-469b-43d7-8b34-d7ac02139e69"
     },
     "/openwiki/testiarium/client-cct.md": {
+      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
+      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e",
       "pageVersion": "sha256:f4b2dd96989f88014656b5db9924f60cc0e5d08dad4978e043c3faec7fe4ba92",
       "completedBy": "hermes",
-      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad",
-      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
-      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e"
+      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad"
     },
     "/openwiki/testiarium/harness.md": {
+      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
+      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e",
       "pageVersion": "sha256:4269b13cf8fc03b369b3aa1cf74a4ca8a0bfe47b189847eaf6cc8e1696b60106",
       "completedBy": "hermes",
-      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad",
-      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
-      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e"
+      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad"
     },
     "/openwiki/testing/verification.md": {
       "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
@@ -149,11 +149,11 @@
       "completedRunId": "54663bc4-efae-4786-85ef-d19f6a939115"
     },
     "/openwiki/typed-peripheral-api/contracts.md": {
+      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
+      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e",
       "pageVersion": "sha256:ba4367c169ff08105e19a8f558702e19d7a075fe77a93a43bd2dd752fa8493d9",
       "completedBy": "hermes",
-      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad",
-      "gitHead": "c5123e9055b5a10632597bfd1810d119e2348880",
-      "sourceFingerprint": "sha256:f240015cf0332d08e66168f2323d83886f3606ffd6a1ceacccd19b2d7d24069e"
+      "completedRunId": "44bb9d01-355b-463e-a8b0-7867978d63ad"
     }
   }
 }
