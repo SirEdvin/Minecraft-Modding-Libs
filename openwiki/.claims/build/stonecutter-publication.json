@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:166e183d7010505a3dbdc249859d2cdc4a70a8d6d987bea1bddf4d45a83dbb1e",
+  "pageVersion": "sha256:36d6caa355003046571a833f8636b6529d151a1502be5de5fa675a6043a5c54e",
   "claims": [
     {
       "id": "claim_b57904ca38dc4e32ae6d543bb7322579",
@@ -51,10 +51,24 @@
           "version": "repo-lines-v1:sha256:d4db5d5cea9f5170e5d5f4759684c6f10a57d45d9b0de58ccd1d898b8334c18e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiMGUyZjRjYjQ3ZmM5OTMzYjNiMjg5M2U5YjI4Yjk2Y2Y0YmY2OTgyYzdkZDE4MTczNzc1YjdmZjRlNjQ1YWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU4MzJmZTBjNWFjMTJkOGZmYmQ0ODliNzRjYTE4MjdkYWYyZjNhOWNmYWQ0M2JiN2ZmMTVlMzViNTYwMmQ2NTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzMGM5NTM2YzZiYzQwYzIwMzIzYjVhYjRmNTIyZjhmNWM1N2Q0ZjAxZDcyZjgyNWRjZWU1YmI1MzQ3ZTYyNTkifQ"
         }
       ]
+    },
+    {
+      "id": "claim_3b9ad82f372c4ee1a690ead10685e33d",
+      "statement": "Aggregate release assets select remapJar for old Fabric leaves, reobfJar for Forge 1.20.1, and jar otherwise, together with sourcesJar; optional Testiarium feature dependencies remain separate from main artifact contents.",
+      "evidence": [
+        {
+          "resource": "repo://build.gradle.kts#L112-L148",
+          "version": "repo-lines-v1:sha256:d40a4ceb7aa2452c1afb4a641e7fe3510e21679f670615e367bac0adc85cc55f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlNzMzY2IzOGQyOGM3NjBiMTI3OGZhZWVhNmFiYzU0ZWE1YmM5Yzc3OTdhYjVkYjNkMmM2NzJhNDRjYWQzYTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYjMzOWMxN2Q0Y2M1NGU3MGM0ZmNmZWNiNjExYmI5ZTdkMzYzZjI1YjE4ZTA5MjNhMWQzMDZjYzk1OTI0ZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjNTk5N2MzNzM3MmM0Njg2ZTA1ZGE4ZTVmZDZiN2Y1ZGYwMTFkZWJmNjgzYjAyNDY1MTdhZDdhMjRmYTU0NDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjZThkMTM3ZmE0NGFjNjY0OGIzYTRhNmY1NmY1MGJhYmE2NzczNDE0NWQwNDc0YTRlNTU1Njk3ZmQyNmJlYzgifQ"
+        },
+        {
+          "resource": "repo://build.gradle.kts#L231-L245",
+          "version": "repo-lines-v1:sha256:7588a72f08797bcd3c72dd497acee2afe79872a6cae58f2012e7294df1154eb2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3YjYxOTE0Y2Q3YWUxNTY2YzY1YmExYzg3NWIzMDdmZTdiMTRmNDk3YWEyMzU2NDU2MWZjZGY4YWNhOTU4MmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjZTk3NDAyY2Y5ZWI3N2MwYjZlZGQzYzIyMWY0ZWVlYTNiNjhjMTMzNzdkYjVhY2FlZmY3ZTc5OTg5NzY3Y2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzMGM5NTM2YzZiYzQwYzIwMzIzYjVhYjRmNTIyZjhmNWM1N2Q0ZjAxZDcyZjgyNWRjZWU1YmI1MzQ3ZTYyNTkifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-21T16:30:44.003Z"
+    "at": "2026-10-21T17:43:06.090Z"
   }
 }

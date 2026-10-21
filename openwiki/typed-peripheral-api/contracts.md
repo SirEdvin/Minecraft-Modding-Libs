@@ -14,19 +14,73 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7-legacy.md
   - id: openwiki-source-18505126b4fc17c6fe763eea
     resource: repo://projects/typed-peripheral-api/build.gradle.kts
+  - id: openwiki-source-da3b4a7b2ffd70eec66af28a
+    resource: repo://projects/typed-peripheral-api/energy_storage_extended.ts
+  - id: openwiki-source-d2344cd17dac0003a35848ae
+    resource: repo://projects/typed-peripheral-api/fluid_storage_extended.ts
+  - id: openwiki-source-9ed7ed554b4207918ddae467
+    resource: repo://projects/typed-peripheral-api/inventory_extended.ts
+  - id: openwiki-source-cfbe391714cc85f130edb55f
+    resource: repo://projects/typed-peripheral-api/inventory.ts
   - id: openwiki-source-b2992bb4316ae5243156d682
     resource: repo://projects/typed-peripheral-api/tests/contracts.ts
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
+generated: { by: "hermes", at: "2026-10-21T17:56:43.998Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-21T16:30:44.003Z
+    at: 2026-10-21T17:56:43.998Z
 ---
 
 # Typed peripheral API contracts and packaging
 
 [Architecture overview](../architecture/overview.md) · [Version/loader topology](../architecture/loaders.md)
+
+## Interface and provider model
+
+```mermaid
+classDiagram
+  accTitle: Inventory contracts compose views, configuration and queries
+  accDescr: InventoryAPI extends InventoryViewAPI. ExtendedInventoryAPI also composes configuration and accepts query transfers. ItemStorageAPI uses queries without an inventory slot hierarchy. Discovery implementation is external.
+  InventoryViewAPI <|-- InventoryAPI
+  InventoryAPI <|-- ExtendedInventoryAPI
+  ConfigurationAPI <|-- ExtendedInventoryAPI
+  ExtendedInventoryAPI ..> ItemQuery : query overloads
+  ItemStorageAPI ..> ItemQuery : unslotted filters
+```
+
+### Native-resource interface and provider families
+
+```mermaid
+classDiagram
+  accTitle: Fluid and energy interfaces keep distinct typed providers
+  accDescr: Extended fluid and energy interfaces extend their own base APIs. The exported typed providers use fluid_storage_extended and energy_storage_extended wire names, not a shared runtime storage class.
+  FluidStorageAPI <|-- ExtendedFluidStorageAPI
+  EnergyStorageAPI <|-- ExtendedEnergyStorageAPI
+  FluidProvider ..> ExtendedFluidStorageAPI : fluid_storage_extended
+  EnergyProvider ..> ExtendedEnergyStorageAPI : energy_storage_extended
+```
+
+Inheritance arrows express TypeScript interface composition, dotted arrows type/provider use. FluidProvider/EnergyProvider are diagram labels for the exported IPeripheralProvider instances, not new classes; these are not generated Kotlin classes. [Inventory](../../projects/typed-peripheral-api/inventory.ts#L4-L21), [extended inventory](../../projects/typed-peripheral-api/inventory_extended.ts#L10-L54), [fluid](../../projects/typed-peripheral-api/fluid_storage_extended.ts#L4-L14) and [energy](../../projects/typed-peripheral-api/energy_storage_extended.ts#L4-L14) show actual composition and wire names. Extended inventory specializes ConfigurationAPI with ExtendedInventoryConfiguration. Provider constructors come from external typed-peripheral-base and use null fallback callbacks; the diagram does not claim their discovery internals are implemented here. Other behavior APIs (scan, look, capture, fuel, operations, interaction, experience, suck, warp and Creative Filler) are contract surfaces, not a single inheritance tree; [contracts.ts imports and calls them](../../projects/typed-peripheral-api/tests/contracts.ts#L1-L99). Exhaustive UML would obscure that independent composition.
+
+### Compiler checks, emission and runtime correlation
+
+```mermaid
+flowchart TB
+  accTitle: Separate TypeScript validation, Lua emission and native correlation
+  accDescr: Gradle uses npm ci. check runs no-emission compiler contracts; assemble runs TypeScript-to-Lua build emitting declarations and Lua. When both tasks are selected, contracts run after emission. Native Tweakium Lua fixtures separately correlate maintained APIs; compiler success is not runtime certification or publication.
+  N["npm ci with package-lock"] --> T["Maintained TS interfaces and providers"]
+  T --> E["assemble / compileTypeScript / npm run build / tstl"]
+  E --> O["Root .d.ts and .lua package files"]
+  T --> C["check / testContracts / npm test / tsc noEmit"]
+  E -.->|mustRunAfter only when both selected| C
+  C --> V["Overload, inferred-type, provider and negative contracts"]
+  K["Kotlin plugin and Lua implementation"] --> R["Separate native CC/Lua fixture execution"]
+  T ==>|maintained correlation, not generation| R
+  O -.->|separate publication action| P["npm package release"]
+```
+
+[Gradle wiring](../../projects/typed-peripheral-api/build.gradle.kts#L17-L50), [npm scripts/files](../../projects/typed-peripheral-api/package.json#L5-L19) and [noEmit test config](../../projects/typed-peripheral-api/tests/tsconfig.json#L1-L7) ground the two compiler routes. `mustRunAfter` orders jointly selected tasks without forcing emission for standalone contracts. Thick correlation is a separate obligation against [Tweakium plugin behavior](../tweakium/modules/plugins.md#small-plugin-family-model), not Kotlin-to-TypeScript generation. Type equality and expected errors do not execute emitted Lua or prove range, conservation, units, schema parity or transactional behavior. This documentation run neither reruns those compilers/native fixtures nor publishes npm artifacts; historical receipts and retained limits follow below.
 
 ## Current compiler/runtime correlation (2026-10-19)
 

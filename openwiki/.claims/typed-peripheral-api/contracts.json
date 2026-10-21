@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:ec74fb37d2e66b5f00290045b9ceeb2fac6c068d9b41ee435f62783eb82c3f3b",
+  "pageVersion": "sha256:ba4367c169ff08105e19a8f558702e19d7a075fe77a93a43bd2dd752fa8493d9",
   "claims": [
     {
       "id": "claim_b2079f866aa24641a840b296bb77931c",
@@ -41,10 +41,32 @@
           "version": "repo-file-v1:sha256:b325dec1a7641950e4cd76412b2b16946a8ac0d57ed6043bdd566edcc4b9eac9"
         }
       ]
+    },
+    {
+      "id": "claim_055cc11f63814cf9833005d4c4c44866",
+      "statement": "Maintained TypeScript extended inventory composes InventoryAPI and typed configuration, while extended fluid/energy interfaces extend their base APIs; exported typed provider instances use matching wire identities and null fallbacks from the external provider dependency.",
+      "evidence": [
+        {
+          "resource": "repo://projects/typed-peripheral-api/energy_storage_extended.ts#L4-L14",
+          "version": "repo-lines-v1:sha256:6fe33b7a79cce768229a99338b580668944751400ec7c496a57bf40d1aef6c3e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3NmRjZjBkNmUxMDE0YmRjN2FhNmFmMjM4ZDY0MjIyYWFjZTFlY2E1MWMwZDM4MmFhMWFkYTJkZDQ2YjA0M2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ZTQyMDhjZDZmZmI4YzRhMzU0N2IyZjU0YWRhMTk5NzhjM2YzNjVlNzhmOTUwMmVmNTE0NWNkZDJhYTg1NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5NzA3NWI5YjI1NGE2YzFjMDNhM2U1NmZhZTgwNTU2OTFkYTcwZDM4Y2ZlMjJkZmIxZmU3MmRhOGQ2MTRiNzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/fluid_storage_extended.ts#L4-L14",
+          "version": "repo-lines-v1:sha256:ef353645a1edfec6df9f225d9bf2a0c03678e1be10579f65a7ba5010833e3c8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3NmRjZjBkNmUxMDE0YmRjN2FhNmFmMjM4ZDY0MjIyYWFjZTFlY2E1MWMwZDM4MmFhMWFkYTJkZDQ2YjA0M2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ZTQyMDhjZDZmZmI4YzRhMzU0N2IyZjU0YWRhMTk5NzhjM2YzNjVlNzhmOTUwMmVmNTE0NWNkZDJhYTg1NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0MGZlMzExNWYwNDA5MmMxYTQ4Y2VjODZmZTlmZmIyOTBiZTQwZTk0ZjRhMzA4NjUyY2IxZTc0Zjk1ZmE4YTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/inventory.ts#L4-L21",
+          "version": "repo-lines-v1:sha256:85b2c46014ae7360ba95f3776ca6a6d5425f2e9506534402232200556768d19f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3NmRjZjBkNmUxMDE0YmRjN2FhNmFmMjM4ZDY0MjIyYWFjZTFlY2E1MWMwZDM4MmFhMWFkYTJkZDQ2YjA0M2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3ZmQ5ODFkMTFhYzYwNzNiNjc2YmE0ZDNjZjMzNDA4MzVmNWJiMmZjZDcwMGQxZmNiYTA5NWZkNGM4YjA3MDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjMjNjMGFjMTQwZGQzZWUzN2MzMGUwMWI3ODQwZTM0NGQ0ZGMzNzk4MjNjN2JlNWQ1YzMwNmE0MWI5YzIxMDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://projects/typed-peripheral-api/inventory_extended.ts#L10-L54",
+          "version": "repo-lines-v1:sha256:134d443fd87e27a099fd90aeae448affc236d35e2d1b2095f4391639254fde4f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3MDRiMjlmYWQxMzVmZjYxOTE0YTVkNWNhMjc5NjU5MjM0ZDcxYTMxZDBjZmIzMTVkMGUwZTA0MTcxODFmOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg0ZTQyMDhjZDZmZmI4YzRhMzU0N2IyZjU0YWRhMTk5NzhjM2YzNjVlNzhmOTUwMmVmNTE0NWNkZDJhYTg1NDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmMzdhYjM2MzhhNjI2NTg5N2M1Y2ZmY2M3ZjMzMjY4YTAwNzY4ZmJmNWJjMjNkMDQ5NzJhNDhhYmM1ZjllZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-21T16:30:44.003Z"
+    "at": "2026-10-21T17:56:43.998Z"
   }
 }

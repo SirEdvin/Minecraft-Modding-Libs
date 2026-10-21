@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:a6e7bede56494a3e6c36ae69eaf59effeb727e230e35d66b1d5f575227c6c46b",
+  "pageVersion": "sha256:7af7c68c2a5e45dbd2904602fd7ba965f2ba167745a6d956628fe35f5eaed370",
   "claims": [
     {
       "id": "claim_381c3905ddfa4ab7a56e4178a084c70d",
@@ -51,10 +51,32 @@
           "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
+    },
+    {
+      "id": "claim_e2d9256e420a409ca8410cf3547ef70f",
+      "statement": "Native acceptance combines task-level stale XML removal and route-specific identity/sentinel checks with matrix-level freshness, duplicate/count checks, process exit and client screenshot freshness, so zero process exit or leftover XML alone is insufficient.",
+      "evidence": [
+        {
+          "resource": "repo://gradle/gametest-reports.gradle.kts#L134-L179",
+          "version": "repo-lines-v1:sha256:061fa4980a7aa1b3a750a77aabbf9ec99bb108130444b3a5b2ab48a97712ba29:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1MzRmZmNjNDcwYTc2OWViMTE0OWIxODRiZGViZDRkMzNiZDZlNTE0NDVkNTc2ZTY1NDM1ODVlZGM4ZmZhMGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjNjQ3OWNjMjMwNDQwZmQ0MWU4MjI0MjE4Njc5Njk4NTU5ZDI4OTNiZDY3YjQzODBhZmFiODExYjM4YTU1YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFiYWQ4Nzg2YWI3ZjQyZWFmOTg4NDc1NGM2MWY1ZTkzYzQ2ZWM4YjkxMmEwZmQ1NDE0NDhlNjIwMGJkOTA0NGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjYWZkNDI2ZjQ3YjM5ZDk0OGFiZDFjNWI5Y2EzYTUzNGZjNGViMTVlMTU2YjU1YWU0NjEwYWNlZWMwNmYxOTYifQ"
+        },
+        {
+          "resource": "repo://gradle/gametest-reports.gradle.kts#L20-L48",
+          "version": "repo-lines-v1:sha256:158842e0714634528ced2927056fa421356d6b0f4b07f357cf4ef701f6921a6d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyZGNmMjlkMmZkNDg3OTIzYzVlZmY2MzcxNjcxYmI1ZGJhMWJmN2IzMjNlYzVhNWU5YmUxYWMxYzNlOTAyNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0NWIxNDg4NmE3OTFjZmJiMTQ0NDNjNmYxZTE1YTNiYTFkODhjMGY2YWM0OTI2N2RiZTFhNmIzNGM4YTI0MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdhMzgwMGE5ZjE0MjMxZjA5YjczMDhhYWZiMDg1Njk2MzAwMTMzMmRjNmI1MjkzMWFiNGQ3YWExMWM2M2UyMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2ODBhYTlmNWE1NjMwMTY0MWFjZTYwNjEyMmRlNjcxNWQ2ZTRlNjI1ZWZmOTUwOTczODdjMjllNzM4ZTgwMTgifQ"
+        },
+        {
+          "resource": "repo://scripts/verification/run-native-matrix.py#L33-L62",
+          "version": "repo-lines-v1:sha256:e691067de284644ce07f02612775ada74407ccf8a0c1a885c55731edfcab24d2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzNzVhZGNkYTk0MzYzMDAwYTI4NTAxOGQ2YmY4MTdiNWM5MGZmZWNlMGY3MTI2N2JiOWIyYjgxZDA3MTViMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyNDg3ODc2NjY2MGM4YmJhN2ExNWM0MDNlNDk4NzIwYjg0MTM0YzU5Nzk3Yjk3Yjg0ZDhiYzJkZmMyNzdiN2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3NzAxNmM2ZWZlZTRjN2Q3YmVlZjZmYzIxZjI0MDQwZjg3NDY3MGI1OGNmZDc0ODA0YmIxMThjOWMzZDNmMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5M2JkNjZlMmJiNzFmM2I4YTkyNDA2NGJiZjdiMDdjNTkwM2E3NzNmYTRmOGMzNTQ2MDYwMzg2NjcxZDNhNzMifQ"
+        },
+        {
+          "resource": "repo://scripts/verification/run-native-matrix.py#L79-L109",
+          "version": "repo-lines-v1:sha256:814fa65082982e3945b0d9e537fd0dbc5cac4cf6634ff078ded3b9cbefa9b1be:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzNTc3NzdkZTY2ZjMwMmJjZjE2ODQ3Njc0MDk3NmQyZTQ2NDVhYzU0YzM4N2YyY2I4MTNkYTcxMTg4NmNkMzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4ZDEzNWNiMmFhNDA0MTU4MWRkYjRiYzQyZTg3MzA0MzU1NjVhYmM3MzE1M2FjYjFmOTA1Y2VmYjhjYWM5OGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdjNGE5N2YyMzczNTEzYTRmZjgzZWJhM2QwMjljM2RlYTI5ZGY4M2M0ZTYwZmMxZmE4MzI0NWQ1ZThiNjRmZGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmZDgwODdlZTVhOGJhNmM2OThlZTYyM2UzNDI2MWZhMjA2NjljZmZlMGE1MDZlMzVlMmEzOTU5NTEzNjRkZjQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:43:06.090Z"
   }
 }

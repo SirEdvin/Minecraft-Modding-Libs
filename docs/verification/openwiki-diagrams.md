@@ -1,5 +1,96 @@
 # OpenWiki diagram campaign
 
+## Milestone 3 — t_6fb747f5
+
+Imported cumulative c5123e9055b5a10632597bfd1810d119e2348880 by fast-forward; verified both that parent and 0e9f0681bf70032e4a9e94c1b7423994c270d9b1 ancestry. Completed the seven remaining factual subsystem/workflow pages and overview/quickstart drill-down navigation. Added 17 diagrams; cumulative total is 48 across 21 diagram-bearing pages plus the quickstart task map. The complete inventory below covers all meaningful existing modules, not an arbitrary diagram quota. No runtime/library, build/dependency, renderer/config, AGENTS or workflow changes on this card. Independent review/publication remains t_5f8c95c0.
+
+Source reconciliation preserves 1.20.1, 1.21.1 and 26.1.2 distinctions: blend/smelting only on legacy Peripheralium; keyed target construction and modern criterion registers; target Testiarium function/instance/environment registration versus old TestFunctions; overlay-gated target client ticks; Java action monitor versus Lua marker/error state; separate fixture features and production output; TypeScript contracts independently maintained outside Stonecutter. Production arrows were rechecked against actual direct dependencies, including Peripheralium → Broccolium. No reverse production Testiarium edge was added.
+
+### Cumulative verification and limits
+
+Actual checks reuse pinned MkDocs 1.6.1, Playwright 1.56.0/Chromium1194 and Mermaid 12.2.0:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 "$TMPDIR/openwiki-diagrams-venv/bin/python" -m mkdocs build --strict --site-dir "$TMPDIR/t_6fb747f5-diagrams-evidence/pages/openwiki"
+PYTHONDONTWRITEBYTECODE=1 "$TMPDIR/openwiki-diagrams-venv/bin/python" scripts/verification/check-openwiki-diagrams.py --site "$TMPDIR/t_6fb747f5-diagrams-evidence/pages" --output "$TMPDIR/t_6fb747f5-diagrams-evidence"
+PYTHONDONTWRITEBYTECODE=1 "$TMPDIR/openwiki-diagrams-venv/bin/python" "$TMPDIR/t_6fb747f5-visual-navigation.py"
+git diff --check
+```
+
+Strict build and all-diagram audit exit 0. All 48 blocks render at 1440×1000 and 390×1000: 42 page/viewport runs, 96 SVG observations, titles/descriptions, viewBox containment, natural-size fonts/pixels and complete scroll-region reach pass. Static audit passes 22 factual pages, 70 Claims, 179 evidence references, bounded repository spans and manifest/Claims version agreement; 2,105 built links/anchors pass. Normal console/page errors: zero. Deliberate CDN failure retains fenced source and ordinary navigation. Parent charts were included in every cumulative replay. No renderer support changes required new regression machinery.
+
+Actual browser navigation passes all six overview → Peripheralium/Testiarium/TypeScript entry → focused heading → overview routes (three at each width), plus quickstart → CCT detail → harness → overview at both widths. Targeted left/right screenshots cover content/platform, registration, harness/reporter, client/CCT, TypeScript and publication/report charts, plus inherited storage/dispatch; full-page screenshots cover every chart. Visual inspection checked representative classes and sequences, edge labels, grayscale contrast and non-color semantics. The dense TypeScript class chart was split into two smaller models after inspection. Long sequences intentionally scroll horizontally in the fixed desktop content column and phone viewport; a single screenshot cannot show every lifeline. Adjacent summaries and accessible SVG descriptions retain the whole meaning.
+
+Supported initial run dd239424-469b-43d7-8b34-d7ac02139e69 submitted nine sequential jobs; finish returned complete/sourceChanged=true because the report changed during authoring, and persisted interrupted. Supported polish run 44bb9d01-355b-463e-a8b0-7867978d63ad submitted four sequential jobs and finished complete. It split the dense class model, corrected the target fixture wiring citation and qualified modern criterion registration; Claims were inspected before clarifying existing prose, with current IDs retained. Final stable-source closure and exact cumulative commit/ref/SHA are recorded in the Kanban handoff and durable evidence receipt after this report is committed, avoiding a self-referential hash loop. Retrieval search and exact section readback passed for CCT channels and source-to-artifact selection.
+
+Only documentation checks were executed: Minecraft, TypeScript compiler contracts and historical native/production campaigns were inspected/inherited, not rerun. No hosted CI/deployment, GitHub-native Mermaid rendering, npm/Maven release, push, PR or merge on this card. The renderer still needs its pinned CDN for SVG and is not an offline/vendor/security audit. Existing AGENTS scheduled-refresh wording remains inherited despite no generator workflow; supported refresh instructions below do not promise automatic permanent diagram preservation.
+
+### Coverage decisions
+
+- All five projects have overview → subsystem → focused model/flow routes and ordinary backlinks. All twelve Broccolium/Tweakium module pages remain covered; this card completes Peripheralium, Testiarium, TypeScript, build and verification.
+- Peripheralium is material/registration/provider composition, not a new peripheral implementation hierarchy. Its focused platform class model and two separate registration/datagen sequences avoid inventing classes or merging runtime and generation.
+- Testiarium's feature graph, target definition/reporter model and registry/client/CCT sequences cover main versus fixtures and execution. Native outer-observer/registration tests were read; no runtime pass is invented.
+- TypeScript interfaces and typed provider instances are independent contracts, not generated Kotlin types. Inventory/query and fluid/energy families are separate focused models. Other behavior API declarations have no shared runtime inheritance tree; existing prose and compiler contract calls cover their composition without giant exhaustive UML.
+- Build/verification use source/artifact/evidence flowcharts rather than artificial class or save-state diagrams. World persistence belongs to Broccolium lifecycle and Tweakium upgrade pages. Generated indexes and quickstart are navigation, not separate class subsystems; no diagram is needed merely to fill those files.
+- Full evidence archive includes machine-readable per-block inventory and direct repository evidence URLs, rendered site, JSON results, full/targeted screenshots, scripts and lifecycle/Git receipt. Those artifacts remain outside tracked source; the handoff identifies their durable attachment.
+
+### Full cumulative diagram inventory
+
+Each row is one rendered block; linked headings contain its adjacent explanation and full repository-relative evidence links. Evidence below abbreviates source filenames/spans; explicit version prefixes distinguish overrides, and module ownership follows the page. Same-heading rows distinguish separate blocks by title. All rows passed both wide and narrow rendering, accessibility/bounds and scroll checks in the cumulative audit above; application tests cited as source are not new test executions.
+
+| Page / heading (diagram) | Kind | Representative source evidence |
+| --- | --- | --- |
+| [Topology: matching leaves](../../openwiki/architecture/loaders.md#one-pattern-four-libraries) | Flow | settings.gradle.kts:44–75; target convention:185–213 |
+| [Topology: effective sources](../../openwiki/architecture/loaders.md#authored-sources-versus-processed-output) | Flow | root build.gradle.kts:52–107 |
+| [Overview: production](../../openwiki/architecture/overview.md#production-dependencies) | Flow | Peripheralium build:40–45; Tweakium build:51–60; target convention:107–128 |
+| [Overview: tests/contracts](../../openwiki/architecture/overview.md#tests-and-consumer-contracts-are-different-edges) | Flow | Broccolium Fabric build:54–67; Tweakium Fabric build:43–69 |
+| [Broccolium adapters: families](../../openwiki/broccolium/integrations/loaders.md#native-delegation-map) | Flow | FabricStorageWrapper:24–103; FabricStorageUtils:48–109 |
+| [Broccolium adapters: native mutation](../../openwiki/broccolium/integrations/loaders.md#one-target-native-mutation-not-a-distributed-transaction) | Sequence | 26.1.2 AgnosticItemHandlerWrapper:11–53 |
+| [Broccolium data: providers](../../openwiki/broccolium/modules/data.md#provider-composition-and-build-time-flow) | Flow | LibDataProviders:5–9; LanguageProvider:14–50 |
+| [Broccolium lookup: priority](../../openwiki/broccolium/modules/lookup-drops.md#resolution-drill-down) | Flow | AgnosticItemSinkLookup:13–24; ChainedBaseLookup:11–41 |
+| [Broccolium capture](../../openwiki/broccolium/modules/lookup-drops.md#capture-state-flow) | Sequence | 26.1.2 FakePlayerProxy:60–75; DropConsumer:18–73 |
+| [Broccolium platform: services](../../openwiki/broccolium/modules/platform-base.md#service-and-module-map) | Flow | BroccoliumCore:17–20; PlatformToolkit:5–16 |
+| [Broccolium platform: lifecycle](../../openwiki/broccolium/modules/platform-base.md#persistence-and-sync) | Flow | 26.1.2 BaseBlockEntityBlock:30–92; LevelChunkMixin:14–29 |
+| [Broccolium storage: contracts](../../openwiki/broccolium/modules/storage.md#focused-storage-class-model) | Class | AgnosticSink:7–30; AgnosticStorage:7–25 |
+| [Broccolium storage: families](../../openwiki/broccolium/modules/storage.md#resource-families) | Flow | AgnosticFluidStorage:3–7; AgnosticEnergyStorage:3–13 |
+| [Broccolium storage: generic transfer](../../openwiki/broccolium/modules/storage.md#generic-transfer-sequence) | Sequence | StorageUtils:13–71; StorageTests:130–202 |
+| [Build: source/artifact selection](../../openwiki/build/stonecutter-publication.md#source-to-artifact-flow) | Flow | root build.gradle.kts:52–107, 152–169, 231–245 |
+| [Build: publication features](../../openwiki/build/stonecutter-publication.md#main-output-versus-test-features) | Flow | target convention:149–166; Testiarium build:21–51; root build:112–148 |
+| [Peripheralium: content/providers](../../openwiki/peripheralium/content.md#content-and-provider-map) | Flow | 26.1.2 PeripheraliumCommonHooks:6–14; PeripheraliumCore:14–23 |
+| [Peripheralium: platform](../../openwiki/peripheralium/content.md#focused-platform-composition) | Class | PeripheraliumPlatform:7–17 |
+| [Peripheralium: datagen](../../openwiki/peripheralium/content.md#data-generation-is-a-separate-lifecycle) | Sequence | 26.1.2 PeripheraliumDataProviders:5–12; loader generators |
+| [Peripheralium adapters: registration](../../openwiki/peripheralium/integrations/loaders.md#registration-sequence) | Sequence | FabricPeripheralium:6–19; ForgePeripheralium legacy:18–37, 1.21.1:16–38, 26.1.2:15–33 |
+| [Peripheralium adapters: isolated routes](../../openwiki/peripheralium/integrations/loaders.md#runtime-datagen-and-test-entrypoints-are-different-routes) | Flow | target fabric.mod.json:17–29; target convention:473–492 |
+| [Testiarium: client](../../openwiki/testiarium/client-cct.md#target-client-sequence) | Sequence | 26.1.2 ClientTestHooks:49–145; ClientTestExtensions:31–67 |
+| [Testiarium: CCT channels](../../openwiki/testiarium/client-cct.md#labeled-cct-action-and-lua-completion) | Sequence | 26.1.2 CctComputers:37–82, 126–185; CctGameTestExtensions:14–50 |
+| [Testiarium harness: features](../../openwiki/testiarium/harness.md#harness-and-feature-model) | Flow | Testiarium build:21–51; root build:112–148 |
+| [Testiarium harness: definitions/reporters](../../openwiki/testiarium/harness.md#focused-registration-and-reporter-model) | Class | 26.1.2 Testiarium:33–69; TestReporters:21–79 |
+| [Testiarium harness: registration](../../openwiki/testiarium/harness.md#version-specific-registration-and-execution) | Sequence | 26.1.2 Testiarium:63–147; ForgeTestiarium:13–25 |
+| [Verification: route map](../../openwiki/testing/verification.md#verification-route-map) | Flow | run-native-matrix.py:18–30; check-publications.py:23–70 |
+| [Verification: report acceptance](../../openwiki/testing/verification.md#fresh-report-acceptance) | Flow | gametest-reports.gradle.kts:20–179; run-native-matrix.py:33–109 |
+| [Tweakium adapters: discovery](../../openwiki/tweakium/integrations/loaders.md#logical-discovery-adapters) | Flow | TweakiumCore:17–27; 26.1.2 FabricComputerPlatformToolkit:49–54 |
+| [Tweakium adapters: client](../../openwiki/tweakium/integrations/loaders.md#physically-client-only-model-registration) | Flow | 26.1.2 FabricTweakiumClient:7–10; fabric.mod.json:12–16 |
+| [Tweakium peripheral: ownership](../../openwiki/tweakium/modules/peripheral.md#composition-model) | Class | OwnedPeripheral:19–100; IPeripheralOwner:19–54 |
+| [Tweakium peripheral: dispatch](../../openwiki/tweakium/modules/peripheral.md#lua-dispatch-lifecycle) | Sequence | OwnedPeripheral:137–160; BoundMethod:11–18 |
+| [Tweakium peripheral: connections](../../openwiki/tweakium/modules/peripheral.md#connectionconfiguration-behavior) | Sequence | OwnedPeripheral:103–134 |
+| [Tweakium platform/data: composition](../../openwiki/tweakium/modules/platform-data.md#platform-and-definition-composition) | Class | 26.1.2 ComputerBasePlatform:17–49; UpgradeDataProviders:9–21 |
+| [Tweakium platform/data: generation versus Filler](../../openwiki/tweakium/modules/platform-data.md#platform-and-definition-composition) | Flow | 26.1.2 UpgradeDataProviders:9–21; TweakiumDataProviders:20–40; CreativeFillerPeripheral:38–79 |
+| [Tweakium player: responsibilities](../../openwiki/tweakium/modules/player.md#host-and-actor-responsibility-map) | Flow | 26.1.2 FakePlayerProviderBlockEntity:17–39; FakePlayerProviderTurtle:16–20 |
+| [Tweakium player: session](../../openwiki/tweakium/modules/player.md#target-session-sequence) | Sequence | 26.1.2 FakePlayerProviderTurtle:43–88; FakePlayerStorageSession:12–62 |
+| [Tweakium plugins: families](../../openwiki/tweakium/modules/plugins.md#small-plugin-family-model) | Class | AbstractRudimentInventoryPlugin:14–36; AbstractInventoryPlugin:17–89 |
+| [Tweakium plugins: operation policy](../../openwiki/tweakium/modules/plugins.md#boons-and-operation-policy) | Flow | IPeripheralOwner:43–54; OperationBoon:39–96, target:39–91 |
+| [Tweakium representation: boundary](../../openwiki/tweakium/modules/representation-rml.md#logical-representation-boundary) | Flow | 26.1.2 LuaRepresentation:101–135 |
+| [Tweakium RML: transform](../../openwiki/tweakium/modules/representation-rml.md#rml-transform-flow) | Flow | rml1/Toolkit:29–55; Operations:7–101 |
+| [Tweakium rendering: extraction/submission](../../openwiki/tweakium/modules/representation-rml.md#client-model-extraction-and-submission-2612) | Sequence | 26.1.2 FacingBlockTurtleModeller:26–73; legacy:12–24 |
+| [Tweakium upgrades: construction](../../openwiki/tweakium/modules/upgrades-persistence.md#pocket-construction-class-view) | Class | PeripheralPocketUpgrade:10–30; StatefulPeripheralPocketUpgrade:10–24 |
+| [Tweakium upgrades: transport](../../openwiki/tweakium/modules/upgrades-persistence.md#save-to-item-and-load-into-a-reconstructed-upgrade) | Sequence | StatefulPocketUpgrade legacy:25–40, 1.21.1:27–60; target UpgradeTemplateUtil:7–45 |
+| [Tweakium upgrades: notification](../../openwiki/tweakium/modules/upgrades-persistence.md#settings-write-notification-is-a-separate-flow) | Sequence | 26.1.2 DataStorageUtil:215–275, 29–40 |
+| [TypeScript: inventory composition](../../openwiki/typed-peripheral-api/contracts.md#interface-and-provider-model) | Class | inventory.ts:4–21; inventory_extended.ts:10–54; item_storage.ts |
+| [TypeScript: fluid/energy providers](../../openwiki/typed-peripheral-api/contracts.md#native-resource-interface-and-provider-families) | Class | fluid_storage_extended.ts:4–14; energy_storage_extended.ts:4–14 |
+| [TypeScript: compiler/emission/runtime](../../openwiki/typed-peripheral-api/contracts.md#compiler-checks-emission-and-runtime-correlation) | Flow | package build.gradle.kts:17–50; package.json:5–19; tests/tsconfig.json:1–7 |
+
+Computed inventory: 25 flowcharts, 9 class models, 14 sequences = 48 blocks. Quickstart has no redundant chart: its visual-route table connects the diagrams above. All new/changed source and navigation links are checked through the strict build, static audit and additional report-link/anchor audit.
+
 ## Milestone 2 — t_9cf32b07
 
 Imported exact parent commit 0e9f0681bf70032e4a9e94c1b7423994c270d9b1 by fast-forward and verified ancestry in the assigned worktree. Completed the twelve existing Broccolium/Tweakium factual pages with 27 new diagrams; cumulative total is 31, including the four parent overview/topology charts. All are accessible, source-grounded and linked through ordinary Markdown. Existing accurate prose and historical/current evidence distinctions remain. No application, dependency, renderer, MkDocs config, AGENTS or workflow changes were made on milestone 2. The verification script only gains immediate renderer-error reporting instead of waiting for a timeout.
@@ -46,7 +137,7 @@ Baseline: fetched origin/multiversion at f71be14b6b98de2d95b1d3c4a36fefcec0e5030
 | --- | --- | --- |
 | Complete — 1/4 | architecture/overview.md | Production and test/contract module graphs; build declarations cited above |
 | Complete — 1/4 | architecture/loaders.md | Matching-version and effective-source flowcharts; source selection cited above |
-| Complete entry — 1/4; final navigation 3/4 | quickstart.md | Routes to overview, topology and all five projects; settings.gradle.kts |
+| Complete — 3/4 | quickstart.md | Overview-to-subsystem-to-focused visual routes for all five projects; topology, artifacts and verification linked |
 | Complete — 2/4 | [Broccolium platform/base](../../openwiki/broccolium/modules/platform-base.md#service-and-module-map) | 2 composition/lifecycle flows; BasePlatform:24–46, target BaseBlockEntityBlock:30–92 and MutableNBTBlockEntity:24–62. Render/link/Claims pass. |
 | Complete — 2/4 | [Storage classes/families/transfer](../../openwiki/broccolium/modules/storage.md#focused-storage-class-model) | Class model, resource-family flow, generic sequence; AgnosticSink:7–30, SlottedAgnosticStorage:8–39, StorageUtils:13–71, ReplaceableItemStorage:6–31. Render/link/Claims pass. |
 | Complete — 2/4 | [Lookup/drop capture](../../openwiki/broccolium/modules/lookup-drops.md#resolution-drill-down) | Priority flow and capture sequence; BaseLookup:28–71, ChainedBaseLookup:11–41, DropConsumer:18–73, target FakePlayerProxy:60–75. Render/link/Claims pass. |
@@ -59,13 +150,13 @@ Baseline: fetched origin/multiversion at f71be14b6b98de2d95b1d3c4a36fefcec0e5030
 | Complete — 2/4 | [Representation/RML/client rendering](../../openwiki/tweakium/modules/representation-rml.md#logical-representation-boundary) | 2 separate language/transform flows and target client sequence; LuaRepresentation:101–135, rml1/Toolkit:29–55, Operations:7–101, target FacingBlockTurtleModeller:26–73. Render/link/Claims pass. |
 | Complete — 2/4 | [Upgrade persistence](../../openwiki/tweakium/modules/upgrades-persistence.md#pocket-construction-class-view) | Construction class model, versioned item transport and settings-write sequences; StatefulPocketUpgrade (1.20.1:25–40, 1.21.1:27–60), target UpgradeTemplateUtil:7–45, DataStorageUtil:29–40/215–275. Turtle sibling seam explained without duplicated exhaustive UML. Render/link/Claims pass. |
 | Complete — 2/4 | [Tweakium loader/client boundaries](../../openwiki/tweakium/integrations/loaders.md#logical-discovery-adapters) | Discovery and isolated client registration flows; target ForgeComputerPlatformToolkit:56–66, FabricComputerPlatformToolkit:49–54, client initializers and Fabric metadata:12–16. No redundant loader class diagram: actual common composition/sequence pages linked. Render/link/Claims pass. |
-| Pending — 3/4 t_6fb747f5 | peripheralium/content.md | Content/registration/provider composition and lifecycle; content holders and generators |
-| Pending — 3/4 t_6fb747f5 | peripheralium/integrations/loaders.md | Loader entrypoint/registry flow and version-limited integrations |
-| Pending — 3/4 t_6fb747f5 | testiarium/harness.md | Harness composition, registration/execution/report flows; main API versus fixture features |
-| Pending — 3/4 t_6fb747f5 | testiarium/client-cct.md | Client/CCT fixture sequences; optional fixture registrations and scripts |
-| Pending — 3/4 t_6fb747f5 | typed-peripheral-api/contracts.md | Interface/provider composition and compiler/Lua contract flow; package scripts, types and tests |
-| Pending detail — 3/4 t_6fb747f5 | build/stonecutter-publication.md | Artifact/publication boundaries; build.gradle.kts and check-publications.py; current source topology already complete above |
-| Pending — 3/4 t_6fb747f5 | testing/verification.md | Fresh report/acceptance flow; gametest-reports.gradle.kts and verification scripts |
+| Complete — 3/4 | peripheralium/content.md | Content/provider map, platform class and separate datagen sequence; source/render details in full inventory above |
+| Complete — 3/4 | peripheralium/integrations/loaders.md | Platform-first sequence, metadata/datagen/test routing and modern/legacy differences |
+| Complete — 3/4 | testiarium/harness.md | Feature composition, definition/reporter class model and version-specific registration/execution sequence |
+| Complete — 3/4 | testiarium/client-cct.md | Separate target client and CCT monitor/marker sequences; historical runtime evidence retained |
+| Complete — 3/4 | typed-peripheral-api/contracts.md | Two focused interface/provider models plus no-emission/compiler/Lua boundary flow |
+| Complete — 3/4 | build/stonecutter-publication.md | Source/artifact selection and main/private/optional feature publication boundaries |
+| Complete — 3/4 | testing/verification.md | Owning verification route map and layered fresh-report acceptance flow |
 
 Final independent review/publication belongs to pre-created 4/4 t_5f8c95c0, not this card. The next owner must import the exact local handoff commit and verify ancestry; task dependencies do not transfer Git changes.
 

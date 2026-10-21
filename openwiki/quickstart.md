@@ -14,10 +14,10 @@ sources:
     resource: repo://gradle/gametest-reports.gradle.kts
   - id: openwiki-source-e620d7484b72a53c7fa812cd
     resource: repo://settings.gradle.kts
-generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
+generated: { by: "hermes", at: "2026-10-21T17:43:06.090Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-21T16:30:44.003Z
+    at: 2026-10-21T17:43:06.090Z
 ---
 
 # Minecraft Modding Libs ownership and task map
@@ -25,6 +25,21 @@ verified:
 ## Visual entry points
 
 Start with the [architecture overview](architecture/overview.md) for all five projects, production arrows, separate fixture/contract relationships and module drill-downs. Continue with [version and loader topology](architecture/loaders.md) for matching common/adapter leaves and canonical versus overridden sources. These logical diagrams are not Minecraft client render models; those belong to [representation/RML](tweakium/modules/representation-rml.md). Normal links and prose remain usable without diagram rendering.
+
+### Follow one visual route
+
+The [overview responsibility table](architecture/overview.md#drill-down-by-responsibility) reaches every meaningful existing module. Each entry has small diagrams with text summaries and source evidence; no SVG clicking is required. Pick a subsystem, then a focused model or sequence:
+
+| Start | Module/model | Behavior or boundary |
+| --- | --- | --- |
+| [Broccolium](architecture/overview.md#production-dependencies) | [Storage class model](broccolium/modules/storage.md#focused-storage-class-model) | Generic transfer on that page, then [native adapters](broccolium/integrations/loaders.md#native-delegation-map); platform/data/lookup remain in ownership routes below |
+| [Tweakium](architecture/overview.md#production-dependencies) | [Peripheral composition](tweakium/modules/peripheral.md#composition-model) | Dispatch/connections on that page, [plugin policy](tweakium/modules/plugins.md#small-plugin-family-model), [upgrade transport](tweakium/modules/upgrades-persistence.md#pocket-construction-class-view) or [client rendering](tweakium/modules/representation-rml.md#logical-representation-boundary) |
+| [Peripheralium](peripheralium/content.md#content-and-provider-map) | Platform composition and provider lifecycle on the content page | [Loader registration sequence](peripheralium/integrations/loaders.md#registration-sequence) |
+| [Testiarium](testiarium/harness.md#harness-and-feature-model) | Registration/reporter model and execution sequence on the harness page | [Client sequence](testiarium/client-cct.md#target-client-sequence), [CCT channels](testiarium/client-cct.md#labeled-cct-action-and-lua-completion), [report acceptance](testing/verification.md#fresh-report-acceptance) |
+| [typed-peripheral-api](typed-peripheral-api/contracts.md#interface-and-provider-model) | Maintained interface/provider composition | [Compiler/emission/runtime flow](typed-peripheral-api/contracts.md#compiler-checks-emission-and-runtime-correlation) |
+| [Build](architecture/loaders.md) | [Source-to-artifact flow](build/stonecutter-publication.md#source-to-artifact-flow) | [Feature isolation](build/stonecutter-publication.md#main-output-versus-test-features) → [owning verification](testing/verification.md#verification-route-map) |
+
+The [coverage inventory](../docs/verification/openwiki-diagrams.md) records diagram kinds, evidence and actual render/build checks. Source inspection is not execution of Minecraft tests, TypeScript contracts, release publication or hosted deployment.
 
 ## Effective source first
 

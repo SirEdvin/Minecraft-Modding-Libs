@@ -5,7 +5,7 @@ description: Production dependency directions, test and contract boundaries, and
 tags: [architecture, dependencies, navigation]
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-21T16:53:49.649Z
+    at: 2026-10-21T17:43:06.090Z
 sources:
   - id: openwiki-source-d7497543e084877c0f613811
     resource: repo://gradle/minecraft-26-1.gradle.kts
@@ -23,7 +23,7 @@ sources:
     resource: repo://projects/typed-peripheral-api/build.gradle.kts
   - id: openwiki-source-b2992bb4316ae5243156d682
     resource: repo://projects/typed-peripheral-api/tests/contracts.ts
-generated: { by: "hermes", at: "2026-10-21T16:53:49.649Z" }
+generated: { by: "hermes", at: "2026-10-21T17:43:06.090Z" }
 ---
 
 # Architecture overview
@@ -75,4 +75,15 @@ These normal Markdown links work without JavaScript, color perception or diagram
 
 ## Reading and verification routes
 
-Start with [version/loader topology](loaders.md) before inspecting implementation overrides. Use [verification](../testing/verification.md) for executable gates and the [diagram coverage checklist](../../docs/verification/openwiki-diagrams.md) for completed overview scope versus later class/flow ownership. Current diagrams summarize build declarations; no application tests were run merely to draw them.
+Start with [version/loader topology](loaders.md) before inspecting implementation overrides. Use [verification](../testing/verification.md) for executable gates and the [diagram coverage inventory](../../docs/verification/openwiki-diagrams.md) for visual coverage and actual documentation checks. Current diagrams summarize source/build declarations; no application tests were run merely to draw them.
+
+### Overview to focused behavior
+
+Choose a responsibility above, then follow a small model into its behavior rather than reading every class:
+
+- Storage: [class model](../broccolium/modules/storage.md#focused-storage-class-model) → generic transfer → [native delegation](../broccolium/integrations/loaders.md#native-delegation-map).
+- Lua integration: [owner composition](../tweakium/modules/peripheral.md#composition-model) → dispatch/connections → [plugin policy](../tweakium/modules/plugins.md#small-plugin-family-model) or [upgrade transport](../tweakium/modules/upgrades-persistence.md#pocket-construction-class-view).
+- Materials: [content/provider map](../peripheralium/content.md#content-and-provider-map) → [loader registration](../peripheralium/integrations/loaders.md#registration-sequence).
+- Native testing: [harness/features](../testiarium/harness.md#harness-and-feature-model) → registration → [client and CCT sequences](../testiarium/client-cct.md#target-client-sequence) → [fresh-report gate](../testing/verification.md#fresh-report-acceptance).
+- Consumer contracts: [interface/provider model](../typed-peripheral-api/contracts.md#interface-and-provider-model) → compiler/emission/runtime boundaries.
+- Cross-cutting delivery: [source-to-artifact selection](../build/stonecutter-publication.md#source-to-artifact-flow) → isolated publication features → [owning verification routes](../testing/verification.md#verification-route-map).
