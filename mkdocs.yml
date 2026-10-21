@@ -1,0 +1,11 @@
+site_name: Minecraft Modding Libs — OpenWiki
+site_url: https://siredvin.github.io/Minecraft-Modding-Libs/openwiki/
+repo_url: https://github.com/SirEdvin/Minecraft-Modding-Libs
+edit_uri: edit/multiversion/openwiki/
+docs_dir: openwiki
+theme:
+  name: readthedocs
+hooks:
+  - scripts/openwiki-pages.py
+exclude_docs: |
+  .* 
