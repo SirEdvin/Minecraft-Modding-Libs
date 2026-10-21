@@ -8,13 +8,13 @@ version="1.0.0"
 [[dependencies.tweakium_client_testmod]]
 modId="tweakium"
 type="required"
-versionRange="[2.0.0,)"
+versionRange="[${tweakiumVersion},)"
 ordering="BEFORE"
 side="BOTH"
 [[dependencies.tweakium_client_testmod]]
 modId="peripheralium"
 type="required"
-versionRange="[2.0.0,)"
+versionRange="[${peripheraliumVersion},)"
 ordering="BEFORE"
 side="BOTH"
 [[mixins]]

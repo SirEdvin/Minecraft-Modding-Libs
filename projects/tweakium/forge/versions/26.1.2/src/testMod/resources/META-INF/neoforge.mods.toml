@@ -10,6 +10,6 @@ displayName="Tweakium Testmod"
 [[dependencies.tweakium_testmod]]
 modId="tweakium"
 type="required"
-versionRange="[2.0.0,)"
+versionRange="[${tweakiumVersion},)"
 ordering="AFTER"
 side="BOTH"

@@ -63,6 +63,12 @@ subprojects {
             }
             tasks.named("processResources") { dependsOn("stonecutterGenerate") }
             tasks.withType<ProcessResources>().configureEach {
+                if (minecraftVersion == "26.1.2" && name != "processResources") {
+                    val fixtureVersions = listOf("broccolium", "testiarium", "tweakium", "peripheralium")
+                        .associate { "${it}Version" to providers.gradleProperty("${it}Version").get() }
+                    inputs.properties(fixtureVersions)
+                    filesMatching("META-INF/neoforge.mods.toml") { expand(fixtureVersions) }
+                }
                 // Published 0.9.0 conventions do not track raw dependency mappings.
                 for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
                     inputs.property("${library}Version", providers.gradleProperty("${library}Version"))
@@ -199,6 +205,40 @@ subprojects {
 
 repositories {
     mavenCentral()
+}
+
+// One monorepo release contains every Minecraft node, not the unversioned controllers.
+extensions.configure<com.github.breadmoirai.githubreleaseplugin.GithubReleaseExtension> {
+    val releaseVersion = providers.gradleProperty("broccoliumVersion")
+    owner.set("SirEdvin")
+    repo.set("Minecraft-Modding-Libs")
+    tagName.set(releaseVersion.map { "v$it" })
+    releaseName.set(releaseVersion.map { "Minecraft Modding Libraries $it" })
+    targetCommitish.set(providers.gradleProperty("releaseCommit").orElse("multiversion"))
+    setToken(providers.environmentVariable("GITHUB_TOKEN"))
+    prerelease.set(releaseVersion.map { it.contains('-') })
+    draft.set(false)
+    overwrite.set(false)
+    allowUploadToExisting.set(false)
+    dryRun.set(false)
+    body.set(
+        "Multiversion release for Minecraft 1.20.1 (Forge/Fabric), " +
+            "1.21.1 (NeoForge/Fabric), and 26.1.2 (NeoForge/Fabric). " +
+            "Includes Broccolium, Testiarium, Tweakium, and Peripheralium, " +
+            "with common modules and source JARs. Use artifacts matching your Minecraft version and loader. " +
+            "This is a release candidate; back up worlds before upgrading.",
+    )
+    gradle.projectsEvaluated {
+        for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
+            require(providers.gradleProperty("${library}Version").get() == releaseVersion.get()) {
+                "The aggregate GitHub release requires matching library versions"
+            }
+        }
+        subprojects.filter { it.projectDir.parentFile.name == "versions" }.forEach { leaf ->
+            val binaryTask = if (leaf.path.contains(":fabric:") && leaf.name != "26.1.2") "remapJar" else "jar"
+            releaseAssets.from(leaf.tasks.named(binaryTask), leaf.tasks.named("sourcesJar"))
+        }
+    }
 }
 
 spotless {
