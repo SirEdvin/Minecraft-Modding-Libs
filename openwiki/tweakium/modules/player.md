@@ -12,15 +12,65 @@ sources:
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt
   - id: openwiki-source-bb09eb55658a45f09e5b9944
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProxy.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+  - id: openwiki-source-0f2322e84bf3051d89732eb8
+    resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerSessionUtil.kt
+generated: { by: "hermes", at: "2026-10-21T17:18:51.475Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T17:18:51.475Z
 ---
 
 # Tweakium fake players and world interactions
 
+[Architecture overview](../../architecture/overview.md) · [Peripheral ownership map](peripheral.md) · [Drop capture scope](../../broccolium/modules/lookup-drops.md)
+
+## Host and actor responsibility map
+
+```mermaid
+flowchart TB
+    accTitle: Host context versus fake-player actor
+    accDescr: A peripheral owner chooses a host-specific cached provider. ComputerPlatformToolkit constructs a loader fake player wrapped by FakePlayerProxy. Providers prepare inventories; the proxy performs hits, use and digging, with drop capture a separate global scope.
+    O[Peripheral owner withPlayer] --> H[Pocket / turtle / block / entity provider]
+    H --> C[Weak-key bounded proxy cache]
+    C -- construct via toolkit --> A[FabricFakePlayer / ForgeFakePlayer]
+    C --> P[FakePlayerProxy]
+    H -- prepare and reconcile --> I[Host inventory / fake inventory]
+    P --> W[Hit / use / swing / dig state]
+    W --> D[Scoped DropConsumer action]
+    D --> I
+```
+
+Solid arrows mean calls/held context, not inheritance. The host provider owns inventory/session preparation and identity; the proxy owns interaction/dig progress, not fuel authorization. Target block providers reject unresolved owners and refresh cached profile mismatches before using a [storage session](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderBlockEntity.kt#L17-L39). Target turtle construction/profile refresh and selected-slot capture are in [its provider](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt#L16-L20) and [action scope](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt#L76-L88).
+
+## Target session sequence
+
+```mermaid
+sequenceDiagram
+    accTitle: Target turtle action and cleanup ordering
+    accDescr: The turtle provider captures the selected slot, loads inventory and swaps the tool into hotbar zero. Scoped attributes close before finally restores the original slot mapping and reconciles items. Action exceptions still reach cleanup.
+    participant O as Owner caller
+    participant H as Turtle provider
+    participant P as Proxy / fake player
+    participant S as Session utilities
+    O->>H: withPlayer(function)
+    H->>H: resolve profile/cache, remember selected slot
+    H->>P: load level / pose / inventory
+    H->>S: swap remembered selection into slot zero
+    H->>S: apply tool attributes (scoped)
+    H->>P: function(proxy)
+    P-->>H: result or exception
+    H->>S: close attribute scope, restore prior modifiers
+    Note over H,S: finally after successful load
+    H->>S: swap back using remembered slot
+    H->>P: copy native slots back, insert/drop extras, clear loans
+    H-->>O: result or propagated failure
+```
+
+The sequence shows [26.1.2 turtle load/unload](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt#L43-L88), not universal legacy parity. Load itself occurs before the action's `try`; this is not a promise that every failure during setup reaches the outer unload. Block/entity [storage sessions](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerStorageSession.kt#L12-L62) instead borrow native storage and reconcile remainders. [Session utilities](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerSessionUtil.kt#L9-L74) catch failed borrowing to return already loaned contents, snapshot applied attribute IDs, and restore previous permanent/transient modifiers on close. They do not make arbitrary backend callbacks transactional. `skipInventory` bypasses loan/copyback; it is not permission to act without a valid host context.
+
 ## Current native session contract (2026-10-19)
+
+Inspected [FakePlayerSessionTests](../../../projects/tweakium/versions/26.1.2/src/test/kotlin/site/siredvin/tweakium/FakePlayerSessionTests.kt#L25-L115) separately covers selected-slot swapping, loan/refusal/remainders and replaced-tool attribute cleanup. Source inspection is not a new execution of those tests; current native acceptance is linked below.
 
 Target sessions have scoped tool/attribute cleanup and load/action/unload reconciliation in finally, native storage loans and owner-cache refresh. Turtle slots9/15 are not hotbar selections: swap into native slot0, retain the original selected slot across callbacks and restore it. Never clamp/drop contents. R6 also repairs the1.21.1 selection path without importing target APIs. Target block use dispatches native game mode once; a preliminary manual pass can duplicate interaction or retry a loader veto.
 

@@ -14,12 +14,16 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R5.md
   - id: openwiki-source-851986a2438c3c75fd1c9bb7
     resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
+  - id: openwiki-source-59c1c24270194cc27f2094eb
+    resource: repo://projects/broccolium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/data/ForgeGeneratorSink.kt
   - id: openwiki-source-90c8b318fc2f5139061b7577
     resource: repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/lang/LanguageProvider.kt
-generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
+  - id: openwiki-source-219dd933171238a711b30685
+    resource: repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/platform/BasePlatform.kt
+generated: { by: "hermes", at: "2026-10-21T16:59:46.460Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-21T16:30:44.003Z
+    at: 2026-10-21T17:25:53.459Z
 ---
 
 # Broccolium data generation
@@ -27,6 +31,30 @@ verified:
 [Architecture overview](../../architecture/overview.md) · [Version/loader topology](../../architecture/loaders.md)
 
 ## Ownership and validation
+
+### Provider composition and build-time flow
+
+This is a build-time responsibility map, not the client rendering pipeline. Solid arrows show calls/data inputs; dashed arrows show the loader sink implementing the common interface. There is no world-save sequence here: generator output is resource JSON, not persistent game state.
+
+```mermaid
+flowchart TB
+    accTitle: Broccolium generator ownership
+    accDescr: Registration tracking supplies expected language keys. Common provider factories enter a loader-specific GeneratorSink and write resource output through native datagen.
+    P[BasePlatform registration] --> T[ModInformationTracker / holder]
+    T --> L[LanguageProvider expected keys]
+    D[LibDataProviders.add] --> S[GeneratorSink]
+    F[FabricGeneratorSink] -. implements .-> S
+    N[ForgeGeneratorSink] -. implements .-> S
+    S --> L
+    S --> C[Consumer tags / loot / model providers]
+    L --> V[Reject duplicate / missing tracked keys]
+    V --> O[PackOutput language JSON]
+    C --> R[Native datagen resources]
+```
+
+Broccolium itself registers only the English/Ukrainian factories through [LibDataProviders](../../../projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/LibDataProviders.kt#L5-L9); the model/tag/loot branches are extension seams for consuming libraries. [LanguageProvider](../../../projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/data/lang/LanguageProvider.kt#L14-L50) performs expected-key validation before saving. Registration tracking is selective: the canonical named block helper tracks its supplier, while the explicit keyed overload delegates directly; do not infer that every route populates every expected-key list ([BasePlatform](../../../projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/platform/BasePlatform.kt#L32-L46)).
+
+On 26.1.2 [FabricGeneratorSink](../../../projects/broccolium/fabric/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/data/FabricGeneratorSink.kt#L28-L45) uses a pack and registry future; [ForgeGeneratorSink](../../../projects/broccolium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/data/ForgeGeneratorSink.kt#L27-L38) uses the gather event/provider registry future. Its [client-only model gate](../../../projects/broccolium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/data/ForgeGeneratorSink.kt#L88-L91) registers skipped providers too, preserving the model cache through the server stale-file purge. This is distinct from old provider signatures and from choosing effective generated roots below.
 
 GeneratorSink is the loader-neutral composition boundary for provider factories, tags, loot, models and registry patches. Broccolium's own concrete provider list generates English/Ukrainian language resources; dependent libraries own their content providers. Language generation rejects duplicates and missing expected tracked keys, not every possible untracked runtime string. Registration tracking therefore matters.
 

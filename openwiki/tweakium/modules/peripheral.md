@@ -12,10 +12,10 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
   - id: openwiki-source-394cd985b01a2c855f6e0e2e
     resource: repo://projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt
-generated: { by: "hermes", at: "2026-10-21T16:30:44.003Z" }
+generated: { by: "hermes", at: "2026-10-21T17:25:53.459Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-21T16:30:44.003Z
+    at: 2026-10-21T17:25:53.459Z
 ---
 
 # Tweakium peripheral dispatch and ownership
@@ -34,11 +34,60 @@ The detailed notes below preserve the earlier327f845/e69b721 source snapshot and
 
 ## Composition model
 
+```mermaid
+classDiagram
+    accTitle: Peripheral owner plugin and method ownership
+    accDescr: OwnedPeripheral implements ComputerCraft dynamic dispatch, holds an owner and explicit plugins, and owns bound methods and connection state. The owner supplies boons and data; boons implement the plugin interface.
+    IDynamicPeripheral <|.. OwnedPeripheral
+    OwnedPeripheral o-- IPeripheralOwner : context
+    OwnedPeripheral o-- IPeripheralPlugin : explicit plugins
+    OwnedPeripheral *-- BoundMethod : collected table
+    OwnedPeripheral *-- ConnectionList : lock guarded operations
+    IPeripheralOwner o-- IDataStorage : settings access
+    IPeripheralOwner o-- IPeripheralOwnerBoon : keyed abilities
+    IPeripheralPlugin <|-- IPeripheralOwnerBoon
+    IPeripheralOwnerBoon <|.. OperationBoon
+    BoundMethod --> PeripheralMethod : delegate
+```
+
+Hollow triangles mean implementation/extension, diamonds mark held references (filled = internally collected state), and an ordinary arrow means delegation. `ConnectionList` is a diagram label for the internal list, not a new Kotlin class. Owner boons are plugin-like but their map iteration order is not a stable registration order. The explicit plugin list is ordered. Sources: [OwnedPeripheral fields and collection](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt#L19-L100), [owner services](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/api/IPeripheralOwner.kt#L19-L54), [keyed owner map](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/owner/BasePeripheralOwner.kt#L10-L33), [boon interface](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/api/IPeripheralOwnerBoon.kt#L3-L4). Drill down to [plugin/operation policy](plugins.md), [fake-player sessions](player.md), [platform/data](platform-data.md), [representation versus client models](representation-rml.md) and [upgrade persistence](upgrades-persistence.md).
+
 OwnedPeripheral combines ComputerCraft IDynamicPeripheral with an IPeripheralOwner. The peripheral owns type, plugin list, bound method table, additional types and computer connections. The owner supplies world/position/facing, player identity, storage, persistence and host-specific actions. An owner is a context/capability object, not automatically an access-control policy.
 
 BasePeripheralOwner keeps typed boons keyed by IPeripheralOwnerBoonKey and rejects duplicate keys. attachOperations installs OperationBoon. IPeripheralOwner.withOperation requires that boon and throws if absent; merely declaring an operation on a plugin does not create it. See [operations and plugins](plugins.md).
 
 ## Lua dispatch lifecycle
+
+```mermaid
+sequenceDiagram
+    accTitle: Lazy Lua method collection and indexed dispatch
+    accDescr: A server-backed first request initializes explicit plugins then owner boons using ComputerCraft's method registry. Later calls use the collected index and BoundMethod delegates to ComputerCraft; no custom scheduler is inserted.
+    participant C as CC caller
+    participant P as Peripheral
+    participant G as Plugin / boon
+    participant R as CC methods
+    participant B as BoundMethod
+    C->>P: names or call
+    opt not initialized and server available
+        P->>P: init, clear table
+        loop explicit plugins then owner boons
+            P->>G: getMethods(server)
+            G->>R: getSelfMethods(this)
+            R-->>G: named methods
+            G-->>P: fixed-target bindings
+            P->>G: bind peripheral
+            P->>P: types / operations
+        end
+        P->>P: names in table order
+    end
+    opt callMethod
+        P->>B: apply indexed binding
+        B->>R: apply target + context
+        R-->>C: MethodResult
+    end
+```
+
+No Tweakium thread hop occurs in [callMethod](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt#L137-L160) or [BoundMethod](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/BoundMethod.kt#L11-L18). [Plugin discovery](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/api/IPeripheralPlugin.kt#L7-L17) delegates CC's machinery; concrete storage methods declare main-thread work rather than this wrapper scheduling every method. If no server is available, the build is skipped; bad/unbuilt indices can fail. Collection sets `initialized` before callbacks, so an exception leaves partially initialized state rather than automatically retrying. Late plugins only append/update types, not rebuild the table ([collection](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt#L65-L100)).
 
 IPeripheralPlugin.getMethods asks ComputerCraft ServerContext's method registry for that plugin's methods and wraps each in BoundMethod with a fixed target. BoundMethod.apply forwards target, Lua context, computer access and arguments to the CC method implementation. The framework therefore relies on ComputerCraft's method machinery, including annotations, instead of providing a separate reflection engine.
 
@@ -48,7 +97,31 @@ Add plugins and boons before the first build. addPlugin appends and updates addi
 
 ## Connection/configuration behavior
 
-attach and detach mutate the computer list under ReentrantLock and invoke explicit plugin onFirstAttach/onLastDetach on transitions to one/zero connections. These callbacks do not iterate owner boons, unlike method collection. forEachComputer and presence/count queries lock, but connectedComputers returns the underlying list as a List, not a snapshot. Avoid assuming that every access path has immutable/snapshot isolation.
+```mermaid
+sequenceDiagram
+    accTitle: Attach and detach under the connection lock
+    accDescr: List mutation and explicit-plugin callbacks happen while holding the same reentrant lock. Callbacks are selected by resulting size, not by an independent transition state machine, and do not visit owner boons.
+    participant C as CC caller
+    participant P as Peripheral
+    participant L as Lock / list
+    participant G as Plugins
+    C->>P: attach(computer)
+    P->>L: lock, append
+    opt resulting size is one
+        P->>G: onFirstAttach
+    end
+    P->>L: unlock
+    C->>P: detach(computer)
+    P->>L: lock, remove
+    opt resulting list is empty
+        P->>G: onLastDetach
+    end
+    P->>L: unlock
+```
+
+Callbacks run on the invoking thread under the lock, without an explicit main-thread scheduler. An exception releases the lock but does not undo the list mutation or earlier callbacks. Attach does not deduplicate; detach on an already empty list still satisfies `isEmpty`, so repeated/unmatched detach can invoke `onLastDetach` again. These details follow [the actual methods](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/OwnedPeripheral.kt#L103-L134), not a stronger imagined connection state machine.
+
+attach and detach mutate the computer list under ReentrantLock and invoke explicit plugin onFirstAttach/onLastDetach when the resulting list has one/zero connections, respectively. These callbacks do not iterate owner boons, unlike method collection. forEachComputer and presence/count queries lock, but connectedComputers returns the underlying list as a List, not a snapshot. Avoid assuming that every access path has immutable/snapshot isolation.
 
 configuration constructs a fresh map, optionally writes implementationProvider, then lets boons and plugins contribute in that order; later contributions can overwrite keys. Equality compares type, owner and plugin class sets, not individual plugin state. This is not an identity or authorization check for every Lua call.
 

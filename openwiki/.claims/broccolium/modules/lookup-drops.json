@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:a32a865ec7a16bd635ad1d20ce7900c820347f73cc33409832fc168f23b396cc",
+  "pageVersion": "sha256:8f4be89373043f6cfae5b479c85b0b6dc582dc14c2298c80874bbedc5e87e6d9",
   "claims": [
     {
       "id": "claim_ed53f9211c004ba584b26f1a102060dd",
@@ -43,10 +43,24 @@
           "version": "repo-file-v1:sha256:863aba8d296a8ee0b31e773a108e44c43089d4064ef3cd071e47f9f5dde9bb22"
         }
       ]
+    },
+    {
+      "id": "claim_a4211819ca214f998853c83d79841746",
+      "statement": "Block item sink lookup checks an explicit sink provider before upstream storage resolution; target storage resolution guards removed block entities, checks explicit storage providers, then registered callbacks and container fallback.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/AgnosticItemSinkLookup.kt#L13-L24",
+          "version": "repo-lines-v1:sha256:ba909e886b78e019fedb8bcbae2189a8e3fe62c1abc293513ae069265d9fb704:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmZGQxMjg4MWRkNWYyY2JjNTE0NzQyZTU4YTYzYmQyZTg3ZWJjOGNmNTk5OGY2ZjliODQ1OWU1NDAwNjI0YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0NDYzMzcxNjhmMzI2YWQ4ZjhiZTRmNTJlOTQzZjk4ZGRmYWUzMTk3MzgzN2M2MTBhNjYxMTAwOTdlNGM2MWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://projects/broccolium/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/storage/item/AgnosticItemStorageLookup.kt#L49-L63",
+          "version": "repo-lines-v1:sha256:1e36e66aa8c664b447d1fe58ecdce152d5cae2b6e810f3f45b26d815282c4f7d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyNDA3MTg3MGU5MjczZGIxMGY5M2FmNWIwMThiMjkwMDAwNmIwZjhiNDRhMWNlOTY5ZjVmM2FkMmJmOTAxNDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0Y2M2NGU5YjE4YTE5ZDRhOTIxNzk1NDIxM2I5MDU2Zjg4NTYyMDgwOWE2OTUxZmU0YzUwMDA3Nzc5NTAxNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T16:59:46.460Z"
   }
 }

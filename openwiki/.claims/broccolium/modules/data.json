@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:86cc6114c5bda5ee491e55faf27648e8bbefefd0d872453e1a4d4e8f147b7b1c",
+  "pageVersion": "sha256:32f11b704c6ba8f7818bffb4d0ae8db708ccae63bcf83b6299300d201262e50c",
   "claims": [
     {
       "id": "claim_aa8965e2b18f4fcb86203bf94446fdd6",
@@ -37,10 +37,30 @@
           "version": "repo-file-v1:sha256:d4fd4e3a21e3509a77790f420412d087bba4aa0bf8aac2c3d656dd6abe86dc4c"
         }
       ]
+    },
+    {
+      "id": "claim_b5205dd40d484d7bbfafeaa7aaab3eb4",
+      "statement": "Canonical BasePlatform's named block registration tracks the supplier while the explicit keyed overload delegates directly, so expected-key tracking is selective.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/src/main/kotlin/site/siredvin/broccolium/modules/platform/BasePlatform.kt#L32-L46",
+          "version": "repo-lines-v1:sha256:db295f6614f33ca52f0f903c48ff723025f1c003c214f65cbbe905c8bf66ab2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxNjY0YWQ0MmVlYTQ5NjgwZjU0YTQ4MTY0MzQ0NDU3NTk2Mjk4M2ExYzM3ZTNjNjMxN2ZjMmI5YWMyNjhhYjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4YzM5MjE1MWZhYzg2MWM2MDNlZTljMThhNDg4OTA3N2M1NDViODI3YTgwZjMyYjdiMTdkNzc0NDNjNzZmMTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQwMzEyZDlkMzhmZGIxOTY5MmM2MWRkODNlYWExMDkzMzBlZjk0OWNjMGY2Y2VjYjMwOTdmM2MyNzI0YTBhOTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjM2YyOTIyZDljMDU4ODExZWI1NmQxNTgzMjI0ZDIwN2VlZGJlZDcxMzM1YWUzZGI2NzYwNmMxMGY4ZWUyZWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2efd0823628741b6964f57ee3f331038",
+      "statement": "Target NeoForge model datagen registers skipped providers too so the server stale-file cache purge preserves client model outputs.",
+      "evidence": [
+        {
+          "resource": "repo://projects/broccolium/forge/versions/26.1.2/src/main/kotlin/site/siredvin/broccolium/modules/data/ForgeGeneratorSink.kt#L88-L91",
+          "version": "repo-lines-v1:sha256:7437695ce150a2c79432b1a61ab1c612a958e022d04f089b80571a29d726510d:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDU3ZDE0YzEyMTRlNWQ5YTc2NTdjYzA1MzA2OGQ0M2M2NjY0ZmRjNzE1N2E5ZmYzMzMyNDhhMTU2NWQ1NzA2NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzM3NmJmZmQ4OGI2YjY2NGUxMjlmYzNkZjA4MGVhMGI0NWM4ZTIyMTgwMGZlMTExYjRkODNlN2E0ZjExMWEzMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYThmNTkyMDRjMWMzZGYzOWQ0ZjlkNWU3YTk3ZDk3YTg1NTUwMTFjMzRhODYzMjEyNDdhMTcxZDIzOGQ5MWY0MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzc5NGQwMmE4MTIxOTQ0ZDE3NmQyNjVlOWJiOWNjNTlmNmFiODkwYmNhZGY4YWVmZGViZGJiYjRmMmVhODQ0NCJ9"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-21T16:30:44.003Z"
+    "at": "2026-10-21T17:25:53.459Z"
   }
 }

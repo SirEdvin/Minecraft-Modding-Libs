@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:7113f54800e717dbe54a77713798189c501318aaf71551db33ae10a449209419",
+  "pageVersion": "sha256:a9688f985e8f24ea71e82c9cc19d654b186bc071dfd18467bcd13e1542b4b1f3",
   "claims": [
     {
       "id": "claim_8fd9691d1345492b90054bccdf2753a8",
@@ -33,10 +33,24 @@
           "version": "repo-file-v1:sha256:863aba8d296a8ee0b31e773a108e44c43089d4064ef3cd071e47f9f5dde9bb22"
         }
       ]
+    },
+    {
+      "id": "claim_500cc66b12204798a30561c3e09b373e",
+      "statement": "Target turtle action scopes close applied attributes before finally unloading with the remembered selected slot, but load precedes the outer try; storage borrowing separately compensates a failed partial loan and attribute cleanup restores captured modifier IDs rather than reading a possibly replaced tool.",
+      "evidence": [
+        {
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerProviderTurtle.kt#L76-L88",
+          "version": "repo-lines-v1:sha256:130de9b4a945205fe10f76f5c4e9b5fd72437c522a09ac3254cf93e39598eaf0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhMWFjMWY4ODhkMmE0NmVlMjFiNzM1MDViNDQxYmQwMGZiNmY0NDBhZTBmNDIzZjQ3NTVkMjNjZDFjYjQzZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OWJkZWZlZWFjYTYzNDBlMDI5MGRjODZlODg5Yzg5ZDVlMTg5YWE1YmE0NGI1ODViM2I3MDczNGY0YTYyZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        },
+        {
+          "resource": "repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/player/FakePlayerSessionUtil.kt#L9-L74",
+          "version": "repo-lines-v1:sha256:6e56c4df68665529fb0aed033410e51d20da5cdfc515b316aea2df4a91af3d58:eyJzZWxlY3RlZExpbmVDb3VudCI6NjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiNzdhN2MxY2NjNWEzZjE4ZGY3ZWY1YTk4NzhiYjdhM2FhZTNkMzM3YWMwNzdlNjkwMjI3OGUyOTc2Yjc5YTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjYjg4NGEwZjg1ZTkzZjBkNGJjZGRhOGNjMGJjNzMyNmEwMWRkNWE4NGUwMzY0OTczNjc5MjY1ZjE4YzE5NGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkODQ1NjRiZTY2OGU3YjU4MDg2MzM3Y2YwNjQwOTRmNzFkNjE2MDk5NGQ3MWUzZDE4NmM0NTA3NzNlYjM3YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM3OTRkMDJhODEyMTk0NGQxNzZkMjY1ZTliYjljYzU5ZjZhYjg5MGJjYWRmOGFlZmRlYmRiYmI0ZjJlYTg0NDQifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.1",
-    "at": "2026-10-19T13:48:57.965Z"
+    "at": "2026-10-21T17:18:51.475Z"
   }
 }

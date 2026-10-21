@@ -14,13 +14,88 @@ sources:
     resource: repo://docs/verification/minecraft-26-1-R7-final-integration.md
   - id: openwiki-source-19d334151b9cbf920f37889d
     resource: repo://projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt
-generated: { by: "hermes", at: "2026-10-19T00:45:42.798Z" }
+generated: { by: "hermes", at: "2026-10-21T17:25:53.459Z" }
 verified:
   - by: openwiki/0.7.1
-    at: 2026-10-19T13:48:57.965Z
+    at: 2026-10-21T17:25:53.459Z
 ---
 
 # Tweakium pocket and turtle upgrade persistence
+
+[Architecture overview](../../architecture/overview.md) · [Peripheral ownership map](peripheral.md) · [Upgrade registration/data](platform-data.md)
+
+## Pocket construction class view
+
+```mermaid
+classDiagram
+    accTitle: Pocket construction and opt-in state transport
+    accDescr: Ordinary and stateful peripheral pocket upgrades are sibling construction routes. Both delegate to the publicly named builder and create owned peripherals; only the stateful route adds upgrade-item data transport.
+    BasePocketUpgrade <|-- PeripheralPocketUpgrade
+    BasePocketUpgrade <|-- StatefulPocketUpgrade
+    StatefulPocketUpgrade <|-- StatefulPeripheralPocketUpgrade
+    PeripheralPocketUpgrade o-- PockerUpgradePeripheralBuilder
+    StatefulPeripheralPocketUpgrade o-- PockerUpgradePeripheralBuilder
+    PockerUpgradePeripheralBuilder --> IOwnedPeripheral : builds with pocket access
+    BasePocketUpgrade --> DisabledPeripheral : if not enabled
+    IOwnedPeripheral --> IPeripheralOwner : host context
+```
+
+Triangles mean inheritance, diamonds builder references, and arrows construction/selection. This deliberately small pocket view represents the turtle sibling seam without drawing every duplicate class: `BaseTurtleUpgrade` receives turtle access plus `TurtleSide`, and delegates construction through `TurtleUpgradePeripheralBuilder`. The [canonical pocket builder](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/pocket/PeripheralPocketUpgrade.kt#L10-L30), [stateful construction](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPeripheralPocketUpgrade.kt#L10-L24), [target base](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/pocket/BasePocketUpgrade.kt#L13-L27) and [turtle base](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/turtle/BaseTurtleUpgrade.kt#L14-L36) show the seams. Builders choose host owners; a disabled result does not erase stored settings.
+
+## Save to item and load into a reconstructed upgrade
+
+```mermaid
+sequenceDiagram
+    accTitle: Stateful upgrade transport across remove and reinstall
+    accDescr: ComputerCraft owns host data and invokes stateful upgrade conversion hooks. Data is overlaid on a crafting definition when removed and extracted again when installed. Legacy NBT, modern components and target templates are distinct payload strategies.
+    participant H as CC host
+    participant U as Stateful upgrade
+    participant I as Item / template
+    participant P as New peripheral
+    H->>U: getUpgradeItem(data)
+    alt 1.20.1
+        U->>I: copy + storedData
+    else 1.21.1
+        U->>I: overlay ItemStack patch
+    else 26.1.2
+        U->>I: overlay template patch
+    end
+    I-->>H: serialized item
+    H->>U: getUpgradeData(item)
+    U-->>H: values / removals
+    H->>U: createPeripheral
+    U->>P: build with owner
+    P->>H: read retained host data
+```
+
+This is the conversion-hook contract, not a guarantee of every CC world-save trigger or third-party uninstall implementation. Empty data can return the original crafting value. [1.20.1 transport](../../../projects/tweakium/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt#L25-L40), [1.21.1 patch conversion](../../../projects/tweakium/versions/1.21.1/src/main/kotlin/site/siredvin/tweakium/modules/pocket/StatefulPocketUpgrade.kt#L27-L60) and [target template helper](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/UpgradeTemplateUtil.kt#L7-L45) distinguish missing entries from explicit removal relative to crafting defaults. The helper preserves unrelated crafting patches and ignores unapproved incoming components. [Template regression source](../../../projects/tweakium/versions/26.1.2/src/test/kotlin/site/siredvin/tweakium/UpgradeTemplateTests.kt#L26-L95) checks real codecs and immutable defaults; actual install/reload evidence remains below, not rerun here.
+
+### Settings write notification is a separate flow
+
+```mermaid
+sequenceDiagram
+    accTitle: Settings writes and persistence notification
+    accDescr: The owner selects an IDataStorage adapter. Modern pocket/turtle adapters copy and replace custom data while preserving other patch entries; NBT-backed patch writes encode before mutation and notify only after successful storage.
+    participant P as Peripheral / owner
+    participant D as IDataStorage adapter
+    participant H as Host data
+    P->>D: notifying setter or mutate
+    alt modern pocket / turtle
+        D->>D: copy CUSTOM_DATA, mutate copy
+        D->>D: preserve other values and removals
+        D->>H: replace pocket or side-specific turtle patch
+    else CompoundTag patch setter
+        D->>D: encode patch first
+        alt encoding succeeds
+            D->>H: store __patch_storage__
+            D->>H: trigger callback
+        else encoding fails
+            D-->>P: throw without write or callback
+        end
+    end
+```
+
+The [target adapters](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt#L215-L275) own pocket/turtle patch replacement; [NBT patch encoding](../../../projects/tweakium/versions/26.1.2/src/main/kotlin/site/siredvin/tweakium/modules/peripheral/util/DataStorageUtil.kt#L29-L40) precedes mutation. Block settings select a dirty callback; raw tags intentionally select none. Direct getter mutation is not a notifying setter. World entity save/load and client packet/render updates are separate [Broccolium lifecycle paths](../../broccolium/modules/platform-base.md#persistence-and-sync), not extra arrows hidden in this item-transport sequence.
 
 ## Current template and persistence acceptance (2026-10-19)
 
