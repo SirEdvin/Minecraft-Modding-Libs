@@ -235,7 +235,11 @@ extensions.configure<com.github.breadmoirai.githubreleaseplugin.GithubReleaseExt
             }
         }
         subprojects.filter { it.projectDir.parentFile.name == "versions" }.forEach { leaf ->
-            val binaryTask = if (leaf.path.contains(":fabric:") && leaf.name != "26.1.2") "remapJar" else "jar"
+            val binaryTask = when {
+                leaf.path.contains(":fabric:") && leaf.name != "26.1.2" -> "remapJar"
+                leaf.path.contains(":forge:") && leaf.name == "1.20.1" -> "reobfJar"
+                else -> "jar"
+            }
             releaseAssets.from(leaf.tasks.named(binaryTask), leaf.tasks.named("sourcesJar"))
         }
     }
