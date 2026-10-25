@@ -116,6 +116,11 @@ def check_publications(root=ROOT, versions=VERSIONS):
                 for variant in variants.values():
                     for dep in variant.get("dependencies", []):
                         assert not dep["group"].startswith("site.siredvin."), (artifact, variant["name"], dep)
+                        if dep["group"] == "site.siredvin":
+                            assert dep["module"].endswith("-" + minecraft), (artifact, "wrong Minecraft dependency", dep)
+                            assert dep["version"]["requires"] == version, (artifact, "wrong library version", dep)
+                        if variant in runtime:
+                            assert dep["group"] not in ("org.junit.jupiter", "org.junit.platform", "org.jqwik", "net.bytebuddy"), (artifact, "test dependency leaked", dep)
                         if minecraft != "26.1.2" and dep["group"] == "org.jetbrains.kotlin" and dep["module"].startswith("kotlin-stdlib"):
                             assert dep["version"]["requires"] in ("2.0.0", "2.1.0"), (artifact, "target stdlib leaked", dep)
                     assert "testFixtures" not in variant["name"], (artifact, "private fixture variant")

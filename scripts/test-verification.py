@@ -96,5 +96,61 @@ class JarGuards(unittest.TestCase):
                                 publications.check_jar(jar, "probe", version, "common", "probe", "2.0.0")
 
 
+class MavenReleaseGuards(unittest.TestCase):
+    def test_full_readback_and_partial_ledger(self):
+        import json
+        from unittest.mock import patch
+        from types import SimpleNamespace
+
+        release = load("maven-release")
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            artifact = "broccolium-common-1.20.1"
+            version = "2.0.0-rc.1"
+            folder = root / "site/siredvin" / artifact / version
+            folder.mkdir(parents=True)
+            prefix = f"{artifact}-{version}"
+            (folder / (prefix + ".pom")).write_text("synthetic POM for guard tests only")
+            (folder / (prefix + ".module")).write_text(json.dumps({
+                "component": {"group": "site.siredvin", "module": artifact, "version": version}, "variants": [],
+            }))
+            model = [{"project": ":broccolium:1.20.1", "group": "site.siredvin", "artifact": artifact,
+                      "version": version, "artifacts": [],
+                      "repositories": [{"name": "SirEdvin", "url": release.BASE}]}]
+            output = root / "receipt.json"
+
+            def download(command, **kwargs):
+                name = command[-1].rsplit("/", 1)[-1]
+                Path(command[command.index("--output") + 1]).write_bytes((folder / name).read_bytes())
+                return SimpleNamespace(stdout="200")
+
+            with patch.dict(release.os.environ, {"GITHUB_SHA": "synthetic-test-source"}), \
+                    patch.object(release.subprocess, "run", side_effect=download):
+                self.assertEqual(release.inspect(model, root, "broccolium", "1.20.1", "common", True, output), [])
+            self.assertEqual(json.loads(output.read_text())["publications"][0]["status"], "verified-identical")
+
+            calls = []
+            def partial(command, **kwargs):
+                calls.append(command[-1])
+                result = download(command, **kwargs)
+                return SimpleNamespace(stdout="404") if command[-1].endswith(".module") else result
+
+            with patch.dict(release.os.environ, {"GITHUB_SHA": "synthetic-test-source"}), \
+                    patch.object(release.subprocess, "run", side_effect=partial), self.assertRaises(ValueError):
+                release.inspect(model, root, "broccolium", "1.20.1", "common", True, output)
+            receipt = json.loads(output.read_text())
+            self.assertEqual(len(calls), 2)
+            self.assertEqual(receipt["publications"][0]["status"], "partial-or-conflicting")
+            self.assertTrue(receipt["errors"])
+
+    def test_remote_classification_fails_closed(self):
+        release = load("maven-release")
+        self.assertEqual(release.classify(404, "expected", "not-found-body"), "absent")
+        self.assertEqual(release.classify(200, "same", "same"), "verified-identical")
+        for status, actual in ((200, "different"), (403, "same"), (500, "same"), (301, "same")):
+            with self.subTest(status=status, actual=actual), self.assertRaises(ValueError):
+                release.classify(status, "same", actual)
+
+
 if __name__ == "__main__":
     unittest.main()

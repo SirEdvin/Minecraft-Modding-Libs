@@ -169,6 +169,24 @@ subprojects {
             }
         }
         pluginManager.withPlugin("maven-publish") {
+            afterEvaluate {
+                extensions.configure<PublishingExtension> {
+                    val destination = repositories.findByName("SirEdvin")
+                        as? org.gradle.api.artifacts.repositories.MavenArtifactRepository
+                        ?: repositories.maven {
+                            name = "SirEdvin"
+                            credentials(org.gradle.api.credentials.PasswordCredentials::class)
+                        }
+                    // Convention 0.9.0 treats every hyphenated version as a snapshot, including RCs.
+                    destination.url = uri(
+                        if (version.toString().endsWith("-SNAPSHOT")) {
+                            "https://mvn.siredvin.site/snapshots"
+                        } else {
+                            "https://mvn.siredvin.site/minecraft"
+                        },
+                    )
+                }
+            }
             extensions.configure<PublishingExtension> {
                 publications.withType<MavenPublication>().configureEach {
                     val publication = this
