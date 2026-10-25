@@ -143,6 +143,21 @@ class MavenReleaseGuards(unittest.TestCase):
             self.assertEqual(receipt["publications"][0]["status"], "partial-or-conflicting")
             self.assertTrue(receipt["errors"])
 
+            calls.clear()
+            def timeout_once(command, **kwargs):
+                calls.append(command[-1])
+                if command[-1].endswith(".module"):
+                    raise release.subprocess.CalledProcessError(28, command)
+                return download(command, **kwargs)
+
+            with patch.dict(release.os.environ, {"GITHUB_SHA": "synthetic-test-source"}), \
+                    patch.object(release.subprocess, "run", side_effect=timeout_once), self.assertRaises(ValueError):
+                release.inspect(model, root, "broccolium", "1.20.1", "common", True, output)
+            receipt = json.loads(output.read_text())
+            self.assertEqual(len(calls), 2)
+            self.assertEqual(receipt["publications"][0]["files"][0]["status"], "transport-error")
+            self.assertTrue(receipt["errors"])
+
     def test_remote_classification_fails_closed(self):
         release = load("maven-release")
         self.assertEqual(release.classify(404, "expected", "not-found-body"), "absent")

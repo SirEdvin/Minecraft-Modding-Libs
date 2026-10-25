@@ -66,9 +66,15 @@ def inspect(model, stage, project, minecraft, target, verify, output):
                 record["files"].append(entry)
                 with tempfile.TemporaryDirectory() as temp:
                     downloaded = Path(temp) / "artifact"
-                    result = subprocess.run(["curl", "--silent", "--show-error", "--location", "--max-time", "60",
-                                             "--output", str(downloaded), "--write-out", "%{http_code}", entry["url"]],
-                                            check=True, capture_output=True, text=True)
+                    try:
+                        result = subprocess.run(["curl", "--silent", "--show-error", "--location", "--max-time", "60",
+                                                 "--output", str(downloaded), "--write-out", "%{http_code}", entry["url"]],
+                                                check=True, capture_output=True, text=True)
+                    except subprocess.CalledProcessError as error:
+                        entry["status"] = "transport-error"
+                        entry["curl_exit_code"] = error.returncode
+                        errors.append(f"{entry['url']}: curl failed with exit {error.returncode}")
+                        continue
                     entry["http_status"] = int(result.stdout)
                     actual = hashlib.sha256(downloaded.read_bytes()).hexdigest()
                     try:
