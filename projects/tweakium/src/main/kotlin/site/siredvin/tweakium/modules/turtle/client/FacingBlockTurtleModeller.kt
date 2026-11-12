@@ -21,6 +21,8 @@ class FacingBlockTurtleModeller<T : ITurtleUpgrade> : TurtleUpgradeModeller<T> {
         } else {
             stack.translate(2.9, 0.0, 0.0)
         }
-        return TransformedModel.of(upgrade.craftingItem, Transformation(stack.last().pose()))
+        @Suppress("DEPRECATION") // The block model is the upgrade's default crafting item, not the equipped stack.
+        val item = upgrade.craftingItem
+        return TransformedModel.of(item, Transformation(stack.last().pose()))
     }
 }

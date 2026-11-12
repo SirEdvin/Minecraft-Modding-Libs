@@ -32,7 +32,7 @@ object CreativeTabUtil {
         out.accept(ItemStack(pocket))
         val filteredItemStacks: Stream<ItemStack> =
             registries.lookupOrThrow(IPocketUpgrade.REGISTRY).listElements()
-                .filter { it.key().location().namespace == modID }.map { x: Holder.Reference<IPocketUpgrade>? ->
+                .filter { it.key().location().namespace == modID }.map { x: Holder.Reference<IPocketUpgrade> ->
                     DataComponentUtil.createStack<UpgradeData<IPocketUpgrade>>(
                         pocket,
                         ModRegistry.DataComponents.POCKET_UPGRADE.get(),

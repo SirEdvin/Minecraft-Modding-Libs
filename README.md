@@ -36,7 +36,9 @@ The server matrix includes Testiarium and Tweakium's peripheral tests. The repor
 guard removes old XML before launch and requires a fresh, nonempty report with no
 failures/errors; Minecraft startup can fail while the process still exits zero.
 
-Stonecutter is pinned to stable 0.9.8. The newer 0.10-beta.1 is not adopted: it
-requires a Java 25 Gradle launcher, Gradle 9.7+, and a separate preprocessing/API
-migration. See [the migration audit](docs/stonecutter-migration-audit.md) for
-gameplay/API differences, inherited bugs, fixes, and verification scope.
+Gradle must be started on Java 25: CC:Tweaked 1.121.0's Fabric artifacts need Loom
+1.18, which needs Gradle 9.7+ and a Java 25 launcher. Minecraft still compiles on
+the Java 17/21 toolchains. Stonecutter is pinned to stable 0.9.8; 0.10 is not
+adopted because it needs a separate preprocessing/API migration. See
+[the migration audit](docs/stonecutter-migration-audit.md) for gameplay/API
+differences, inherited bugs, fixes, and verification scope.

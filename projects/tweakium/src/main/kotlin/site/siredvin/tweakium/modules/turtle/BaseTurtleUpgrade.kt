@@ -11,6 +11,8 @@ import site.siredvin.broccolium.modules.base.util.turtleAdjective
 import site.siredvin.tweakium.modules.peripheral.DisabledPeripheral
 import site.siredvin.tweakium.modules.peripheral.api.IOwnedPeripheral
 
+// CC:Tweaked 1.121 deprecates the item-less upgrade API; it stays the supported legacy path and keeps 2.0.x saves loading.
+@Suppress("DEPRECATION")
 abstract class BaseTurtleUpgrade<T : IOwnedPeripheral<*>>(
     id: ResourceLocation,
     type: TurtleUpgradeType,

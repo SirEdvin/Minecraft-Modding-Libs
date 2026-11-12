@@ -113,7 +113,7 @@ object LuaRepresentation {
             val base = VanillaDetailRegistries.ITEM_STACK.getDetails(stack)
             if (!stack.componentsPatch.isEmpty) {
                 val tagData = stack.componentsPatch.let { ComputerPlatformToolkit.get().componentToLua(it) }
-                base["rawNBT"] = tagData
+                if (tagData != null) base["rawNBT"] = tagData
             }
             base
         }

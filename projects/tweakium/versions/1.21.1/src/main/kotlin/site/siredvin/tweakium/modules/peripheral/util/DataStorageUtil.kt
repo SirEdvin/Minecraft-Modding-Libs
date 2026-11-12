@@ -211,6 +211,8 @@ abstract class CustomDataComputerDataStorage : IDataStorage {
     }
 }
 
+// CC:Tweaked 1.121 deprecates the item-less upgrade API; it stays the supported legacy path and keeps 2.0.x saves loading.
+@Suppress("DEPRECATION")
 class PocketComputerDataStorage(private val pocket: IPocketAccess) : CustomDataComputerDataStorage() {
 
     override var patch: DataComponentPatch
@@ -242,6 +244,8 @@ class PocketComputerDataStorage(private val pocket: IPocketAccess) : CustomDataC
     }
 }
 
+// CC:Tweaked 1.121 deprecates the item-less upgrade API; it stays the supported legacy path and keeps 2.0.x saves loading.
+@Suppress("DEPRECATION")
 class TurtleComputerDataStorage(private val turtle: ITurtleAccess, private val side: TurtleSide) : CustomDataComputerDataStorage() {
 
     override var patch: DataComponentPatch
