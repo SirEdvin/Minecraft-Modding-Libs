@@ -22,6 +22,7 @@ abstract class ComputerBasePlatform : BasePlatform() {
     override val holder: ComputerModInformationHolder
         get() = modInformationTracker
 
+    @Suppress("DEPRECATION") // The "item" codec field is a single item, not an ingredient.
     private fun <T : UpgradeBase> createWithSelfCustomItem(factory: BiFunction<ItemStack, UpgradeType<T>, T>): UpgradeType<T> {
         lateinit var type: UpgradeType<T>
         type = UpgradeType.create(

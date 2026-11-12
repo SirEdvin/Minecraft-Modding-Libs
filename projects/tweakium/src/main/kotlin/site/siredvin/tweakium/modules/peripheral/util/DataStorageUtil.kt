@@ -73,12 +73,14 @@ class CompoundTagDataStorage(private val tag: CompoundTag, private val trigger: 
     }
 }
 
+// CC:Tweaked 1.121 deprecates the item-less upgrade API; it stays the supported legacy path and keeps 2.0.x saves loading.
+@Suppress("DEPRECATION")
 object DataStorageUtil {
     fun getDataStorage(compoundTag: CompoundTag): IDataStorage = CompoundTagDataStorage(
         compoundTag,
     ) { }
 
-    fun getDataStorage(access: ITurtleAccess, side: TurtleSide?): IDataStorage = CompoundTagDataStorage(
+    fun getDataStorage(access: ITurtleAccess, side: TurtleSide): IDataStorage = CompoundTagDataStorage(
         access.getUpgradeNBTData(side),
     ) { access.updateUpgradeNBTData(side) }
 

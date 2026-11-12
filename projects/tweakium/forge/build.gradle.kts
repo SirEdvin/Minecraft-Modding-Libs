@@ -92,11 +92,11 @@ if (modernForge) {
     }
     tasks.processResources {
         from(project(":tweakium:${sc.current.project}").sourceSets.main.get().resources)
-        inputs.properties("version" to project.version, "forgeVersion" to "47.1.0", "computercraftVersion" to "1.113.1", "broccoliumVersion" to broccoliumVersion)
+        inputs.properties("version" to project.version, "forgeVersion" to "47.1.0", "computercraftVersion" to libs.versions.ccTweaked120.get(), "broccoliumVersion" to broccoliumVersion)
         filesMatching("META-INF/mods.toml") {
             expand(
                 "forgeVersion" to "47.1.0",
-                "computercraftVersion" to "1.113.1",
+                "computercraftVersion" to libs.versions.ccTweaked120.get(),
                 "broccoliumVersion" to broccoliumVersion,
                 "file" to mapOf("jarVersion" to project.version),
                 "version" to project.version,

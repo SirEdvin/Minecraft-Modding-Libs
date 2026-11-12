@@ -5,7 +5,7 @@ import org.gradle.api.publish.maven.MavenPublication
 plugins {
     java
     alias(libs.plugins.loom) apply false
-    id("net.fabricmc.fabric-loom") version "1.17.11" apply false
+    id("net.fabricmc.fabric-loom") version "1.18.4" apply false
     id("org.jetbrains.kotlin.jvm") version "2.4.0" apply false
     id("net.neoforged.moddev.legacyforge") version "2.0.142" apply false
     id("site.siredvin.root") version "0.9.4"

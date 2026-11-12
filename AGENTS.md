@@ -22,7 +22,7 @@ Keep loader-neutral code and APIs in the common library source tree; loader APIs
 - Loader metadata: Fabric `src/main/resources/fabric.mod.json`; Forge-family version overrides contain `META-INF/mods.toml` or `META-INF/neoforge.mods.toml`.
 - `projects/typed-peripheral-api`: TypeScript sources, package manifest and Gradle bridge.
 - `gradle/libs.versions.toml`: dependency and plugin versions.
-- `gradle.properties`: library versions/default properties; `build.gradle.kts` and loader scripts select Java 17/21 per Minecraft node.
+- `gradle.properties`: library versions/default properties; `build.gradle.kts` and loader scripts select Java 17/21 per Minecraft node. Start Gradle itself on Java 25 (`JAVA_HOME`); Loom 1.18 rejects older launchers.
 - [Migration audit](docs/stonecutter-migration-audit.md): build/publication contracts. If present in the assigned checkout, start repository wiki navigation at `openwiki/index.md` and coverage evidence at `docs/module-test-coverage.md`.
 
 Shared modules use access wideners. Forge modules use access transformers and may use mixins; Fabric modules may use mixins. Update the relevant loader configuration and metadata when changing either integration boundary.

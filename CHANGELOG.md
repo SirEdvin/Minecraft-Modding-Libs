@@ -6,8 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0] - Unreleased
 
+### Changed
+
+- CC:Tweaked 1.121.0 is the minimum on both Minecraft versions (1.20.1 was 1.113.1, 1.21.1 was 1.120.0). Migration: depend on `cc-tweaked-*:1.121.0`
+- Fabric builds against CC:Tweaked 1.121.0 need Loom 1.18.1+, which needs Gradle 9.7+ started on Java 25. Migration: raise Loom, the Gradle wrapper and the launcher JVM together; Minecraft toolchains stay 17/21
+- Tweakium upgrade bases (`BaseTurtleUpgrade`, `BasePocketUpgrade`, `Stateful*Upgrade`, `Peripheral*Upgrade`) keep their `ItemStack` constructors and `getUpgradeData`/`getUpgradeItem` overrides on CC's now-deprecated item-less API. Migration: none; code that calls the deprecated CC members itself (`craftingItem`, `getUpgradeData`, `upgradeNBTData`/`upgradeData` setters) under `-Werror` adds `@Suppress("DEPRECATION")` or moves to `UpgradeHandle`
+- CC now stores the equipped item and validates it: an upgrade whose `isItemSuitable` accepts more than its base class must return an accepted item from `getUpgradeItem(data)`; otherwise CC throws `IllegalArgumentException` after a data write or old-save load (1.20.1 drops the upgrade on load instead). Migration: keep `getUpgradeItem` and `isItemSuitable` consistent
+- CC calls `createPeripheral` for every equipped upgrade, not only `TurtleUpgradeType.PERIPHERAL` ones. Migration: return `null` from tool-only upgrades
+- 1.20.1: `DataStorageUtil.getDataStorage(ITurtleAccess, TurtleSide)` takes a non-null side (CC's API is null-marked). Migration: pass a non-null `TurtleSide`
+
 ### Removed
 
+- 1.21.1: Tweakium's `LegacyTurtleUpgradeData`, `LegacyTurtleUpgradeFix` and its data-fixer mixin; CC:Tweaked 1.121.0 migrates 1.20.1 turtle upgrade data itself and the old hook breaks its fixer. Migration: delete references, there is no replacement
 - Minecraft 26.1.2 support; 2.0.1 is the last release with 26.1.2 artifacts
 - The retired SirEdvin Maven repository; Repsy (`https://repo.repsy.io/siredvin/default`) is the only `site.siredvin` repository
 
