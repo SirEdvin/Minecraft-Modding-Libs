@@ -7,7 +7,7 @@ import site.siredvin.broccolium.modules.storage.base.api.SlottedAgnosticStorage
 import site.siredvin.broccolium.modules.storage.item.AgnosticItemHandlerWrapper
 import site.siredvin.broccolium.modules.storage.item.ContainerWrapper
 
-@WithMinecraft
+@WithNeoForgeMinecraft
 class ForgeSlottedStorageTests : SlottedStorageTests() {
     override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int> {
         val baseContainer = SimpleContainer(items.size)
@@ -18,7 +18,7 @@ class ForgeSlottedStorageTests : SlottedStorageTests() {
     }
 }
 
-@WithMinecraft
+@WithNeoForgeMinecraft
 class CompactForgeSlottedStorageTests : SlottedStorageTests() {
     override fun createSlottedStorage(items: List<ItemStack>, secondary: Boolean): SlottedAgnosticStorage<ItemStack, Int> {
         if (secondary) {

@@ -24,6 +24,7 @@ Each row is required by the row above it; none is optional.
 | Gradle launcher JVM | 21 or 25 | 25 | every Loom 1.18.x declares JVM 25; CI already launched with 25 |
 | NeoForge (`neoforge`) | 21.1.9 | 21.1.265 | the NeoForge JAR requires `[21.1.265,21.2)`; this is also the libraries' declared minimum |
 | Kotlin for Forge, NeoForge (`forge-kotlin-neoforge`) | 5.7.0 | 5.9.0 | 5.7.0 and 5.8.0 call `net.neoforged.fml.Bindings`, which that NeoForge no longer has |
+| Broccolium NeoForge unit tests | `@WithMinecraft` | `@WithNeoForgeMinecraft` | that NeoForge's patched vanilla bootstrap reads FML's mod list, which plain JUnit never creates; the test-only annotation supplies an empty one |
 
 Stonecutter stays on 0.9.8. Minecraft toolchains stay Java 17 (1.20.1) and 21 (1.21.1). Forge
 47.1.0 and the Fabric API pins already satisfy CC's 1.121.0 metadata.

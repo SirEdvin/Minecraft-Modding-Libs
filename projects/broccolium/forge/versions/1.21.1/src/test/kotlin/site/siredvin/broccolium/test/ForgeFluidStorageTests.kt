@@ -66,7 +66,7 @@ internal class CombinedTanks(private val tanks: List<IFluidTank>) : IFluidHandle
     }
 }
 
-@WithMinecraft
+@WithNeoForgeMinecraft
 internal class ForgeFluidStorageTests : FluidStorageTests() {
 
     override fun createStorage(fluids: List<AgnosticFluidStack>, secondary: Boolean): AgnosticFluidStorage {
@@ -84,7 +84,7 @@ internal class ForgeFluidStorageTests : FluidStorageTests() {
     }
 }
 
-@WithMinecraft
+@WithNeoForgeMinecraft
 internal class ForgeDummyFluidStorageTests : FluidStorageTests() {
 
     override fun createStorage(fluids: List<AgnosticFluidStack>, secondary: Boolean): AgnosticFluidStorage {
