@@ -151,13 +151,19 @@ class UpgradeBehaviorGameTests {
     }
 
     @GameTest(template = "modulebehavior.empty")
-    fun turtleUpgradeDataFromMinecraft120SurvivesTheDataFixer(helper: GameTestHelper) = helper.immediate {
+    fun upgradeDataFromMinecraft120SurvivesTheDataFixer(helper: GameTestHelper) = helper.immediate {
+        val current = SharedConstants.getCurrentVersion().dataVersion.version
+        val oldPocket = TagParser.parseTag("""{id:"computercraft:pocket_computer_normal",Count:1b,tag:{Upgrade:"computercraft:speaker",UpgradeInfo:{owner:"back"}}}""")
+        val pocket = DataFixers.getDataFixer().update(References.ITEM_STACK, Dynamic(NbtOps.INSTANCE, oldPocket), 3465, current).value as CompoundTag
+        val back = PocketComputerItem.getUpgradeWithData(ItemStack.parseOptional(helper.level.registryAccess(), pocket)) ?: error("Pocket upgrade was lost: $pocket")
+        check(back.data().get(DataComponents.CUSTOM_DATA)!!.get().copyTag().getString("owner") == "back") { "Pocket upgrade data was lost: $pocket" }
+
         val old = TagParser.parseTag(
             """{id:"computercraft:turtle_normal",Fuel:1234,Items:[{Slot:0b,id:"minecraft:diamond",Count:11b}],""" +
                 """LeftUpgrade:"computercraft:speaker",LeftUpgradeNbt:{owner:"left",storedData:{mode:"retained"}},""" +
                 """RightUpgrade:"computercraft:speaker",RightUpgradeNbt:{owner:"right"}}""",
         )
-        val fixed = DataFixers.getDataFixer().update(References.BLOCK_ENTITY, Dynamic(NbtOps.INSTANCE, old), 3465, SharedConstants.getCurrentVersion().dataVersion.version).value as CompoundTag
+        val fixed = DataFixers.getDataFixer().update(References.BLOCK_ENTITY, Dynamic(NbtOps.INSTANCE, old), 3465, current).value as CompoundTag
         val entity = placeTurtle(helper)
         entity.loadWithComponents(fixed, helper.level.registryAccess())
         for (side in TurtleSide.entries) {

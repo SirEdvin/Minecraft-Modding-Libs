@@ -32,9 +32,9 @@ teamreborn-energy121 = "4.1.0"
 
 # Forge dependencies
 forge = "47.1.0"
-neoforge = "21.1.9"
+neoforge = "21.1.265"
 forge-kotlin = "4.4.0"
-forge-kotlin-neoforge = "5.7.0"
+forge-kotlin-neoforge = "5.9.0"
 parchment = "2024.11.17"
 parchmentMc = "1.21.1"
 parchment-forge = "2023.07.16"
