@@ -1,7 +1,0 @@
-{
-  "required": true,
-  "package": "site.siredvin.testiarium.mixin",
-  "compatibilityLevel": "JAVA_25",
-  "mixins": ["RegistryLoadTaskAccessor", "RegistryDataLoaderMixin"],
-  "injectors": {"defaultRequire": 1}
-}

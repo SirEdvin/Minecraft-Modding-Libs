@@ -16,9 +16,9 @@ import xml.etree.ElementTree as ET
 
 
 def routes():
-    for version in ("1.20.1", "1.21.1", "26.1.2"):
+    for version in ("1.20.1", "1.21.1"):
         for loader in ("fabric", "forge"):
-            if loader == "fabric" or version == "26.1.2":
+            if loader == "fabric":
                 yield "broccolium", loader, version, "runStorageGameTest", [], "storage-gametest.xml"
             standalone = "runServer" if loader == "fabric" else "runGameTestServer"
             yield "testiarium", loader, version, standalone, [], "gametest.xml"

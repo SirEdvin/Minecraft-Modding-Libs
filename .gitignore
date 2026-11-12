@@ -42,3 +42,6 @@ Libs-*
 .opencode
 .kotlin
 .factorypath
+.jqwik-database
+.fabric/
+scripts/**/__pycache__/

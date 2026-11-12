@@ -3,7 +3,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 // Some Minecraft startup failures exit zero. Require fresh, non-empty test evidence.
 subprojects {
     val reports = when {
-        path.startsWith(":broccolium:fabric:") || path == ":broccolium:forge:26.1.2" -> mapOf("runStorageGameTest" to "storage-gametest.xml")
+        path.startsWith(":broccolium:fabric:") -> mapOf("runStorageGameTest" to "storage-gametest.xml")
         path.startsWith(":testiarium:fabric:") -> mapOf(
             "runServer" to "gametest.xml",
             "runCctGameTest" to "cct-gametest.xml",
@@ -64,71 +64,10 @@ subprojects {
                         "nativeSlotCommitAbortAndNestedRollback", "nestedAbortPreservesOuterCommit")
                     expect("EnergyIntegrationGameTests", "absentEnergyProvidersReturnNullWithoutChangingItems")
                 }
-                if (project.name == "26.1.2") {
-                    expect("NativeBehaviorGameTests", "entityInventoriesExposeFirstAndLastNativeSlots",
-                        "horseCargoExcludesEquipmentAndKeepsEveryCargoSlot", "nativeChunkClearDoesNotDestroyObserver",
-                        "nativeSaveRetainsRootPayloadAndRegistryType", "observerUsesNativeBlockOrientationAndRemovalOrder",
-                        "removedProvidersDoNotResolveReplacementOrDiscardedCargo", "removedWorldChestIsNotExposed",
-                        "worldChestLookupConservesItems")
-                    expect("RegistryCodecGameTests", "registeredTooltipHooksAreLazyAndDoNotLoadClientOnServer",
-                        "registryEntryCodecResolvesRealSupplierAndRejectsUnknown")
-                    if (project.path.contains(":fabric:")) {
-                        expect("FabricProviderGameTests", "worldBucketReplacementConservesNativeUnits",
-                            "worldPositiveFluidEnergyProvidersAndNestedRollback")
-                    } else {
-                        expect("ForgeProviderGameTests", "nativeBucketProviderReplacesWorldOriginAndRejectsUnsupported",
-                            "worldPositiveProvidersConserveAndRejectRemoved", "completePlayerEquipmentRetainsNativeRulesAndNestedRollback")
-                    }
-                }
                 val nodes = document.getElementsByTagName("testcase")
                 val names = (0 until nodes.length).map { (nodes.item(it) as org.w3c.dom.Element).getAttribute("name") }
                 check(names.filter { it != "minecraft:always_pass" }.toSet() == expected && names.distinct().size == names.size) {
                     "Storage discovery must match its exact once-only fixture inventory: expected $expected, got $names ($file)"
-                }
-            }
-            if (project.path.startsWith(":tweakium:") && project.name == "26.1.2") {
-                check(skipped == 0) { "Tweakium capability tests must not be skipped: $file" }
-                val expected = setOf(
-                    "CreativeFillerGameTests.fillsInventory",
-                    "NativeSessionGameTests.nativeSelectedSlotsRestoreReplacedToolsAndPermanentAttributesOnAllExits",
-                    "NativeSessionGameTests.changedSelectionDuringNativeActionDoesNotRemapToAnotherSourceSlot",
-                    "NativeSessionGameTests.changedNativeOwnerCannotReusePreviousPlayersIdentity",
-                    "NativeSessionGameTests.nativeEntityStorageLoansReturnToolsAndDropOnlyExactOverflowOnAllExits",
-                    "NativeUpgradeGameTests.liveTurtleInstallRemoveReinstallKeepsIndependentSideSettings",
-                    "NativeUpgradeGameTests.creativeTabResolvesOnlyOwningRegisteredUpgradesAndIndependentStacks",
-                    "NativeUpgradeGameTests.livePocketInstallRemoveReinstallUsesNativeSideAccessAndPlayerInventory",
-                    "NativeUpgradeGameTests.nativeChunkDiskUnloadReloadKeepsInstalledUpgradeSettings",
-                    "NativeInteractionGameTests.oneNativeUseAndLoaderCancellationAndBreakProtectionArePreserved",
-                    "NativePluginGameTests.realLuaPluginQueriesTransfersRefusalsAndPaidOperations",
-                    "ModuleBehaviorGameTests.nativeRegistriesRoundTripWithoutInventingMissingKeys",
-                    "ModuleBehaviorGameTests.lookupUsesFirstNonNullResultAndForwardsNativeContext",
-                    "ModuleBehaviorGameTests.itemAndBlockQueriesEvaluateNativeRegistryValues",
-                    "ModuleBehaviorGameTests.inventoryQueryPullHonorsDestinationAndConservesItems",
-                    "ModuleBehaviorGameTests.numericPullRejectsOutOfRangeDestinationBeforeMutation",
-                    "ModuleBehaviorGameTests.malformedQueriesAreRejectedBeforeNativeTransfer",
-                    "ModuleBehaviorGameTests.fakePlayerMissAndUnbreakableBlockDoNotMutateWorld",
-                    "ModuleBehaviorGameTests.failedPlayerActionAlwaysReleasesGlobalDropCapture",
-                    "RuntimeBehaviorGameTests.nativeMethodDiscoveryBindsAndInvokesPluginsExactlyOnce",
-                    "RuntimeBehaviorGameTests.scanningUsesNativeFiltersBoundsAndOperationPolicy",
-                    "RuntimeBehaviorGameTests.successfulFakePlayerBreakCapturesExactlyOneDrop",
-                    "RuntimeBehaviorGameTests.livingDropCaptureTargetsOnlyConfiguredEntityAndPreservesRemainder",
-                    "WorldBehaviorGameTests.blockTraversalHonorsBoundaryPredicateAndRelativeCoordinates",
-                    "WorldBehaviorGameTests.luaRepresentationsExposeNativeCountsAndBlockProperties",
-                    "WorldBehaviorGameTests.registeredPeripheralPreservesOwnerAndSettingsAcrossNativeNbtReload",
-                    "UpgradeBehaviorGameTests.pocketStateSurvivesItemSerializationWithoutChangingCraftingItem",
-                    "UpgradeBehaviorGameTests.turtleStateSurvivesItemSerializationWithoutChangingCraftingItem",
-                    "UpgradeBehaviorGameTests.pocketExplicitRemovalSurvivesItemRoundTrip",
-                    "UpgradeBehaviorGameTests.turtleExplicitRemovalSurvivesItemRoundTrip",
-                    "PeripheraliumBehaviorGameTests.registeredItemsAndBlockMatchTrackedObjects",
-                    "PeripheraliumBehaviorGameTests.recipeOutputsAndInvalidPatternsPreserveContracts",
-                    "PeripheraliumBehaviorGameTests.loadedRecipesCraftWithNativeIngredientsAndRejectWrongCenter",
-                    "PeripheraliumBehaviorGameTests.bothLanguagesContainEveryTrackedTranslation",
-                    "PeripheraliumBehaviorGameTests.blockLootDropsExactlyOneRegisteredBlock",
-                )
-                val nodes = document.getElementsByTagName("testcase")
-                val names = (0 until nodes.length).map { (nodes.item(it) as org.w3c.dom.Element).getAttribute("name") }
-                check(names.filter { it != "minecraft:always_pass" }.toSet() == expected && names.distinct().size == names.size) {
-                    "Tweakium discovery must match its exact once-only fixture inventory: expected $expected, got $names ($file)"
                 }
             }
             if (project.path.startsWith(":testiarium:") && reports.getValue(name) in setOf("gametest.xml", "cct-gametest.xml")) {
@@ -139,8 +78,6 @@ subprojects {
                     "StandaloneGameTests.optionalFailure" to "optional failure fixture",
                     "StandaloneGameTests.failFastFailureCannotBecomeSuccess" to "fail-fast sentinel",
                 )
-                val targetCct = project.name == "26.1.2" && reports.getValue(name) == "cct-gametest.xml"
-                if (targetCct) expectedFailures["CctHarnessGameTests.luaFailureCannotBecomeSuccess"] = "cct lua sentinel"
                 val testCases = document.getElementsByTagName("testcase")
                 val elements = (0 until testCases.length).map { testCases.item(it) as org.w3c.dom.Element }
                 for ((testName, message) in expectedFailures) {
@@ -160,12 +97,6 @@ subprojects {
                     "containerRejectsNonemptyExpectedSlotsBeyondItsSize", "reporterCountsEscapesAndFinishesOnce",
                 ).mapTo(mutableSetOf()) { "StandaloneGameTests.$it" }
                 expectedNames.addAll(expectedFailures.keys)
-                if (project.name == "26.1.2") expectedNames.add("StandaloneGameTests.nativeEnvironmentSetupAndTeardown")
-                if (targetCct) expectedNames.addAll(listOf(
-                    "CctHarnessGameTests.realLuaAndQueuedActionExecuteOnce",
-                    "CctHarnessGameTests.luaFailureIsObservedByRequiredOuterTest",
-                    "CctHarnessGameTests.queuedActionAfterLuaStartupExecutesOnce",
-                ))
                 val names = elements.map { it.getAttribute("name") }
                 val nativeNames = names.filter { it != "minecraft:always_pass" }
                 check(nativeNames.toSet() == expectedNames && names.distinct().size == names.size) {

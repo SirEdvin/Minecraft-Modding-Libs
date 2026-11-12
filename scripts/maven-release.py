@@ -8,7 +8,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 
-BASE = "https://mvn.siredvin.site/minecraft/"
+BASE = "https://repo.repsy.io/siredvin/default/"
 
 
 def classify(status, expected, actual):
@@ -37,7 +37,7 @@ def inspect(model, stage, project, minecraft, target, verify, output):
     try:
         for p in selected:
             assert p["group"] == "site.siredvin" and not p["version"].endswith("-SNAPSHOT"), p
-            destination = [r for r in p["repositories"] if r["name"] == "SirEdvin"]
+            destination = [r for r in p["repositories"] if r["name"] == "Repsy"]
             assert len(destination) == 1 and destination[0]["url"].rstrip("/") == BASE.rstrip("/"), destination
             relative = f"{p['group'].replace('.', '/')}/{p['artifact']}/{p['version']}/"
             prefix = f"{p['artifact']}-{p['version']}"
@@ -87,7 +87,7 @@ def inspect(model, stage, project, minecraft, target, verify, output):
             states = {f["status"] for f in record["files"]}
             if states == {"absent"}:
                 record["status"] = "ready"
-                tasks.append(p["project"] + ":publishAllPublicationsToSirEdvinRepository")
+                tasks.append(p["project"] + ":publishAllPublicationsToRepsyRepository")
             elif states == {"verified-identical"}:
                 record["status"] = "verified-identical"
             else:
@@ -105,7 +105,7 @@ def inspect(model, stage, project, minecraft, target, verify, output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", required=True, choices=("broccolium", "testiarium", "tweakium", "peripheralium"))
-    parser.add_argument("--minecraft", required=True, choices=("1.20.1", "1.21.1", "26.1.2"))
+    parser.add_argument("--minecraft", required=True, choices=("1.20.1", "1.21.1"))
     parser.add_argument("--target", default="all", choices=("all", "common", "fabric", "forge"))
     parser.add_argument("--verify", action="store_true")
     parser.add_argument("--model", type=Path, default=Path("build/verification/maven-model.json"))
