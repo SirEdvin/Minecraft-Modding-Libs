@@ -20,6 +20,15 @@ pluginManagement {
                 includeGroupByRegex("site.siredvin.*")
             }
         }
+        maven("https://repo.repsy.io/siredvin/default") {
+            name = "Repsy"
+            content { includeGroupByRegex("site.siredvin.*") }
+        }
+        // Upstream fallbacks for the groups the mirror above normally serves.
+        maven("https://maven.minecraftforge.net/")
+        maven("https://maven.neoforged.net/releases/")
+        maven("https://maven.parchmentmc.org/")
+        maven("https://repo.spongepowered.org/repository/maven-public/")
     }
 
     resolutionStrategy {

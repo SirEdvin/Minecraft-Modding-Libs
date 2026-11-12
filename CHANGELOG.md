@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1]
+
+First release from the Stonecutter `multiversion` branch: Minecraft 1.20.1, 1.21.1 and 26.1.2
+from one tree, with unchanged Maven coordinates. Published to the Repsy backup repository
+`https://repo.repsy.io/siredvin/default`.
+
+### Changed
+
+- Fabric reverse item adapters (`SlottedAgnosticItemStorageWrapper`) require `ReplaceableItemStorage`; other backings throw instead of corrupting counts
+- Item/block queries reject unknown keys, empty logical tables and non-string `in`/`not_in` values
+- 1.21.1: `LuaRepresentation.forEnchantment(s)` takes `Holder<Enchantment>`; `name` is the registry id
+- 1.21.1: NeoForge storage lookups pass a `null` side through instead of substituting `UP`
+- 1.21.1: `DataComponentUtil.patchToNBT` throws on encoding failure
+- 1.21.1: fake players apply only main-hand attribute modifiers
+
+### Fixed
+
+- 1.21.1: pocket/turtle upgrade data keeps explicit component removals
+- 1.21.1: NeoForge entity inventory lookup no longer throws
+- Fabric slot moves to/from slot 0 and slotted targets, relative sides in any letter case, `toSlot` for query pulls
+- Drop capture is released on exceptions and targets the configured entity; exact XP level thresholds
+
 ## [1.3.1]
 
 ### Changed

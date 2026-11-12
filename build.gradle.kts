@@ -8,9 +8,9 @@ plugins {
     id("net.fabricmc.fabric-loom") version "1.17.11" apply false
     id("org.jetbrains.kotlin.jvm") version "2.4.0" apply false
     id("net.neoforged.moddev.legacyforge") version "2.0.142" apply false
-    id("site.siredvin.root") version "0.9.0"
-    id("site.siredvin.release") version "0.9.0"
-    id("site.siredvin.linting") version "0.9.0"
+    id("site.siredvin.root") version "0.9.3"
+    id("site.siredvin.release") version "0.9.3"
+    id("site.siredvin.linting") version "0.9.3"
     id("com.github.ben-manes.versions") version "0.51.0"
 }
 
@@ -42,6 +42,16 @@ subprojects {
             }
             if (!path.contains(":fabric:")) {
                 pluginManager.apply("net.fabricmc.fabric-loom-companion")
+            }
+        }
+
+        // Appended after the convention's SirEdvin mirror: upstream fallbacks for the groups it serves.
+        afterEvaluate {
+            repositories {
+                maven("https://maven.squiddev.cc/") { content { includeGroup("cc.tweaked") } }
+                maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") {
+                    content { includeGroup("fuzs.forgeconfigapiport") }
+                }
             }
         }
 
@@ -188,6 +198,10 @@ subprojects {
                 }
             }
             extensions.configure<PublishingExtension> {
+                repositories.maven("https://repo.repsy.io/siredvin/default") {
+                    name = "Repsy"
+                    credentials(org.gradle.api.credentials.PasswordCredentials::class)
+                }
                 publications.withType<MavenPublication>().configureEach {
                     val publication = this
                     groupId = projectGroup
@@ -244,7 +258,7 @@ extensions.configure<com.github.breadmoirai.githubreleaseplugin.GithubReleaseExt
             "1.21.1 (NeoForge/Fabric), and 26.1.2 (NeoForge/Fabric). " +
             "Includes Broccolium, Testiarium, Tweakium, and Peripheralium, " +
             "with common modules and source JARs. Use artifacts matching your Minecraft version and loader. " +
-            "This is a release candidate; back up worlds before upgrading.",
+            "Back up worlds before upgrading.",
     )
     gradle.projectsEvaluated {
         for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {

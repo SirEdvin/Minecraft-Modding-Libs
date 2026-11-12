@@ -5,6 +5,11 @@ does not invoke npm, mod distribution or GitHub release tasks. Release candidate
 in `https://mvn.siredvin.site/minecraft`; only literal `-SNAPSHOT` versions use snapshots.
 The common Testiarium artifact retains `core`, and Forge-family modules retain `forge`.
 
+Repsy (`https://repo.repsy.io/siredvin/default`) is the backup: plugins resolve from it when
+the primary is down, and `publishAllPublicationsToRepsyRepository` uploads there with
+`ORG_GRADLE_PROJECT_RepsyUsername`/`ORG_GRADLE_PROJECT_RepsyPassword`. It is a manual local
+route; the tag workflow below still targets the primary only.
+
 ## Before publishing
 
 1. Enumerate the real model with `-I scripts/maven-release.init.gradle`. The JSON model is
