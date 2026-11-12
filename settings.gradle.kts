@@ -3,28 +3,10 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://maven.fabricmc.net/")
-        maven("https://mvn.siredvin.site/minecraft") {
-            name = "SirEdvin's Minecraft repository"
-            content {
-                includeGroup("net.minecraftforge")
-                includeGroup("net.minecraftforge.gradle")
-                includeGroup("net.neoforged")
-                includeGroup("net.neoforged.moddev")
-                includeGroup("org.parchmentmc")
-                includeGroup("org.parchmentmc.feather")
-                includeGroup("org.parchmentmc.data")
-                includeGroup("org.spongepowered")
-                includeGroup("org.spongepowered.gradle.vanilla")
-                includeGroup("net.fabricmc")
-                includeGroup("fabric-loom")
-                includeGroupByRegex("site.siredvin.*")
-            }
-        }
         maven("https://repo.repsy.io/siredvin/default") {
             name = "Repsy"
             content { includeGroupByRegex("site.siredvin.*") }
         }
-        // Upstream fallbacks for the groups the mirror above normally serves.
         maven("https://maven.minecraftforge.net/")
         maven("https://maven.neoforged.net/releases/")
         maven("https://maven.parchmentmc.org/")
@@ -67,18 +49,9 @@ stonecutter {
         "tweakium",
         "peripheralium",
     ) {
-        versions("1.20.1", "1.21.1", "26.1.2")
+        versions("1.20.1", "1.21.1")
         branch("fabric")
         branch("forge")
         vcsVersion = "1.20.1"
-    }
-}
-
-// Unobfuscated leaves must not apply the legacy remapping conventions.
-for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
-    for (branch in listOf("", ":fabric", ":forge")) {
-        val target = project(":$library$branch:26.1.2")
-        target.buildFileName = rootDir.resolve("gradle/minecraft-26-1.gradle.kts")
-            .relativeTo(target.projectDir).path
     }
 }

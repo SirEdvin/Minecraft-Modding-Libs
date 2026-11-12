@@ -5,11 +5,10 @@ import json
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-VERSIONS = ("1.20.1", "1.21.1", "26.1.2")
+VERSIONS = ("1.20.1", "1.21.1")
 EXPECTED = {
     *(f"broccolium/{loader}/{version}" for loader in ("common", "fabric", "forge") for version in VERSIONS),
     *(f"tweakium/{loader}/{version}" for loader in ("common", "fabric") for version in VERSIONS),
-    "tweakium/forge/26.1.2",
     *(f"testiarium/common/{version}" for version in VERSIONS),
 }
 

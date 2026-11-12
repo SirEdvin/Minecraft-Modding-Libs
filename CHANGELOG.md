@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - Unreleased
+
+### Removed
+
+- Minecraft 26.1.2 support; 2.0.1 is the last release with 26.1.2 artifacts
+- The retired SirEdvin Maven repository; Repsy (`https://repo.repsy.io/siredvin/default`) is the only `site.siredvin` repository
+
 ## [2.0.1]
 
 First release from the Stonecutter `multiversion` branch: Minecraft 1.20.1, 1.21.1 and 26.1.2

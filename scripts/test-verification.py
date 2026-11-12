@@ -116,7 +116,7 @@ class MavenReleaseGuards(unittest.TestCase):
             }))
             model = [{"project": ":broccolium:1.20.1", "group": "site.siredvin", "artifact": artifact,
                       "version": version, "artifacts": [],
-                      "repositories": [{"name": "SirEdvin", "url": release.BASE}]}]
+                      "repositories": [{"name": "Repsy", "url": release.BASE}]}]
             output = root / "receipt.json"
 
             def download(command, **kwargs):

@@ -3,7 +3,7 @@
 import groovy.xml.MarkupBuilder
 
 gradle.projectsEvaluated {
-    def owner = gradle.rootProject.project(':testiarium:fabric:26.1.2')
+    def owner = gradle.rootProject.project(':testiarium:fabric:1.21.1')
     def run = owner.tasks.named('runServer').get()
     def report = owner.layout.buildDirectory.file('test-results/gametest.xml').get().asFile
     def negatives = [
@@ -16,7 +16,6 @@ gradle.projectsEvaluated {
         'failFastExceptionIsImmediatelyTerminal', 'failFastErrorIsImmediatelyTerminal',
         'containerMatchesIncludingImplicitEmptySlots', 'containerRejectsMismatchedActualSlots',
         'containerRejectsNonemptyExpectedSlotsBeyondItsSize', 'reporterCountsEscapesAndFinishesOnce',
-        'nativeEnvironmentSetupAndTeardown',
     ].collect { "StandaloneGameTests.$it".toString() }
     def base = positives.collect { [name: it] } + negatives.collect { name, message -> [name: name, skipped: message] }
     def xml = { cases, declared = cases.size() ->

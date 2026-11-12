@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "tweakium:block/creative_filler_bottom",
-    "side": "tweakium:block/creative_filler_side",
-    "top": "tweakium:block/creative_filler_top"
-  }
-}

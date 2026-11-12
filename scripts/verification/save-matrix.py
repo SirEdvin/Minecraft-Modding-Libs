@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Execute the R6 same-loader copied-save matrix using prepared assemblies.
 
-Input root/servers contains six explicit hash-checked production assemblies.
+Input root/servers contains four explicit hash-checked production assemblies.
 Four 1.20.1/1.21.1 source fixtures must already have create-v2 receipts.
 Original worlds are read-only inputs: only exclusive new copies are opened.
 Receipts persist after every run. Re-running refuses existing destinations.
@@ -106,12 +106,8 @@ def execute(root, assemblies=None):
                 name = version + '-' + loader
                 source = sources[name]
                 copied_run(name + '-same', version, loader, source['backup'], source['semantic'])
-            modern = sources['1.21.1-' + loader]
-            copied_run(loader + '-direct-target', '26.1.2', loader, modern['backup'], modern['semantic'])
             old = sources['1.20.1-' + loader]
-            intermediate = copied_run(loader + '-staged-modern', '1.21.1', loader, old['backup'], old['semantic'])
-            intermediate_backup = backup(loader + '-staged-modern', intermediate)
-            copied_run(loader + '-staged-target', '26.1.2', loader, intermediate_backup, old['semantic'])
+            copied_run(loader + '-staged-modern', '1.21.1', loader, old['backup'], old['semantic'])
         recheck_backups()
         receipt['status'] = 'PASS'
         receipt['originals_and_backups_unchanged'] = True

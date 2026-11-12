@@ -14,8 +14,8 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 LIBRARIES = ("broccolium", "testiarium", "tweakium", "peripheralium")
-VERSIONS = ("1.20.1", "1.21.1", "26.1.2")
-MAJORS = {"1.20.1": 61, "1.21.1": 65, "26.1.2": 69}
+VERSIONS = ("1.20.1", "1.21.1")
+MAJORS = {"1.20.1": 61, "1.21.1": 65}
 LOADERS = ("common", "fabric", "forge")
 NS = {"m": "http://maven.apache.org/POM/4.0.0"}
 
@@ -40,7 +40,7 @@ def check_jar(archive, artifact, minecraft, loader, library, version):
         if "accessWidener" in mod:
             widener = mod["accessWidener"]
             assert widener in names, (artifact, widener)
-            namespace = "official" if minecraft == "26.1.2" else "intermediary"
+            namespace = "intermediary"
             assert archive.read(widener).decode().splitlines()[0].split()[-1] == namespace, (artifact, widener)
         for nested in mod.get("jars", []):
             assert nested["file"] in names, (artifact, "missing nested dependency", nested)
@@ -121,7 +121,7 @@ def check_publications(root=ROOT, versions=VERSIONS):
                             assert dep["version"]["requires"] == version, (artifact, "wrong library version", dep)
                         if variant in runtime:
                             assert dep["group"] not in ("org.junit.jupiter", "org.junit.platform", "org.jqwik", "net.bytebuddy"), (artifact, "test dependency leaked", dep)
-                        if minecraft != "26.1.2" and dep["group"] == "org.jetbrains.kotlin" and dep["module"].startswith("kotlin-stdlib"):
+                        if dep["group"] == "org.jetbrains.kotlin" and dep["module"].startswith("kotlin-stdlib"):
                             assert dep["version"]["requires"] in ("2.0.0", "2.1.0"), (artifact, "target stdlib leaked", dep)
                     assert "testFixtures" not in variant["name"], (artifact, "private fixture variant")
                 if loader == "common":
@@ -151,7 +151,7 @@ def check_publications(root=ROOT, versions=VERSIONS):
                     check_jar(archive, artifact, minecraft, loader, library, version)
                     if loader != "common":
                         generated = {}
-                        roots = [] if minecraft == "26.1.2" else [branch / "src/generated/resources"]
+                        roots = [branch / "src/generated/resources"]
                         roots.append(branch / "versions" / minecraft / "src/generated/resources")
                         for directory in roots:
                             for resource in directory.rglob("*.json"):
@@ -159,8 +159,6 @@ def check_publications(root=ROOT, versions=VERSIONS):
                                     generated[str(resource.relative_to(directory))] = resource.read_bytes()
                         for name, payload in generated.items():
                             assert name in archive.namelist() and archive.read(name) == payload, (artifact, "generated resource missing/drifted", name)
-                        if minecraft == "26.1.2":
-                            assert not any(name.startswith((f"data/{library}/recipes/", f"data/{library}/loot_tables/")) for name in archive.namelist()), (artifact, "legacy generated resources leaked")
                 if loader == "forge" and (minecraft != "1.20.1" or library in ("broccolium", "tweakium")):
                     raw = build / "libs" / f"{artifact}-raw-{version}-raw.jar"
                     assert raw.is_file(), (artifact, "missing raw configuration artifact")

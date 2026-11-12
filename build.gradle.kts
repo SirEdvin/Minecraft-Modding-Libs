@@ -8,9 +8,9 @@ plugins {
     id("net.fabricmc.fabric-loom") version "1.17.11" apply false
     id("org.jetbrains.kotlin.jvm") version "2.4.0" apply false
     id("net.neoforged.moddev.legacyforge") version "2.0.142" apply false
-    id("site.siredvin.root") version "0.9.3"
-    id("site.siredvin.release") version "0.9.3"
-    id("site.siredvin.linting") version "0.9.3"
+    id("site.siredvin.root") version "0.9.4"
+    id("site.siredvin.release") version "0.9.4"
+    id("site.siredvin.linting") version "0.9.4"
     id("com.github.ben-manes.versions") version "0.51.0"
 }
 
@@ -29,7 +29,7 @@ apply(from = "gradle/gametest-reports.gradle.kts")
 subprojects {
     if (projectDir.parentFile.name == "versions") {
         extra["minecraftVersion"] = name
-        if (name != "26.1.2" && !path.contains(":forge:")) {
+        if (!path.contains(":forge:")) {
             subprojectConfig.javaVersion.set(
                 if (name == "1.20.1") JavaVersion.VERSION_17 else JavaVersion.VERSION_21,
             )
@@ -42,16 +42,6 @@ subprojects {
             }
             if (!path.contains(":fabric:")) {
                 pluginManager.apply("net.fabricmc.fabric-loom-companion")
-            }
-        }
-
-        // Appended after the convention's SirEdvin mirror: upstream fallbacks for the groups it serves.
-        afterEvaluate {
-            repositories {
-                maven("https://maven.squiddev.cc/") { content { includeGroup("cc.tweaked") } }
-                maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") {
-                    content { includeGroup("fuzs.forgeconfigapiport") }
-                }
             }
         }
 
@@ -73,12 +63,6 @@ subprojects {
             }
             tasks.named("processResources") { dependsOn("stonecutterGenerate") }
             tasks.withType<ProcessResources>().configureEach {
-                if (minecraftVersion == "26.1.2" && name != "processResources") {
-                    val fixtureVersions = listOf("broccolium", "testiarium", "tweakium", "peripheralium")
-                        .associate { "${it}Version" to providers.gradleProperty("${it}Version").get() }
-                    inputs.properties(fixtureVersions)
-                    filesMatching("META-INF/neoforge.mods.toml") { expand(fixtureVersions) }
-                }
                 // Published 0.9.0 conventions do not track raw dependency mappings.
                 for (library in listOf("broccolium", "testiarium", "tweakium", "peripheralium")) {
                     inputs.property("${library}Version", providers.gradleProperty("${library}Version"))
@@ -97,20 +81,17 @@ subprojects {
                 // extra generated root for inactive nodes without generating it;
                 // select the authored resource roots explicitly instead.
                 val ordinaryRoots = mainResources.srcDirs.filterNot { it.parentFile.name == "generated" }
-                val generatedRoots = mutableListOf(localSources.resolve("generated/resources"))
-                if (minecraftVersion != "26.1.2") generatedRoots.add(sharedSources.resolve("generated/resources").toFile())
+                val generatedRoots = listOf(localSources.resolve("generated/resources"), sharedSources.resolve("generated/resources").toFile())
                 mainResources.setSrcDirs(ordinaryRoots + generatedRoots)
             }
         }
         pluginManager.withPlugin("org.jetbrains.kotlin.jvm") {
-            if (minecraftVersion != "26.1.2") {
-                tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-                    compilerOptions.languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
-                    compilerOptions.apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
-                    // Old consumers deliberately retain 2.0 metadata. Keep source
-                    // warnings fatal; only acknowledge this chosen version floor.
-                    compilerOptions.freeCompilerArgs.add("-Xsuppress-version-warnings")
-                }
+            tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+                compilerOptions.languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+                compilerOptions.apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+                // Old consumers deliberately retain 2.0 metadata. Keep source
+                // warnings fatal; only acknowledge this chosen version floor.
+                compilerOptions.freeCompilerArgs.add("-Xsuppress-version-warnings")
             }
             extensions.getByType<org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension>().sourceSets.configureEach {
                 kotlin.exclude(overridden)
@@ -128,14 +109,12 @@ subprojects {
                     "core"
                 }
                 for (feature in listOf("testMod", "cctTestMod")) {
-                    if (minecraftVersion != "26.1.2") {
-                        // KGP's new compiler must not choose the feature runtime floor.
-                        dependencies.add("${feature}Api", "org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
-                    }
+                    // KGP's new compiler must not choose the feature runtime floor.
+                    dependencies.add("${feature}Api", "org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
                     // Feature JARs contain only feature output, not the core API.
                     // Old Loom runtimeElements carries intermediary mod dependencies.
                     // Local feature runs already inherit the named main classpath.
-                    val coreDependency = if (part == "fabric" && minecraftVersion != "26.1.2") {
+                    val coreDependency = if (part == "fabric") {
                         dependencies.project(mapOf("path" to path, "configuration" to "namedElements"))
                     } else {
                         project(path)
@@ -179,29 +158,7 @@ subprojects {
             }
         }
         pluginManager.withPlugin("maven-publish") {
-            afterEvaluate {
-                extensions.configure<PublishingExtension> {
-                    val destination = repositories.findByName("SirEdvin")
-                        as? org.gradle.api.artifacts.repositories.MavenArtifactRepository
-                        ?: repositories.maven {
-                            name = "SirEdvin"
-                            credentials(org.gradle.api.credentials.PasswordCredentials::class)
-                        }
-                    // Convention 0.9.0 treats every hyphenated version as a snapshot, including RCs.
-                    destination.url = uri(
-                        if (version.toString().endsWith("-SNAPSHOT")) {
-                            "https://mvn.siredvin.site/snapshots"
-                        } else {
-                            "https://mvn.siredvin.site/minecraft"
-                        },
-                    )
-                }
-            }
             extensions.configure<PublishingExtension> {
-                repositories.maven("https://repo.repsy.io/siredvin/default") {
-                    name = "Repsy"
-                    credentials(org.gradle.api.credentials.PasswordCredentials::class)
-                }
                 publications.withType<MavenPublication>().configureEach {
                     val publication = this
                     groupId = projectGroup
@@ -254,8 +211,8 @@ extensions.configure<com.github.breadmoirai.githubreleaseplugin.GithubReleaseExt
     allowUploadToExisting.set(false)
     dryRun.set(false)
     body.set(
-        "Multiversion release for Minecraft 1.20.1 (Forge/Fabric), " +
-            "1.21.1 (NeoForge/Fabric), and 26.1.2 (NeoForge/Fabric). " +
+        "Multiversion release for Minecraft 1.20.1 (Forge/Fabric) " +
+            "and 1.21.1 (NeoForge/Fabric). " +
             "Includes Broccolium, Testiarium, Tweakium, and Peripheralium, " +
             "with common modules and source JARs. Use artifacts matching your Minecraft version and loader. " +
             "Back up worlds before upgrading.",
@@ -268,7 +225,7 @@ extensions.configure<com.github.breadmoirai.githubreleaseplugin.GithubReleaseExt
         }
         subprojects.filter { it.projectDir.parentFile.name == "versions" }.forEach { leaf ->
             val binaryTask = when {
-                leaf.path.contains(":fabric:") && leaf.name != "26.1.2" -> "remapJar"
+                leaf.path.contains(":fabric:") -> "remapJar"
                 leaf.path.contains(":forge:") && leaf.name == "1.20.1" -> "reobfJar"
                 else -> "jar"
             }
